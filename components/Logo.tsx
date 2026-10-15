@@ -1,5 +1,5 @@
 /**
- * Avangard logotipi — "Seal" (muhr-nishon) konsepti: doiraviy medal
+ * Avangard English logotipi — "Seal" (muhr-nishon) konsepti: doiraviy medal
  * shaklida, zaytun (olive) va oltin rang birikmasida "A" monogrammasi.
  * O'zi mustaqil ramka bo'lgani uchun tashqi konteynerga muhtoj emas —
  * to'g'ridan-to'g'ri istalgan fonda (och yoki to'q) ishlatiladi.
@@ -12,7 +12,7 @@ export function LogoMark({ size = 40, className }: { size?: number; className?: 
       viewBox="0 0 40 40"
       className={className}
       role="img"
-      aria-label="Avangard logotipi"
+      aria-label="Avangard English logotipi"
     >
       <circle cx="20" cy="20" r="18" fill="#1e2012" stroke="#cfa249" strokeWidth="1.4" />
       <circle cx="20" cy="20" r="14" fill="none" stroke="#cfa24966" strokeWidth="0.6" />
@@ -28,7 +28,7 @@ export function LogoMark({ size = 40, className }: { size?: number; className?: 
 export function Logo({
   size = 40,
   showText = true,
-  subtitle = "Rus tili maktabi",
+  subtitle = "Ingliz tili maktabi",
 }: {
   size?: number;
   showText?: boolean;
@@ -39,7 +39,7 @@ export function Logo({
       <LogoMark size={size} className="shrink-0 drop-shadow-[0_2px_6px_rgba(30,32,18,0.35)]" />
       {showText && (
         <div>
-          <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard</p>
+          <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard English</p>
           <p className="text-[11px] text-ink-700/70">{subtitle}</p>
         </div>
       )}

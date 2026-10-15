@@ -26,6 +26,7 @@ import {
   updateStudentInfoAction,
   type TeacherActionResult,
 } from "@/app/teacher-actions";
+import { SITE_HOST, SITE_URL } from "@/lib/site";
 
 type Mode = "placement" | "password" | "info" | "delete";
 
@@ -144,7 +145,7 @@ function NewStudentForm({ levels, onClose }: { levels: PlacementLevel[]; onClose
         </p>
         <p className="text-sm text-ink-700 dark:text-ink-200">Quyidagilarni o'quvchiga bering (keyin ham o'quvchi kartasidan ko'rish mumkin):</p>
         <div className="grid gap-2 rounded-xl bg-white p-3 font-mono text-sm dark:bg-white/5">
-          <span>Sayt: internation-ru.vercel.app</span>
+          <span>Sayt: {SITE_HOST}</span>
           <span>Login: {created.username}</span>
           <span>Parol: {created.password}</span>
         </div>
@@ -152,7 +153,7 @@ function NewStudentForm({ levels, onClose }: { levels: PlacementLevel[]; onClose
           <button
             onClick={() =>
               navigator.clipboard?.writeText(
-                `Sayt: https://internation-ru.vercel.app\nLogin: ${created.username}\nParol: ${created.password}`
+                `Sayt: ${SITE_URL}\nLogin: ${created.username}\nParol: ${created.password}`
               )
             }
             className="btn-press rounded-full bg-mint-600 px-4 py-2 text-sm font-bold text-white hover:bg-mint-500"
@@ -343,7 +344,7 @@ function Credentials({ student }: { student: TeacherStudent }) {
   function copy() {
     if (!shown?.password) return;
     navigator.clipboard?.writeText(
-      `Sayt: https://internation-ru.vercel.app\nLogin: ${shown.username ?? ""}\nParol: ${shown.password}`
+      `Sayt: ${SITE_URL}\nLogin: ${shown.username ?? ""}\nParol: ${shown.password}`
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);

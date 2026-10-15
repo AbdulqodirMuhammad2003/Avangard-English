@@ -1,17 +1,16 @@
 import "server-only";
 import { sql } from "./db";
 import { getLevelBoard, UNLOCK_RULE_ENABLED, UNLOCK_THRESHOLD } from "./data";
-import { A1_GRAMMAR_BANK, type ExamGrammarItem } from "./exam-a1";
-import { A2_GRAMMAR_BANK } from "./exam-a2";
-import { B1_GRAMMAR_BANK } from "./exam-b1";
-import { B2_GRAMMAR_BANK } from "./exam-b2";
+import { GRAMMAR_BANKS, type ExamGrammarItem } from "./exam-bank";
+import { normalizeAnswer } from "./english-speech";
+import { levelInfo } from "./levels";
 
 /**
  * Daraja yakuniy imtihoni: o'quvchi o'z darajasining imtihonini topshiradi
- * (A1 — Elementar, A2 — Asosiy, B1 — Birinchi, B2 — Ikkinchi sertifikat). Har daraja uchun
- * grammatika banki alohida.
+ * (A1 — Beginner, A2 — Elementary, B1 — Intermediate, B2 — Upper-Intermediate).
+ * Har daraja uchun grammatika banki alohida (lib/exam-bank.ts).
  *
- *  - 40 savol: 20 ta lug'at (rasm + o'zbekcha tarjima → ruscha so'zni yozish)
+ *  - 40 savol: 20 ta lug'at (rasm + o'zbekcha tarjima → inglizcha so'zni yozish)
  *    va 20 ta grammatika (variant tanlash). Har dars kamida bittadan savol
  *    bilan qamraladi; har urinishda yangi variant.
  *  - 40 daqiqa; o'tish bali — 80 %. Javob to'g'ri-noto'g'riligi imtihon
@@ -25,12 +24,14 @@ import { B2_GRAMMAR_BANK } from "./exam-b2";
  */
 
 /** Imtihoni tayyor darajalar: nomi va grammatika savollari banki. */
-const EXAMS: Record<string, { title: string; bank: Record<string, ExamGrammarItem[]> }> = {
-  A1: { title: "Elementar daraja imtihoni", bank: A1_GRAMMAR_BANK },
-  A2: { title: "Asosiy daraja imtihoni", bank: A2_GRAMMAR_BANK },
-  B1: { title: "Birinchi sertifikat darajasi imtihoni", bank: B1_GRAMMAR_BANK },
-  B2: { title: "Ikkinchi sertifikat darajasi imtihoni", bank: B2_GRAMMAR_BANK },
-};
+const EXAMS: Record<string, { title: string; bank: Record<string, ExamGrammarItem[]> }> = Object.fromEntries(
+  Object.entries(GRAMMAR_BANKS).map(([code, bank]) => [
+    code,
+    { title: `${levelInfo(code)?.en ?? code} (${code}) imtihoni`, bank },
+  ])
+);
+/** Bankida savol bor (tayyor) imtihon. */
+const isReady = (level: string) => Object.keys(EXAMS[level]?.bank ?? {}).length > 0;
 const EXAM_LEVELS = Object.keys(EXAMS);
 
 /** O'quvchi qaysi daraja imtihonini ko'radi: o'z darajasiniki; u darajada
@@ -107,14 +108,7 @@ export interface ExamStatus {
   levelComplete: boolean;
 }
 
-const normalize = (s: string) =>
-  s
-    .toLowerCase()
-    .replace(/ё/g, "е")
-    .replace(/́/g, "")
-    .replace(/[.,!?;:«»"'—-]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+const normalize = normalizeAnswer;
 
 function shuffle<T>(items: T[]): T[] {
   const a = [...items];
@@ -158,7 +152,7 @@ async function buildVariant(level: string): Promise<StoredQuestion[]> {
     WHERE r.unit_id IN ${sql(units.map((u) => u.id))}
   `;
   // O'zbekcha tarjimasi boshqa so'znikiga to'g'ri keladigan so'zlar
-  // (masalan, «kechikmoq» — опаздывать / опоздать) imtihonga olinmaydi.
+  // (masalan, «katta» — big / large) imtihonga olinmaydi.
   const key = (uz: string) => uz.toLowerCase().replace(/\(.*?\)/g, "").split(/[;,]/)[0].trim();
   const seen = new Map<string, number>();
   for (const w of words) seen.set(key(w.translation_uz), (seen.get(key(w.translation_uz)) ?? 0) + 1);
@@ -407,6 +401,7 @@ export async function getExamStatus(userId: number): Promise<ExamStatus> {
   let nextAvailableAt: string | null = null;
   if (passed) blockReason = "Imtihondan o'tgansiz.";
   else if (active) blockReason = null;
+  else if (!isReady(level)) blockReason = "Bu daraja imtihoni hali tayyorlanmoqda.";
   else {
     // Darslar ketma-ketligi qoidasi yoqilgan bo'lsa yoki daraja qayta
     // o'qilayotgan bo'lsa (2-sikl va keyingilari), imtihon barcha darslar

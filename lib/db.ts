@@ -45,7 +45,7 @@ function createConnection() {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
     console.warn(
-      "[avangard] DATABASE_URL topilmadi. .env.local fayliga Supabase Postgres " +
+      "[avangard-english] DATABASE_URL topilmadi. .env.local fayliga Supabase Postgres " +
         "ulanish satrini qo'shing (Supabase dashboard → Project Settings → Database → " +
         "Connection string). Baza so'rovlari xato beradi."
     );

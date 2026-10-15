@@ -52,7 +52,7 @@ export interface UnitRecord {
   locked: number;
   date_label: string;
   percent: number;
-  /** Mashqlar tugatilgach ochiladigan "Ruscha tomosha" — haqiqiy ruscha
+  /** Mashqlar tugatilgach ochiladigan "Inglizcha tomosha" — haqiqiy inglizcha
    *  film, multfilm, hujjatli film yoki intervyudan 5-10 daqiqalik parcha
    *  (YouTube). Parcha tanlanmagan darslar uchun `clip_url` — `null`. */
   clip_url: string | null;

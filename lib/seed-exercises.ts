@@ -9,14 +9,13 @@ export type ExerciseKind =
   | "choice" // katta so'z/gap va variantlar (odatiy test)
   | "listen" // `audio` o'qiladi, eshitilgani variantlardan tanlanadi
   | "dialog" // `prompt` — suhbatdoshning gapi, javob variantlardan tanlanadi
-  | "ending" // `prompt` "книга (Иван)", to'g'ri qo'shimcha tanlanadi
   | "anagram" // `prompt` — aralash harflar, `answer` — yig'iladigan so'z
   | "type" // `prompt` — berilgan so'z, `answer` — o'quvchi yozadigan javob
   | "picture" // `prompt` — emoji/rasm, variantlardan nomi tanlanadi
   | "situation" // `prompt` — vaziyat tavsifi, mos ibora tanlanadi
   | "match" // `options` — "chap|o'ng" juftlar, hammasi ulanadi
-  | "stress" // `audio` — so'z, `options` — bo'g'inlar, urg'uli bo'g'in tanlanadi
-  | "number" // `audio` — ruscha son, `answer` — raqamlar bilan
+  | "stress" // `audio` — so'z, `options` — bo'g'inlar (PHO-to-graph), urg'uli bo'g'in tanlanadi
+  | "number" // `audio` — inglizcha son, `answer` — raqamlar bilan
   | "order" // `answer` — gap, o'quvchi so'z plitkalaridan yig'adi
   | "fill" // `prompt` — "___" bo'sh joyli gap/so'z, `answer` — tushgan qism
   | "speak" // `prompt` — ibora, o'quvchi mikrofonga aytadi

@@ -2,12 +2,13 @@
 export type VocabSeed = {
   emoji: string;
   word: string;
+  /** Talaffuz: "IPA|o'zbekcha", masalan "həˈləʊ|halou" (lib/transcription.ts). */
   transcription: string;
   pos: string;
   uz: string;
-  /** So'zning rus tilidagi izohi (ta'rifi). */
+  /** So'zning ingliz tilidagi sodda izohi (ta'rifi). */
   def: string;
-  /** So'z ishtirok etgan rus tilidagi gap — "gap" bosqichida so'z o'rniga
+  /** So'z ishtirok etgan inglizcha gap — "gap" bosqichida so'z o'rniga
    *  bo'sh joy qoldiriladi, shuning uchun so'z gapda aynan shu shaklda bo'lsin. */
   ex: string;
   /** `ex` gapining o'zbek tiliga tarjimasi. */

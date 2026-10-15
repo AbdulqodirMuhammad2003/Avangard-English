@@ -17,7 +17,7 @@ async function main() {
   await seedDatabase();
 
   console.log("Baza demo ma'lumotlar bilan muvaffaqiyatli to'ldirildi.");
-  console.log("Demo login: demo@avangard.uz / demo1234");
+  console.log("Demo login: demo@avangard-english.uz / demo1234");
 
   // postgres.js ulanishini yopamiz, aks holda skript osilib qoladi.
   await getDb().end();

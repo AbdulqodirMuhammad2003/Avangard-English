@@ -11,7 +11,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-const MODES: ReviewItem["mode"][] = ["ru-uz", "uz-ru", "audio"];
+const MODES: ReviewItem["mode"][] = ["en-uz", "uz-en", "audio"];
 
 export default async function ReviewPage() {
   const session = await getSession();
@@ -26,7 +26,7 @@ export default async function ReviewPage() {
   // klient bilan server bir xil narsani chizadi.
   const items: ReviewItem[] = shuffle(words).map((w, i) => {
     const mode = MODES[i % MODES.length];
-    const toUz = mode === "ru-uz";
+    const toUz = mode === "en-uz";
     const answer = toUz ? w.translation_uz : w.word;
     const distractors = shuffle(
       pool

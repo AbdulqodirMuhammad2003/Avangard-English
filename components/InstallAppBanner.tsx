@@ -93,7 +93,7 @@ export function InstallAppBanner() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/icon-192.png" alt="" className="h-11 w-11 shrink-0 rounded-xl" />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-bold">Avangard ilovasi</p>
+        <p className="text-sm font-bold">Avangard English ilovasi</p>
         {showIosHint ? (
           <p className="text-xs text-white/75">
             <Share size={12} className="inline align-[-1px]" /> «Ulashish» → «На экран Домой / Add to Home Screen»

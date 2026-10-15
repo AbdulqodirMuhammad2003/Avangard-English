@@ -1,4 +1,4 @@
--- Avangard platformasi uchun Supabase (PostgreSQL) sxemasi.
+-- Avangard English platformasi uchun Supabase (PostgreSQL) sxemasi.
 --
 -- Ishlatish: Supabase dashboard → SQL Editor → yangi query → shu faylning
 -- to'liq matnini joylashtirib "Run" bosing (bir marta, loyiha yaratilganda).
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL DEFAULT 'student', -- student | teacher
   password_view TEXT, -- o'qituvchi ko'rishi uchun parol nusxasi (AES-GCM, kalit JWT_SECRET dan)
   avatar_url TEXT,
-  course TEXT DEFAULT 'Rus tili kursi',
+  course TEXT DEFAULT 'Ingliz tili kursi',
   level TEXT DEFAULT 'A1',
   coins INTEGER DEFAULT 0,
   stars INTEGER DEFAULT 0,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS units (
   order_index INTEGER NOT NULL,
   locked INTEGER NOT NULL DEFAULT 0,
   date_label TEXT,
-  -- "Ruscha tomosha": mashqlar tugatilgach ochiladigan haqiqiy ruscha film,
+  -- "Inglizcha tomosha": mashqlar tugatilgach ochiladigan haqiqiy inglizcha film,
   -- multfilm, hujjatli film yoki intervyudan 5-10 daqiqalik parcha (YouTube).
   -- clip_url NULL bo'lsa, bu bo'lim ko'rsatilmaydi. clip_start/clip_end —
   -- parchaning boshi va oxiri (soniyalarda).

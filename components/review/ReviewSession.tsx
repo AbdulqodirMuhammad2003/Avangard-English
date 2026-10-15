@@ -5,24 +5,19 @@ import Link from "next/link";
 import { CalendarClock, CheckCircle2, Trophy, Volume2 } from "lucide-react";
 import type { ReviewWord } from "@/lib/data";
 import { submitReviewAnswer } from "@/app/actions";
+import { speak } from "@/lib/english-speech";
+import { formatTranscription } from "@/lib/transcription";
 
 export interface ReviewItem {
   word: ReviewWord;
-  /** ru-uz: ruscha so'z → tarjima; uz-ru: tarjima → ruscha so'z;
-   *  audio: eshitib ruscha so'zni topish. */
-  mode: "ru-uz" | "uz-ru" | "audio";
+  /** en-uz: inglizcha so'z → tarjima; uz-en: tarjima → inglizcha so'z;
+   *  audio: eshitib inglizcha so'zni topish. */
+  mode: "en-uz" | "uz-en" | "audio";
   options: string[];
   correct: number;
 }
 
-function speakRu(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = "ru-RU";
-  utter.rate = 0.85;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utter);
-}
+const speakEn = (text: string) => speak(text, 0.85);
 
 function formatNextDue(iso: string | null) {
   if (!iso) return null;
@@ -33,8 +28,8 @@ function formatNextDue(iso: string | null) {
 }
 
 const MODE_LABELS: Record<ReviewItem["mode"], string> = {
-  "ru-uz": "Tarjimasini toping",
-  "uz-ru": "Ruschasini toping",
+  "en-uz": "Tarjimasini toping",
+  "uz-en": "Inglizchasini toping",
   audio: "Eshitgan so'zingizni toping",
 };
 
@@ -52,7 +47,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
   const done = pos >= queue.length;
 
   useEffect(() => {
-    if (item?.mode === "audio" || item?.mode === "ru-uz") speakRu(item.word.word);
+    if (item?.mode === "audio" || item?.mode === "en-uz") speakEn(item.word.word);
   }, [item, pos]);
 
   if (items.length === 0) {
@@ -116,7 +111,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
       });
     }
     if (!ok) setQueue((q) => [...q, item]);
-    if (item.mode !== "ru-uz") speakRu(item.word.word);
+    if (item.mode !== "en-uz") speakEn(item.word.word);
   }
 
   function next() {
@@ -149,7 +144,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
 
         {item.mode === "audio" ? (
           <button
-            onClick={() => speakRu(item.word.word)}
+            onClick={() => speakEn(item.word.word)}
             className="btn-press mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
             aria-label="Eshitish"
           >
@@ -159,14 +154,14 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
           <div className="text-center">
             <div className="text-5xl">{item.word.emoji}</div>
             <p className="font-display mt-2 text-3xl font-bold text-ink-950 dark:text-ink-50">
-              {item.mode === "ru-uz" ? item.word.word : item.word.translation_uz}
+              {item.mode === "en-uz" ? item.word.word : item.word.translation_uz}
             </p>
-            {item.mode === "ru-uz" && (
+            {item.mode === "en-uz" && (
               <button
-                onClick={() => speakRu(item.word.word)}
+                onClick={() => speakEn(item.word.word)}
                 className="mt-1 inline-flex items-center gap-1 text-sm text-ink-500 hover:text-azure-600 dark:text-ink-400"
               >
-                <Volume2 size={14} /> [{item.word.transcription}]
+                <Volume2 size={14} /> {formatTranscription(item.word.transcription)}
               </button>
             )}
           </div>

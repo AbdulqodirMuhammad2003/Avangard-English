@@ -3,83 +3,10 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
-import { toCyrillicLookalikes } from "@/lib/cyrillic";
-import { matchesPronunciation, speechNorm, SPEECH_ERRORS } from "@/lib/russian-speech";
+import { matchesPronunciation, normalizeAnswer, speak, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
 
-function speakRu(text: string, rate = 0.85) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = "ru-RU";
-  utter.rate = rate;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utter);
-}
-
-/** Yozma javobni solishtirish uchun: kichik harf, ё → е, urg'u belgisi va
- *  tinish belgilari olib tashlanadi. */
-function normalizeAnswer(s: string) {
-  return toCyrillicLookalikes(s)
-    .toLowerCase()
-    .replace(/ё/g, "е")
-    .replace(/́/g, "")
-    .replace(/[.,!?;:«»"'—-]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-// Ko'p o'quvchilarda rus klaviaturasi o'rnatilmagan — yozish savollari
-// uchun ekrandagi kichik klaviatura.
-const RU_KEYBOARD = ["йцукенгшщзхъ", "фывапролджэ", "ячсмитьбюё"];
-
-function RussianKeyboard({
-  onKey,
-  onBackspace,
-  disabled,
-}: {
-  onKey: (ch: string) => void;
-  onBackspace: () => void;
-  disabled: boolean;
-}) {
-  return (
-    <div className="flex w-full flex-col items-center gap-1">
-      {RU_KEYBOARD.map((row, ri) => (
-        <div key={ri} className="flex w-full justify-center gap-1">
-          {row.split("").map((ch) => (
-            <button
-              key={ch}
-              type="button"
-              disabled={disabled}
-              onClick={() => onKey(ch)}
-              className="h-10 min-w-0 max-w-9 flex-1 rounded-lg bg-ink-100 text-sm font-semibold text-ink-800 transition-colors hover:bg-azure-100 active:bg-azure-200 disabled:opacity-40 dark:bg-white/10 dark:text-ink-100 dark:hover:bg-azure-900/50"
-            >
-              {ch}
-            </button>
-          ))}
-          {ri === RU_KEYBOARD.length - 1 && (
-            <button
-              type="button"
-              disabled={disabled}
-              onClick={onBackspace}
-              aria-label="O'chirish"
-              className="flex h-10 w-12 shrink-0 items-center justify-center rounded-lg bg-ink-200 text-ink-700 hover:bg-ink-300 disabled:opacity-40 dark:bg-white/15 dark:text-ink-100"
-            >
-              <Delete size={16} />
-            </button>
-          )}
-        </div>
-      ))}
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => onKey(" ")}
-        aria-label="Bo'sh joy"
-        className="h-10 w-1/2 rounded-lg bg-ink-100 text-xs font-semibold text-ink-500 hover:bg-azure-100 disabled:opacity-40 dark:bg-white/10 dark:text-ink-300"
-      >
-        пробел
-      </button>
-    </div>
-  );
-}
+/** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi. */
+const speakEn = (text: string, rate = 0.85) => speak(text, rate);
 
 /** Har bir savol uchun bir xil tartibda aralashtiradi (sahifa yangilansa ham
  *  plitkalar/juftlar joyidan sakramaydi). */
@@ -92,16 +19,6 @@ function seededShuffle<T>(items: T[], seed: number): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-/** "книга (Иван)" → { noun: "книга", owner: "Иван", stem: "Иван" };
- *  -а bilan tugagan ismda -а tushib qoladi (мама → мам + ы). */
-function parseEnding(prompt: string) {
-  const m = prompt.match(/^(.*)\s+\((.*)\)$/);
-  const noun = m?.[1] ?? prompt;
-  const owner = m?.[2] ?? "";
-  const stem = owner.endsWith("а") ? owner.slice(0, -1) : owner;
-  return { noun, owner, stem };
 }
 
 /** «**qalin**» belgilarini ajratib ko'rsatadi. */
@@ -148,7 +65,7 @@ function RuleText({ text }: { text: string }) {
           return (
             <p
               key={i}
-              lang="ru"
+              lang="en"
               className="rounded-xl bg-mint-50 px-3 py-1.5 font-medium text-mint-900 dark:bg-mint-950/40 dark:text-mint-100"
             >
               <RichLine text={line.slice(2)} />
@@ -227,7 +144,7 @@ export function ExerciseRun({
   // Tinglab tushunish mashqida matn hamma savollar uchun bitta — u faqat
   // birinchi savolda o'qiladi, keyin o'quvchi o'zi qayta eshitadi.
   useEffect(() => {
-    if (question?.audio_text && !(kind === "audiotext" && qIndex > 0)) speakRu(question.audio_text);
+    if (question?.audio_text && !(kind === "audiotext" && qIndex > 0)) speakEn(question.audio_text);
   }, [question?.audio_text, qIndex, kind]);
 
   if (result !== null) {
@@ -326,7 +243,6 @@ export function ExerciseRun({
   const isWritten = kind === "anagram" || kind === "order" || !!question.answer_text;
   const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeAnswer);
   const canCheck = isWritten ? answerValue.trim() !== "" : selected !== null;
-  const ending = kind === "ending" ? parseEnding(question.prompt) : null;
 
   function record(ok: boolean) {
     setChecked(ok);
@@ -344,7 +260,7 @@ export function ExerciseRun({
         ? acceptedAnswers.includes(normalizeAnswer(answerValue))
         : selected === question.correct_index
     );
-    if (kind === "number" && question.audio_text) speakRu(question.audio_text);
+    if (kind === "number" && question.audio_text) speakEn(question.audio_text);
   }
 
   function pickMatchRight(pairIndex: number) {
@@ -372,7 +288,7 @@ export function ExerciseRun({
     }
     window.speechSynthesis?.cancel();
     const recog = new SR();
-    recog.lang = "ru-RU";
+    recog.lang = SPEECH_LANG;
     recog.maxAlternatives = 5;
     recog.onresult = (e: any) => {
       const alts: string[] = Array.from(e.results[0]).map((r: any) => String(r.transcript));
@@ -425,7 +341,7 @@ export function ExerciseRun({
   const optionGrid = (prefix = "") => (
     <div
       className={`grid gap-2 ${
-        kind === "choice" || kind === "rule" || kind === "ending"
+        kind === "choice" || kind === "rule"
           ? shortOptions
             ? question.options.length === 2
               ? "grid-cols-2"
@@ -461,8 +377,6 @@ export function ExerciseRun({
     ? matchPairs.map((p) => `${p[0]} — ${p[1]}`).join(", ")
     : isWritten
     ? question.answer_text!.split("|")[0]
-    : ending
-    ? `${ending.noun} ${ending.stem}${question.options[question.correct_index]}`
     : question.options[question.correct_index];
 
   return (
@@ -506,7 +420,7 @@ export function ExerciseRun({
         {kind === "listen" && (
           <>
             <button
-              onClick={() => question.audio_text && speakRu(question.audio_text)}
+              onClick={() => question.audio_text && speakEn(question.audio_text)}
               className="btn-press mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
               aria-label="Eshitish"
             >
@@ -548,23 +462,6 @@ export function ExerciseRun({
               </p>
             </div>
             {optionGrid()}
-          </>
-        )}
-
-        {ending && (
-          <>
-            <div className="text-center">
-              <p className="text-sm text-ink-500 dark:text-ink-400">
-                {ending.noun} ({ending.owner}) →
-              </p>
-              <p className="font-display mt-1 text-3xl font-bold text-ink-950 dark:text-ink-50">
-                {ending.noun} {ending.stem}
-                <span className={`border-b-2 border-current px-1 ${resultTone}`}>
-                  {selected === null ? "_" : question.options[selected]}
-                </span>
-              </p>
-            </div>
-            {optionGrid("-")}
           </>
         )}
 
@@ -623,9 +520,9 @@ export function ExerciseRun({
               <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
                 <BookOpen size={14} /> Matn
               </p>
-              <p lang="ru">{question.prompt.split("||")[0]}</p>
+              <p lang="en">{question.prompt.split("||")[0]}</p>
             </div>
-            <p lang="ru" className="text-center text-xl font-semibold text-ink-950 dark:text-ink-50">
+            <p lang="en" className="text-center text-xl font-semibold text-ink-950 dark:text-ink-50">
               {question.prompt.split("||")[1]}
             </p>
             {optionGrid()}
@@ -638,9 +535,9 @@ export function ExerciseRun({
               <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
                 <BookOpen size={14} /> Matn
               </p>
-              <p lang="ru" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
+              <p lang="en" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
             </div>
-            <p lang="ru" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
+            <p lang="en" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
               {question.prompt.split("||")[1]}
             </p>
             {optionGrid()}
@@ -651,14 +548,14 @@ export function ExerciseRun({
           <>
             <div className="flex items-center gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30">
               <button
-                onClick={() => question.audio_text && speakRu(question.audio_text)}
+                onClick={() => question.audio_text && speakEn(question.audio_text)}
                 className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
                 aria-label="Matnni eshitish"
               >
                 <Volume2 size={26} />
               </button>
               <button
-                onClick={() => question.audio_text && speakRu(question.audio_text, 0.6)}
+                onClick={() => question.audio_text && speakEn(question.audio_text, 0.6)}
                 className="btn-press flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
                 aria-label="Sekinroq eshitish"
                 title="Sekinroq"
@@ -669,7 +566,7 @@ export function ExerciseRun({
                 Matnni tinglang. Qayta eshitish uchun tugmani bosing, sekinroq eshitish uchun — shilliqqurtni.
               </p>
             </div>
-            <p lang="ru" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
+            <p lang="en" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
               {question.prompt}
             </p>
             {optionGrid()}
@@ -689,7 +586,7 @@ export function ExerciseRun({
         {(kind === "stress" || kind === "number" || kind === "dictation") && (
           <div className="flex items-center justify-center gap-3">
             <button
-              onClick={() => question.audio_text && speakRu(question.audio_text)}
+              onClick={() => question.audio_text && speakEn(question.audio_text)}
               className="btn-press flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
               aria-label="Eshitish"
             >
@@ -697,7 +594,7 @@ export function ExerciseRun({
             </button>
             {kind === "dictation" && (
               <button
-                onClick={() => question.audio_text && speakRu(question.audio_text, 0.55)}
+                onClick={() => question.audio_text && speakEn(question.audio_text, 0.55)}
                 className="btn-press flex h-12 w-12 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-950/40 dark:text-gold-200"
                 aria-label="Sekinroq eshitish"
                 title="Sekinroq"
@@ -754,7 +651,7 @@ export function ExerciseRun({
                 if (e.key === "Enter") (checked === null ? check : next)();
               }}
               disabled={checked !== null}
-              lang="ru"
+              lang="en"
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
@@ -766,11 +663,6 @@ export function ExerciseRun({
                   ? "border-rose-400"
                   : "border-ink-200 focus:border-azure-500 dark:border-white/10"
               }`}
-            />
-            <RussianKeyboard
-              disabled={checked !== null}
-              onKey={(ch) => setTyped((t) => t + ch)}
-              onBackspace={() => setTyped((t) => t.slice(0, -1))}
             />
           </div>
         )}
@@ -826,7 +718,7 @@ export function ExerciseRun({
                 ko'rsatiladi; oddiy «Gap tuzing»da prompt ko'rsatilmaydi. */}
             {question.prompt !== "Gap tuzing" && (
               <p
-                lang="ru"
+                lang="en"
                 className="rounded-2xl bg-ink-50 px-4 py-3 text-center text-lg font-semibold leading-relaxed text-ink-900 dark:bg-white/5 dark:text-ink-50"
               >
                 {question.prompt}
@@ -881,10 +773,25 @@ export function ExerciseRun({
               </span>
               {question.prompt.split("___")[1]}
             </p>
-            <RussianKeyboard
+            <input
+              value={typed}
+              onChange={(e) => setTyped(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") (checked === null ? check : next)();
+              }}
               disabled={checked !== null}
-              onKey={(ch) => setTyped((t) => t + ch)}
-              onBackspace={() => setTyped((t) => t.slice(0, -1))}
+              lang="en"
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck={false}
+              placeholder="Tushib qolgan so'zni yozing"
+              className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-lg font-semibold text-ink-900 outline-none transition-colors placeholder:text-sm placeholder:font-normal placeholder:text-ink-300 dark:bg-white/5 dark:text-ink-50 ${
+                checked === true
+                  ? "border-mint-500"
+                  : checked === false
+                  ? "border-rose-400"
+                  : "border-ink-200 focus:border-azure-500 dark:border-white/10"
+              }`}
             />
           </div>
         )}
@@ -895,7 +802,7 @@ export function ExerciseRun({
               {question.prompt}
             </p>
             <button
-              onClick={() => speakRu(question.prompt)}
+              onClick={() => speakEn(question.prompt)}
               className="flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-gold-500"
             >
               <Volume2 size={16} /> Namunani eshitish
@@ -952,11 +859,11 @@ export function ExerciseRun({
                 if (e.key === "Enter") (checked === null ? check : next)();
               }}
               disabled={checked !== null}
-              lang="ru"
+              lang="en"
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Javobni ruscha yozing"
+              placeholder="Javobni inglizcha yozing"
               className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-lg font-semibold text-ink-900 outline-none transition-colors placeholder:text-sm placeholder:font-normal placeholder:text-ink-300 dark:bg-white/5 dark:text-ink-50 ${
                 checked === true
                   ? "border-mint-500"
@@ -964,11 +871,6 @@ export function ExerciseRun({
                   ? "border-rose-400"
                   : "border-ink-200 focus:border-azure-500 dark:border-white/10"
               }`}
-            />
-            <RussianKeyboard
-              disabled={checked !== null}
-              onKey={(ch) => setTyped((t) => t + ch)}
-              onBackspace={() => setTyped((t) => t.slice(0, -1))}
             />
           </div>
         )}

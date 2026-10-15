@@ -18,7 +18,6 @@ import {
   PenLine,
   Puzzle,
   Shapes,
-  UserRound,
   Image as ImageIcon,
   Lightbulb,
   ArrowLeftRight,
@@ -47,6 +46,7 @@ import type {
 import { loadExerciseQuestions, loadUnitWords, submitExerciseResult } from "@/app/actions";
 import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
+import { levelInfo } from "@/lib/levels";
 
 type View = "main" | "exercise-run" | "clip";
 type Section = "vocab" | "rule" | "exercises";
@@ -55,7 +55,6 @@ const EXERCISE_KIND_ICONS: Record<ExerciseKind, LucideIcon> = {
   listen: Headphones,
   choice: Shapes,
   dialog: MessagesSquare,
-  ending: UserRound,
   anagram: Puzzle,
   type: PenLine,
   picture: ImageIcon,
@@ -71,15 +70,6 @@ const EXERCISE_KIND_ICONS: Record<ExerciseKind, LucideIcon> = {
   reading: BookOpenText,
   audiotext: Radio,
   rule: GraduationCap,
-};
-
-/** Darajalarning ruscha rasmiy nomlari (ТРКИ — rus tili bo'yicha davlat
- *  test tizimi shkalasi). */
-const LEVEL_NAMES_RU: Record<string, string> = {
-  A1: "Элементарный уровень",
-  A2: "Базовый уровень",
-  B1: "Первый уровень",
-  B2: "Второй уровень",
 };
 
 const CLIP_KIND_LABELS: Record<ClipKind, string> = {
@@ -108,7 +98,7 @@ function toYouTubeEmbedUrl(
       else if (u.pathname.startsWith("/embed/")) id = u.pathname.split("/")[2];
     }
     if (!id) return null;
-    const params = new URLSearchParams({ rel: "0", hl: "ru", cc_lang_pref: "ru" });
+    const params = new URLSearchParams({ rel: "0", hl: "en", cc_lang_pref: "en" });
     if (start) params.set("start", String(start));
     if (end) params.set("end", String(end));
     return `https://www.youtube-nocookie.com/embed/${id}?${params}`;
@@ -283,7 +273,7 @@ export function LessonsBoard({
     return Math.round(exercises.reduce((s, e) => s + e.score_pct, 0) / exercises.length);
   }
 
-  /** "Ruscha tomosha" faqat shu darsdagi barcha mashqlar kamida bir marta
+  /** "Inglizcha tomosha" faqat shu darsdagi barcha mashqlar kamida bir marta
    *  yakunlangach (ball qanday bo'lishidan qat'iy nazar) ochiladi. */
   function unitClipUnlocked(unit: UnitDetail) {
     return unit.exercises.length > 0 && unit.exercises.every((e) => e.attempted);
@@ -410,15 +400,20 @@ export function LessonsBoard({
         </div>
       )}
 
-      {/* Tanlangan daraja — ruscha rasmiy nomi bilan (ТРКИ shkalasi) */}
+      {/* Tanlangan daraja — CEFR nomi va taxminiy IELTS bali bilan */}
       {shownLevel && (
         <div className="mb-4 flex items-center gap-3">
           <span className="font-display rounded-2xl bg-gradient-to-br from-azure-600 to-azure-900 px-3.5 py-2 text-lg font-bold text-white shadow-sm shadow-azure-900/30">
             {shownLevel.code}
           </span>
           <div className="min-w-0">
-            <p lang="ru" className="font-display text-lg font-bold leading-tight text-ink-950 dark:text-ink-50">
-              {LEVEL_NAMES_RU[shownLevel.code] ?? shownLevel.title}
+            <p className="font-display flex flex-wrap items-center gap-x-2 gap-y-1 text-lg font-bold leading-tight text-ink-950 dark:text-ink-50">
+              <span lang="en">{levelInfo(shownLevel.code)?.en ?? shownLevel.title}</span>
+              {levelInfo(shownLevel.code) && (
+                <span className="rounded-full bg-gold-100 px-2 py-0.5 text-xs font-semibold text-gold-800 dark:bg-gold-950/50 dark:text-gold-200">
+                  IELTS ≈ {levelInfo(shownLevel.code)!.ielts}
+                </span>
+              )}
             </p>
             <p className="text-sm text-ink-600 dark:text-ink-300">{shownLevel.description}</p>
           </div>
@@ -432,7 +427,7 @@ export function LessonsBoard({
           {[shownLevel].map((level) => (
             <a
               key={level.code}
-              href={`/handbooks/Avangard-${level.code}-qollanma.pdf`}
+              href={`/handbooks/Avangard-English-${level.code}-qollanma.pdf`}
               download
               className="btn-press flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-ink-800 shadow-sm ring-1 ring-ink-950/5 transition-colors hover:bg-ink-50 dark:bg-white/5 dark:text-ink-100 dark:ring-white/10 dark:hover:bg-white/10"
             >
@@ -743,7 +738,7 @@ export function LessonsBoard({
                               unitClipUnlocked(openUnit) ? "text-white/75" : "text-ink-500 dark:text-ink-400"
                             }`}
                           >
-                            Ruscha tomosha
+                            Inglizcha tomosha
                             {openUnit.clip_kind ? ` · ${CLIP_KIND_LABELS[openUnit.clip_kind]}` : ""}
                           </p>
                           <p
@@ -751,7 +746,7 @@ export function LessonsBoard({
                               unitClipUnlocked(openUnit) ? "" : "text-ink-800 dark:text-ink-100"
                             }`}
                           >
-                            {openUnit.clip_title || "Ruscha parcha"}
+                            {openUnit.clip_title || "Inglizcha parcha"}
                           </p>
                         </div>
                         {!unitClipUnlocked(openUnit) && (
@@ -762,7 +757,7 @@ export function LessonsBoard({
                       </button>
                       {clipNotice && !unitClipUnlocked(openUnit) && (
                         <p className="-mt-2 animate-fade-up rounded-xl bg-gold-50 px-3 py-2 text-xs text-gold-700 dark:bg-gold-950/40 dark:text-gold-300">
-                          Mashqlarni bajarib bo'lgach, darsni ruscha film yoki multfilmdan parcha
+                          Mashqlarni bajarib bo'lgach, darsni inglizcha film yoki multfilmdan parcha
                           bilan yakunlaysiz.
                         </p>
                       )}
@@ -876,7 +871,7 @@ export function LessonsBoard({
                       <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-md">
                         <iframe
                           src={embedUrl}
-                          title={openUnit.clip_title || `${openUnit.title} — ruscha parcha`}
+                          title={openUnit.clip_title || `${openUnit.title} — inglizcha parcha`}
                           className="h-full w-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
@@ -886,7 +881,7 @@ export function LessonsBoard({
                   })()}
                   <p className="rounded-xl bg-ink-50 px-3 py-2 text-xs text-ink-600 dark:bg-white/5 dark:text-ink-300">
                     Hamma so'zni tushunish shart emas. Bu darsda o'rgangan so'zlaringizni jonli
-                    ruscha nutqda eshitishga harakat qiling.
+                    inglizcha nutqda eshitishga harakat qiling.
                   </p>
                 </div>
               )}

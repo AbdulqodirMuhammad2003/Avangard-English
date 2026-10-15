@@ -3,8 +3,8 @@ import Link from "next/link";
 import { LogoMark } from "@/components/Logo";
 
 export const metadata: Metadata = {
-  title: "Maxfiylik siyosati | Avangard",
-  description: "Avangard rus tili platformasi qanday ma'lumot to'playdi va undan qanday foydalanadi.",
+  title: "Maxfiylik siyosati | Avangard English",
+  description: "Avangard English platformasi qanday ma'lumot to'playdi va undan qanday foydalanadi.",
 };
 
 /** Ochiq sahifa (kirish talab qilinmaydi) — Google OAuth ilovasi uchun
@@ -16,13 +16,13 @@ export default function PrivacyPage() {
         <div className="mb-6 flex items-center gap-3">
           <LogoMark size={40} />
           <div>
-            <p className="font-display text-lg font-bold leading-tight">Avangard</p>
-            <p className="text-xs text-ink-500">Rus tili maktabi</p>
+            <p className="font-display text-lg font-bold leading-tight">Avangard English</p>
+            <p className="text-xs text-ink-500">Ingliz tili maktabi</p>
           </div>
         </div>
 
         <h1 className="font-display mb-2 text-2xl font-bold">Maxfiylik siyosati</h1>
-        <p className="mb-6 text-sm text-ink-500">Oxirgi yangilanish: 2026-yil 4-oktabr</p>
+        <p className="mb-6 text-sm text-ink-500">Oxirgi yangilanish: 2026-yil 15-oktabr</p>
 
         <div className="space-y-5 text-sm leading-relaxed">
           <section>

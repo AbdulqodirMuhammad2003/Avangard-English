@@ -60,7 +60,7 @@ function ExamIntro({ status }: { status: ExamStatus }) {
           <>
             <ul className="mt-5 grid gap-2 text-sm text-ink-700 sm:grid-cols-2 dark:text-ink-200">
               <li className="rounded-2xl bg-ink-50 px-4 py-3 dark:bg-white/5">
-                <b>1–20:</b> lug'at — rasm va tarjimaga qarab ruscha so'zni o'z klaviaturangizdan yozasiz.
+                <b>1–20:</b> lug'at — rasm va tarjimaga qarab inglizcha so'zni o'z klaviaturangizdan yozasiz.
               </li>
               <li className="rounded-2xl bg-ink-50 px-4 py-3 dark:bg-white/5">
                 <b>21–40:</b> grammatika — to'g'ri variantni tanlaysiz.
@@ -257,7 +257,7 @@ function ExamRun({
           <div className="flex flex-col items-center gap-3 text-center">
             <p className="text-7xl" aria-hidden="true">{q.emoji}</p>
             <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{q.uz}</p>
-            <p className="text-sm text-ink-500 dark:text-ink-400">Ruschasini yozing · {q.letters} ta harf</p>
+            <p className="text-sm text-ink-500 dark:text-ink-400">Inglizchasini yozing · {q.letters} ta harf</p>
             <input
               key={index}
               autoFocus
@@ -266,18 +266,18 @@ function ExamRun({
               onKeyDown={(e) => {
                 if (e.key === "Enter" && index < total - 1) go(index + 1);
               }}
-              lang="ru"
+              lang="en"
               autoComplete="off"
               autoCapitalize="off"
               autoCorrect="off"
               spellCheck={false}
-              placeholder="Ruscha so'z"
+              placeholder="Inglizcha so'z"
               className="w-full max-w-sm rounded-2xl border-2 border-ink-200 bg-white px-4 py-3 text-center text-xl font-semibold text-ink-900 outline-none focus:border-azure-500 dark:border-white/10 dark:bg-white/5 dark:text-ink-50"
             />
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            <p lang="ru" className="text-center text-xl font-semibold text-ink-950 dark:text-ink-50">{q.prompt}</p>
+            <p lang="en" className="text-center text-xl font-semibold text-ink-950 dark:text-ink-50">{q.prompt}</p>
             <div className="grid gap-2 sm:grid-cols-2">
               {q.options!.map((opt, i) => (
                 <button

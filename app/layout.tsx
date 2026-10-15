@@ -2,27 +2,26 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 
-// Ikkalasi ham kirill harflarini to'liq qo'llab-quvvatlaydi (ruscha matn
-// uchun muhim). Manrope — sarlavhalar uchun zamonaviy, do'stona geometrik
-// shrift; Inter — ekranda o'qish uchun eng qulay matn shriftlaridan biri.
+// Manrope — sarlavhalar uchun zamonaviy, do'stona geometrik shrift; Inter —
+// ekranda o'qish uchun eng qulay matn shriftlaridan biri.
 const manrope = Manrope({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   variable: "--font-manrope",
   display: "swap",
 });
 
 const inter = Inter({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Avangard | Rus tili kursi",
-  description: "O'zbek o'quvchilari uchun rus tilini o'rgatuvchi platforma — darslar, mashqlar, baholar va reyting.",
-  applicationName: "Avangard",
+  title: "Avangard English | Ingliz tili kursi",
+  description: "O'zbek o'quvchilari uchun ingliz tilini o'rgatuvchi platforma — darslar, mashqlar, baholar va reyting.",
+  applicationName: "Avangard English",
   // iPhone: «Bosh ekranga qo'shish» dan keyin ilova kabi ochiladi.
-  appleWebApp: { capable: true, title: "Avangard", statusBarStyle: "black" },
+  appleWebApp: { capable: true, title: "Avangard English", statusBarStyle: "black" },
   icons: { apple: "/apple-touch-icon.png" },
 };
 
@@ -41,7 +40,7 @@ const THEME_INIT_SCRIPT = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`h-full antialiased ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="uz" className={`h-full antialiased ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {/* next/script'ning "beforeInteractive" strategiyasi o'rniga oddiy
             inline <script> ishlatilmoqda — u HTML parse qilinayotganda,

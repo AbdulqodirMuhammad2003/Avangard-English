@@ -1,5 +1,5 @@
 /**
- * Har bir daraja uchun «Avangard qo'llanmasi» PDF faylini yasaydi — faqat
+ * Har bir daraja uchun «Avangard English qo'llanmasi» PDF faylini yasaydi — faqat
  * saytdagi o'zimizning materiallardan (lug'at, misollar, qoidalar, testlar).
  *
  *   npx tsx scripts/build-handbooks.ts            → HTML + PDF (public/handbooks/)
@@ -13,14 +13,10 @@ import path from "path";
 import { execFileSync } from "child_process";
 import { LESSON_CONTENT } from "../lib/seed-lessons";
 import { UNITS } from "../lib/seed-data";
+import { levelInfo } from "../lib/levels";
+import { formatTranscription } from "../lib/transcription";
 
 const OUT_DIR = path.join(process.cwd(), "public", "handbooks");
-const LEVEL_NAMES: Record<string, { uz: string; ru: string }> = {
-  A1: { uz: "Boshlang'ich daraja", ru: "Элементарный уровень" },
-  A2: { uz: "Asosiy daraja", ru: "Базовый уровень" },
-  B1: { uz: "O'rta daraja", ru: "Первый сертификационный уровень" },
-  B2: { uz: "Yuqori o'rta daraja", ru: "Второй сертификационный уровень" },
-};
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -43,7 +39,7 @@ function ruleHtml(text: string) {
     }
     flush();
     if (line.startsWith("## ")) out.push(`<h4>${bold(line.slice(3))}</h4>`);
-    else if (line.startsWith("→ ")) out.push(`<p class="ex" lang="ru">${bold(line.slice(2))}</p>`);
+    else if (line.startsWith("→ ")) out.push(`<p class="ex" lang="en">${bold(line.slice(2))}</p>`);
     else out.push(`<p>${bold(line)}</p>`);
   }
   flush();
@@ -69,9 +65,9 @@ function lessonHtml(code: string, index: number) {
 ${round.words
   .map(
     // Rangli emoji PDF'ga katta rasm bo'lib kiradi (~30 MB) — qo'llanmada yo'q.
-    (w) => `<tr><td class="word"><span lang="ru">${esc(w.word)}</span>${w.transcription ? `<span class="tr">[${esc(w.transcription)}]</span>` : ""}</td>
+    (w) => `<tr><td class="word"><span lang="en">${esc(w.word)}</span>${w.transcription ? `<span class="tr">${esc(formatTranscription(w.transcription))}</span>` : ""}</td>
 <td>${esc(w.uz)}</td>
-<td><span lang="ru">${esc(w.ex)}</span><br><span class="exuz">${esc(w.exUz)}</span></td></tr>`
+<td><span lang="en">${esc(w.ex)}</span><br><span class="exuz">${esc(w.exUz)}</span></td></tr>`
   )
   .join("\n")}
 </tbody></table>`);
@@ -85,8 +81,8 @@ ${round.words
 <ol class="test">
 ${rule.questions
   .map(
-    (q) => `<li><p lang="ru">${esc(q.prompt)}</p><div class="opts">${(q.options ?? [])
-      .map((o, i) => `<span><b>${LETTERS[i]})</b> <span lang="ru">${esc(o)}</span></span>`)
+    (q) => `<li><p lang="en">${esc(q.prompt)}</p><div class="opts">${(q.options ?? [])
+      .map((o, i) => `<span><b>${LETTERS[i]})</b> <span lang="en">${esc(o)}</span></span>`)
       .join("")}</div></li>`
   )
   .join("\n")}
@@ -104,7 +100,7 @@ function levelHtml(level: string) {
   const codes = UNITS.filter((u) => u.level === level && LESSON_CONTENT.some((l) => l.code === u.code)).map(
     (u) => u.code
   );
-  const name = LEVEL_NAMES[level];
+  const info = levelInfo(level);
   const toc = codes
     .map((c, i) => {
       const u = UNITS.find((x) => x.code === c)!;
@@ -112,7 +108,7 @@ function levelHtml(level: string) {
     })
     .join("\n");
 
-  return `<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>Avangard — ${level} qo'llanma</title>
+  return `<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>Avangard English — ${level} qo'llanma</title>
 <style>
 @page { size: A4; margin: 16mm 14mm 18mm; }
 * { box-sizing: border-box; }
@@ -158,11 +154,11 @@ ol.test p { margin: 0 0 1mm; }
 </style></head><body>
 <div class="cover">
   <svg class="seal" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#1e2012" stroke="#cfa249" stroke-width="1.4"/><circle cx="20" cy="20" r="14" fill="none" stroke="#cfa249" stroke-opacity=".4" stroke-width=".6"/><path d="M20 10.5 L27.5 29.5 L23.8 29.5 L22.2 25.3 L17.8 25.3 L16.2 29.5 L12.5 29.5 Z M18.6 22.2 L21.4 22.2 L20 17.9 Z" fill="#dfbd6c"/><circle cx="20" cy="6.5" r="1.2" fill="#dfbd6c"/></svg>
-  <h1>Avangard — Rus tili maktabi</h1>
+  <h1>Avangard English — Ingliz tili maktabi</h1>
   <div class="lvl">${level}</div>
-  <div class="sub">${esc(name.uz)} · <span lang="ru">${esc(name.ru)}</span></div>
+  <div class="sub">${esc(info?.uz ?? level)} · <span lang="en">${esc(info?.en ?? level)}</span>${info ? ` · IELTS ≈ ${esc(info.ielts)}` : ""}</div>
   <div class="sub" style="margin-top:3mm">O'quvchi qo'llanmasi: lug'at, qoidalar va testlar</div>
-  <div class="note">Qo'llanma Avangard saytidagi darslar asosida tuzilgan. internation-ru.vercel.app</div>
+  <div class="note">Qo'llanma Avangard English saytidagi darslar asosida tuzilgan. avangard-english.vercel.app</div>
 </div>
 <div class="toc"><h2>Mundarija</h2><ol>${toc}</ol></div>
 ${codes.map((c, i) => lessonHtml(c, i)).join("\n")}
@@ -192,7 +188,7 @@ for (const level of levels) {
     console.log(`${level}: HTML yozildi (brauzer topilmadi — PDF yo'q)`);
     continue;
   }
-  const pdfPath = path.join(OUT_DIR, `Avangard-${level}-qollanma.pdf`);
+  const pdfPath = path.join(OUT_DIR, `Avangard-English-${level}-qollanma.pdf`);
   // Alohida vaqtinchalik profil — foydalanuvchining Chrome profiliga tegilmaydi.
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), "avangard-pdf-"));
   execFileSync(browser, [

@@ -15,18 +15,17 @@ import {
 } from "lucide-react";
 import type { VocabRoundWithWords, VocabWord } from "@/lib/data";
 import { setWordStagePassed, type VocabStage } from "@/app/actions";
-import { toCyrillicLookalikes } from "@/lib/cyrillic";
-import { matchesPronunciation, pronunciationTargets, SPEECH_ERRORS } from "@/lib/russian-speech";
+import {
+  matchesPronunciation,
+  normalizeAnswer as normalize,
+  pronunciationTargets,
+  speak,
+  SPEECH_ERRORS,
+  SPEECH_LANG,
+} from "@/lib/english-speech";
+import { formatTranscription } from "@/lib/transcription";
 
 // ---------- Yordamchi funksiyalar ----------
-
-function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = "ru-RU";
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utter);
-}
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -35,17 +34,6 @@ function shuffle<T>(arr: T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-/** Yozma javobni solishtirish uchun: kichik harf, «ё» = «е» (ko'p
- *  klaviaturada «ё» yo'q), Unicode bir xil shaklga keltiriladi (ba'zi
- *  telefon klaviaturalari «ё» ni «е» + ikki nuqta belgisi qilib yuboradi). */
-function normalize(s: string) {
-  return toCyrillicLookalikes(s)
-    .toLowerCase()
-    .replace(/ё/g, "е")
-    .trim()
-    .replace(/[^a-zа-я\s-]/gi, "");
 }
 
 /** Javobdan keyin: to'g'ri/xato xabari va «Keyingisi» tugmasi — o'quvchi
@@ -74,7 +62,7 @@ function StageNext({
             "To'g'ri!"
           ) : (
             <>
-              To'g'ri javob: <span lang="ru">{answer}</span>
+              To'g'ri javob: <span lang="en">{answer}</span>
             </>
           )}
         </p>
@@ -146,7 +134,7 @@ export function VocabRoundFlow({
   round: VocabRoundWithWords;
   allWords: VocabWord[];
   /** Boshlang'ich darslarda gap bosqichida ham so'zning rasmi ko'rsatiladi
-   *  (misollar ko'pincha «Это …» bo'lgani uchun rasm yordam beradi). */
+   *  (misollar ko'pincha «This is …» bo'lgani uchun rasm yordam beradi). */
   showPictures?: boolean;
   onClose: () => void;
 }) {
@@ -497,7 +485,7 @@ function LearnCard({
             {word.word}
           </p>
           <p className="text-sm text-ink-700/60 dark:text-ink-300/60">
-            [{word.transcription}]
+            {formatTranscription(word.transcription)}
           </p>
         </div>
       </div>
@@ -891,7 +879,7 @@ function PronunciationStage({
     window.speechSynthesis?.cancel();
 
     const recog = new SR();
-    recog.lang = "ru-RU";
+    recog.lang = SPEECH_LANG;
     recog.interimResults = false;
     recog.continuous = false;
     recog.maxAlternatives = 5;
@@ -956,7 +944,7 @@ function PronunciationStage({
         <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">
           {word.word}
         </p>
-        <p className="text-sm text-ink-700/60 dark:text-ink-300/60">[{word.transcription}]</p>
+        <p className="text-sm text-ink-700/60 dark:text-ink-300/60">{formatTranscription(word.transcription)}</p>
       </div>
 
       {!unsupported && (

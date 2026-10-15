@@ -5,9 +5,9 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "Avangard — Rus tili maktabi",
-    short_name: "Avangard",
-    description: "O'zbek o'quvchilari uchun rus tili kursi — lug'at, qoidalar, mashqlar va imtihonlar.",
+    name: "Avangard English — Ingliz tili maktabi",
+    short_name: "Avangard English",
+    description: "O'zbek o'quvchilari uchun ingliz tili kursi — lug'at, qoidalar, mashqlar va imtihonlar.",
     lang: "uz",
     start_url: "/lessons",
     scope: "/",

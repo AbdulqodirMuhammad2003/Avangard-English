@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL DEFAULT 'student', -- student | teacher
   password_view TEXT, -- o'qituvchi ko'rishi uchun parol nusxasi (AES-GCM, kalit JWT_SECRET dan)
   avatar_url TEXT,
-  course TEXT DEFAULT 'Rus tili kursi',
+  course TEXT DEFAULT 'Ingliz tili kursi',
   level TEXT DEFAULT 'A1',
   coins INTEGER DEFAULT 0,
   stars INTEGER DEFAULT 0,

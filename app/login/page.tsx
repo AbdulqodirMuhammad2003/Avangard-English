@@ -41,14 +41,14 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <div className="mb-8 flex items-center gap-3">
           <LogoMark size={46} className="shrink-0 drop-shadow-[0_2px_8px_rgba(30,32,18,0.35)]" />
           <div>
-            <p className="font-display text-lg font-bold leading-tight">Avangard</p>
-            <p className="text-xs text-ink-700/60">Rus tili maktabi</p>
+            <p className="font-display text-lg font-bold leading-tight">Avangard English</p>
+            <p className="text-xs text-ink-700/60">Ingliz tili maktabi</p>
           </div>
         </div>
 
         <h1 className="font-display mb-1 text-2xl font-bold text-ink-950">Shaxsiy kabinetga kirish</h1>
         <p className="mb-6 text-sm text-ink-700/60">
-          Rus tilini o'rganishda to'xtagan joyingizdan davom eting.
+          Ingliz tilini o'rganishda to'xtagan joyingizdan davom eting.
         </p>
 
         <a

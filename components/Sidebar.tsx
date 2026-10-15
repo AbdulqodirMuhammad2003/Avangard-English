@@ -39,8 +39,8 @@ export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
       <div className="relative mb-8 flex items-center gap-3 px-2">
         <LogoMark size={42} className="shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]" />
         <div>
-          <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard</p>
-          <p className="text-[11px] text-ink-200/70">Rus tili maktabi</p>
+          <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard English</p>
+          <p className="text-[11px] text-ink-200/70">Ingliz tili maktabi</p>
         </div>
       </div>
 
