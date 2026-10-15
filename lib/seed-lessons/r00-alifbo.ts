@@ -1,0 +1,345 @@
+/**
+ * 1-dars — «Alifbo va tovushlar» (Liden & Denz, «Я ❤ Русский Язык»,
+ * «Вводно-фонетический курс» asosida). Lug'at — kitobdagi har bir harfga
+ * bittadan alifbo so'zi va urg'u jadvalidagi so'zlar; gap va mashqlar
+ * o'zimizniki.
+ */
+import { scramble, type SeedExercise, type SeedQuestion } from "../seed-exercises";
+import type { VocabSeed } from "./types";
+
+const w = (
+  emoji: string,
+  word: string,
+  transcription: string,
+  uz: string,
+  def: string,
+  ex: string,
+  exUz: string
+): VocabSeed => ({ emoji, word, transcription, pos: "ot", uz, def, ex, exUz });
+
+export const R00_ROUNDS: { title: string; words: VocabSeed[] }[] = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("💊", "Аптека", "aptyéka", "Dorixona", "Там покупают лекарства.", "Аптека работает днём и ночью.", "Dorixona kechayu kunduz ishlaydi."),
+      w("🍌", "Банан", "banán", "Banan", "Длинный жёлтый сладкий фрукт.", "Обезьяна любит банан.", "Maymun bananni yaxshi ko'radi."),
+      w("💧", "Вода", "vadá", "Suv", "Её пьют, когда хотят пить.", "Вода в море солёная.", "Dengizdagi suv sho'r."),
+      w("🏙️", "Город", "górat", "Shahar", "Большое место, где живёт много людей.", "Ташкент — большой и красивый город.", "Toshkent — katta va chiroyli shahar."),
+      w("🏠", "Дом", "dom", "Uy", "Здание, в котором живут люди.", "Мой дом — моя крепость.", "Mening uyim — mening qal'am."),
+      w("💶", "Евро", "yévra", "Yevro (pul)", "Деньги в Европе.", "Кофе в Париже стоит пять евро.", "Parijda qahva besh yevro turadi."),
+      w("🦔", "Ёж", "yosh", "Tipratikan", "Маленькое животное с иголками.", "Ёж спит всю зиму.", "Tipratikan butun qish uxlaydi."),
+      w("🦒", "Жираф", "zhiráf", "Jirafa", "Животное с очень длинной шеей.", "Жираф — самое высокое животное.", "Jirafa — eng baland hayvon."),
+      w("☂️", "Зонт", "zont", "Soyabon", "Его берут, когда идёт дождь.", "Идёт дождь — возьми зонт!", "Yomg'ir yog'yapti — soyabonni ol!"),
+      w("🐟", "Икра", "ikrá", "Ikra (baliq uvuldirig'i)", "Маленькие яйца рыбы, их едят.", "Красная икра — русский деликатес.", "Qizil ikra — rus noz-ne'mati."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("🥛", "Йогурт", "yógurt", "Yogurt", "Молочный продукт.", "На завтрак у меня йогурт и банан.", "Nonushtaga yogurt va banan yeyman."),
+      w("🐈", "Кот", "kot", "Mushuk", "Домашнее животное, которое ловит мышей.", "Кот спит весь день.", "Mushuk kun bo'yi uxlaydi."),
+      w("💡", "Лампа", "lámpa", "Chiroq", "Она даёт свет.", "Лампа Аладдина — волшебная.", "Aladdinning chirog'i — sehrli."),
+      w("🏰", "Москва", "maskvá", "Moskva", "Столица России.", "Москва — столица России.", "Moskva — Rossiya poytaxti."),
+      w("🔢", "Номер", "nómir", "Raqam, nomer", "Число, по которому можно найти дом, телефон или комнату.", "Какой у тебя номер телефона?", "Telefon raqaming qanday?"),
+      w("🪟", "Окно", "aknó", "Deraza", "Через него смотрят на улицу.", "Окно в моей комнате большое.", "Xonamdagi deraza katta."),
+      w("🌳", "Парк", "park", "Bog', park", "Место в городе, где много деревьев.", "Парк Горького — самый известный парк Москвы.", "Gorkiy parki — Moskvaning eng mashhur parki."),
+      w("🍽️", "Ресторан", "ristarán", "Restoran", "Место, где обедают и ужинают.", "Этот ресторан готовит вкусный плов.", "Bu restoran mazali palov tayyorlaydi."),
+      w("🧃", "Сок", "sok", "Sharbat", "Напиток из фруктов.", "Апельсиновый сок — мой любимый.", "Apelsin sharbati — mening sevimlim."),
+      w("🎂", "Торт", "tort", "Tort", "Сладкий праздничный пирог.", "Мама испекла торт на мой день рождения.", "Onam tug'ilgan kunimga tort pishirdi."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("📚", "Урок", "urók", "Dars", "Время, когда учатся в классе.", "Урок начинается в девять.", "Dars to'qqizda boshlanadi."),
+      w("🚩", "Флаг", "flak", "Bayroq", "Символ страны.", "Флаг Узбекистана — синий, белый и зелёный.", "O'zbekiston bayrog'i — ko'k, oq va yashil."),
+      w("🍞", "Хлеб", "khlyep", "Non", "Его едят каждый день; его пекут из муки.", "Хлеб — всему голова.", "Non — hamma narsaning boshi (maqol)."),
+      w("🎪", "Цирк", "tsirk", "Sirk", "Там выступают артисты и животные.", "Цирк приехал в наш город!", "Shahrimizga sirk keldi!"),
+      w("⌚", "Часы", "chisí", "Soat", "Они показывают время.", "Часы показывают ровно девять.", "Soat roppa-rosa to'qqizni ko'rsatyapti."),
+      w("🏫", "Школа", "shkóla", "Maktab", "Там учатся дети.", "Моя школа рядом с домом.", "Maktabim uyimning yonida."),
+      w("🍲", "Борщ", "borshch", "Borsh (sho'rva)", "Русский суп со свёклой.", "Бабушкин борщ — самый вкусный!", "Buvimning borshi — eng mazalisi!"),
+      w("🚪", "Подъезд", "padyést", "Podyezd (ko'p qavatli uyga kirish)", "Вход в многоэтажный дом.", "Мой подъезд — второй справа.", "Mening podyezdim — o'ngdan ikkinchisi."),
+      w("🧀", "Сыр", "sir", "Pishloq", "Продукт из молока.", "Мышь любит сыр.", "Sichqon pishloqni yaxshi ko'radi."),
+      w("☀️", "День", "dyen'", "Kun", "Время, когда светло.", "День был длинный, но хороший.", "Kun uzun, lekin yaxshi o'tdi."),
+    ],
+  },
+  {
+    title: "4-bosqich",
+    words: [
+      w("🏢", "Этаж", "etásh", "Qavat", "Уровень в доме: первый, второй, третий…", "Этаж высокий, а лифт не работает!", "Qavat baland, lift esa ishlamayapti!"),
+      w("🧭", "Юг", "yuk", "Janub", "Сторона света, где тепло.", "Осенью птицы летят на юг.", "Kuzda qushlar janubga uchib ketadi."),
+      w("🍎", "Яблоко", "yáblaka", "Olma", "Круглый фрукт, бывает красный или зелёный.", "Одно яблоко в день — и врач не нужен.", "Kuniga bitta olma — shifokorga hojat yo'q."),
+      w("👩", "Мама", "máma", "Ona", "Женщина по отношению к своим детям.", "Мама — самое главное слово.", "Ona — eng muhim so'z."),
+      w("👨", "Папа", "pápa", "Ota", "Мужчина по отношению к своим детям.", "Папа может всё!", "Dadam hamma narsani uddalaydi!"),
+      w("🛋️", "Комната", "kómnata", "Xona", "Часть квартиры или дома.", "Моя комната маленькая, но уютная.", "Xonam kichik, lekin shinam."),
+      w("🍫", "Шоколад", "shakalát", "Shokolad", "Сладкий коричневый продукт.", "Шоколад делает день лучше.", "Shokolad kunni yaxshiroq qiladi."),
+      w("🌦️", "Погода", "pagóda", "Ob-havo", "Какой сегодня день: тепло или холодно, солнце или дождь.", "Какая сегодня погода в Ташкенте?", "Bugun Toshkentda ob-havo qanday?"),
+      w("🏬", "Магазин", "magazín", "Do'kon", "Там покупают продукты и вещи.", "Магазин работает до десяти.", "Do'kon o'ngacha ishlaydi."),
+      w("🎵", "Музыка", "múzika", "Musiqa", "Её слушают.", "Музыка — язык без слов.", "Musiqa — so'zsiz til."),
+    ],
+  },
+];
+
+const listen = (audio: string, options: string[], correct = options.indexOf(audio), explanation?: string): SeedQuestion => ({
+  prompt: "Eshitganingizni toping",
+  audio,
+  options,
+  correct,
+  explanation,
+});
+const pick = (prompt: string, options: string[], correct: number, explanation?: string): SeedQuestion => ({
+  prompt,
+  options,
+  correct,
+  explanation,
+});
+const HARD_VOWELS = ["а", "о", "у", "э"];
+const SOFT_VOWELS = ["я", "ё", "ю", "е"];
+
+export const R00_EXERCISES: SeedExercise[] = [
+  {
+    title: "Bo'g'inni toping",
+    skill: "Tinglash",
+    kind: "listen",
+    instructions:
+      "Bo'g'in yoki so'z ovoz chiqarib o'qiladi. Eshitganingizni toping. Diqqat: б–п, д–т, в–ф — juft tovushlar.",
+    questions: [
+      listen("па", ["па", "ба", "та", "да"]),
+      listen("ба", ["па", "ба", "ва", "ма"]),
+      listen("да", ["та", "да", "на", "ба"]),
+      listen("та", ["да", "та", "ка", "па"]),
+      listen("фа", ["ва", "фа", "ха", "па"]),
+      listen("ва", ["фа", "ва", "ба", "ма"]),
+      listen("дом", ["дом", "том", "дым", "тот"]),
+      listen("тут", ["тот", "там", "тут", "дут"]),
+      listen("кот", ["кот", "код", "кит", "год"]),
+      listen("два", ["два", "вот", "дом", "да"]),
+    ],
+  },
+  {
+    title: "Kirill va lotin",
+    skill: "Harflar",
+    kind: "match",
+    instructions: "Rus (kirill) harfini o'zbek lotin harfi bilan ulang. Masalan: Ж = j, Ш = sh.",
+    questions: [
+      ["А|a", "Б|b", "В|v", "Г|g"],
+      ["Д|d", "Ж|j", "З|z", "И|i"],
+      ["Й|y", "К|k", "Л|l", "М|m"],
+      ["Н|n", "О|o", "П|p", "Р|r"],
+      ["С|s", "Т|t", "У|u", "Ф|f"],
+      ["Х|x", "Ц|ts", "Ч|ch", "Ш|sh"],
+      ["Щ|shch", "Э|e", "Ю|yu", "Я|ya"],
+      ["Ё|yo", "Е|ye", "Ж|j", "Ц|ts"],
+      ["Ч|ch", "Ш|sh", "Щ|shch", "Х|x"],
+      ["Ю|yu", "Я|ya", "Ё|yo", "Й|y"],
+    ].map((options) => ({ prompt: "Juftlarni ulang", options })),
+  },
+  {
+    title: "Qaysi harf bilan boshlanadi?",
+    skill: "Tinglash",
+    kind: "listen",
+    instructions: "So'zni eshiting. U qaysi harf bilan boshlanadi?",
+    questions: [
+      listen("жираф", ["Ж", "Ш", "З", "Ч"], 0),
+      listen("цирк", ["Ч", "Ц", "С", "Щ"], 1),
+      listen("юг", ["У", "Ю", "Я", "Ё"], 1),
+      listen("ёж", ["Е", "О", "Ё", "Ю"], 2),
+      listen("хлеб", ["К", "Г", "Х", "Ф"], 2),
+      listen("школа", ["Щ", "Ш", "Ч", "Ж"], 1),
+      listen("флаг", ["В", "П", "Ф", "Х"], 2),
+      listen("этаж", ["Е", "Э", "И", "А"], 1),
+      listen("яблоко", ["А", "Ю", "Е", "Я"], 3),
+      listen("йогурт", ["И", "Й", "Ё", "Ю"], 1),
+    ],
+  },
+  {
+    title: "Bu nima?",
+    skill: "Rasm",
+    kind: "picture",
+    instructions: "Rasmga qarang va uning ruscha nomini toping.",
+    questions: [
+      pick("🍌", ["лампа", "банан", "парк", "сок"], 1),
+      pick("💧", ["вода", "город", "торт", "сыр"], 0),
+      pick("🦒", ["зонт", "ёж", "жираф", "кот"], 2),
+      pick("☂️", ["зонт", "юг", "дом", "флаг"], 0),
+      pick("🐈", ["кот", "торт", "сок", "цирк"], 0),
+      pick("🍞", ["хлеб", "сыр", "борщ", "банан"], 0),
+      pick("🎪", ["парк", "цирк", "школа", "урок"], 1),
+      pick("🍎", ["яблоко", "йогурт", "банан", "икра"], 0),
+      pick("🧀", ["сок", "сыр", "хлеб", "торт"], 1),
+      pick("🦔", ["кот", "жираф", "ёж", "юг"], 2),
+    ],
+  },
+  {
+    title: "Unli juftlari",
+    skill: "Tovushlar",
+    kind: "choice",
+    instructions:
+      "Har bir qattiq unlining yumshoq jufti bor: а–я, о–ё, у–ю, э–е, ы–и. Juftini toping.",
+    questions: [
+      pick("а → ?", SOFT_VOWELS, 0, "я = й + а (so'z boshida: яблоко [yablaka])."),
+      pick("о → ?", SOFT_VOWELS, 1),
+      pick("у → ?", SOFT_VOWELS, 2),
+      pick("э → ?", SOFT_VOWELS, 3),
+      pick("ы → ?", ["и", "е", "ю", "я"], 0),
+      pick("я → ?", HARD_VOWELS, 0),
+      pick("ё → ?", HARD_VOWELS, 1),
+      pick("ю → ?", HARD_VOWELS, 2),
+      pick("е → ?", HARD_VOWELS, 3),
+      pick("и → ?", ["ы", "а", "о", "у"], 0),
+    ],
+  },
+  {
+    title: "Urg'u qayerda?",
+    skill: "Fonetika",
+    kind: "stress",
+    instructions: "So'zni eshiting va urg'uli bo'g'inni bosing. Urg'usiz «о» [a] bo'lib o'qiladi.",
+    questions: (
+      [
+        ["ба|нан", 1],
+        ["о|на", 1],
+        ["ка|фе", 1],
+        ["мет|ро", 1],
+        ["ок|но", 1],
+        ["ком|на|та", 0],
+        ["шо|ко|лад", 2, "шокола́д [shakalat]"],
+        ["со|ба|ка", 1],
+        ["по|го|да", 1],
+        ["ма|га|зин", 2],
+      ] as [string, number, string?][]
+    ).map(([syllables, correct, explanation]) => ({
+      prompt: "Urg'uli bo'g'inni toping",
+      audio: syllables.replace(/\|/g, ""),
+      options: syllables.split("|"),
+      correct,
+      explanation,
+    })),
+  },
+  {
+    title: "Harflardan so'z",
+    skill: "Harflar",
+    kind: "anagram",
+    instructions: "Harflar aralashib ketgan. Ularni to'g'ri tartibda bosib, so'zni yig'ing. Masalan: наабн → банан.",
+    questions: ["банан", "жираф", "йогурт", "лампа", "ресторан", "школа", "яблоко", "шоколад", "магазин", "город"].map(
+      (word) => ({ prompt: scramble(word), answer: word })
+    ),
+  },
+  {
+    title: "Eshitib yozing",
+    skill: "Diktant",
+    kind: "dictation",
+    instructions: "So'z ovoz chiqarib o'qiladi. Uni ruscha yozing — pastdagi klaviaturadan foydalaning.",
+    questions: [
+      ["кот"],
+      ["дом"],
+      ["сок"],
+      ["сыр"],
+      ["торт"],
+      ["парк"],
+      ["зонт"],
+      ["флаг", "Oxiridagi «г» [k] bo'lib eshitiladi, lekin «г» yoziladi."],
+      ["урок"],
+      ["хлеб", "Oxiridagi «б» [p] bo'lib eshitiladi, lekin «б» yoziladi."],
+    ].map(([word, explanation]) => ({ prompt: "Eshitib yozing", audio: word, answer: word, explanation })),
+  },
+  {
+    title: "«Это …» gapini tuzing",
+    skill: "Gap tuzish",
+    kind: "order",
+    instructions:
+      "So'zlarni to'g'ri tartibda bosib, gap tuzing. «Это» — «bu», «тут» — «shu yerda», «там» — «u yerda».",
+    questions: [
+      "Это мама.",
+      "Это мама и папа.",
+      "Это Иван и Инна.",
+      "Это город Москва.",
+      "Там школа и парк.",
+      "Тут торт и сок.",
+      "Это банан и яблоко.",
+      "Это Анна и Антон.",
+      "Там ресторан и магазин.",
+      "Это дом, а это парк.",
+    ].map((answer) => ({ prompt: "Gap tuzing", answer })),
+  },
+  {
+    title: "Qaysi harf tushib qoldi?",
+    skill: "Imlo",
+    kind: "fill",
+    instructions: "So'zda bitta harf tushib qolgan. O'sha harfni yozing.",
+    questions: [
+      ["ж___раф", "и"],
+      ["хле___", "б", "Oxirida [p] eshitiladi, lekin «б» yoziladi."],
+      ["шко___а", "л"],
+      ["я___локо", "б"],
+      ["й___гурт", "о"],
+      ["по___ъезд", "д"],
+      ["ц___рк", "и"],
+      ["эта___", "ж"],
+      ["бор___", "щ"],
+      ["д___нь", "е"],
+    ].map(([prompt, answer, explanation]) => ({ prompt, answer, explanation })),
+  },
+  {
+    title: "Alifbo tartibi",
+    skill: "Alifbo",
+    kind: "choice",
+    instructions: "Rus alifbosida bu harfdan keyin qaysi harf keladi?",
+    questions: [
+      pick("А → ?", ["Б", "В", "Д", "Я"], 0),
+      pick("В → ?", ["Б", "Г", "Д", "Ж"], 1),
+      pick("Д → ?", ["Ё", "Е", "Ж", "Т"], 1),
+      pick("Ж → ?", ["И", "Ш", "З", "Ц"], 2),
+      pick("К → ?", ["Л", "М", "Г", "Х"], 0),
+      pick("О → ?", ["Р", "П", "Б", "Ф"], 1),
+      pick("С → ?", ["У", "Ц", "Т", "З"], 2),
+      pick("Ф → ?", ["Ц", "В", "К", "Х"], 3),
+      pick("Ч → ?", ["Щ", "Ш", "Ц", "Ж"], 1),
+      pick("Э → ?", ["Я", "Е", "Ю", "Ы"], 2),
+    ],
+  },
+  {
+    title: "Tarjimasini toping",
+    skill: "Lug'at",
+    kind: "choice",
+    instructions: "Ruscha so'zning o'zbekcha tarjimasini toping.",
+    questions: [
+      pick("вода", ["suv", "non", "sharbat", "shahar"], 0),
+      pick("хлеб", ["pishloq", "non", "tort", "sho'rva"], 1),
+      pick("сок", ["suv", "qahva", "sharbat", "sut"], 2),
+      pick("город", ["uy", "maktab", "bog'", "shahar"], 3),
+      pick("урок", ["dars", "maktab", "kitob", "bayroq"], 0),
+      pick("флаг", ["soat", "bayroq", "soyabon", "chiroq"], 1),
+      pick("юг", ["shimol", "g'arb", "janub", "sharq"], 2),
+      pick("день", ["tun", "kun", "tong", "hafta"], 1),
+      pick("этаж", ["xona", "eshik", "qavat", "deraza"], 2),
+      pick("номер", ["raqam", "nom", "shahar", "ko'cha"], 0),
+    ],
+  },
+  {
+    title: "Rasm va so'z",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Rasmni uning ruscha nomi bilan ulang.",
+    questions: [
+      ["🍌|банан", "🍞|хлеб", "🧀|сыр", "🍎|яблоко"],
+      ["🐈|кот", "🦒|жираф", "🦔|ёж", "🎂|торт"],
+      ["☂️|зонт", "💡|лампа", "⌚|часы", "🚩|флаг"],
+      ["🏠|дом", "🏫|школа", "🎪|цирк", "🌳|парк"],
+      ["💧|вода", "🧃|сок", "🍫|шоколад", "🍲|борщ"],
+      ["💊|аптека", "🍽️|ресторан", "🏙️|город", "🏬|магазин"],
+      ["🎵|музыка", "🌦️|погода", "🛋️|комната", "🪟|окно"],
+      ["👩|мама", "👨|папа", "📚|урок", "🔢|номер"],
+      ["💶|евро", "🥛|йогурт", "🏢|этаж", "🧭|юг"],
+      ["☀️|день", "🚪|подъезд", "🐟|икра", "🏰|Москва"],
+    ].map((options) => ({ prompt: "Juftlarni ulang", options })),
+  },
+  {
+    title: "Ayting",
+    skill: "Talaffuz",
+    kind: "speak",
+    instructions: "So'zni eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
+    questions: ["Москва", "ресторан", "школа", "яблоко", "шоколад", "погода", "музыка", "жираф", "йогурт", "магазин"].map(
+      (word) => ({ prompt: word, answer: word })
+    ),
+  },
+];

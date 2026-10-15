@@ -1,0 +1,83 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Home,
+  GraduationCap,
+  ListChecks,
+  Trophy,
+  LogOut,
+  Presentation,
+} from "lucide-react";
+import { logoutAction } from "@/app/actions";
+import { LogoMark } from "./Logo";
+
+export const NAV_ITEMS = [
+  { href: "/", label: "Bosh sahifa", icon: Home },
+  { href: "/lessons", label: "Darslar", icon: GraduationCap },
+  { href: "/marks", label: "Baholar", icon: ListChecks },
+  { href: "/ranking", label: "Reyting", icon: Trophy },
+];
+
+/** O'qituvchi uchun qo'shimcha bo'lim. */
+export const TEACHER_NAV_ITEM = { href: "/teacher", label: "O'qituvchi", icon: Presentation };
+
+export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
+  const pathname = usePathname();
+  const items = isTeacher ? [...NAV_ITEMS, TEACHER_NAV_ITEM] : NAV_ITEMS;
+
+  return (
+    <aside
+      className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col lg:flex overflow-hidden bg-gradient-to-b from-[#1a2030] via-[#141925] to-[#0f131c] px-4 py-6 text-white"
+      style={{ backgroundColor: "#0f131c" }}
+    >
+      {/* Nozik oltin nur — orqa fonda */}
+      <div className="pointer-events-none absolute -left-16 -top-24 h-56 w-56 rounded-full bg-gold-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -right-10 h-48 w-48 rounded-full bg-ink-400/10 blur-3xl" />
+
+      <div className="relative mb-8 flex items-center gap-3 px-2">
+        <LogoMark size={42} className="shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]" />
+        <div>
+          <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard</p>
+          <p className="text-[11px] text-ink-200/70">Rus tili maktabi</p>
+        </div>
+      </div>
+
+      <nav className="relative flex flex-1 flex-col gap-1">
+        {items.map((item) => {
+          const active =
+            item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200 ${
+                active
+                  ? "bg-gradient-to-r from-azure-600 to-azure-700 font-semibold text-white shadow-lg shadow-azure-950/40"
+                  : "text-ink-200/70 hover:translate-x-0.5 hover:bg-white/5 hover:text-gold-200"
+              }`}
+            >
+              <Icon
+                size={18}
+                className={active ? "text-gold-300" : "transition-colors group-hover:text-gold-300"}
+              />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <form action={logoutAction} className="relative">
+        <button
+          type="submit"
+          className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-200/70 transition-colors duration-200 hover:bg-white/5 hover:text-rose-300"
+        >
+          <LogOut size={18} />
+          Chiqish
+        </button>
+      </form>
+    </aside>
+  );
+}

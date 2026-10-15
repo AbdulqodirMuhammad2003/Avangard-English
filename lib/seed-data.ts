@@ -1,0 +1,372 @@
+/**
+ * Baza ma'lumotlarini namunaviy kontent bilan to'ldirish uchun umumiy mantiq.
+ * Platforma o'zbek o'quvchilariga rus tilini o'rgatadi.
+ *
+ * Bu fayl faqat `scripts/seed.ts` orqali, qo'lda (`npm run db:seed`)
+ * ishga tushiriladi — Supabase (Postgres) doimiy baza bo'lgani uchun
+ * (avvalgi SQLite versiyasidan farqli o'laroq) serverning har bir sovuq
+ * boshlanishida avtomatik ishlamaydi. Ishlab turgan bazaga yangi darslarni
+ * qo'shish uchun — `npm run db:add-lessons` (scripts/add-lessons.ts).
+ */
+import bcrypt from "bcryptjs";
+import { sql } from "./db";
+import type { SeedExercise } from "./seed-exercises";
+import { LESSON_CONTENT } from "./seed-lessons";
+import type { VocabSeed } from "./seed-lessons/types";
+
+/** Mashqlarni savollari bilan birga darsga qo'shadi (tartib raqami
+ *  darsdagi mavjud mashqlardan keyin davom etadi). Seed va bir martalik
+ *  migratsiya skriptlari ikkalasi ham ishlatadi. */
+export async function insertExercises(
+  db: typeof sql,
+  unitId: number,
+  exercises: SeedExercise[]
+) {
+  const [{ max }] = await db<{ max: number }[]>`
+    SELECT COALESCE(MAX(order_index), 0)::int AS max FROM exercises WHERE unit_id = ${unitId}
+  `;
+  for (const [i, ex] of exercises.entries()) {
+    const [row] = await db<{ id: number }[]>`
+      INSERT INTO exercises (unit_id, title, skill_label, kind, instructions, order_index)
+      VALUES (${unitId}, ${ex.title}, ${ex.skill}, ${ex.kind}, ${ex.instructions}, ${max + i + 1})
+      RETURNING id
+    `;
+    const rows = ex.questions.map((q, qi) => ({
+      exercise_id: row.id,
+      prompt: q.prompt,
+      options_json: JSON.stringify(q.options ?? []),
+      correct_index: q.correct ?? 0,
+      order_index: qi + 1,
+      audio_text: q.audio ?? null,
+      answer_text: q.answer ?? null,
+      explanation: q.explanation ?? null,
+    }));
+    await db`INSERT INTO exercise_questions ${db(rows)}`;
+  }
+}
+
+/** Lug'at bosqichini so'zlari bilan qo'shadi. */
+export async function insertRound(
+  db: typeof sql,
+  unitId: number,
+  title: string,
+  order: number,
+  words: VocabSeed[]
+) {
+  const [round] = await db<{ id: number }[]>`
+    INSERT INTO vocabulary_rounds (unit_id, title, order_index) VALUES (${unitId}, ${title}, ${order})
+    RETURNING id
+  `;
+  // postgres.js'ning ko'p qatorli INSERT yordamchisi — har bir so'z uchun
+  // alohida so'rov yubormaslik uchun (tezroq, Supabase'ga kam murojaat).
+  await db`INSERT INTO vocabulary_words ${db(
+    words.map((w, i) => ({
+      round_id: round.id,
+      emoji: w.emoji,
+      word: w.word,
+      transcription: w.transcription,
+      part_of_speech: w.pos,
+      translation_uz: w.uz,
+      definition: w.def,
+      example_sentence: w.ex,
+      example_translation: w.exUz,
+      order_index: i + 1,
+    }))
+  )}`;
+}
+
+/** Darsni (unit) qo'shadi va id sini qaytaradi. */
+export async function insertUnit(db: typeof sql, levelId: number, orderIndex: number, u: UnitSeed) {
+  const [row] = await db<{ id: number }[]>`
+    INSERT INTO units (level_id, code, title, subtitle, color, icon, order_index, locked, date_label,
+      clip_url, clip_title, clip_kind, clip_start, clip_end)
+    VALUES (
+      ${levelId}, ${u.code}, ${u.title}, ${u.subtitle}, ${u.color}, ${u.icon},
+      ${orderIndex}, ${u.locked}, ${u.date},
+      ${u.clip?.url ?? null}, ${u.clip?.title ?? null}, ${u.clip?.kind ?? null},
+      ${u.clip?.start ?? null}, ${u.clip?.end ?? null}
+    )
+    RETURNING id
+  `;
+  return row.id;
+}
+
+export async function resetDatabase() {
+  const tables = [
+    "exam_attempts",
+    "extra_lesson_bookings",
+    "extra_lessons",
+    "ranking_entries",
+    "marks",
+    "user_unit_progress",
+    "user_question_progress",
+    "user_exercise_progress",
+    "exercise_questions",
+    "exercises",
+    "user_daily_activity",
+    "user_word_review",
+    "user_word_stage_progress",
+    "user_word_progress",
+    "vocabulary_words",
+    "vocabulary_rounds",
+    "units",
+    "levels",
+    "users",
+  ];
+  for (const t of tables) {
+    // Jadval nomlari shu yerdagi qattiq kodlangan ro'yxatdan kelgani uchun
+    // (foydalanuvchi kiritmasi emas) to'g'ridan-to'g'ri qo'yish xavfsiz.
+    await sql.unsafe(`DELETE FROM ${t}`);
+  }
+}
+
+// ---------- Darajalar (A1, A2, B1, B2) ----------
+export const LEVELS = [
+  {
+    code: "A1",
+    title: "Boshlang'ich daraja",
+    description: "Rus tilini noldan boshlaymiz: salomlashish, oila, sonlar va kundalik so'z boyligi.",
+    locked: 0,
+  },
+  {
+    code: "A2",
+    title: "Asosiy daraja",
+    description: "Oddiy suhbatlar, o'tgan zamon va kengroq so'z boyligi.",
+    locked: 1,
+  },
+  {
+    code: "B1",
+    title: "O'rta daraja",
+    description: "Murakkabroq grammatika va erkin muloqot ko'nikmalari.",
+    locked: 1,
+  },
+  {
+    code: "B2",
+    title: "Yuqori o'rta daraja",
+    description: "Rasmiy va ishbilarmonlik nutqi, chuqur grammatika.",
+    locked: 1,
+  },
+];
+
+export interface UnitSeed {
+  code: string;
+  level: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  icon: string;
+  locked: number;
+  date: string;
+  clip: { url: string; title: string; kind: string; start: number | null; end: number | null } | null;
+}
+
+// ---------- Darslar (Units) ----------
+// A1 darajasi Liden & Denz «Я ❤ Русский Язык» kitobi asosida: 1-dars —
+// kitobning «Вводно-фонетический курс» qismi, 2–15-darslar — uning 14 ta
+// darsi (R01–R14). Kitob faqat dastur sifatida ishlatiladi (mavzu, so'z,
+// grammatika); gap va mashqlar o'zimizniki. Darslar o'quvchi natijasiga
+// qarab ochiladi (lib/data.ts — UNLOCK_THRESHOLD), `locked` bu yerda
+// faqat boshlang'ich qiymat. Darsning tartib raqami — shu ro'yxatda o'z
+// darajasi ichidagi o'rni.
+//
+// "Ruscha tomosha" — mashqlar tugatilgach ochiladigan haqiqiy ruscha
+// parcha (5-10 daqiqa). Faqat rasmiy kanallardan va O'zbekistonda
+// ochiladiganlari tanlangan (Soyuzmultfilm klassikalari u yerda
+// bloklangan — "владелец запретил просмотр в вашей стране").
+export const UNITS: UnitSeed[] = [
+  {
+    code: "R00",
+    level: "A1",
+    title: "1-dars",
+    subtitle: "Alifbo va tovushlar",
+    color: "green",
+    icon: "headphones",
+    locked: 0,
+    date: "",
+    clip: null,
+  },
+  {
+    code: "R01",
+    level: "A1",
+    title: "2-dars",
+    subtitle: "Привет! Tanishuv va salomlashish",
+    color: "blue",
+    icon: "book",
+    locked: 1,
+    date: "",
+    clip: null,
+  },
+  { code: "R02", level: "A1", title: "3-dars", subtitle: "Кто вы? Kasb, millat va yosh", color: "orange", icon: "chart", locked: 1, date: "", clip: null },
+  { code: "R03", level: "A1", title: "4-dars", subtitle: "Моя семья. Oila", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "R04", level: "A1", title: "5-dars", subtitle: "Живу, учусь, работаю. Qayerda?", color: "black", icon: "lock", locked: 1, date: "", clip: null },
+  { code: "R05", level: "A1", title: "6-dars", subtitle: "Города, страны. Shahar va mamlakatlar", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "R06", level: "A1", title: "7-dars", subtitle: "Что вы делали вчера? O'tgan zamon", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "R07", level: "A1", title: "8-dars", subtitle: "Ресторан. Ovqat va buyurtma", color: "orange", icon: "chart", locked: 1, date: "", clip: null },
+  { code: "R08", level: "A1", title: "9-dars", subtitle: "Мой день. Kun tartibi va transport", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "R09", level: "A1", title: "10-dars", subtitle: "Кино. Музыка. Театр. Kelasi zamon", color: "black", icon: "lock", locked: 1, date: "", clip: null },
+  { code: "R10", level: "A1", title: "11-dars", subtitle: "Дом, квартира. Uy-joy", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "R11", level: "A1", title: "12-dars", subtitle: "В университете. Fe'l turlari", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "R12", level: "A1", title: "13-dars", subtitle: "День рождения. Sovg'a va bayramlar", color: "orange", icon: "chart", locked: 1, date: "", clip: null },
+  { code: "R13", level: "A1", title: "14-dars", subtitle: "В городе. Yo'l so'rash", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "R14", level: "A1", title: "15-dars", subtitle: "Читаем русскую литературу", color: "black", icon: "lock", locked: 1, date: "", clip: null },
+  // Daraja oxirida, imtihondan oldin — butun daraja bo'yicha takrorlash.
+  { code: "A1-T", level: "A1", title: "Takrorlash", subtitle: "A1 darajasi bo'yicha umumiy takror", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  // ---------- A2 — Базовый уровень (Liden & Denz, 2-kitob) ----------
+  { code: "A2-01", level: "A2", title: "1-dars", subtitle: "Давайте поговорим! Takrorlash", color: "green", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-02", level: "A2", title: "2-dars", subtitle: "Биография", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-03", level: "A2", title: "3-dars", subtitle: "Семья", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-04", level: "A2", title: "4-dars", subtitle: "Путешествия", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A2-05", level: "A2", title: "5-dars", subtitle: "Дом. Квартира", color: "black", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-06", level: "A2", title: "6-dars", subtitle: "Мой день", color: "green", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-07", level: "A2", title: "7-dars", subtitle: "Поговорим о будущем", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-08", level: "A2", title: "8-dars", subtitle: "Жизнь — это движение", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A2-09", level: "A2", title: "9-dars", subtitle: "Транспорт", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-10", level: "A2", title: "10-dars", subtitle: "Портрет", color: "black", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-11", level: "A2", title: "11-dars", subtitle: "Здоровье", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A2-12", level: "A2", title: "12-dars", subtitle: "Ресторан", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-13", level: "A2", title: "13-dars", subtitle: "Образование", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-14", level: "A2", title: "14-dars", subtitle: "Работа", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A2-15", level: "A2", title: "15-dars", subtitle: "Кино, театр, телевидение", color: "black", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-16", level: "A2", title: "16-dars", subtitle: "Традиции и праздники", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A2-T", level: "A2", title: "Takrorlash", subtitle: "A2 darajasi bo'yicha umumiy takror", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  // ---------- B1 — Первый сертификационный уровень (Liden & Denz, B1.1) ----------
+  // Kitobning 8 moduli 16 ta darsga bo'lingan: har darsda bitta asosiy
+  // grammatika mavzusi (katta mavzular — sifatdosh, ravishdosh — bir necha
+  // darsga yoyilgan). Lug'atning 4–5-bosqichi — kollokatsiyalar.
+  { code: "B1-01", level: "B1", title: "1-dars", subtitle: "Семейные ценности", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-02", level: "B1", title: "2-dars", subtitle: "Династия Запашных", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B1-03", level: "B1", title: "3-dars", subtitle: "Брак и развод", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B1-04", level: "B1", title: "4-dars", subtitle: "Семейный быт и бюджет", color: "black", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-05", level: "B1", title: "5-dars", subtitle: "Высшее образование: за и против", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-06", level: "B1", title: "6-dars", subtitle: "Гении без образования", color: "blue", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B1-07", level: "B1", title: "7-dars", subtitle: "Работа в России, фриланс", color: "orange", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B1-08", level: "B1", title: "8-dars", subtitle: "Собеседование, карьера", color: "purple", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-09", level: "B1", title: "9-dars", subtitle: "Здоровый образ жизни", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B1-10", level: "B1", title: "10-dars", subtitle: "Фитнес, телемедицина", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B1-11", level: "B1", title: "11-dars", subtitle: "Спорт для всех", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-12", level: "B1", title: "12-dars", subtitle: "Соревнования, болельщики", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B1-13", level: "B1", title: "13-dars", subtitle: "Проблемы экологии", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B1-14", level: "B1", title: "14-dars", subtitle: "Отходы и экопроекты", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B1-15", level: "B1", title: "15-dars", subtitle: "Город и деревня", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B1-16", level: "B1", title: "16-dars", subtitle: "Русская дача", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  // ---------- B2 (Liden & Denz, «Я ❤ Русский Язык» B1.2) ----------
+  // Kitobning 8 moduli 16 ta darsga bo'lingan; 4–5-bosqich kollokatsiyalari
+  // qisman A. Absalomov lug'atidan.
+  { code: "B2-01", level: "B2", title: "1-dars", subtitle: "Природные богатства России", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-02", level: "B2", title: "2-dars", subtitle: "Кремль и Регистан", color: "orange", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-03", level: "B2", title: "3-dars", subtitle: "Путешествия", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-04", level: "B2", title: "4-dars", subtitle: "Города России", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-05", level: "B2", title: "5-dars", subtitle: "По Транссибу", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-06", level: "B2", title: "6-dars", subtitle: "Писатели-путешественники", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-07", level: "B2", title: "7-dars", subtitle: "Музеи России", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-08", level: "B2", title: "8-dars", subtitle: "Выставки и отзывы", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-09", level: "B2", title: "9-dars", subtitle: "Увлечения", color: "orange", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-10", level: "B2", title: "10-dars", subtitle: "Хобби и бизнес", color: "black", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-11", level: "B2", title: "11-dars", subtitle: "Наука и космос", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-12", level: "B2", title: "12-dars", subtitle: "Люди и роботы", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-13", level: "B2", title: "13-dars", subtitle: "Интернет вещей", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-14", level: "B2", title: "14-dars", subtitle: "Жизнь в соцсетях", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-15", level: "B2", title: "15-dars", subtitle: "Они изменили мир", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-16", level: "B2", title: "16-dars", subtitle: "СМИ и новости", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+];
+
+export async function seedDatabase() {
+  // ---------- Foydalanuvchi (demo hisob) ----------
+  const passwordHash = bcrypt.hashSync("demo1234", 10);
+
+  const [demoUser] = await sql<{ id: number }[]>`
+    INSERT INTO users (name, email, password_hash, avatar_url, course, level, coins, stars,
+      branch_rank, group_rank, battle_wins, august_average, reading_pct, writing_pct, listening_pct, speaking_pct)
+    VALUES (
+      ${"Abdulqodir Xabibullayev"}, ${"demo@avangard.uz"}, ${passwordHash}, ${null},
+      ${"Rus tili kursi"}, ${"A1"}, ${11130}, ${6006}, ${20}, ${5}, ${7}, ${78.98}, ${96}, ${100}, ${90}, ${100}
+    )
+    RETURNING id
+  `;
+  const userId = demoUser.id;
+
+  await sql`
+    INSERT INTO users (name, email, password_hash, avatar_url, course, level, coins, stars,
+      branch_rank, group_rank, battle_wins, august_average, reading_pct, writing_pct, listening_pct, speaking_pct)
+    VALUES (
+      ${"Madina Yusupova"}, ${"madina@avangard.uz"}, ${passwordHash}, ${null},
+      ${"Rus tili kursi"}, ${"A2"}, ${9820}, ${5210}, ${4}, ${2}, ${9}, ${81.2}, ${92}, ${95}, ${88}, ${97}
+    )
+  `;
+
+  // ---------- Darajalar ----------
+  const levelIds: Record<string, number> = {};
+  for (let i = 0; i < LEVELS.length; i++) {
+    const l = LEVELS[i];
+    const [row] = await sql<{ id: number }[]>`
+      INSERT INTO levels (code, title, description, order_index, locked)
+      VALUES (${l.code}, ${l.title}, ${l.description}, ${i + 1}, ${l.locked})
+      RETURNING id
+    `;
+    levelIds[l.code] = row.id;
+  }
+
+  // ---------- Darslar ----------
+  const unitIds: Record<string, number> = {};
+  const unitOrderByLevel: Record<string, number> = {};
+  for (const u of UNITS) {
+    unitOrderByLevel[u.level] = (unitOrderByLevel[u.level] || 0) + 1;
+    unitIds[u.code] = await insertUnit(sql, levelIds[u.level], unitOrderByLevel[u.level], u);
+  }
+
+  // ---------- Lug'at va mashqlar ----------
+  for (const lesson of LESSON_CONTENT) {
+    for (const [i, round] of lesson.rounds.entries()) {
+      await insertRound(sql, unitIds[lesson.code], round.title, i + 1, round.words);
+    }
+    await insertExercises(sql, unitIds[lesson.code], lesson.exercises);
+  }
+
+  // ---------- Baholar (Marks) ----------
+  await sql`
+    INSERT INTO marks (user_id, unit_id, subject, score, max_score, date)
+    VALUES (${userId}, ${unitIds["R00"]}, ${"Tinglab tushunish"}, ${96}, ${100}, ${"2026-08-11"})
+  `;
+  await sql`
+    INSERT INTO marks (user_id, unit_id, subject, score, max_score, date)
+    VALUES (${userId}, ${null}, ${"Sinov testi (A1 darajasi)"}, ${78}, ${100}, ${"2026-08-17"})
+  `;
+
+  // ---------- Qo'shimcha darslar (Extra lessons) ----------
+  // Diqqat: `sql(rows)` helper'ining o'zi "(ustunlar) values (...)" qismini
+  // to'liq generatsiya qiladi — shuning uchun ustunlar ro'yxati va "VALUES"
+  // so'zini alohida yozish shart emas (aks holda ustunlar ikki marta
+  // yozilib, "INSERT has more target columns than expressions" xatosi
+  // chiqadi).
+  await sql`
+    INSERT INTO extra_lessons ${sql([
+      {
+        title: "Rus tilida suhbat klubi",
+        description: "Kundalik mavzularda kichik guruhlarda rus tilida erkin suhbat mashqi.",
+        teacher: "Anna Sokolova",
+        date_label: "21 avg",
+        time_label: "18:00 - 19:00",
+        seats_total: 12,
+        seats_taken: 7,
+      },
+      {
+        title: "Grammatika bo'yicha individual maslahat",
+        description: "Kelishiklar va fe'l zamonlari bo'yicha o'qituvchi bilan yakka tartibda ishlash.",
+        teacher: "Viktor Petrov",
+        date_label: "23 avg",
+        time_label: "17:00 - 18:00",
+        seats_total: 8,
+        seats_taken: 8,
+      },
+      {
+        title: "Tinglab tushunish mashg'uloti",
+        description: "Rus tilidagi audio va videolarni tinglab tushunish amaliyoti.",
+        teacher: "Irina Kim",
+        date_label: "25 avg",
+        time_label: "19:00 - 20:00",
+        seats_total: 15,
+        seats_taken: 4,
+      },
+    ])}
+  `;
+}
