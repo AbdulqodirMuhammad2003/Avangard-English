@@ -2,8 +2,8 @@
  *  natijasini tekshirish va yozma javoblarni solishtirish uchun umumiy
  *  yordamchilar — lug'at bosqichlari, mashqlar va takrorlash ishlatadi. */
 
-/** Ovoz o'qish va tanish tili. */
-export const SPEECH_LANG = "en-US";
+/** Ovoz o'qish va tanish tili — britancha (kitob va IELTS britancha talaffuzda). */
+export const SPEECH_LANG = "en-GB";
 
 /** Matnni inglizcha ovozda o'qib beradi. */
 export function speak(text: string, rate?: number) {

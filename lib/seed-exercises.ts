@@ -23,6 +23,7 @@ export type ExerciseKind =
   | "truefalse" // `prompt` — "matn||gap", variantlar: To'g'ri / Noto'g'ri
   | "reading" // `prompt` — "matn||savol", javob variantlardan tanlanadi
   | "audiotext" // `audio` — tinglanadigan matn, `prompt` — savol, variantlar
+  | "mistake" // `options` — gap so'zlari, `correct` — xato so'z o'rni, `explanation` — to'g'risi
   | "rule"; // darsning qoidasi: `instructions` — sodda tushuntirish, savollar — choice kabi test
 
 export interface SeedQuestion {

@@ -95,9 +95,13 @@ function stagePassed(word: VocabWord, stage: VocabStage): boolean {
   }
 }
 
+/** So'z gapdan butun so'z sifatida qidiriladi: «Hi» — «this» ichidan,
+ *  «I» — birinchi uchragan «i» harfidan topilmasligi uchun. */
 function splitSentenceOnWord(sentence: string, word: string) {
   if (!sentence) return { before: "", after: "", found: false };
-  const idx = sentence.toLowerCase().indexOf(word.toLowerCase());
+  const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(`(?<![A-Za-z'])${escaped}(?![A-Za-z'])`, "i").exec(sentence);
+  const idx = match ? match.index : -1;
   if (idx === -1) return { before: sentence, after: "", found: false };
   return {
     before: sentence.slice(0, idx),
@@ -614,15 +618,21 @@ function SpellingStage({
   const target = word.word;
   const letterSlots = useMemo(() => target.split(""), [target]);
   // Harflar savol ochilganda bir marta aralashtiriladi (qayta render'da
-  // joyidan sakramasligi uchun).
-  const [tileLetters] = useState(() =>
-    shuffle(
-      target
-        .split("")
-        .map((ch, i) => ({ id: i, ch }))
-        .filter((t) => t.ch !== " ")
-    )
-  );
+  // joyidan sakramasligi uchun). Qisqa so'zda (dog, cat) aralashtirish asl
+  // tartibni qaytarishi mumkin — unda qayta aralashtiriladi.
+  const [tileLetters] = useState(() => {
+    const tiles = target
+      .split("")
+      .map((ch, i) => ({ id: i, ch }))
+      .filter((t) => t.ch !== " ");
+    const original = tiles.map((t) => t.ch.toLowerCase()).join("");
+    let mixed = shuffle(tiles);
+    for (let i = 0; i < 10 && new Set(original).size > 1; i++) {
+      if (mixed.map((t) => t.ch.toLowerCase()).join("") !== original) break;
+      mixed = shuffle(tiles);
+    }
+    return mixed;
+  });
 
   const [filledIds, setFilledIds] = useState<(number | "space" | null)[]>(() =>
     letterSlots.map((ch) => (ch === " " ? "space" : null))

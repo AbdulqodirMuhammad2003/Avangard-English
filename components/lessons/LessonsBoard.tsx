@@ -31,6 +31,7 @@ import {
   BookOpenText,
   Radio,
   GraduationCap,
+  SearchCheck,
   Trophy,
   Download,
   type LucideIcon,
@@ -70,6 +71,7 @@ const EXERCISE_KIND_ICONS: Record<ExerciseKind, LucideIcon> = {
   reading: BookOpenText,
   audiotext: Radio,
   rule: GraduationCap,
+  mistake: SearchCheck,
 };
 
 const CLIP_KIND_LABELS: Record<ClipKind, string> = {

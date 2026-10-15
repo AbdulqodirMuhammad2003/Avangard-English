@@ -227,7 +227,14 @@ export function ExerciseRun({
   const letters = kind === "anagram" ? question.prompt.split("") : [];
   const orderTiles =
     kind === "order"
-      ? seededShuffle(normalizeAnswer(question.answer_text ?? "").split(" ").filter(Boolean), question.id)
+      ? seededShuffle(
+          (question.answer_text ?? "")
+            .split("|")[0]
+            .split(/\s+/)
+            .map((t) => t.replace(/^[«"(]+|[.,!?;:»")]+$/g, ""))
+            .filter(Boolean),
+          question.id
+        )
       : [];
   const matchPairs = kind === "match" ? question.options.map((o) => o.split("|")) : [];
   const matchRight =
@@ -375,6 +382,8 @@ export function ExerciseRun({
     ? question.options.map((o, i) => (i === question.correct_index ? o.toUpperCase() : o)).join("-")
     : kind === "match"
     ? matchPairs.map((p) => `${p[0]} — ${p[1]}`).join(", ")
+    : kind === "mistake"
+    ? `«${question.options[question.correct_index]}» — xato so'z`
     : isWritten
     ? question.answer_text!.split("|")[0]
     : question.options[question.correct_index];
@@ -441,6 +450,23 @@ export function ExerciseRun({
             </p>
             {optionGrid()}
           </>
+        )}
+
+        {kind === "mistake" && (
+          <div className="flex flex-wrap justify-center gap-2 py-2">
+            {question.options.map((token, i) => (
+              <button
+                key={i}
+                lang="en"
+                onClick={() => checked === null && setSelected(i)}
+                className={`rounded-xl border-2 px-3 py-2 text-lg font-semibold transition-all duration-150 ${
+                  OPTION_STATE_CLASSES[optionState(i)]
+                }`}
+              >
+                {token}
+              </button>
+            ))}
+          </div>
         )}
 
         {kind === "dialog" && (

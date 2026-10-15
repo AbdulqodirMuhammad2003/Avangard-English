@@ -2,6 +2,8 @@
  *  Yangi dars qo'shilganda shu ro'yxatga qo'shiladi. */
 import { mixAnswers, type SeedExercise } from "../seed-exercises";
 import type { VocabSeed } from "./types";
+import { A1_00_EXERCISES, A1_00_ROUNDS } from "./a1-00-alphabet";
+import { A1_01_EXERCISES, A1_01_ROUNDS } from "./a1-01-hello";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -37,7 +39,10 @@ function withMixedAnswers(exercises: SeedExercise[]): SeedExercise[] {
 
 // Yangi dars: lib/seed-lessons/<kod>.ts faylida ROUNDS va EXERCISES
 // yoziladi va shu ro'yxatga qo'shiladi.
-const LESSONS: LessonContent[] = [];
+const LESSONS: LessonContent[] = [
+  { code: "A1-00", rounds: A1_00_ROUNDS, exercises: A1_00_EXERCISES },
+  { code: "A1-01", rounds: A1_01_ROUNDS, exercises: A1_01_EXERCISES },
+];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —
  *  mashqlar ro'yxatining boshiga qo'yiladi. */

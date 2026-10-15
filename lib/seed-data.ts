@@ -151,7 +151,11 @@ export interface UnitSeed {
 // "Inglizcha tomosha" — mashqlar tugatilgach ochiladigan haqiqiy inglizcha
 // parcha (5-10 daqiqa), faqat rasmiy kanallardan va O'zbekistonda
 // ochiladiganlari.
-export const UNITS: UnitSeed[] = [];
+export const UNITS: UnitSeed[] = [
+  // ---------- A1 — Beginner ----------
+  { code: "A1-00", level: "A1", title: "0-dars", subtitle: "Alifbo va tovushlar", color: "green", icon: "headphones", locked: 0, date: "", clip: null },
+  { code: "A1-01", level: "A1", title: "1-dars", subtitle: "Hello! Tanishuv", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+];
 
 export async function seedDatabase() {
   // ---------- Foydalanuvchi (demo hisob) ----------
