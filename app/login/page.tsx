@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth";
 import { getUserStats } from "@/lib/data";
 import { LoginForm } from "./login-form";
 import { LogoMark } from "@/components/Logo";
+import { googleConfigured } from "@/lib/google-auth";
 
 const GOOGLE_ERRORS: Record<string, string> = {
   google: "Google orqali kirib bo'lmadi. Qaytadan urinib ko'ring.",
@@ -51,22 +52,27 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           Ingliz tilini o'rganishda to'xtagan joyingizdan davom eting.
         </p>
 
-        <a
-          href="/auth/google"
-          className="btn-press flex w-full items-center justify-center gap-3 rounded-xl border border-ink-200 bg-white py-2.5 text-sm font-semibold text-ink-900 shadow-sm transition-colors hover:bg-ink-50"
-        >
-          <GoogleIcon />
-          Google orqali kirish
-        </a>
-        {googleError && (
-          <p className="mt-3 animate-fade-up rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{googleError}</p>
-        )}
+        {/* Google tugmasi faqat GOOGLE_CLIENT_ID/SECRET o'rnatilganda chiqadi. */}
+        {googleConfigured() && (
+          <>
+            <a
+              href="/auth/google"
+              className="btn-press flex w-full items-center justify-center gap-3 rounded-xl border border-ink-200 bg-white py-2.5 text-sm font-semibold text-ink-900 shadow-sm transition-colors hover:bg-ink-50"
+            >
+              <GoogleIcon />
+              Google orqali kirish
+            </a>
+            {googleError && (
+              <p className="mt-3 animate-fade-up rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{googleError}</p>
+            )}
 
-        <div className="my-5 flex items-center gap-3 text-xs text-ink-700/50">
-          <span className="h-px flex-1 bg-ink-100" />
-          yoki email bilan
-          <span className="h-px flex-1 bg-ink-100" />
-        </div>
+            <div className="my-5 flex items-center gap-3 text-xs text-ink-700/50">
+              <span className="h-px flex-1 bg-ink-100" />
+              yoki email bilan
+              <span className="h-px flex-1 bg-ink-100" />
+            </div>
+          </>
+        )}
 
         <LoginForm />
       </div>
