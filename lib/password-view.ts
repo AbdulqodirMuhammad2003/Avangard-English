@@ -1,12 +1,13 @@
 import "server-only";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
+import { jwtSecret } from "./secret";
 
 /** O'qituvchi o'quvchi parolini qayta ko'ra olishi uchun parolning shifrlangan
  *  nusxasi (kirish baribir bcrypt xeshi bilan tekshiriladi). AES-256-GCM,
  *  kalit JWT_SECRET dan olinadi — u o'zgarsa, eski nusxalar o'qilmaydi va
  *  o'qituvchi yangi parol beradi. */
 function key() {
-  const secret = process.env.JWT_SECRET || "dev-secret-change-me-inter-nation";
+  const secret = jwtSecret();
   return createHash("sha256").update(`${secret}:password-view`).digest();
 }
 

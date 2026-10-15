@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me-inter-nation";
+import { jwtSecret } from "./secret";
 export const AUTH_COOKIE = "avangard_session";
 
 export interface SessionPayload {
@@ -23,12 +23,12 @@ export async function verifyPassword(
 }
 
 export function createSessionToken(payload: SessionPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "30d" });
+  return jwt.sign(payload, jwtSecret(), { expiresIn: "30d" });
 }
 
 export function verifySessionToken(token: string): SessionPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as SessionPayload;
+    return jwt.verify(token, jwtSecret()) as SessionPayload;
   } catch {
     return null;
   }
