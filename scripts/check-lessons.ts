@@ -54,7 +54,8 @@ for (const lesson of LESSON_CONTENT) {
       if (needsOptions.includes(ex.kind)) {
         if (opts.length < 2) errors.push(`${where}: variantlar yo'q`);
         if ((q.correct ?? 0) < 0 || (q.correct ?? 0) >= opts.length) errors.push(`${where}: to'g'ri javob variantlar ichida emas`);
-        if (new Set(opts).size !== opts.length) errors.push(`${where}: takroriy variant`);
+        // «mistake» da gap so'zlari takrorlanishi tabiiy (he … he) — tugma o'rni bo'yicha ishlaydi.
+        if (ex.kind !== "mistake" && new Set(opts).size !== opts.length) errors.push(`${where}: takroriy variant`);
       }
       switch (ex.kind) {
         case "listen":

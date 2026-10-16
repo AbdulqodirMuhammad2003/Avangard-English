@@ -242,4 +242,170 @@ Bitta narsa haqida gapirganda otdan oldin **a** yoki **an** qo'yiladi (o'zbekcha
       q("Qaysi gap to'g'ri?", ["These are my friends.", "This are my friends.", "These is my friends.", "Those is my friends."]),
     ]
   ),
+
+  "A1-05": rule(
+    "to be: he / she / it is, they are · kasblar",
+    `Endi **to be** fe'lining to'liq jadvalini bilamiz.
+
+## To'liq jadval
+• I **am** (I'm)
+• you **are** (you're)
+• he / she / it **is** (he's, she's, it's)
+• we **are** (we're)
+• they **are** (they're)
+
+## U — he, she yoki it?
+O'zbek tilida «u» bitta so'z, ingliz tilida esa uchta:
+• **he** — erkak yoki o'g'il bola: Aziz → he
+• **she** — ayol yoki qiz bola: Malika → she
+• **it** — narsa, hayvon yoki joy: the hospital → it
+• **they** — ko'plik, odamlar ham, narsalar ham: Jasur and Timur → they
+
+## Inkor va so'roq
+• is not → **isn't**, are not → **aren't**
+→ She isn't a doctor. They aren't at home.
+→ **Is he** a pilot? — **Yes, he is.** / **No, he isn't.**
+→ **Are they** students? — **Yes, they are.** / **No, they aren't.**
+
+## Kasb: a / an shart!
+O'zbekchada «U shifokor» deymiz, inglizchada esa kasbdan oldin **a** yoki **an** qo'yiladi:
+→ He's **a** doctor. (He's doctor — xato)
+→ She's **an** engineer. (unli tovushdan oldin — an)
+→ Ko'plikda a/an qo'yilmaydi: They're doctor**s**.
+
+## Kasb haqida so'rash
+→ **What's your job?** — I'm a programmer.
+→ Ishda — **at work**: He's at work now.`,
+    [
+      q("She ___ a nurse.", ["is", "are", "am", "be"]),
+      q("Aziz is a pilot. → ___ is a pilot.", ["He", "She", "It", "They"]),
+      q("The hospital is new. → ___ is new.", ["It", "He", "She", "They"]),
+      q("Qaysi gap to'g'ri?", ["He's an engineer.", "He's engineer.", "He's a engineer.", "He an engineer."]),
+      q("Are they doctors? (✗)", ["No, they aren't.", "No, they isn't.", "No, they not.", "No, it isn't."]),
+      q("Is she a teacher? (✓)", ["Yes, she is.", "Yes, she's.", "Yes, he is.", "Yes, she are."]),
+      q("«U kasalxonada emas» (ayol) inglizcha qanday?", ["She isn't at the hospital.", "She not at the hospital.", "She aren't at the hospital.", "He isn't at the hospital."]),
+      q("Kasb haqida qanday so'raymiz?", ["What's your job?", "Who is your job?", "Where is your job?", "How is your job?"]),
+      q("Qaysi biri to'g'ri?", ["They're doctors.", "They're a doctors.", "They're doctor.", "They're an doctors."]),
+      q("My brothers ___ programmers.", ["are", "is", "am", "has"]),
+    ]
+  ),
+
+  "A1-06": rule(
+    "Joy predloglari · Where…? · vaqt",
+    `## Joy predloglari
+O'zbek tilida joy qo'shimcha bilan bildiriladi (stolda, stol ustida), ingliz tilida esa otdan **oldin predlog** qo'yiladi.
+• **in** — ichida: in the box, in my bag, in Tashkent
+• **on** — ustida: on the table, on the wall
+• **under** — tagida: under the chair
+• **near** — yaqinida: near the park
+• **next to** — yonida: next to the bank
+• **behind** — orqasida: behind the house
+• **in front of** — oldida: in front of the school
+• **between** — orasida: between the bank **and** the shop
+→ Devordagi narsa — **on the wall**. Ishda — **at work**, uyda — **at home**.
+
+## Qayerda?
+• Bitta narsa: **Where is** (Where's) my phone? — **It's** on the desk.
+• Ko'p narsa: **Where are** my keys? — **They're** in my bag.
+• **They're** (ular) — **their** (ularning) — **there** (u yerda): talaffuzi o'xshash, yozilishi boshqa.
+
+## Soat necha?
+**What time is it?** — **It's** …
+• 7:00 — seven **o'clock**
+• 7:30 — **half past** seven
+• 7:15 — **quarter past** seven
+• 6:45 — **quarter to** seven (yettiga chorak qoldi)
+• O'zbekchadan farqi: «yarim» oldingi soat bilan aytiladi: 2:30 — **half past two**.
+• Vaqt — **at** bilan: The film is **at** seven o'clock.`,
+    [
+      q("The picture is ___ the wall.", ["on", "in", "under", "at"]),
+      q("The cat is ___ the box. (ichida)", ["in", "on", "under", "between"]),
+      q("___ are my keys?", ["Where", "Where is", "What", "Who"]),
+      q("Where is the bank? — ___", ["It's next to the hotel.", "They're next to the hotel.", "It next to hotel.", "Is next the hotel."]),
+      q("7:30 inglizcha qanday?", ["half past seven", "half past eight", "half to eight", "seven half"]),
+      q("8:45 inglizcha qanday?", ["quarter to nine", "quarter past eight", "quarter to eight", "half past eight"]),
+      q("The café is between the bank ___ the shop.", ["and", "or", "next", "to"]),
+      q("«Ular uyda» inglizcha qanday?", ["They're at home.", "Their at home.", "There at home.", "They at home."]),
+      q("The film is ___ seven o'clock.", ["at", "in", "on", "to"]),
+      q("Qaysi gap to'g'ri?", ["Where are my glasses?", "Where is my glasses?", "Where my glasses?", "Where are my glass?"]),
+    ]
+  ),
+
+  "A1-07": rule(
+    "have got · sifat + ot · noto'g'ri ko'plik",
+    `## have got — …i bor
+O'zbekchada «Mening mushugim bor» deymiz. Ingliz tilida egalik **have got** bilan aytiladi:
+• I / you / we / they **have got** (I've got, they've got)
+• he / she / it **has got** (he's got, she's got)
+→ I've got a cat. — Mening mushugim bor.
+→ She's got two children. — Uning ikki farzandi bor.
+→ The flat has got two rooms. — Kvartirada ikki xona bor.
+Diqqat: **she's got** = she **has** got, **she's** a doctor = she **is** a doctor. Qaysi biri ekanini **got** so'zidan bilib olasiz.
+
+## Sifat + ot
+• Sifat **otdan oldin** keladi: a **big** house (a house big — xato)
+• Sifat ko'plikda **o'zgarmaydi**: big house**s** (bigs houses — xato)
+• **a / an** sifatga qarab tanlanadi: **an old** car, **a new** car
+• Sifat **to be** dan keyin ham keladi: Our street **is quiet**.
+
+## Noto'g'ri ko'plik
+Ba'zi otlar ko'plikda **-s olmaydi**, butunlay o'zgaradi:
+• man → **men**, woman → **women**
+• child → **children**
+• person → **people**
+• Talaffuzga e'tibor bering: woman [vuman] — women [uimin].
+• **people** — o'zi ko'plik: five people (peoples — xato).`,
+    [
+      q("She ___ two children.", ["has got", "have got", "is got", "got has"]),
+      q("We ___ a small flat.", ["have got", "has got", "are got", "got"]),
+      q("Qaysi biri to'g'ri?", ["a big house", "a house big", "an big house", "big a house"]),
+      q("Qaysi biri to'g'ri?", ["new phones", "news phones", "phones new", "a new phones"]),
+      q("«child» ning ko'plik shakli qaysi?", ["children", "childs", "childrens", "childes"]),
+      q("«woman» ning ko'plik shakli qaysi?", ["women", "womans", "womens", "woman"]),
+      q("Qaysi biri to'g'ri?", ["five people", "five peoples", "five persons people", "five person"]),
+      q("«I have got» ning qisqa shakli qaysi?", ["I've got", "I'm got", "I'got", "I's got"]),
+      q("Qaysi biri to'g'ri?", ["an old car", "a old car", "an car old", "old a car"]),
+      q("«He's got a bike» dagi 's nimani bildiradi?", ["has", "is", "his", "us"]),
+    ]
+  ),
+
+  "A1-08": rule(
+    "have got: inkor va so'roq",
+    `## Inkor gap
+**have / has** dan keyin **not** qo'yiladi:
+• have not got → **haven't got**
+• has not got → **hasn't got**
+→ I haven't got a car. — Mening mashinam yo'q.
+→ She hasn't got a tablet. — Uning plansheti yo'q.
+
+## So'roq gap
+**Have / Has** gapning boshiga chiqadi, **got** esa joyida qoladi:
+→ You've got a pen. → **Have you got** a pen?
+→ He's got a bike. → **Has he got** a bike?
+
+## Qisqa javob
+Javobda **got** ishlatilmaydi:
+• Have you got a pet? — **Yes, I have.** / **No, I haven't.**
+• Has she got a car? — **Yes, she has.** / **No, she hasn't.**
+• Ijobiy javobda qisqartirilmaydi: «Yes, I've» — xato.
+
+## Zid ma'noli sifatlar
+So'zlarni juft-juft o'rganish oson:
+• cheap — expensive, fast — slow, long — short
+• heavy — light, easy — difficult, hot — cold
+• clean — dirty, full — empty, happy — sad, rich — poor
+→ This laptop isn't cheap. It's **expensive**.`,
+    [
+      q("___ you got a tablet?", ["Have", "Has", "Are", "Do"]),
+      q("___ she got a car?", ["Has", "Have", "Is", "Does"]),
+      q("Have you got a pet? (✓)", ["Yes, I have.", "Yes, I've.", "Yes, I have got.", "Yes, I has."]),
+      q("Has he got a bike? (✗)", ["No, he hasn't.", "No, he haven't.", "No, he hasn't got.", "No, he isn't."]),
+      q("«Mening mashinam yo'q» inglizcha qanday?", ["I haven't got a car.", "I hasn't got a car.", "I not got a car.", "I haven't a got car."]),
+      q("She ___ got a printer.", ["hasn't", "haven't", "isn't", "don't"]),
+      q("«cheap» ning zid ma'nosi qaysi?", ["expensive", "rich", "easy", "light"]),
+      q("«heavy» ning zid ma'nosi qaysi?", ["light", "short", "slow", "empty"]),
+      q("Qaysi gap to'g'ri?", ["Has the hotel got internet?", "Have the hotel got internet?", "Has got the hotel internet?", "The hotel has got internet?"]),
+      q("«full» ning zid ma'nosi qaysi?", ["empty", "clean", "cold", "poor"]),
+    ]
+  ),
 };

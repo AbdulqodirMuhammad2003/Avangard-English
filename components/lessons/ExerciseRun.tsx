@@ -248,7 +248,10 @@ export function ExerciseRun({
       ? heard
       : typed;
   const isWritten = kind === "anagram" || kind === "order" || !!question.answer_text;
-  const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeAnswer);
+  // Son va vaqt (kind "number") faqat raqamlari bo'yicha solishtiriladi:
+  // telefon raqam klaviaturasida «:» yo'q, shuning uchun 8:15 = 815.
+  const normalizeWritten = (s: string) => (kind === "number" ? s.replace(/\D/g, "") : normalizeAnswer(s));
+  const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeWritten);
   const canCheck = isWritten ? answerValue.trim() !== "" : selected !== null;
 
   function record(ok: boolean) {
@@ -264,7 +267,7 @@ export function ExerciseRun({
     }
     record(
       isWritten
-        ? acceptedAnswers.includes(normalizeAnswer(answerValue))
+        ? acceptedAnswers.includes(normalizeWritten(answerValue))
         : selected === question.correct_index
     );
     if (kind === "number" && question.audio_text) speakEn(question.audio_text);
@@ -650,7 +653,7 @@ export function ExerciseRun({
         {kind === "number" && (
           <input
             value={typed}
-            onChange={(e) => setTyped(e.target.value.replace(/\D/g, ""))}
+            onChange={(e) => setTyped(e.target.value.replace(/[^\d:]/g, ""))}
             onKeyDown={(e) => {
               if (e.key === "Enter") (checked === null ? check : next)();
             }}
