@@ -4,6 +4,9 @@ import { mixAnswers, type SeedExercise } from "../seed-exercises";
 import type { VocabSeed } from "./types";
 import { A1_00_EXERCISES, A1_00_ROUNDS } from "./a1-00-alphabet";
 import { A1_01_EXERCISES, A1_01_ROUNDS } from "./a1-01-hello";
+import { A1_02_EXERCISES, A1_02_ROUNDS } from "./a1-02-where-from";
+import { A1_03_EXERCISES, A1_03_ROUNDS } from "./a1-03-spell";
+import { A1_04_EXERCISES, A1_04_ROUNDS } from "./a1-04-what-is-this";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -42,6 +45,9 @@ function withMixedAnswers(exercises: SeedExercise[]): SeedExercise[] {
 const LESSONS: LessonContent[] = [
   { code: "A1-00", rounds: A1_00_ROUNDS, exercises: A1_00_EXERCISES },
   { code: "A1-01", rounds: A1_01_ROUNDS, exercises: A1_01_EXERCISES },
+  { code: "A1-02", rounds: A1_02_ROUNDS, exercises: A1_02_EXERCISES },
+  { code: "A1-03", rounds: A1_03_ROUNDS, exercises: A1_03_EXERCISES },
+  { code: "A1-04", rounds: A1_04_ROUNDS, exercises: A1_04_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —

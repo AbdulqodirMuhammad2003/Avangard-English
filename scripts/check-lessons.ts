@@ -58,7 +58,9 @@ for (const lesson of LESSON_CONTENT) {
       }
       switch (ex.kind) {
         case "listen":
-          if (!q.audio || !opts.includes(q.audio)) errors.push(`${where}: audio variantlar ichida yo'q`);
+          // Odatda audio — variantlardan biri; harflab aytilgan so'zda (A, Z, I, Z) farq qiladi.
+          if (!q.audio) errors.push(`${where}: audio yo'q`);
+          else if (!opts.includes(q.audio) && !q.audio.includes(", ")) errors.push(`${where}: audio variantlar ichida yo'q`);
           break;
         case "match":
           if (!opts.every((o) => o.split("|").length === 2)) errors.push(`${where}: juft "chap|o'ng" emas`);

@@ -155,6 +155,9 @@ export const UNITS: UnitSeed[] = [
   // ---------- A1 — Beginner ----------
   { code: "A1-00", level: "A1", title: "0-dars", subtitle: "Alifbo va tovushlar", color: "green", icon: "headphones", locked: 0, date: "", clip: null },
   { code: "A1-01", level: "A1", title: "1-dars", subtitle: "Hello! Tanishuv", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A1-02", level: "A1", title: "2-dars", subtitle: "Qayerdansiz? Mamlakatlar, 1–10", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A1-03", level: "A1", title: "3-dars", subtitle: "Ismingiz qanday yoziladi?", color: "purple", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A1-04", level: "A1", title: "4-dars", subtitle: "Bu nima? Buyumlar, 11–100", color: "green", icon: "chart", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

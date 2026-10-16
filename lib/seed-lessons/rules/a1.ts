@@ -104,4 +104,142 @@ Ingliz tilida «sen» va «siz» uchun bitta so'z bor: **you**. Hurmat **Mr**, *
       q("«sen» va «siz» inglizchada qanday?", ["Ikkalasi ham — you", "sen — you, siz — your", "sen — I, siz — you", "sen — thou, siz — you"]),
     ]
   ),
+
+  "A1-02": rule(
+    "to be: we are, you are · Where are you from?",
+    `O'tgan darsda **I am** va **you are**ni o'rgandik. Endi ko'plikda: «biz» va «sizlar».
+
+## Darak gap
+• **We are** (we're) — biz …miz
+• **You are** (you're) — sizlar …siz
+→ We're from Uzbekistan. — Biz O'zbekistondanmiz.
+→ You're students. — Sizlar talabasiz.
+**you** — «sen», «siz» va «sizlar» uchun bitta so'z. Shakli doim **are**.
+
+## Inkor gap
+• we are not → **we aren't** (we're not)
+• you are not → **you aren't** (you're not)
+→ We aren't from Tashkent. We're from Bukhara.
+
+## So'roq gap va qisqa javob
+→ **Are you** from Japan? — **Yes, we are.** / **No, we aren't.**
+Qisqa javob savolga mos: savol «sizlar» haqida bo'lsa, javob «biz» (**we**) bilan beriladi.
+
+## Qayerdansiz? — from
+• **Where are you from?** — Qayerdansiz?
+• **I'm from** Samarkand. — Samarqanddanman.
+O'zbek tilidagi **-dan** qo'shimchasi o'rniga so'zdan **oldin from** qo'yiladi.
+
+## Mamlakatlar va bosh harf
+• Mamlakat va shahar nomlari doim **bosh harf** bilan yoziladi: Japan, Tashkent.
+• Ko'pchiligi artiklsiz: from Japan, from France.
+• Lekin: **the USA**, **the UK** — the bilan.`,
+    [
+      q("We ___ from Uzbekistan.", ["are", "is", "am", "be"]),
+      q("«Biz Buxorodan emasmiz» inglizcha qanday?", ["We aren't from Bukhara.", "We not from Bukhara.", "We isn't from Bukhara.", "We aren't Bukhara from."]),
+      q("Are you from Japan? (✓, ikki kishi javob beradi)", ["Yes, we are.", "Yes, we're.", "Yes, I am.", "Yes, you are."]),
+      q("«Qayerdansiz?» inglizcha qanday?", ["Where are you from?", "Where you are from?", "From where you are?", "Where are you?"]),
+      q("Qaysi gap to'g'ri?", ["I'm from France.", "I'm France.", "I from France.", "I'm in France from."]),
+      q("Qaysi biri to'g'ri yozilgan?", ["I'm from Japan.", "I'm from japan.", "I'm from the Japan.", "i'm from Japan."]),
+      q("Qaysi biri to'g'ri?", ["She's from the USA.", "She's from USA.", "She's from the usa.", "She's USA."], "the USA — artikl bilan."),
+      q("«we are» ning qisqa shakli qaysi?", ["we're", "were", "we'r", "we's"], "we're [uia] — were [uyo] (o'tgan zamon) bilan adashtirmang."),
+      q("Are you students? (✗)", ["No, we aren't.", "No, we not.", "No, you aren't.", "No, I amn't."]),
+      q("«Sizlar» inglizcha qanday?", ["you", "your", "we", "they"]),
+    ]
+  ),
+
+  "A1-03": rule(
+    "So'roq so'zlari: What? Who? Where? How?",
+    `Ingliz tilida so'roq gap ko'pincha **so'roq so'zi**dan boshlanadi. Undan keyin **to be** (am / is / are), keyin esa ega keladi.
+
+## So'roq so'zlari
+• **What** — nima? → What is your name?
+• **Who** — kim? → Who is your teacher?
+• **Where** — qayerda? qayerdan? → Where are you from?
+• **How** — qanday? → How are you?
+• **How old** — necha yoshda? → How old are you?
+
+## So'z tartibi
+**So'roq so'zi + to be + ega**
+→ Where **are you** from? (Where you are from? — xato)
+→ What **is your** surname?
+
+## Qisqa shakl
+• What is → **What's**: What's your phone number?
+• Who is → **Who's**, Where is → **Where's**
+
+## Yosh
+• **How old are you?** — **I'm 19.** yoki **I'm 19 years old.**
+• O'zbekchadagidek «19 yoshdaman» — fe'l **am** bilan: I **am** 19.
+
+## Harflab so'rash
+• **How do you spell it?** — U qanday harflanadi?
+• Javob harfma-harf beriladi: K-A-R-I-M-O-V.
+
+## E'tibor bering
+• Manzil va telefon raqamini **What** bilan so'raymiz: **What's** your address? (Where emas!)
+• Millat — **Uzbek**, mamlakat — **Uzbekistan**: I'm Uzbek. I'm from Uzbekistan.`,
+    [
+      q("___ is your name?", ["What", "Who", "Where", "How"]),
+      q("___ is your teacher? — Mrs Brown.", ["Who", "What", "How", "Where"]),
+      q("Qaysi gap to'g'ri?", ["Where are you from?", "Where you are from?", "Where from you are?", "From where are you?"]),
+      q("___ old are you?", ["How", "What", "Who", "Where"]),
+      q("«Yoshim 20 da» inglizcha qanday?", ["I'm 20.", "I have 20 years.", "I'm 20 year old.", "My 20."]),
+      q("Manzil haqida qanday so'raymiz?", ["What's your address?", "Where's your address?", "Who's your address?", "How's your address?"]),
+      q("«What is» ning qisqa shakli qaysi?", ["What's", "Whats", "What'is", "Wha's"]),
+      q("«U qanday harflanadi?» inglizcha qanday?", ["How do you spell it?", "What do you spell it?", "How it spell?", "How spell you it?"]),
+      q("Millatingizni qanday aytasiz?", ["I'm Uzbek.", "I'm Uzbekistan.", "I'm from Uzbek.", "My Uzbek."]),
+      q("Odam haqida qaysi so'z bilan so'raymiz?", ["Who", "What", "Where", "How old"]),
+    ]
+  ),
+
+  "A1-04": rule(
+    "this / that / these / those · ko'plik · a / an",
+    `## Bu, u, bular, ular
+Buyumni ko'rsatganda ikki narsaga qaraymiz: **bittami yoki ko'pmi** va **yaqindami yoki uzoqdami**.
+
+• Yaqinda, bitta — **this** (bu)
+• Uzoqda, bitta — **that** (ana u)
+• Yaqinda, ko'p — **these** (bular)
+• Uzoqda, ko'p — **those** (ana ular)
+→ This is my phone. That is my car.
+→ These are my keys. Those are my friends.
+
+## is yoki are
+• Bitta: this / that / it + **is**
+• Ko'p: these / those / they + **are**
+→ What's this? — **It's** a pencil.
+→ What are these? — **They're** pencils.
+
+## Ko'plik shakli
+• Odatda **+ s**: phone → phones, ticket → tickets
+• s, x, ch, sh bilan tugasa **+ es**: bus → buses, box → boxes, watch → watches
+• Undosh + y → **ies**: city → cities, country → countries
+• Unli + y → faqat **+ s**: key → keys
+• Ba'zi so'zlar doim ko'plikda bo'ladi: **glasses** (ko'zoynak) → My glasses **are** new.
+
+## a yoki an
+Bitta narsa haqida gapirganda otdan oldin **a** yoki **an** qo'yiladi (o'zbekchada «bitta» deyish shart emas, inglizchada shart).
+• Undosh tovushdan oldin — **a**: a phone, a camera, a ticket
+• Unli tovushdan oldin — **an**: an apple, an umbrella, an egg
+• Ko'plikda **a / an qo'yilmaydi**: phones, umbrellas.
+
+## Sonlar 11–100
+• 13–19: **-teen**, urg'u oxirida: thir**TEEN**, fif**TEEN**
+• 20, 30…: **-ty**, urg'u boshida: **THIR**ty, **FIF**ty
+• 21–99: chiziqcha bilan: twenty-one, forty-five
+• Imloga e'tibor bering: **forty** (u harfisiz), **eight**een (bitta t).`,
+    [
+      q("___ are my keys. (yaqinda)", ["These", "This", "That", "Those"]),
+      q("___ is my car. (uzoqda)", ["That", "These", "This", "Those"]),
+      q("What are these? — ___", ["They're tickets.", "It's tickets.", "This is tickets.", "They're ticket."]),
+      q("«box» ning ko'plik shakli qaysi?", ["boxes", "boxs", "boxies", "box"]),
+      q("«city» ning ko'plik shakli qaysi?", ["cities", "citys", "cityes", "cityies"]),
+      q("Qaysi biri to'g'ri?", ["an umbrella", "a umbrella", "an camera", "a apple"]),
+      q("Qaysi biri to'g'ri?", ["My glasses are new.", "My glasses is new.", "My glass are new.", "My glasses new."]),
+      q("«thirteen» da urg'u qayerda?", ["thir-TEEN", "THIR-teen", "Urg'u yo'q", "Ikkalasida"]),
+      q("40 qanday yoziladi?", ["forty", "fourty", "fortty", "fourteen"]),
+      q("Qaysi gap to'g'ri?", ["These are my friends.", "This are my friends.", "These is my friends.", "Those is my friends."]),
+    ]
+  ),
 };
