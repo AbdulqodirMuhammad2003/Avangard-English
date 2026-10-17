@@ -606,7 +606,10 @@ function StageQuestion({
   );
 }
 
-// ---------- 1-bosqich: Imlo (harflardan terish) ----------
+// ---------- 1-bosqich: Imlo (klaviaturadan yozish) ----------
+
+/** Imloda qabul qilinadigan belgilar: harflar, apostrof va chiziqcha. */
+const SPELL_CHAR = /[a-z'’-]/i;
 
 function SpellingStage({
   word,
@@ -617,74 +620,80 @@ function SpellingStage({
 }) {
   const target = word.word;
   const letterSlots = useMemo(() => target.split(""), [target]);
-  // Harflar savol ochilganda bir marta aralashtiriladi (qayta render'da
-  // joyidan sakramasligi uchun). Qisqa so'zda (dog, cat) aralashtirish asl
-  // tartibni qaytarishi mumkin — unda qayta aralashtiriladi.
-  const [tileLetters] = useState(() => {
-    const tiles = target
-      .split("")
-      .map((ch, i) => ({ id: i, ch }))
-      .filter((t) => t.ch !== " ");
-    const original = tiles.map((t) => t.ch.toLowerCase()).join("");
-    let mixed = shuffle(tiles);
-    for (let i = 0; i < 10 && new Set(original).size > 1; i++) {
-      if (mixed.map((t) => t.ch.toLowerCase()).join("") !== original) break;
-      mixed = shuffle(tiles);
-    }
-    return mixed;
-  });
+  // Yoziladigan belgilar soni (bo'shliqlarsiz) — kataklar shuncha.
+  const letterCount = letterSlots.filter((ch) => ch !== " ").length;
 
-  const [filledIds, setFilledIds] = useState<(number | "space" | null)[]>(() =>
-    letterSlots.map((ch) => (ch === " " ? "space" : null))
-  );
-  const [usedTileIds, setUsedTileIds] = useState<Set<number>>(new Set());
+  // O'quvchi yozgan harflar (bo'shliqlarsiz); kataklarga ketma-ket tushadi.
+  const [typed, setTyped] = useState("");
+  const typedRef = useRef("");
   const [checked, setChecked] = useState<boolean | null>(null);
-
-  const isComplete = filledIds.every((f) => f !== null);
-
+  const checkedRef = useRef(checked);
   useEffect(() => {
-    if (isComplete && checked === null) {
-      const typed = filledIds
-        .map((f, i) =>
-          f === "space" ? " " : tileLetters.find((t) => t.id === f)?.ch ?? ""
-        )
-        .join("");
-      setChecked(normalize(typed) === normalize(target));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isComplete]);
+    checkedRef.current = checked;
+  }, [checked]);
+  const input = useRef<HTMLInputElement>(null);
 
-  function placeTile(tile: { id: number; ch: string }) {
-    if (checked !== null || usedTileIds.has(tile.id)) return;
-    const idx = filledIds.findIndex((f) => f === null);
-    if (idx === -1) return;
-    const next = [...filledIds];
-    next[idx] = tile.id;
-    setFilledIds(next);
-    setUsedTileIds((s) => new Set(s).add(tile.id));
+  function commit(next: string) {
+    typedRef.current = next;
+    setTyped(next);
   }
 
-  function removeSlot(idx: number) {
-    if (checked !== null) return;
-    const val = filledIds[idx];
-    if (val === null || val === "space") return;
-    const next = [...filledIds];
-    next[idx] = null;
-    setFilledIds(next);
-    setUsedTileIds((s) => {
-      const copy = new Set(s);
-      copy.delete(val as number);
-      return copy;
-    });
+  // Hamma kataklar to'lgach — «Tekshirish» tugmasi yoki Enter (oxirgi
+  // harfdagi xatoni ham o'chirib tuzatishga ulgurish uchun avtomatik emas).
+  function check() {
+    const cur = typedRef.current;
+    if (checkedRef.current !== null || cur.length < letterCount) return;
+    let k = 0;
+    const answer = letterSlots.map((ch) => (ch === " " ? " " : cur[k++])).join("");
+    const ok = normalize(answer) === normalize(target);
+    checkedRef.current = ok;
+    setChecked(ok);
+    input.current?.blur();
   }
 
-  /** Oxirgi qo'yilgan harfni (eng o'ngdagi to'lgan katakni) qaytaradi. */
+  function typeChar(ch: string) {
+    if (checkedRef.current !== null || typedRef.current.length >= letterCount) return;
+    commit(typedRef.current + (ch === "’" ? "'" : ch));
+  }
+
   function removeLast() {
-    for (let i = filledIds.length - 1; i >= 0; i--) {
-      if (filledIds[i] !== null && filledIds[i] !== "space") return removeSlot(i);
+    if (checkedRef.current !== null) return;
+    commit(typedRef.current.slice(0, -1));
+  }
+
+  // Kompyuter: maydon fokusda bo'lmasa ham (masalan, sahifaning boshqa joyiga
+  // bosilgan bo'lsa) harflar va Backspace ishlaydi. Enter — «Keyingisi» o'zi.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.target === input.current) return;
+      if (e.key === "Enter" && checkedRef.current === null) {
+        e.preventDefault();
+        check();
+      } else if (e.key === "Backspace") {
+        e.preventDefault();
+        removeLast();
+      } else if (e.key.length === 1 && SPELL_CHAR.test(e.key)) {
+        e.preventDefault();
+        typeChar(e.key);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Telefon: kataklar ustidagi ko'rinmas maydon (bosilganda klaviatura
+  // ochiladi). Unda doim bitta yashirin belgi turadi — shunda bo'sh maydonda
+  // ham Backspace keladi (Android klaviaturalari aks holda yubormaydi).
+  const SENTINEL = "​";
+  function onInput(value: string) {
+    if (!value.includes(SENTINEL)) removeLast();
+    for (const ch of value.replace(/​/g, "")) {
+      if (SPELL_CHAR.test(ch)) typeChar(ch);
     }
   }
 
+  let k = 0;
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
       <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
@@ -694,17 +703,15 @@ function SpellingStage({
         {word.translation_uz}
       </p>
 
-      <div className="flex flex-wrap items-center justify-center gap-1.5">
+      <div className="relative flex flex-wrap items-center justify-center gap-1.5">
         {letterSlots.map((ch, i) => {
-          const val = filledIds[i];
-          const letter = val === "space" ? " " : val === null ? "" : tileLetters.find((t) => t.id === val)?.ch;
-          return ch === " " ? (
-            <span key={i} className="w-3" />
-          ) : (
-            <button
+          if (ch === " ") return <span key={i} className="w-3" />;
+          const pos = k++;
+          const letter = typed[pos] ?? "";
+          const isCursor = checked === null && pos === typed.length;
+          return (
+            <span
               key={i}
-              onClick={() => removeSlot(i)}
-              disabled={checked !== null}
               className={`flex h-11 w-9 items-center justify-center rounded-xl border-2 text-lg font-bold uppercase transition-colors ${
                 checked === true
                   ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"
@@ -712,47 +719,61 @@ function SpellingStage({
                   ? "border-rose-400 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300"
                   : letter
                   ? "border-ink-300 bg-ink-50 text-ink-900 dark:border-white/20 dark:bg-white/10 dark:text-ink-50"
+                  : isCursor
+                  ? "border-azure-500 bg-white dark:bg-white/5"
                   : "border-dashed border-ink-200 bg-white dark:border-white/15 dark:bg-white/5"
               }`}
             >
               {letter}
-            </button>
+            </span>
           );
         })}
-      </div>
-
-      {/* Ishlatilgan harf o'z joyida bo'sh iz bo'lib qoladi — qolgan harflar
-          siljimaydi, shuning uchun tez bosilganda ham qo'shni harf bosilib
-          ketmaydi. Yuqoridagi katak bosilsa, harf shu iziga qaytadi. */}
-      <div className="flex flex-wrap justify-center gap-2.5">
-        {tileLetters.map((tile) =>
-          usedTileIds.has(tile.id) ? (
-            <span
-              key={tile.id}
-              aria-hidden
-              className="h-12 w-12 rounded-xl border-2 border-dashed border-ink-200 dark:border-white/10"
-            />
-          ) : (
-            <button
-              key={tile.id}
-              onClick={() => placeTile(tile)}
-              disabled={checked !== null}
-              className="btn-press flex h-12 w-12 items-center justify-center rounded-xl bg-ink-100 text-lg font-bold uppercase text-ink-800 shadow-sm transition-colors hover:bg-ink-200 dark:bg-white/10 dark:text-ink-100 dark:hover:bg-white/20"
-            >
-              {tile.ch}
-            </button>
-          )
+        {/* Kataklar ustida, ko'rinmas: bosilganda telefon klaviaturasi ochiladi. */}
+        {checked === null && (
+          <input
+            ref={input}
+            value={SENTINEL}
+            onChange={(e) => onInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                check();
+              }
+            }}
+            autoFocus
+            aria-label="So'zni inglizcha yozing"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            enterKeyHint="done"
+            className="absolute inset-0 h-full w-full cursor-text opacity-0"
+          />
         )}
       </div>
 
+      <p className="text-center text-xs text-ink-500 dark:text-ink-400">
+        So&apos;zni inglizcha yozing · {letterCount} ta belgi
+      </p>
+
       <button
         onClick={removeLast}
-        disabled={checked !== null || usedTileIds.size === 0}
+        disabled={checked !== null || typed.length === 0}
         className="mx-auto flex items-center gap-1.5 text-xs font-semibold text-ink-500 hover:text-ink-700 disabled:opacity-40 dark:text-ink-400 dark:hover:text-ink-200"
       >
         <Delete size={14} /> Oxirgi harfni o'chirish
       </button>
-      {checked !== null && <StageNext correct={checked} answer={word.word} onNext={() => onResult(checked)} />}
+      {checked === null ? (
+        <button
+          onClick={check}
+          disabled={typed.length < letterCount}
+          className="btn-press rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-40"
+        >
+          Tekshirish
+        </button>
+      ) : (
+        <StageNext correct={checked} answer={word.word} onNext={() => onResult(checked)} />
+      )}
     </div>
   );
 }
