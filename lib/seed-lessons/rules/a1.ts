@@ -408,4 +408,162 @@ So'zlarni juft-juft o'rganish oson:
       q("«full» ning zid ma'nosi qaysi?", ["empty", "clean", "cold", "poor"]),
     ]
   ),
+
+  "A1-09": rule(
+    "Egalik: my, his, her… va 's",
+    `## Egalik olmoshlari
+O'zbek tilida egalik qo'shimcha bilan bildiriladi: kitob**im**, kitob**ing**. Ingliz tilida otdan **oldin** alohida so'z qo'yiladi:
+• I → **my** (mening): my book
+• you → **your** (sening, sizning): your phone
+• he → **his** (uning — erkak): his car
+• she → **her** (uning — ayol): her name
+• it → **its** (uning — narsa, hayvon): its bed
+• we → **our** (bizning): our flat
+• they → **their** (ularning): their house
+Bu so'zlar ko'plikda ham o'zgarmaydi: my brother**s**, their children.
+
+## Egalik 's
+Kimningdir narsasi haqida gapirganda otga **'s** qo'shiladi:
+→ Aziz**'s** car — Azizning mashinasi
+→ my sister**'s** name — opamning ismi
+• Ko'plik -s bilan tugasa, faqat **apostrof** qo'shiladi: my parent**s'** house.
+
+## Adashtirmang
+• **its** (uning) — **it's** (it is): The dog is in **its** bed. **It's** a big dog.
+• **their** (ularning) — **there** (u yerda) — **they're** (they are): talaffuzi bir xil.
+• **he's** = he is, lekin **his** = uning.
+
+## Kimning?
+→ **Whose** bag is this? — It's **Malika's**.`,
+    [
+      q("She's my aunt. ___ son is my cousin.", ["Her", "His", "She", "Hers"]),
+      q("He's a doctor. ___ wife is a nurse.", ["His", "Her", "He's", "Him"]),
+      q("We live in Tashkent. ___ flat is small.", ["Our", "We", "Us", "Their"]),
+      q("«Azizning mashinasi» inglizcha qanday?", ["Aziz's car", "Aziz car", "car's Aziz", "Azizs car"]),
+      q("«Ota-onamning uyi» inglizcha qanday?", ["my parents' house", "my parent's houses", "my parents house's", "my parents's house"]),
+      q("The cat is in ___ bed.", ["its", "it's", "it", "his"]),
+      q("___ bag is this?", ["Whose", "Who's", "Who", "Which"]),
+      q("They're my neighbours. ___ garden is beautiful.", ["Their", "There", "They're", "They"]),
+      q("My father's brother is my …", ["uncle", "aunt", "cousin", "grandfather"]),
+      q("Qaysi gap to'g'ri?", ["Her name is Malika.", "She name is Malika.", "His name is Malika. (ayol)", "Hers name is Malika."]),
+    ]
+  ),
+
+  "A1-10": rule(
+    "Present Simple: darak gap",
+    `**Present Simple** — doimiy, odatiy ishlar uchun: qayerda yashaysiz, nima ish qilasiz, nimani yoqtirasiz.
+→ I live in Tashkent. — Toshkentda yashayman.
+→ She works in a hotel. — U mehmonxonada ishlaydi.
+
+## Shakli
+• I / you / we / they + fe'l: I **work**, they **speak**
+• he / she / it + fe'l**-s**: she **works**, it **opens**
+O'zbekchada har bir shaxsning o'z qo'shimchasi bor. Ingliz tilida esa qo'shimcha faqat **he / she / it** da: **-s**.
+
+## -s qanday yoziladi
+• Odatda **+ s**: work → works, live → lives
+• s, sh, ch, x, o bilan tugasa **+ es**: watch → watch**es**, go → go**es**, do → do**es**
+• Undosh + y → **ies**: study → stud**ies**, fly → fl**ies**
+• Unli + y → **+ s**: play → plays
+• have → **has**
+
+## -s qanday o'qiladi
+• /s/ — works, likes, speaks
+• /z/ — lives, plays, reads
+• /ɪz/ — watches, teaches (s, sh, ch, x dan keyin)
+
+## Diqqat
+• Present Simple'da **am / is / are kerak emas**: I **live** in Bukhara. (I am live — xato)
+• My parents = they → My parents **live**…`,
+    [
+      q("She ___ in Samarkand.", ["lives", "live", "is live", "living"]),
+      q("I ___ English.", ["study", "studies", "am study", "studys"]),
+      q("«watch» ning he/she shakli qaysi?", ["watches", "watchs", "watchies", "watch"]),
+      q("«study» ning he/she shakli qaysi?", ["studies", "studys", "studyes", "study"]),
+      q("«have» ning he/she shakli qaysi?", ["has", "haves", "have", "had"]),
+      q("My parents ___ in a village.", ["live", "lives", "are live", "living"]),
+      q("Qaysi gap to'g'ri?", ["He goes to work by bus.", "He go to work by bus.", "He gos to work by bus.", "He is go to work by bus."]),
+      q("«teaches» oxiri qanday o'qiladi?", ["/ɪz/", "/s/", "/z/", "o'qilmaydi"]),
+      q("Qaysi gap to'g'ri?", ["I work in a bank.", "I works in a bank.", "I am work in a bank.", "I working in a bank."]),
+      q("The shop ___ at nine o'clock.", ["opens", "open", "is open at", "opening"]),
+    ]
+  ),
+
+  "A1-11": rule(
+    "Present Simple: inkor gap",
+    `## don't va doesn't
+Present Simple'da inkor yordamchi fe'l bilan yasaladi:
+• I / you / we / they + **don't** (do not) + fe'l
+• he / she / it + **doesn't** (does not) + fe'l
+→ I **don't** drive. — Men mashina haydamayman.
+→ She **doesn't** take the metro. — U metroga tushmaydi.
+
+## Muhim: doesn't dan keyin -s yo'q
+**-s** endi **doesn't** ichida, shuning uchun fe'l o'z holiga qaytadi:
+→ She drives. → She doesn't **drive**. (doesn't drives — xato)
+→ He has a car. → He doesn't **have** a car.
+
+## am / is / are bilan adashtirmang
+• to be bilan gapda: **isn't / aren't** — She **isn't** a doctor.
+• Boshqa fe'l bilan: **doesn't / don't** — She **doesn't** drive. (She isn't drive — xato)
+
+## Transport
+• by + transport: **by** bus, **by** car, **by** train, **by** plane, **by** metro, **by** taxi
+• Piyoda: **on foot**
+• Kutmoq — **wait for**: I wait **for** the bus.
+• Uzoq — **far from**: The airport is far **from** the city.`,
+    [
+      q("She ___ drive.", ["doesn't", "don't", "isn't", "not"]),
+      q("I ___ like the metro.", ["don't", "doesn't", "am not", "not"]),
+      q("Qaysi gap to'g'ri?", ["He doesn't walk to work.", "He doesn't walks to work.", "He don't walk to work.", "He isn't walk to work."]),
+      q("«They have a car» inkor shakli qaysi?", ["They don't have a car.", "They doesn't have a car.", "They haven't a car.", "They not have a car."]),
+      q("«My sister has a bike» inkor shakli qaysi?", ["My sister doesn't have a bike.", "My sister doesn't has a bike.", "My sister don't have a bike.", "My sister isn't have a bike."]),
+      q("I go to work ___ bus.", ["by", "on", "with", "in"]),
+      q("We go to school ___ foot.", ["on", "by", "with", "at"]),
+      q("I wait ___ the bus.", ["for", "to", "on", "—"]),
+      q("Qaysi gap to'g'ri?", ["She isn't a doctor.", "She doesn't a doctor.", "She don't a doctor.", "She not a doctor."], "to be bilan — isn't."),
+      q("The train ___ stop here.", ["doesn't", "don't", "isn't", "aren't"]),
+    ]
+  ),
+
+  "A1-12": rule(
+    "Present Simple: so'roq gap · kun tartibi",
+    `## Do va Does
+So'roq gap yordamchi fe'l bilan boshlanadi:
+• **Do** + I / you / we / they + fe'l: **Do you** get up early?
+• **Does** + he / she / it + fe'l: **Does she** work at night?
+• Does dan keyin fe'l **-s siz** bo'ladi: Does she **work**? (Does she works — xato)
+
+## Qisqa javob
+• Do you…? — **Yes, I do.** / **No, I don't.**
+• Does he…? — **Yes, he does.** / **No, he doesn't.**
+• Javobda asosiy fe'l takrorlanmaydi: «Yes, I like» — xato.
+
+## Vaqt predloglari
+• Soat bilan — **at**: at seven o'clock, at half past eight
+• Kun qismlari — **in the**: in the morning, in the afternoon, in the evening
+• Lekin: **at night**, **at the weekend**
+• **go home** — «to» kerak emas (go to home — xato).
+
+## Kun tartibi iboralari
+get up, have breakfast, have a shower, go to work, have lunch, go home, have dinner, do homework, watch TV, go to bed.
+→ I get up at seven. **Then** I have breakfast.
+
+## Do'konda
+→ **How much** is this? / How much **are** these apples?
+→ Can I pay **by card**? — Sorry, only **cash**.
+→ **Here you are.** — Marhamat (biror narsa berganda).`,
+    [
+      q("___ she work at night?", ["Does", "Do", "Is", "Has"]),
+      q("___ you like tea?", ["Do", "Does", "Are", "Is"]),
+      q("Do you get up early? (✓)", ["Yes, I do.", "Yes, I get.", "Yes, I am.", "Yes, I does."]),
+      q("Does he drive? (✗)", ["No, he doesn't.", "No, he don't.", "No, he isn't.", "No, he doesn't drive it."]),
+      q("Qaysi gap to'g'ri?", ["Does she play tennis?", "Does she plays tennis?", "Do she play tennis?", "She does play tennis?"]),
+      q("I get up ___ seven o'clock.", ["at", "in", "on", "to"]),
+      q("We watch TV ___ the evening.", ["in", "at", "on", "to"]),
+      q("Qaysi biri to'g'ri?", ["I go home at six.", "I go to home at six.", "I go at home at six.", "I home go at six."]),
+      q("Narxni qanday so'raymiz?", ["How much is it?", "How many is it?", "How price is it?", "What much is it?"]),
+      q("Sotuvchiga pul berayotib nima deysiz?", ["Here you are.", "Here are you.", "You are here.", "Take you."]),
+    ]
+  ),
 };
