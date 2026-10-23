@@ -1,0 +1,338 @@
+/**
+ * A1, 17-dars — «Mehmonxonada». Mehmonxona xizmatlari, xona bron qilish,
+ * muammo haqida aytish. Grammatika: Is there…? / Are there any…? va qisqa
+ * javoblar (Yes, there is. / No, there aren't.), How many … are there?
+ * Matn va mashqlar o'zimizniki.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  hearing,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  pick,
+  reading,
+  say,
+  sentences,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+export const A1_17_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🛎️", "reception", "rɪˈsepʃn|risepshn", "ot", "Qabulxona (resepshn)", "The desk near the hotel door where you get your key.", "Leave your key at reception.", "Kalitingizni qabulxonada qoldiring."),
+      w("🛏️", "single room", "ˌsɪŋɡl ˈruːm|singl ruum", "ot", "Bir kishilik xona", "A hotel room for one person.", "A single room, please.", "Bir kishilik xona, iltimos."),
+      w("🛌", "double room", "ˌdʌbl ˈruːm|dabl ruum", "ot", "Ikki kishilik xona", "A hotel room for two people.", "We'd like a double room.", "Bizga ikki kishilik xona kerak."),
+      w("📶", "Wi-Fi", "ˈwaɪ faɪ|uay fay", "ot", "Wi-Fi (simsiz internet)", "Internet without cables.", "Is the Wi-Fi free?", "Wi-Fi bepulmi?"),
+      w("❄️", "air conditioning", "ˈeə kənˌdɪʃənɪŋ|ea kandishaning", "ot", "Konditsioner", "It makes a room cool in hot weather.", "The air conditioning doesn't work.", "Konditsioner ishlamayapti."),
+      w("🧺", "towel", "ˈtaʊəl|tauel", "ot", "Sochiq", "You dry your body with it.", "Can I have a clean towel?", "Toza sochiq bersangiz bo'ladimi?"),
+      w("🛁", "bathroom", "ˈbɑːθruːm|baasruum", "ot", "Hammom, vannaxona", "A room with a shower or a bath and a toilet.", "The bathroom is very small.", "Vannaxona juda kichik."),
+      w("🌇", "balcony", "ˈbælkəni|belkani", "ot", "Balkon", "A small place outside a window, high up.", "Our room has a balcony.", "Xonamizda balkon bor."),
+      w("🏞️", "view", "vjuː|vyuu", "ot", "Manzara, ko'rinish", "What you can see from a place.", "What a beautiful view!", "Qanday go'zal manzara!"),
+      w("🕑", "check-in", "ˈtʃek ɪn|chek in", "ot", "Ro'yxatdan o'tish (kirish)", "The time when you arrive and get your room.", "Check-in is at two o'clock.", "Ro'yxatdan o'tish soat ikkida."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("📝", "book", "bʊk|buk", "fe'l", "Bron qilmoq", "To ask for a room or a table before you come.", "I want to book a room for two nights.", "Ikki kechaga xona bron qilmoqchiman."),
+      w("🏨", "stay", "steɪ|stey", "fe'l", "Turmoq, yashab turmoq", "To live in a place for a short time.", "We stay at this hotel every summer.", "Har yozda shu mehmonxonada turamiz."),
+      w("🧳", "check out", "ˌtʃek ˈaʊt|chek aut", "fe'l", "Mehmonxonadan chiqmoq", "To pay and leave a hotel.", "We check out at twelve.", "Soat o'n ikkida mehmonxonadan chiqamiz."),
+      w("🧑‍💼", "guest", "ɡest|gest", "ot", "Mehmon", "A person who stays in a hotel.", "Every guest gets a free breakfast.", "Har bir mehmonga bepul nonushta beriladi."),
+      w("🆓", "free", "friː|frii", "sifat", "Bepul", "It costs no money.", "Breakfast is free.", "Nonushta bepul."),
+      w("✅", "available", "əˈveɪləbl|aveylabl", "sifat", "Bo'sh, mavjud", "You can have or use it now.", "Are there any rooms available?", "Bo'sh xonalar bormi?"),
+      w("⚠️", "problem", "ˈprɒbləm|problem", "ot", "Muammo", "Something that is wrong.", "There's a problem with my room.", "Xonamda muammo bor."),
+      w("💥", "broken", "ˈbrəʊkən|brouken", "sifat", "Buzilgan, singan", "It doesn't work.", "The TV is broken.", "Televizor buzilgan."),
+      w("🧳", "suitcase", "ˈsuːtkeɪs|suutkeys", "ot", "Chamadon", "A big bag for clothes when you travel.", "My suitcase is very heavy.", "Chamadonim juda og'ir."),
+      w("💳", "key card", "ˈkiː kɑːd|kii kaad", "ot", "Kalit-karta", "A plastic card that opens your hotel room.", "Here is your key card.", "Mana kalit-kartangiz."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("❓", "is there", "ɪz ðeə|iz zea", "ibora", "…bormi? (bitta)", "A question: does one thing exist?", "Is there a gym in the hotel?", "Mehmonxonada sport zali bormi?"),
+      w("⁉️", "are there", "ɑː ðeə|aa zea", "ibora", "…bormi? (ko'p)", "A question: do these things exist?", "Are there any towels in the room?", "Xonada sochiqlar bormi?"),
+      w("1️⃣", "only", "ˈəʊnli|ounli", "ravish", "Faqat", "Not more than.", "There is only one bed.", "Faqat bitta karavot bor."),
+      w("➕", "also", "ˈɔːlsəʊ|oolsou", "ravish", "Shuningdek, ham", "Too, in addition.", "The hotel also has a pool.", "Mehmonxonada shuningdek basseyn ham bor."),
+      w("💵", "cost", "kɒst|kost", "fe'l", "Turmoq (narx)", "To have a price.", "How much does the room cost?", "Xona qancha turadi?"),
+      w("🌙", "per night", "pə ˈnaɪt|pa nayt", "ibora", "Bir kechasi uchun", "For one night.", "It's sixty dollars per night.", "Bir kechasi oltmish dollar."),
+      w("🛌", "pillow", "ˈpɪləʊ|pilou", "ot", "Yostiq", "You put your head on it in bed.", "Can I have another pillow?", "Yana bitta yostiq bersangiz bo'ladimi?"),
+      w("🧣", "blanket", "ˈblæŋkɪt|blenkit", "ot", "Adyol, ko'rpa", "A warm cover for your bed.", "It's cold. I need a blanket.", "Sovuq. Menga adyol kerak."),
+      w("🚿", "shower", "ˈʃaʊə|shaua", "ot", "Dush", "Water comes from above and you wash.", "The shower is very hot.", "Dush juda issiq."),
+      w("💨", "hairdryer", "ˈheədraɪə|headraya", "ot", "Fen (soch quritgich)", "A machine that dries your hair.", "Is there a hairdryer in the room?", "Xonada fen bormi?"),
+    ],
+  },
+];
+
+const SHORT = ["Yes, there is.", "No, there isn't.", "Yes, there are.", "No, there aren't."];
+
+const AD = `HOTEL SILK ROAD — BUKHARA
+Our small family hotel is in the old city, five minutes from the Lyabi-Hauz. There are twelve rooms: four single rooms and eight double rooms. All rooms have air conditioning, free Wi-Fi and a bathroom with a shower. There aren't any TVs in the rooms — but there is a big TV in the garden! Breakfast is free and there is a small restaurant with Uzbek food. There isn't a swimming pool or a gym. Check-in is from 2 p.m. and check-out is until 12 p.m.
+Prices: single room — $35 per night, double room — $50 per night.`;
+const read = reading(AD);
+
+const CALL = `Reception, good evening. How can I help you?
+Hello. This is Mr Davron in room 204. There's a problem with my room.
+I'm sorry to hear that. What's the problem?
+The air conditioning doesn't work, and it's very hot.
+Oh, I'm sorry. Our mechanic comes in the morning. Is there anything else?
+Yes. There aren't any towels in the bathroom, and the TV is broken too.
+I'm very sorry. We have another room available — room 310. It's on the third floor and it has a balcony.
+Great, thank you! Can I also have an extra pillow?
+Of course. I'll send a new key card and a pillow to your room now.`;
+const hear = hearing(CALL);
+
+export const A1_17_EXERCISES: SeedExercise[] = [
+  {
+    title: "Mehmonxona so'zlari",
+    skill: "Tinglash",
+    kind: "listen",
+    instructions: "So'z yoki ibora o'qiladi. Eshitganingizni toping.",
+    questions: [
+      listen("reception", ["reception", "receptionist", "recipe", "receipt"]),
+      listen("towel", ["towel", "tower", "travel", "table"]),
+      listen("balcony", ["balcony", "bakery", "battery", "bathroom"]),
+      listen("view", ["view", "few", "five", "very"]),
+      listen("guest", ["guest", "guess", "best", "rest"]),
+      listen("available", ["available", "comfortable", "vegetable", "valuable"]),
+      listen("suitcase", ["suitcase", "staircase", "suit", "case"]),
+      listen("blanket", ["blanket", "basket", "planet", "jacket"]),
+      listen("is there", ["is there", "are there", "there is", "where is"]),
+      listen("are there", ["is there", "are there", "they are", "there are"]),
+    ],
+  },
+  {
+    title: "Rasmga mos so'z",
+    skill: "Rasm",
+    kind: "picture",
+    instructions: "Rasmga qarang va mos so'zni toping.",
+    questions: [
+      pick("🛎️", ["reception", "bathroom", "balcony", "view"], 0),
+      pick("📶", ["air conditioning", "Wi-Fi", "TV", "key card"], 1),
+      pick("🛁", ["shower", "towel", "bathroom", "balcony"], 2),
+      pick("🧳", ["blanket", "pillow", "towel", "suitcase"], 3),
+      pick("🚿", ["shower", "bathroom", "hairdryer", "air conditioning"], 0),
+      pick("🧺", ["blanket", "towel", "pillow", "suitcase"], 1),
+      pick("💨", ["air conditioning", "Wi-Fi", "hairdryer", "shower"], 2),
+      pick("🏞️", ["balcony", "check-in", "reception", "view"], 3),
+      pick("🆓", ["free", "available", "broken", "only"], 0),
+      pick("💥", ["free", "broken", "available", "double room"], 1),
+    ],
+  },
+  {
+    title: "Is there yoki Are there?",
+    skill: "Grammatika",
+    kind: "choice",
+    instructions: "Bitta narsa — Is there a…? Ko'p narsa — Are there any…?",
+    questions: [
+      pick("___ a gym in the hotel?", ["Is there", "Are there"], 0),
+      pick("___ any towels in the bathroom?", ["Is there", "Are there"], 1),
+      pick("___ a hairdryer in the room?", ["Is there", "Are there"], 0),
+      pick("___ any rooms available?", ["Is there", "Are there"], 1),
+      pick("___ a restaurant near here?", ["Is there", "Are there"], 0),
+      pick("___ any good cafes in the old city?", ["Is there", "Are there"], 1),
+      pick("___ free Wi-Fi?", ["Is there", "Are there"], 0, "Wi-Fi — sanalmaydi, birlikdagi kabi: Is there…?"),
+      pick("___ any blankets in the cupboard?", ["Is there", "Are there"], 1),
+      pick("___ a balcony in our room?", ["Is there", "Are there"], 0),
+      pick("How many rooms ___?", ["is there", "are there"], 1, "How many … are there?"),
+    ],
+  },
+  {
+    title: "Qisqa javob",
+    skill: "Grammatika",
+    kind: "choice",
+    instructions: "Belgiga qarang (✓ — bor, ✗ — yo'q) va qisqa javobni tanlang.",
+    questions: [
+      pick("Is there a gym? (✓)", SHORT, 0),
+      pick("Is there a swimming pool? (✗)", SHORT, 1),
+      pick("Are there any towels? (✓)", SHORT, 2),
+      pick("Are there any TVs in the rooms? (✗)", SHORT, 3),
+      pick("Is there free Wi-Fi? (✓)", SHORT, 0),
+      pick("Are there any rooms available? (✓)", SHORT, 2),
+      pick("Is there a hairdryer? (✗)", SHORT, 1),
+      pick("Are there any pillows? (✗)", SHORT, 3),
+      pick("Is there a restaurant? (✓)", SHORT, 0),
+      pick("Are there any single rooms? (✗)", SHORT, 3),
+    ],
+  },
+  {
+    title: "Savol yozing",
+    skill: "Grammatika",
+    kind: "type",
+    instructions: "So'zdan savol yozing: bitta — Is there a…? ko'p — Are there any…?",
+    questions: written([
+      ["a gym", "Is there a gym?"],
+      ["towels", "Are there any towels?"],
+      ["a hairdryer", "Is there a hairdryer?"],
+      ["rooms available", "Are there any rooms available?"],
+      ["a balcony", "Is there a balcony?"],
+      ["blankets", "Are there any blankets?"],
+      ["a restaurant", "Is there a restaurant?"],
+      ["single rooms", "Are there any single rooms?"],
+      ["a swimming pool", "Is there a swimming pool?"],
+      ["pillows", "Are there any pillows?"],
+    ]),
+  },
+  {
+    title: "Resepshnda",
+    skill: "Vaziyat",
+    kind: "situation",
+    instructions: "Vaziyatni o'qing va unga mos inglizcha iborani tanlang.",
+    questions: [
+      say("Ikki kechaga ikki kishilik xona kerak.", ["I'd like a double room for two nights.", "I want two rooms single.", "A room double two night.", "Double nights, please."]),
+      say("Xona narxini so'rang.", ["How much is it per night?", "How many is the room?", "What is night room?", "How much nights?"]),
+      say("Nonushta narxga kiradimi, so'rang.", ["Is breakfast free?", "Is breakfast broken?", "Is there breakfast available room?", "Breakfast how many?"]),
+      say("Xonangizda konditsioner ishlamayapti.", ["The air conditioning doesn't work.", "The air conditioning is free.", "There is air conditioning.", "Air conditioning, please available."]),
+      say("Yana bitta sochiq kerak.", ["Can I have another towel, please?", "Is there a towel broken?", "Towel more me.", "I have towel."]),
+      say("Mehmonxonadan chiqish vaqtini so'rang.", ["What time is check-out?", "When is check-in tomorrow morning?", "Where is check-out?", "Check-out is how much?"]),
+      say("Xona kalitini qabulxonada qoldirmoqchisiz.", ["Can I leave my key at reception?", "Can I book my key?", "Is my key free?", "Key is reception."]),
+      say("Bo'sh xona bormi, bilmoqchisiz.", ["Are there any rooms available?", "Is there rooms free?", "Are rooms there?", "Any rooms is?"]),
+      say("Televizor buzilgan.", ["The TV is broken.", "The TV is free.", "There is a TV.", "The TV is available."]),
+      say("Xonadan manzara juda chiroyli ekan.", ["What a beautiful view!", "What a beautiful problem!", "The view is broken.", "View is free."]),
+    ],
+  },
+  {
+    title: "Juftini toping",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Chap va o'ng tomonni ulang.",
+    questions: pairs([
+      ["reception|qabulxona", "towel|sochiq", "pillow|yostiq", "blanket|adyol"],
+      ["single room|bir kishilik xona", "double room|ikki kishilik xona", "key card|kalit-karta", "suitcase|chamadon"],
+      ["book|bron qilmoq", "stay|turmoq", "check out|chiqib ketmoq", "cost|turmoq (narx)"],
+      ["free|bepul", "broken|buzilgan", "available|bo'sh, mavjud", "only|faqat"],
+      ["Is there a gym?|Yes, there is.", "Are there any towels?|No, there aren't.", "How much is it?|$50 per night.", "What time is check-in?|At 2 p.m."],
+      ["bathroom|vannaxona", "shower|dush", "balcony|balkon", "view|manzara"],
+    ]),
+  },
+  {
+    title: "Xatoni toping",
+    skill: "Grammatika",
+    kind: "mistake",
+    instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
+    questions: [
+      mistake("*Is there any towels in the room?", "Ko'plik — Are there any towels?"),
+      mistake("Are there *a gym in the hotel?", "Bitta — Is there a gym?"),
+      mistake("Is there a pool? — Yes, *it is.", "Yes, there is."),
+      mistake("Are there any rooms? — No, there *isn't.", "rooms — ko'plik: No, there aren't."),
+      mistake("How many rooms *is there?", "How many … are there?"),
+      mistake("Are there *some towels in the bathroom?", "So'roqda — any."),
+      mistake("It's fifty dollars *for a night per.", "per night: fifty dollars per night."),
+      mistake("The air conditioning *don't work.", "it → doesn't work."),
+      mistake("How much *is the room cost?", "How much does the room cost? (yoki How much is the room?)"),
+      mistake("I want to *booking a room.", "want to + fe'l: I want to book a room."),
+    ],
+  },
+  {
+    title: "Suhbatni davom ettiring",
+    skill: "Dialog",
+    kind: "dialog",
+    instructions: "Suhbatdoshingiz gapirdi. Unga mos javobni tanlang.",
+    questions: [
+      say("Good afternoon. Can I help you?", ["Yes, I'd like to book a room, please.", "Yes, I'm help.", "No, it's free.", "Yes, there are."]),
+      say("Single or double?", ["Double, please. For two nights.", "Yes, please.", "Single nights.", "It's broken."]),
+      say("Is there a gym in the hotel?", ["No, there isn't, but there's a pool.", "No, it isn't.", "No, there aren't.", "Yes, it is a gym."]),
+      say("Are there any rooms with a view?", ["Yes, there are. Room 501 has a balcony.", "Yes, there is rooms.", "Yes, they are.", "No, there isn't any."]),
+      say("How much is the double room?", ["It's fifty dollars per night.", "It's two nights.", "It's on the fifth floor.", "It's free Wi-Fi."]),
+      say("Is breakfast included?", ["Yes, breakfast is free.", "Yes, it's broken.", "No, there are.", "Breakfast is at reception."]),
+      say("Here is your key card. Your room is 305.", ["Thank you. Where is the lift?", "Yes, there is.", "No problem, broken.", "How many are there?"]),
+      say("Is everything OK with your room?", ["Not really. The shower is broken.", "Yes, there is.", "It's on the third floor.", "No, there isn't room."]),
+      say("What time is check-out?", ["At twelve o'clock.", "At reception.", "For two nights.", "Yes, it is."]),
+      say("I'm sorry about the problem.", ["That's OK. Thank you for your help.", "Yes, I'm sorry too problem.", "No, there aren't.", "It's free."]),
+    ],
+  },
+  {
+    title: "Gap tuzing",
+    skill: "Gap tuzish",
+    kind: "order",
+    instructions: "So'zlarni to'g'ri tartibda bosib, gap tuzing.",
+    questions: sentences([
+      "Is there a gym in the hotel?",
+      "Are there any towels in the room?",
+      "Yes, there is.",
+      "No, there aren't.",
+      "I want to book a room for two nights.",
+      "How much is it per night?",
+      "The air conditioning doesn't work.",
+      "Can I have another pillow, please?",
+      "Check-in is at two o'clock.",
+      "Our room has a beautiful view.",
+    ]),
+  },
+  {
+    title: "Bo'sh joyni to'ldiring",
+    skill: "Yozish",
+    kind: "fill",
+    instructions: "Gapda bitta so'z tushib qolgan. Uni inglizcha yozing.",
+    questions: written([
+      ["___ there a swimming pool?", "Is"],
+      ["Are there ___ rooms available?", "any"],
+      ["— Is there a gym? — No, there ___.", "isn't"],
+      ["— Are there any towels? — Yes, there ___.", "are"],
+      ["How many rooms are ___?", "there"],
+      ["It's forty dollars ___ night.", "per"],
+      ["Breakfast is ___. You don't pay for it.", "free"],
+      ["The TV doesn't work. It's ___.", "broken"],
+      ["I'd like to ___ a double room.", "book"],
+      ["You get your key at ___.", "reception"],
+    ]),
+  },
+  {
+    title: "«Silk Road» mehmonxonasi",
+    skill: "Matn bilan ishlash",
+    kind: "reading",
+    instructions: "E'lonni diqqat bilan o'qing va har bir savolga javob bering.",
+    questions: [
+      read("Where is the hotel?", ["In the old city of Bukhara", "In the centre of Tashkent", "Near the airport", "The text doesn't say."]),
+      read("How many rooms are there?", ["Twelve", "Eight", "Four", "Fifty"]),
+      read("How many double rooms are there?", ["Eight", "Four", "Twelve", "Two"]),
+      read("Is there Wi-Fi in the rooms?", ["Yes, and it's free.", "Yes, but it isn't free.", "No, there isn't.", "The text doesn't say."]),
+      read("Are there any TVs in the rooms?", ["No, there aren't.", "Yes, there are.", "Yes, big TVs.", "The text doesn't say."]),
+      read("Where is the big TV?", ["In the garden", "In the restaurant", "At reception", "In room 12"]),
+      read("Is there a swimming pool?", ["No, there isn't.", "Yes, there is.", "Yes, a small one.", "The text doesn't say."]),
+      read("Is breakfast free?", ["Yes, it is.", "No, it isn't.", "Only in double rooms.", "The text doesn't say."]),
+      read("What time is check-in?", ["From 2 p.m.", "Until 12 p.m.", "At 5 p.m.", "The text doesn't say."]),
+      read("How much is a double room?", ["$50 per night", "$35 per night", "$12 per night", "It's free."]),
+    ],
+  },
+  {
+    title: "Xonada muammo",
+    skill: "Tinglab tushunish",
+    kind: "audiotext",
+    instructions: "Telefondagi suhbatni tinglang (kerak bo'lsa, qayta yoki sekinroq) va savollarga javob bering. Matn ekranda ko'rsatilmaydi.",
+    questions: [
+      hear("Janob Davron qaysi xonada?", ["204", "310", "240", "301"]),
+      hear("Birinchi muammo nima?", ["Konditsioner ishlamayapti", "Televizor buzilgan", "Sochiq yo'q", "Dush sovuq"]),
+      hear("Mexanik qachon keladi?", ["Ertalab", "Hozir", "Kechqurun", "Ertaga tushda"]),
+      hear("Vannaxonada nima yo'q?", ["Sochiqlar", "Yostiq", "Fen", "Sovun"]),
+      hear("Yana nima buzilgan?", ["Televizor", "Lift", "Dush", "Telefon"]),
+      hear("Xodim qaysi xonani taklif qiladi?", ["310", "204", "301", "320"]),
+      hear("Yangi xona nechanchi qavatda?", ["Uchinchi", "Ikkinchi", "Beshinchi", "Birinchi"]),
+      hear("Yangi xonada nima bor?", ["Balkon", "Basseyn", "Ikkita televizor", "Oshxona"]),
+      hear("Janob Davron yana nima so'raydi?", ["Qo'shimcha yostiq", "Adyol", "Sochiq", "Fen"]),
+      hear("Xodim xonaga nima yuboradi?", ["Yangi kalit-karta va yostiq", "Mexanik", "Nonushta", "Televizor"]),
+    ],
+  },
+  {
+    title: "Ayting",
+    skill: "Talaffuz",
+    kind: "speak",
+    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
+    questions: phrases([
+      "Is there a gym in the hotel?",
+      "Are there any towels?",
+      "Yes, there is.",
+      "No, there aren't.",
+      "I'd like to book a double room.",
+      "How much is it per night?",
+      "The air conditioning doesn't work.",
+      "What a beautiful view!",
+      "available",
+      "reception",
+    ]),
+  },
+];

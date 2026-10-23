@@ -719,4 +719,164 @@ Gap «There is / There are» bilan boshlanadi, joy esa oxirida keladi.
       q("Qaysi gap to'g'ri?", ["There is a gym next to my school.", "Their is a gym next to my school.", "They is a gym next to my school.", "It there is a gym."]),
     ]
   ),
+
+  "A1-17": rule(
+    "Is there…? Are there…?",
+    `## So'roq gap
+**there is / there are** da so'roq uchun **is / are** oldinga chiqadi:
+• Bitta: **Is there a** gym in the hotel? — Mehmonxonada sport zali bormi?
+• Ko'p: **Are there any** towels in the room? — Xonada sochiqlar bormi?
+So'roqda ko'plik bilan **any** ishlatiladi (some emas).
+
+## Qisqa javob
+• Is there…? — **Yes, there is.** / **No, there isn't.**
+• Are there…? — **Yes, there are.** / **No, there aren't.**
+• «Yes, it is» — xato: javob ham **there** bilan bo'ladi.
+
+## Nechta bor?
+→ **How many** rooms **are there**? — There are twelve.
+How many dan keyin ot doim ko'plikda, fe'l esa **are there**.
+
+## Mehmonxonada foydali iboralar
+→ I'd like to **book** a double room for two nights.
+→ How much is it **per night**? — Is breakfast **free**?
+→ The air conditioning **doesn't work**. / The TV **is broken**.
+→ Can I have another **towel / pillow**, please?
+→ What time is **check-in** / **check-out**?`,
+    [
+      q("___ a gym in the hotel?", ["Is there", "Are there", "There is", "Is it"]),
+      q("___ any towels in the room?", ["Are there", "Is there", "There are", "Are they"]),
+      q("Is there a pool? (✓)", ["Yes, there is.", "Yes, it is.", "Yes, there are.", "Yes, is there."]),
+      q("Are there any rooms available? (✗)", ["No, there aren't.", "No, there isn't.", "No, they aren't.", "No, aren't there."]),
+      q("How many rooms ___?", ["are there", "is there", "there are", "there is"]),
+      q("Are there ___ blankets in the cupboard?", ["any", "some", "a", "an"]),
+      q("Qaysi gap to'g'ri?", ["It's fifty dollars per night.", "It's fifty dollars for night per.", "It's fifty dollars per a night.", "It's per night fifty dollars."]),
+      q("«Konditsioner ishlamayapti» inglizcha qanday?", ["The air conditioning doesn't work.", "The air conditioning isn't work.", "The air conditioning don't work.", "The air conditioning no work."]),
+      q("«bepul» inglizcha qanday?", ["free", "broken", "available", "only"]),
+      q("Qaysi gap to'g'ri?", ["I'd like to book a room.", "I'd like book a room.", "I like to booking a room.", "I'd like to booking a room."]),
+    ]
+  ),
+
+  "A1-18": rule(
+    "each va all the · uy-joy",
+    `## each — har bir (alohida)
+• **each** + **birlik** ot + **birlik** fe'l
+→ **Each room has** a window. — Har bir xonaning derazasi bor.
+→ **Each student is** in the classroom.
+
+## all the — barcha (hammasi birga)
+• **all the** + **ko'plik** ot + **ko'plik** fe'l
+→ **All the rooms have** curtains. — Barcha xonalarda parda bor.
+→ **All the beds are** comfortable.
+• Sanalmaydigan ot bilan: **All the furniture is** new.
+
+## Diqqat
+• Each rooms — xato (each dan keyin birlik).
+• All rooms the — xato (to'g'ri tartib: **all the** rooms).
+• **furniture** — sanalmaydigan ot: furnitures — xato.
+• shelf → **shelves** (f → ves).
+
+## Joy
+• **upstairs** — yuqori qavatda, **downstairs** — pastki qavatda (oxirida -s!)
+• Xonalar: kitchen, living room, bedroom, dining room, bathroom, hall, garage.
+
+## Muammolar
+→ The heating **doesn't work**. The fridge **is very noisy**. The lamp **is broken**.`,
+    [
+      q("___ room has a lamp.", ["Each", "All the", "All", "Every the"]),
+      q("___ rooms have curtains.", ["All the", "Each", "Each the", "All of"]),
+      q("Each bedroom ___ a wardrobe.", ["has", "have", "are", "do"]),
+      q("All the beds ___ comfortable.", ["are", "is", "has", "does"]),
+      q("Qaysi gap to'g'ri?", ["All the furniture is new.", "All the furnitures are new.", "Each furnitures is new.", "All furniture the is new."]),
+      q("«shelf» ning ko'pligi qaysi?", ["shelves", "shelfs", "shelfes", "shelf"]),
+      q("Yotoqxonalar yuqori qavatda — The bedrooms are ___.", ["upstairs", "upstair", "up stair", "downstairs"]),
+      q("Sut qayerda saqlanadi?", ["in the fridge", "in the cooker", "in the wardrobe", "in the garage"]),
+      q("«cooker» nima?", ["Plita", "Oshpaz", "Muzlatgich", "Shkaf"]),
+      q("Qaysi gap to'g'ri?", ["The heating doesn't work.", "The heating doesn't works.", "The heating isn't work.", "The heating not work."]),
+    ]
+  ),
+
+  "A1-19": rule(
+    "can / can't — qobiliyat",
+    `## …a olaman
+**can** — biror ishni qila olishni bildiradi:
+→ I **can** swim. — Men suza olaman.
+→ She **can't** drive. — U mashina hayday olmaydi.
+
+## Shakli hamma uchun bir xil
+• I / you / he / she / it / we / they **can**
+• can **-s olmaydi**: she can (she cans — xato)
+• can dan keyin fe'l **to siz** va **-s siz**: He can **drive**. (can to drive, can drives — xato)
+
+## Inkor va so'roq
+• can not → **can't** (yoki cannot): I can't sing.
+• So'roq — can oldinga chiqadi: **Can** you **swim**?
+• Qisqa javob: **Yes, I can.** / **No, I can't.**
+• «I don't can» — xato.
+
+## Talaffuz
+• Gapda **can** qisqa va urg'usiz: I can swim [ay kən suim]
+• **can't** cho'ziq va urg'uli: I can't swim [ay **kaant** suim]
+
+## Qanchalik yaxshi?
+• very well — juda yaxshi · quite well — ancha yaxshi
+• a little — biroz · not … at all — umuman
+→ I can speak **a little** French. I can't sing **at all**.
+
+## O'yin va musiqa
+• Sport, o'yin — artiklsiz: play **chess**, play **tennis**
+• Musiqa asbobi — **the** bilan: play **the guitar**, play **the piano**`,
+    [
+      q("She ___ swim.", ["can", "cans", "can to", "is can"]),
+      q("Qaysi gap to'g'ri?", ["He can drive.", "He can drives.", "He can to drive.", "He cans drive."]),
+      q("«Men qo'shiq ayta olmayman» inglizcha qanday?", ["I can't sing.", "I don't can sing.", "I can't to sing.", "I not can sing."]),
+      q("Can you play the guitar? (✓)", ["Yes, I can.", "Yes, I do.", "Yes, I play.", "Yes, I can play it can."]),
+      q("Can she dance? (✗)", ["No, she can't.", "No, she doesn't.", "No, she isn't.", "No, she can."]),
+      q("Qaysi biri to'g'ri?", ["play the piano", "play piano the", "play a piano chess", "play pianos the"]),
+      q("Qaysi biri to'g'ri?", ["play chess", "play the chess", "play a chess", "play chesses"]),
+      q("I can't swim ___ all.", ["at", "a", "in", "for"]),
+      q("«biroz» inglizcha qanday?", ["a little", "at all", "quite", "very well"]),
+      q("Gapda qaysi biri cho'ziq va urg'u bilan aytiladi?", ["can't", "can", "Ikkalasi bir xil", "Hech biri"]),
+    ]
+  ),
+
+  "A1-20": rule(
+    "Can you…? Could you…? · ravishlar",
+    `## Iltimos
+• **Can you** close the window, please? — oddiy iltimos
+• **Could you** close the window, please? — muloyimroq iltimos
+• Ruxsat so'rash: **Can I** borrow your pen?
+can / could dan keyin fe'l to siz keladi.
+
+## Javoblar
+• Ha: **Sure.** / **Of course.** / **Certainly.** (rasmiy)
+• Yo'q: **I'm afraid I can't.** / **Sorry, I can't.**
+
+## borrow va lend
+• **borrow** — olib turmoq: Can **I borrow** your pen?
+• **lend** — berib turmoq: Can **you lend me** your pen?
+
+## Harakat ravishlari
+Ravish fe'lni tasvirlaydi: qanday qiladi?
+• Sifat **+ ly**: quick → quick**ly**, careful → careful**ly**, quiet → quiet**ly**
+• **-y → -ily**: easy → eas**ily**, happy → happ**ily**
+• Noto'g'ri: good → **well**; hard → **hard**; fast → **fast**
+• Ravish fe'ldan (yoki obyektdan) **keyin**: She speaks English **well**. (speaks well English — xato)
+
+## Sifat va ravish
+• Sifat otni tasvirlaydi: a **careful** driver, Your English is **good**.
+• Ravish fe'lni tasvirlaydi: He drives **carefully**. You speak English **well**.`,
+    [
+      q("___ you help me, please? (muloyim)", ["Could", "Do", "Are", "Does"]),
+      q("Qaysi gap to'g'ri?", ["Can you open the window?", "Can you to open the window?", "Can you opening the window?", "You can open the window please?"]),
+      q("Can I ___ your pen?", ["borrow", "lend", "give", "take me"]),
+      q("Could you ___ me your phone?", ["lend", "borrow", "take", "have"]),
+      q("Muloyim rad etish qaysi?", ["I'm afraid I can't.", "No, I can't help, go.", "Of course not.", "Certainly."]),
+      q("«careful» dan ravish qaysi?", ["carefully", "carefuly", "carefull", "careful"]),
+      q("«easy» dan ravish qaysi?", ["easily", "easyly", "easly", "easy"]),
+      q("«good» dan ravish qaysi?", ["well", "goodly", "good", "better"]),
+      q("Qaysi gap to'g'ri?", ["She speaks English well.", "She speaks well English.", "She speaks English good.", "She well speaks English."]),
+      q("He works very ___.", ["hard", "hardly", "hardily", "harder"]),
+    ]
+  ),
 };
