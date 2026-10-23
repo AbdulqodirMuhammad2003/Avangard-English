@@ -139,10 +139,13 @@ export function LessonsBoard({
   units,
   levels,
   exam,
+  previewAll = false,
 }: {
   units: UnitDetail[];
   levels: LevelRecord[];
   exam: BoardExam;
+  /** O'qituvchi: dars ichidagi bosqichlar (qoida, mashqlar) ham ochiq. */
+  previewAll?: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -160,7 +163,11 @@ export function LessonsBoard({
   // Faqat ochilgan darajalarning darslari ko'rsatiladi; sarlavhada esa
   // o'quvchining joriy (oxirgi ochilgan) darajasi turadi.
   const openLevels = levels.filter((l) => !l.locked);
-  const currentLevel = openLevels[openLevels.length - 1] ?? levels[0];
+  // Mazmuni hali yo'q daraja (masalan, o'qituvchiga ochiq IELTS) standart
+  // bo'lib tanlanmaydi — darsi bor oxirgi ochiq daraja ko'rsatiladi.
+  const levelsWithUnits = openLevels.filter((l) => units.some((u) => u.level_code === l.code));
+  const currentLevel =
+    levelsWithUnits[levelsWithUnits.length - 1] ?? openLevels[openLevels.length - 1] ?? levels[0];
 
   // Ro'yxatda bitta daraja ko'rsatiladi: odatda joriysi; oldingi darajalar
   // yorliq orqali (takrorlash uchun) ochiladi.
@@ -284,11 +291,11 @@ export function LessonsBoard({
   /** Dars bosqichlari ketma-ket ochiladi: lug'at VOCAB_PASS_PCT ga yetmaguncha qoida, qoida
    *  testidan kamida RULE_PASS_PCT natija olinmaguncha mashqlar yopiq. */
   function unitVocabDone(unit: UnitDetail) {
-    return unit.totalWords === 0 || unitVocabPercent(unit) >= VOCAB_PASS_PCT;
+    return previewAll || unit.totalWords === 0 || unitVocabPercent(unit) >= VOCAB_PASS_PCT;
   }
 
   function unitRuleDone(unit: UnitDetail) {
-    return unit.exercises.every((e) => e.kind !== "rule" || e.score_pct >= RULE_PASS_PCT);
+    return previewAll || unit.exercises.every((e) => e.kind !== "rule" || e.score_pct >= RULE_PASS_PCT);
   }
 
   function finishExercise(exerciseId: number, answers: { questionId: number; correct: boolean }[]) {
@@ -393,9 +400,11 @@ export function LessonsBoard({
                 {level.code}
                 {level.code === currentLevel?.code ? (
                   <span className="ml-1 text-xs font-semibold text-azure-600 dark:text-azure-300">· joriy</span>
-                ) : (
+                ) : level.order_index < (currentLevel?.order_index ?? 0) ? (
+                  // ✓ — faqat o'tilgan (joriydan oldingi) daraja; o'qituvchiga
+                  // ochiq keyingi darajalar belgisiz.
                   <span className="ml-1 text-xs font-semibold text-mint-600 dark:text-mint-300">✓</span>
-                )}
+                ) : null}
               </button>
             );
           })}

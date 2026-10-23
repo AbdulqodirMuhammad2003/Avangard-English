@@ -15,6 +15,10 @@ import { A1_09_EXERCISES, A1_09_ROUNDS } from "./a1-09-family";
 import { A1_10_EXERCISES, A1_10_ROUNDS } from "./a1-10-about-me";
 import { A1_11_EXERCISES, A1_11_ROUNDS } from "./a1-11-journeys";
 import { A1_12_EXERCISES, A1_12_ROUNDS } from "./a1-12-my-day";
+import { A1_13_EXERCISES, A1_13_ROUNDS } from "./a1-13-clothes";
+import { A1_14_EXERCISES, A1_14_ROUNDS } from "./a1-14-buildings";
+import { A1_15_EXERCISES, A1_15_ROUNDS } from "./a1-15-style";
+import { A1_16_EXERCISES, A1_16_ROUNDS } from "./a1-16-my-town";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -64,6 +68,10 @@ const LESSONS: LessonContent[] = [
   { code: "A1-10", rounds: A1_10_ROUNDS, exercises: A1_10_EXERCISES },
   { code: "A1-11", rounds: A1_11_ROUNDS, exercises: A1_11_EXERCISES },
   { code: "A1-12", rounds: A1_12_ROUNDS, exercises: A1_12_EXERCISES },
+  { code: "A1-13", rounds: A1_13_ROUNDS, exercises: A1_13_EXERCISES },
+  { code: "A1-14", rounds: A1_14_ROUNDS, exercises: A1_14_EXERCISES },
+  { code: "A1-15", rounds: A1_15_ROUNDS, exercises: A1_15_EXERCISES },
+  { code: "A1-16", rounds: A1_16_ROUNDS, exercises: A1_16_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —

@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/auth";
-import { getAllUnitsDetailed, withoutQuestions, getLevels } from "@/lib/data";
+import { getAllUnitsDetailed, withoutQuestions, getLevels, getUserStats } from "@/lib/data";
 import { LessonsBoard } from "@/components/lessons/LessonsBoard";
 import { getExamStatus } from "@/lib/exam";
 
@@ -9,11 +9,14 @@ import { getExamStatus } from "@/lib/exam";
 export default async function LessonsPage() {
   const session = await getSession();
   const userId = session!.userId;
-  const [units, levels, exam] = await Promise.all([
+  const [units, levels, exam, user] = await Promise.all([
     getAllUnitsDetailed(userId).then(withoutQuestions),
     getLevels(userId),
     getExamStatus(userId),
+    getUserStats(userId),
   ]);
+  // O'qituvchi saytni tekshirishi uchun unga hamma narsa ochiq.
+  const isTeacher = user?.role === "teacher";
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-4">
@@ -21,11 +24,12 @@ export default async function LessonsPage() {
       <LessonsBoard
         units={units}
         levels={levels}
+        previewAll={isTeacher}
         exam={{
           level: exam.level,
           // Imtihon daraja tugagach (barcha darslar 80 %) ochiladi; boshlangan
           // urinish yoki takrorlash rejasi bo'lsa ham kirish mumkin.
-          open: exam.levelComplete || !!exam.active || (!!exam.lastResult && !exam.levelResetHappened),
+          open: isTeacher || exam.levelComplete || !!exam.active || (!!exam.lastResult && !exam.levelResetHappened),
           passed: exam.passed,
           note: exam.active
             ? "Imtihon davom etyapti"

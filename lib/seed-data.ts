@@ -166,6 +166,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A1-10", level: "A1", title: "10-dars", subtitle: "Men haqimda: Present Simple", color: "blue", icon: "book", locked: 1, date: "", clip: null },
   { code: "A1-11", level: "A1", title: "11-dars", subtitle: "Yo'lda: don't / doesn't", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "A1-12", level: "A1", title: "12-dars", subtitle: "Kun tartibim: Do you…?", color: "green", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A1-13", level: "A1", title: "13-dars", subtitle: "Kiyim: always, never", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A1-14", level: "A1", title: "14-dars", subtitle: "Binolar: Wh- savollar", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A1-15", level: "A1", title: "15-dars", subtitle: "Uslub va tana", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A1-16", level: "A1", title: "16-dars", subtitle: "Shahrim: there is / there are", color: "green", icon: "book", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

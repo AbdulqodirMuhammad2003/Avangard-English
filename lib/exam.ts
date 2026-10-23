@@ -36,9 +36,12 @@ const EXAM_LEVELS = Object.keys(EXAMS);
 
 /** O'quvchi qaysi daraja imtihonini ko'radi: o'z darajasiniki; u darajada
  *  imtihon hali bo'lmasa — oxirgi tayyor imtihon (o'tganini ko'rsatish uchun). */
-async function examLevelOf(userId: number): Promise<string> {
-  const [u] = await sql<{ level: string }[]>`SELECT level FROM users WHERE id = ${userId}`;
-  return u && EXAMS[u.level] ? u.level : EXAM_LEVELS[EXAM_LEVELS.length - 1];
+async function examLevelOf(userId: number): Promise<{ level: string; isTeacher: boolean }> {
+  const [u] = await sql<{ level: string; role: string }[]>`SELECT level, role FROM users WHERE id = ${userId}`;
+  return {
+    level: u && EXAMS[u.level] ? u.level : EXAM_LEVELS[EXAM_LEVELS.length - 1],
+    isTeacher: u?.role === "teacher",
+  };
 }
 export const EXAM_VOCAB_COUNT = 20;
 export const EXAM_GRAMMAR_COUNT = 20;
@@ -349,7 +352,7 @@ async function resetLevelProgress(userId: number, level: string) {
 }
 
 export async function getExamStatus(userId: number): Promise<ExamStatus> {
-  const level = await examLevelOf(userId);
+  const { level, isTeacher } = await examLevelOf(userId);
   let attempts = await attemptsOf(userId, level);
 
   // Vaqti tugagan, lekin topshirilmagan urinish — saqlangan javoblar bilan yakunlanadi.
@@ -402,6 +405,9 @@ export async function getExamStatus(userId: number): Promise<ExamStatus> {
   if (passed) blockReason = "Imtihondan o'tgansiz.";
   else if (active) blockReason = null;
   else if (!isReady(level)) blockReason = "Bu daraja imtihoni hali tayyorlanmoqda.";
+  // O'qituvchi imtihonni tekshirishi uchun: darslar foizi, 24 soat va
+  // takrorlash rejasi shartlarisiz.
+  else if (isTeacher) blockReason = null;
   else {
     // Darslar ketma-ketligi qoidasi yoqilgan bo'lsa yoki daraja qayta
     // o'qilayotgan bo'lsa (2-sikl va keyingilari), imtihon barcha darslar

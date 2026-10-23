@@ -288,12 +288,13 @@ export async function getWordPool(): Promise<{ id: number; word: string; transla
 /** Darajalar o'quvchi uchun: uning joriy darajasi va undan oldingilari
  *  ochiq, keyingilari yopiq. Keyingi daraja yakuniy imtihondan o'tganda
  *  ochiladi (lib/exam.ts o'quvchining darajasini ko'taradi).
- *  PREVIEW_ALL_LEVELS_EMAILS dagi hisoblarga hamma darajalar ochiq. */
+ *  O'qituvchiga (mazmunni tekshirish uchun) va PREVIEW_ALL_LEVELS_EMAILS
+ *  dagi hisoblarga hamma darajalar ochiq. */
 export async function getLevels(userId: number): Promise<LevelRecord[]> {
   return sql<LevelRecord[]>`
     SELECT l.id, l.code, l.title, l.description, l.order_index,
            (l.order_index > COALESCE(
-              (SELECT CASE WHEN u.email IN ${sql(PREVIEW_ALL_LEVELS_EMAILS.length ? PREVIEW_ALL_LEVELS_EMAILS : [""])}
+              (SELECT CASE WHEN u.role = 'teacher' OR u.email IN ${sql(PREVIEW_ALL_LEVELS_EMAILS.length ? PREVIEW_ALL_LEVELS_EMAILS : [""])}
                            THEN 999 ELSE lv.order_index END
                FROM users u JOIN levels lv ON lv.code = u.level WHERE u.id = ${userId}), 1
            ))::int AS locked
@@ -363,8 +364,8 @@ export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]>
     `,
     sql<{ code: string; order_index: number }[]>`SELECT code, order_index FROM levels`,
     // O'qituvchi o'quvchini qaysi darajaning qaysi darsidan boshlatgan.
-    sql<{ level: string; start_order: number | null }[]>`
-      SELECT u.level, su.order_index AS start_order
+    sql<{ level: string; role: string; start_order: number | null }[]>`
+      SELECT u.level, u.role, su.order_index AS start_order
       FROM users u
       LEFT JOIN levels lv ON lv.code = u.level
       LEFT JOIN units su ON su.id = u.start_unit_id AND su.level_id = lv.id
@@ -382,6 +383,8 @@ export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]>
   }
   const placedOpen = (unit: UnitRecord) => {
     if (!placement) return false;
+    // O'qituvchi saytdagi barcha darslarni tekshira olishi uchun — hammasi ochiq.
+    if (placement.role === "teacher") return true;
     const unitLevel = levelOrder.get(unit.level_code) ?? 0;
     const userLevel = levelOrder.get(placement.level) ?? 0;
     if (unitLevel < userLevel) return true;

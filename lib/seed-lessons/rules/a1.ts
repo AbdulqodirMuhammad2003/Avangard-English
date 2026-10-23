@@ -566,4 +566,157 @@ get up, have breakfast, have a shower, go to work, have lunch, go home, have din
       q("Sotuvchiga pul berayotib nima deysiz?", ["Here you are.", "Here are you.", "You are here.", "Take you."]),
     ]
   ),
+
+  "A1-13": rule(
+    "Chastota ravishlari · and, but, because",
+    `## Qanchalik tez-tez?
+• **always** — doim (100%)
+• **usually** — odatda (80%)
+• **often** — tez-tez (60%)
+• **sometimes** — ba'zan (30%)
+• **never** — hech qachon (0%)
+
+## Gapdagi o'rni
+• Oddiy fe'ldan **oldin**: I **always** wear jeans. She **never** drinks coffee.
+• **am / is / are** dan **keyin**: He **is never** late. I'**m usually** tired on Monday.
+• **never** — o'zi inkor, unga don't qo'shilmaydi: I never wear a tie. (I never don't — xato)
+
+## Gaplarni bog'lash
+• **and** — va (qo'shimcha fikr): I like jeans **and** T-shirts.
+• **but** — lekin (qarama-qarshi fikr): It's cold, **but** I don't wear a coat.
+• **because** — chunki (sabab): I wear a coat **because** it's cold.
+
+## Kiyim va ranglar
+• **trousers, jeans, shoes, clothes** — doim ko'plikda: My jeans **are** blue.
+• Rang — sifat, otdan oldin keladi va o'zgarmaydi: a **black** jacket, black jacket**s**.
+• Britancha imlo: **colour** (amerikancha — color).`,
+    [
+      q("I ___ wear jeans. (100%)", ["always", "never", "sometimes", "often"]),
+      q("Qaysi gap to'g'ri?", ["She is never late.", "She never is late.", "She is late never.", "Never she is late."]),
+      q("Qaysi gap to'g'ri?", ["I usually wear a dress.", "I wear usually a dress.", "I usually am wear a dress.", "Usually I a dress wear."]),
+      q("I wear a coat ___ it's cold.", ["because", "but", "and", "so"]),
+      q("It's cold, ___ I don't wear a coat.", ["but", "because", "and", "or"]),
+      q("My jeans ___ blue.", ["are", "is", "am", "be"]),
+      q("«sometimes» qanchalik tez-tez?", ["Ba'zan", "Doim", "Hech qachon", "Odatda"]),
+      q("Qaysi gap to'g'ri?", ["I never wear a tie.", "I never don't wear a tie.", "I don't never wear a tie.", "I wear never a tie."]),
+      q("Qaysi biri to'g'ri?", ["a black jacket", "a jacket black", "a blacks jacket", "black a jacket"]),
+      q("Britancha imloda «rang» qanday yoziladi?", ["colour", "color", "colur", "coulor"]),
+    ]
+  ),
+
+  "A1-14": rule(
+    "Wh- savollar",
+    `## So'roq so'zlari
+• **What** — nima · **Who** — kim · **Where** — qayerda
+• **When** — qachon · **Why** — nega · **Which** — qaysi
+• **How** — qanday · **How many** — nechta · **How long** — qancha uzun / qancha vaqt
+• **How often** — qanchalik tez-tez · **How far** — qancha uzoq
+• **What time** — soat nechada · **What colour** — qanday rangda · **What kind of** — qanaqa
+
+## Oddiy fe'l bilan
+**So'roq so'zi + do / does + ega + fe'l**
+→ Where **do** you live?
+→ What time **does** the museum **open**? (opens emas!)
+
+## to be bilan
+**So'roq so'zi + am / is / are + ega**
+→ Where **is** the station?
+→ How tall **is** the tower? (sifat bilan doim to be)
+
+## Javoblar
+• Why…? — **Because** …: Why do you like it? — Because it's beautiful.
+• How many…? — son: How many floors? — Twenty.
+• **How many** — sanaladigan (floors, people), **How much** — narx yoki sanalmaydigan (money).`,
+    [
+      q("___ does the museum open? — At nine.", ["When", "Why", "Who", "Which"]),
+      q("Qaysi savol to'g'ri?", ["Where does she live?", "Where she lives?", "Where does she lives?", "Where do she live?"]),
+      q("Qaysi savol to'g'ri?", ["How tall is the tower?", "How tall does the tower?", "How tall the tower is?", "How does tall the tower?"]),
+      q("Why do you like Samarkand? — ___", ["Because it's beautiful.", "But it's beautiful.", "Yes, I do.", "At nine."]),
+      q("___ floors are there? — Twelve.", ["How many", "How much", "How long", "How far"]),
+      q("___ bus goes to the centre? — Number 5.", ["Which", "Who", "Why", "When"]),
+      q("___ is the airport? — Twenty kilometres.", ["How far", "How long", "How many", "How often"]),
+      q("___ do you go to the gym? — Twice a week.", ["How often", "How many", "When", "What time"]),
+      q("What time ___ the train leave?", ["does", "do", "is", "are"]),
+      q("«Qaysi» inglizcha qanday?", ["which", "why", "who", "what"]),
+    ]
+  ),
+
+  "A1-15": rule(
+    "Present Simple — hammasi bir joyda · very / really",
+    `## Present Simple: to'liq jadval
+• **Darak:** I/you/we/they **work** · he/she/it **works**
+• **Inkor:** I/you/we/they **don't work** · he/she/it **doesn't work**
+• **So'roq:** **Do** you **work**? · **Does** she **work**?
+• **Qisqa javob:** Yes, I **do**. / No, she **doesn't**.
+• **Wh- savol:** Where **does** he **work**? What time **do** you **get up**?
+Esda tuting: -s faqat bitta joyda bo'ladi. «She doesn't works», «Does she works» — xato.
+
+## very / really + sifat
+• **very** — juda: It's **very** cold.
+• **really** — rostdan, juda (og'zaki nutqda ko'p): This film is **really** good.
+• **look** + sifat — …ko'rinmoq: You **look great**! (greatly emas)
+
+## Noto'g'ri ko'plik
+• foot → **feet**, tooth → **teeth**
+• man → men, woman → women, child → children
+• **hair** — sanalmaydigan ot: She has **long hair**. (a long hair — xato)
+
+## Vokzalda
+→ A **single** / **return** ticket to Samarkand, please.
+→ Which **platform** does the train leave from?
+→ When is the **next** / **last** train?
+→ Do I **change** trains? How do I **get to** the station?`,
+    [
+      q("She ___ wear glasses. (inkor)", ["doesn't", "don't", "isn't", "not"]),
+      q("Qaysi savol to'g'ri?", ["Where does he work?", "Where does he works?", "Where he works?", "Where do he work?"]),
+      q("Does your brother have a beard? (✓)", ["Yes, he does.", "Yes, he has.", "Yes, he is.", "Yes, he do."]),
+      q("«foot» ning ko'pligi qaysi?", ["feet", "foots", "feets", "foot"]),
+      q("«tooth» ning ko'pligi qaysi?", ["teeth", "tooths", "teeths", "toothes"]),
+      q("Qaysi gap to'g'ri?", ["She has long hair.", "She has a long hair.", "She has long hairs.", "She long hair has."]),
+      q("You look ___!", ["great", "greatly", "very greatly", "greatness"]),
+      q("Borib-qaytish chiptasi qanday ataladi?", ["return ticket", "single ticket", "next ticket", "last ticket"]),
+      q("___ do I get to the station?", ["How", "What", "Which", "Who"]),
+      q("This film is ___ good.", ["really", "real", "much", "very much"]),
+    ]
+  ),
+
+  "A1-16": rule(
+    "there is / there are · some / any",
+    `## …bor
+O'zbekchada «Uyim yaqinida park bor» deymiz. Inglizchada biror joyda nimadir borligini **there is / there are** bilan aytamiz:
+• Bitta: **There is** (There's) a park near my house.
+• Ko'p: **There are** two cinemas in our town.
+Gap «There is / There are» bilan boshlanadi, joy esa oxirida keladi.
+
+## Inkor
+• **There isn't a** museum here. — Bu yerda muzey yo'q.
+• **There aren't any** banks near here. — Yaqin atrofda birorta bank yo'q.
+
+## some va any
+• Darak gapda — **some**: There are **some** cafes in the square.
+• Inkor va so'roqda — **any**: There aren't **any** shops. Are there **any** parks?
+• **a lot of** — ko'p: There are **a lot of** people. (a lot people — xato)
+
+## «It is» bilan adashtirmang
+• **There is** a fountain in the square. — Maydonda favvora **bor**.
+• **It is** a big fountain. — U katta favvora.
+• **There** (bor / u yerda) va **their** (ularning) — boshqa-boshqa so'zlar.
+
+## Joy
+• **opposite** the bank — bank qarshisida (opposite **of** — xato)
+• **on the corner** — muyulishda
+• **next to**, **near**, **behind**, **in front of** — 6-darsdagidek.`,
+    [
+      q("___ a park near my house.", ["There is", "There are", "It is", "Their is"]),
+      q("___ two cinemas in our town.", ["There are", "There is", "They are", "It are"]),
+      q("There aren't ___ banks here.", ["any", "some", "a", "no"]),
+      q("There are ___ cafes in the square.", ["some", "any", "a", "an"]),
+      q("Qaysi gap to'g'ri?", ["There are a lot of people.", "There are a lot people.", "There is a lot of people.", "It is a lot of people."]),
+      q("Are there ___ supermarkets near here?", ["any", "some", "a", "the"]),
+      q("Qaysi gap to'g'ri?", ["The bank is opposite the hotel.", "The bank is opposite of the hotel.", "The bank is opposite to hotel.", "The bank opposite is the hotel."]),
+      q("«Bu yerda muzey yo'q» inglizcha qanday?", ["There isn't a museum here.", "There aren't a museum here.", "It isn't a museum here.", "There isn't any museum here are."]),
+      q("The cafe is ___ the corner.", ["on", "in", "at", "to"]),
+      q("Qaysi gap to'g'ri?", ["There is a gym next to my school.", "Their is a gym next to my school.", "They is a gym next to my school.", "It there is a gym."]),
+    ]
+  ),
 };
