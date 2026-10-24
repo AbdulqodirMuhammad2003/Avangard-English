@@ -1040,4 +1040,135 @@ Gapdagi o'rniga qarab olmosh shakli o'zgaradi:
       q("«o'tgan kuni» inglizcha qanday?", ["the day before yesterday", "last yesterday", "yesterday before", "the day last"]),
     ]
   ),
+  "A1-25": rule(
+    "Past Simple: noto'g'ri fe'llar · sifat + ot",
+    `## Noto'g'ri fe'llar
+Ko'p fe'llar o'tgan zamonda -ed olmaydi — ularning shakli boshqacha va uni yod olish kerak:
+• go → **went** · come → **came** · see → **saw** · have → **had**
+• get → **got** · make → **made** · take → **took** · give → **gave**
+• buy → **bought** · eat → **ate** · drink → **drank** · write → **wrote**
+• meet → **met** · leave → **left** · find → **found** · feel → **felt**
+• tell → **told** · begin → **began** · know → **knew** · send → **sent**
+Shakl hamma shaxslar uchun bir xil: I **went**, she **went**, they **went**.
+→ We **went** to Khiva last May. — O'tgan may oyida Xivaga bordik.
+• goed, buyed, eated — xato!
+
+## Sifat + ot
+Sifat otdan **oldin** keladi va o'zgarmaydi:
+→ a **wonderful** trip · **delicious** food · a **lovely** hotel
+Sifat «to be» dan keyin ham keladi: The food **was delicious**.
+• a trip wonderful, a wonderfully time — xato.`,
+    [
+      q("go → ?", ["went", "goed", "gone", "wented"]),
+      q("buy → ?", ["bought", "buyed", "brought", "boughted"]),
+      q("We ___ a lot of photos.", ["took", "taked", "take", "tooked"]),
+      q("I ___ a beautiful mosque.", ["saw", "seed", "see", "sawed"]),
+      q("She ___ me a present.", ["gave", "gived", "give", "gaved"]),
+      q("They ___ plov for dinner.", ["ate", "eated", "eat", "ated"]),
+      q("Qaysi gap to'g'ri?", ["We had a wonderful time.", "We had a time wonderful.", "We had a wonderfully time.", "We haved a wonderful time."]),
+      q("The food was ___.", ["delicious", "deliciously", "a delicious", "delicious food was"]),
+      q("know → ?", ["knew", "knowed", "known", "new"]),
+      q("Qaysi gapda xato bor?", ["I meeted my friends.", "I met my friends.", "I felt happy.", "We left at seven."]),
+    ]
+  ),
+  "A1-26": rule(
+    "Past Simple: inkor va savol · fe'l iboralari",
+    `## Inkor: didn't + fe'l
+O'tgan zamon inkori — **didn't** (did not) + fe'lning **oddiy** shakli. Hamma shaxslar uchun bir xil:
+→ I **didn't go** to college. — Kollejga bormadim.
+→ She **didn't call** me. — U menga qo'ng'iroq qilmadi.
+• didn't went, didn't called — xato! O'tgan zamonni «did» ko'rsatadi, fe'l oddiy qoladi.
+
+## Savol: Did + ega + fe'l
+→ **Did** you **see** the film? — Filmni ko'rdingmi?
+→ Where **did** you **go**? — Qayerga bording?
+Qisqa javob: **Yes, I did.** / **No, I didn't.**
+• was / were bilan did ishlatilmaydi: **Were** you ill? — Yes, I **was**.
+
+## do, make, have, take, go
+• **do** the shopping, do the washing-up, do homework
+• **make** the bed, make a mistake, make a phone call
+• **have** a shower, have a rest, have breakfast
+• **take** a taxi, take an exam, take photos
+• **go** shopping, go home`,
+    [
+      q("I ___ go to college yesterday.", ["didn't", "don't", "wasn't", "not"]),
+      q("She didn't ___ me.", ["call", "called", "calls", "calling"]),
+      q("___ you see the match?", ["Did", "Do", "Were", "Was"]),
+      q("Did he ___ his keys?", ["lose", "lost", "loses", "losed"]),
+      q("Did you do the shopping? — Yes, I ___.", ["did", "do", "was", "done"]),
+      q("Were you ill? — No, I ___.", ["wasn't", "didn't", "weren't", "don't"]),
+      q("Qaysi gap to'g'ri?", ["Where did you go?", "Where did you went?", "Where you went?", "Where do you went?"]),
+      q("___ a mistake", ["make", "do", "take", "go"]),
+      q("___ a shower", ["have", "make", "do", "take"]),
+      q("___ the washing-up", ["do", "make", "have", "go"]),
+    ]
+  ),
+  "A1-27": rule(
+    "ago · ob-havo",
+    `## ago — «…oldin»
+**ago** vaqt miqdoridan **keyin** keladi va o'tgan zamon bilan ishlatiladi:
+→ two days **ago** — ikki kun oldin · ten years **ago** — o'n yil oldin · an hour **ago** — bir soat oldin
+→ I came here three years **ago**.
+• before two days, ago two days — xato.
+
+## ago, last, in
+• **ago** — hozirdan orqaga hisoblanadi: five minutes ago, a week ago
+• **last** — eng yaqin o'tgan: last night, last week, last summer (predlogsiz!)
+• **in** — oy, yil, fasl: in May, in 2010, in winter
+Savol: **When** did it happen? / How long **ago** did it happen?
+
+## Ob-havo
+• What's the weather **like**? — Ob-havo qanday?
+• It's **sunny / cloudy / windy / foggy / rainy / snowy / warm**. — It was windy yesterday.
+• Ot va sifat: sun → **sunny**, wind → **windy**, cloud → **cloudy**, fog → **foggy**
+• There was a **storm**. It snows in **winter**.
+• **news** — birlikda: The news **is** good.`,
+    [
+      q("I saw him two days ___.", ["ago", "before", "last", "in"]),
+      q("Qaysi to'g'ri?", ["ten years ago", "ago ten years", "before ten years", "last ten years"]),
+      q("We went to Bukhara ___ summer.", ["last", "ago", "in the", "on"]),
+      q("She was born ___ 2010.", ["in", "ago", "last", "on"]),
+      q("What's the weather ___?", ["like", "likes", "as", "how"]),
+      q("There's a lot of wind. It's ___.", ["windy", "wind", "winded", "windly"]),
+      q("It was ___ yesterday. (quyoshli)", ["sunny", "sun", "suny", "sunned"]),
+      q("The news ___ very good.", ["is", "are", "were", "be"]),
+      q("Qaysi fasl qishdan keyin keladi?", ["spring", "autumn", "summer", "winter"]),
+      q("win → ?", ["won", "winned", "wan", "wined"]),
+    ]
+  ),
+  "A1-28": rule(
+    "be going to · kelasi zamon iboralari",
+    `## Rejalar: be going to + fe'l
+Oldindan o'ylangan reja haqida gapirganda:
+• I **am (I'm)** going to + fe'l
+• he / she / it **is (he's, she's)** going to + fe'l
+• we / you / they **are (we're, they're)** going to + fe'l
+→ I'**m going to study** tonight. — Bugun kechqurun dars qilmoqchiman.
+→ They'**re going to get** married. — Ular turmush qurishadi.
+going to dan keyin fe'l **oddiy** shaklda: going to study (going to studying, going to studied — xato).
+
+## Inkor
+• I'**m not** going to… · he **isn't** going to… · we **aren't** going to…
+→ We **aren't going to** take a taxi.
+• I don't going to — xato.
+
+## Kelasi zamon iboralari
+• **tonight** — bugun kechqurun · **tomorrow** — ertaga
+• **the day after tomorrow** — indinga
+• **next** week / month / year / summer — kelasi… (predlogsiz!)
+• **soon** — tez orada · **later** — keyinroq · **in the future** — kelajakda`,
+    [
+      q("I ___ going to study tonight.", ["am", "is", "are", "be"]),
+      q("She ___ going to get a job.", ["is", "am", "are", "be"]),
+      q("We're going to ___ house.", ["move", "moving", "moved", "moves"]),
+      q("He's going ___ study abroad.", ["to", "for", "-", "at"]),
+      q("Inkor: They ___ going to come.", ["aren't", "don't", "isn't", "not"]),
+      q("Inkor: I ___ going to stay.", ["'m not", "don't", "isn't", "aren't"]),
+      q("I'm going to visit my aunt ___ week.", ["next", "last", "in next", "ago"]),
+      q("«indinga» inglizcha qanday?", ["the day after tomorrow", "the day before yesterday", "after tomorrow day", "next tomorrow"]),
+      q("Qaysi gap to'g'ri?", ["It's going to be cold.", "It's going to is cold.", "It going to be cold.", "It's going be cold."]),
+      q("«tez orada» inglizcha qanday?", ["soon", "later", "tonight", "ago"]),
+    ]
+  ),
 };

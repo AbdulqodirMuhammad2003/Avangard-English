@@ -178,6 +178,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A1-22", level: "A1", title: "22-dars", subtitle: "Bolaligimizda: was / were", color: "blue", icon: "book", locked: 1, date: "", clip: null },
   { code: "A1-23", level: "A1", title: "23-dars", subtitle: "O'tmishdagi hayot: -ed", color: "purple", icon: "book", locked: 1, date: "", clip: null },
   { code: "A1-24", level: "A1", title: "24-dars", subtitle: "Unutilmas lahzalar: me, him, them", color: "green", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A1-25", level: "A1", title: "25-dars", subtitle: "Yaxshi xotiralar: went, saw, bought", color: "orange", icon: "book", locked: 1, date: "", clip: null },
+  { code: "A1-26", level: "A1", title: "26-dars", subtitle: "Bahona: didn't / Did you…?", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A1-27", level: "A1", title: "27-dars", subtitle: "Yangiliklar va ob-havo: ago", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A1-28", level: "A1", title: "28-dars", subtitle: "Rejalar: going to", color: "green", icon: "book", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

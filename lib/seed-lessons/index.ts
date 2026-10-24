@@ -27,6 +27,10 @@ import { A1_21_EXERCISES, A1_21_ROUNDS } from "./a1-21-hobbies";
 import { A1_22_EXERCISES, A1_22_ROUNDS } from "./a1-22-childhood";
 import { A1_23_EXERCISES, A1_23_ROUNDS } from "./a1-23-past-lives";
 import { A1_24_EXERCISES, A1_24_ROUNDS } from "./a1-24-special-moments";
+import { A1_25_EXERCISES, A1_25_ROUNDS } from "./a1-25-memories";
+import { A1_26_EXERCISES, A1_26_ROUNDS } from "./a1-26-excuses";
+import { A1_27_EXERCISES, A1_27_ROUNDS } from "./a1-27-news";
+import { A1_28_EXERCISES, A1_28_ROUNDS } from "./a1-28-plans";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -88,6 +92,10 @@ const LESSONS: LessonContent[] = [
   { code: "A1-22", rounds: A1_22_ROUNDS, exercises: A1_22_EXERCISES },
   { code: "A1-23", rounds: A1_23_ROUNDS, exercises: A1_23_EXERCISES },
   { code: "A1-24", rounds: A1_24_ROUNDS, exercises: A1_24_EXERCISES },
+  { code: "A1-25", rounds: A1_25_ROUNDS, exercises: A1_25_EXERCISES },
+  { code: "A1-26", rounds: A1_26_ROUNDS, exercises: A1_26_EXERCISES },
+  { code: "A1-27", rounds: A1_27_ROUNDS, exercises: A1_27_EXERCISES },
+  { code: "A1-28", rounds: A1_28_ROUNDS, exercises: A1_28_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —
