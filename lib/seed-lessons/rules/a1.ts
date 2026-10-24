@@ -879,4 +879,165 @@ Ravish fe'lni tasvirlaydi: qanday qiladi?
       q("He works very ___.", ["hard", "hardly", "hardily", "harder"]),
     ]
   ),
+
+  "A1-21": rule(
+    "like / love / hate + -ing",
+    `## Nimani yoqtirasiz?
+Mashg'ulot haqida gapirganda bu fe'llardan keyin ikkinchi fe'l **-ing** bilan keladi:
+• **love** + -ing — juda yoqtiraman: I **love cooking**.
+• **like** + -ing — yoqtiraman: She **likes reading**.
+• **enjoy** + -ing — rohatlanaman: We **enjoy walking**.
+• **don't mind** + -ing — qarshi emasman: I **don't mind cleaning**.
+• **hate** + -ing — yomon ko'raman: He **hates getting up** early.
+O'zbekchadagi «…ishni» (o'qishni, pishirishni) qo'shimchasiga o'xshaydi.
+
+## -ing imlosi
+• Odatda + ing: read → reading, play → playing
+• -e tushib qoladi: make → mak**ing**, dance → danc**ing**
+• Qisqa so'zda oxirgi undosh ikkilanadi: swim → swi**mm**ing, run → ru**nn**ing, shop → sho**pp**ing
+• Britancha: travel → trave**ll**ing
+
+## Predlogdan keyin ham -ing
+• be **good at** + -ing: She's good at **drawing**.
+• be **interested in** + -ing: I'm interested in **taking** photos.
+
+## -ed va -ing sifatlar
+• **bored** — zerikkan (odam): I'm bored.
+• **boring** — zerikarli (narsa): The film is boring.
+• Xuddi shunday: interested / interesting, excited / exciting, relaxed / relaxing.`,
+    [
+      q("I love ___ for my family.", ["cooking", "cook", "to cooking", "cooks"]),
+      q("She enjoys ___ in the park.", ["walking", "walk", "walks", "to walking"]),
+      q("«swim» ning -ing shakli qaysi?", ["swimming", "swiming", "swimeing", "swimmin"]),
+      q("«make» ning -ing shakli qaysi?", ["making", "makeing", "makking", "make"]),
+      q("He's good ___ drawing.", ["at", "in", "on", "for"]),
+      q("I'm interested ___ history.", ["in", "at", "on", "with"]),
+      q("This film is very ___.", ["boring", "bored", "bore", "bores"]),
+      q("I'm ___. Let's go out!", ["bored", "boring", "bore", "bores"]),
+      q("Qaysi gap to'g'ri?", ["I don't mind washing the dishes.", "I don't mind wash the dishes.", "I don't minding wash the dishes.", "I not mind washing the dishes."]),
+      q("Qaysi gap to'g'ri?", ["I prefer tea to coffee.", "I prefer tea than coffee.", "I prefer tea from coffee.", "I prefer tea as coffee."]),
+    ]
+  ),
+
+  "A1-22": rule(
+    "was / were · sanalar",
+    `## to be ning o'tgan zamoni
+• I / he / she / it **was** — edim, edi
+• you / we / they **were** — eding(iz), edik, edi(lar)
+→ I **was** a shy child. — Men uyatchan bola edim.
+→ My parents **were** teachers. — Ota-onam o'qituvchi edi.
+
+## Inkor va so'roq
+• was not → **wasn't**, were not → **weren't**
+→ She **wasn't** at school yesterday.
+• So'roq: **Was** he…? / **Were** you…?
+• Qisqa javob: Yes, I **was**. / No, they **weren't**.
+
+## O'tgan zamon so'zlari
+yesterday — kecha, when I was a child — bolaligimda
+→ **Yesterday** I **was** at home. (Yesterday I am — xato)
+
+## Tartib sonlar
+1st — fir**st**, 2nd — seco**nd**, 3rd — thi**rd**, 4th — four**th**, 5th — fif**th**, 8th — eigh**th**, 9th — nin**th**, 12th — twelf**th**, 20th — twentie**th**, 21st — twenty-fir**st**
+
+## Sana
+• Kun — **on**: on the 5th of May (on the fifth of May)
+• Oy — **in**: in May · Yil — **in**: in 2008
+• Oy nomlari doim **bosh harf** bilan: January, March.
+• What's the date today? — It's the twenty-fifth of October.`,
+    [
+      q("I ___ at home yesterday.", ["was", "were", "am", "is"]),
+      q("My parents ___ teachers.", ["were", "was", "are", "is"]),
+      q("___ you at school yesterday?", ["Were", "Was", "Are", "Did"]),
+      q("Was she late? (✗)", ["No, she wasn't.", "No, she weren't.", "No, she isn't.", "No, she didn't."]),
+      q("My birthday is ___ the fifth of May.", ["on", "in", "at", "of"]),
+      q("I was born ___ 2008.", ["in", "on", "at", "from"]),
+      q("«3rd» qanday yoziladi?", ["third", "threeth", "thirdth", "three"]),
+      q("«12th» qanday yoziladi?", ["twelfth", "twelveth", "twelfeth", "twelf"]),
+      q("Qaysi oy to'g'ri yozilgan?", ["February", "february", "Febuary", "Februar"]),
+      q("Qaysi gap to'g'ri?", ["Yesterday I was ill.", "Yesterday I am ill.", "Yesterday I were ill.", "Yesterday I ill."]),
+    ]
+  ),
+
+  "A1-23": rule(
+    "Past Simple: to'g'ri fe'llar (-ed)",
+    `**Past Simple** — o'tmishda bo'lib o'tgan va tugagan ish:
+→ I **worked** in a bank. — Bankda ishladim.
+→ Navoi **lived** in Herat. — Navoiy Hirotda yashagan.
+
+## Shakli hamma uchun bir xil
+• I / you / he / she / we / they **worked**
+• He-she uchun -s **yo'q**: she worked (she workeds — xato)
+
+## -ed imlosi
+• Odatda + ed: work → work**ed**, play → play**ed**
+• -e bilan tugasa + d: live → liv**ed**, move → mov**ed**
+• Undosh + y → **ied**: study → stud**ied**
+• Qisqa so'zda undosh ikkilanadi: stop → sto**pp**ed
+• Britancha: travel → trave**ll**ed
+
+## -ed qanday o'qiladi
+• /t/ — worked, finished, watched, stopped
+• /d/ — lived, played, moved
+• /ɪd/ — wanted, started, visited (faqat **t** va **d** dan keyin)
+
+## Tug'ilgan, vafot etgan
+• **was born** — tug'ilgan: Amir Temur **was born** in 1336. (borned — xato)
+• **died** — vafot etgan: Navoi **died** in 1501.
+
+## O'tgan zamonga ishora
+yesterday, in 2015, last year, in the fifteenth **century** (asr bilan — in)`,
+    [
+      q("I ___ in Samarkand as a child. (live)", ["lived", "liveed", "live", "living"]),
+      q("She ___ medicine. (study)", ["studied", "studyed", "studies", "studdied"]),
+      q("The bus ___ near the park. (stop)", ["stopped", "stoped", "stops", "stopping"]),
+      q("Qaysi gap to'g'ri?", ["He worked in a factory.", "He workeds in a factory.", "He was work in a factory.", "He work in a factory yesterday."]),
+      q("Qaysi gap to'g'ri?", ["Navoi was born in 1441.", "Navoi borned in 1441.", "Navoi is born in 1441.", "Navoi was borned in 1441."]),
+      q("«wanted» oxiri qanday o'qiladi?", ["/ɪd/", "/t/", "/d/", "o'qilmaydi"]),
+      q("«worked» oxiri qanday o'qiladi?", ["/t/", "/d/", "/ɪd/", "o'qilmaydi"]),
+      q("«travel» ning o'tgan zamoni (britancha)?", ["travelled", "traveled", "travelt", "travelling"]),
+      q("Ulugh Beg lived ___ the fifteenth century.", ["in", "on", "at", "for"]),
+      q("«century» nima?", ["Asr (100 yil)", "Ming yil", "O'n yil", "Bir yil"]),
+    ]
+  ),
+
+  "A1-24": rule(
+    "Obyekt olmoshlari · o'tgan zamon iboralari",
+    `## Ega va obyekt
+Gapdagi o'rniga qarab olmosh shakli o'zgaradi:
+• Ega (kim?): **I, you, he, she, it, we, they**
+• Obyekt (kimni? kimga?): **me, you, him, her, it, us, them**
+→ **He** called **me**. — U menga qo'ng'iroq qildi.
+→ **I** called **him**. — Men unga qo'ng'iroq qildim.
+
+## Qayerda ishlatiladi
+• Fe'ldan keyin: Can you help **me**? I visited **them**.
+• Predlogdan keyin: This present is for **her**. Come with **us**!
+• «Me and Aziz went…» — og'zaki, lekin to'g'risi: **Aziz and I** went…
+
+## O'tgan zamon iboralari
+• **yesterday** — kecha · **the day before yesterday** — o'tgan kuni
+• **last night** — kecha kechqurun · **this morning** — bugun ertalab
+• **last week / month / year** — o'tgan hafta / oy / yil
+• **last** dan oldin predlog va artikl kerak emas: in last week, the last night — xato.
+
+## Bayram iboralari
+• Happy birthday! / Happy New Year! — tabrik
+• Congratulations! / Well done! — muvaffaqiyat uchun
+• Good luck! / Have fun! — tilak
+• Enjoy your meal! — yoqimli ishtaha
+• Qiziqish bildirish: Really? / No way! / How interesting! / That's great! / What a pity!`,
+    [
+      q("Can you help ___?", ["me", "I", "my", "mine"]),
+      q("I called ___ yesterday. (he)", ["him", "he", "his", "her"]),
+      q("This present is for ___. (she)", ["her", "she", "hers", "him"]),
+      q("Our teacher helped ___. (we)", ["us", "we", "our", "them"]),
+      q("I visited ___ last week. (they)", ["them", "they", "their", "us"]),
+      q("Qaysi gap to'g'ri?", ["Aziz and I went to the party.", "Me and Aziz went to the party.", "Aziz and me went to the party.", "I and Aziz went to party."]),
+      q("Qaysi ibora to'g'ri?", ["last week", "in last week", "the last week ago", "on last week"]),
+      q("Do'stingiz imtihondan o'tdi. Nima deysiz?", ["Well done!", "What a pity!", "Enjoy your meal!", "Have fun!"]),
+      q("Do'stingiz kela olmaydi. Nima deysiz?", ["What a pity!", "Well done!", "No problem!", "Happy New Year!"]),
+      q("«o'tgan kuni» inglizcha qanday?", ["the day before yesterday", "last yesterday", "yesterday before", "the day last"]),
+    ]
+  ),
 };
