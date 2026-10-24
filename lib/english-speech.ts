@@ -5,14 +5,52 @@
 /** Ovoz o'qish va tanish tili — britancha (kitob va IELTS britancha talaffuzda). */
 export const SPEECH_LANG = "en-GB";
 
+/** Eng mos inglizcha ovoz: avval britancha, keyin istalgan inglizcha.
+ *  Ovoz aniq berilmasa, ba'zi brauzerlar (Windows'dagi Chrome, Android)
+ *  en-GB ovozi topilmaganda umuman jim qoladi. */
+function englishVoice(): SpeechSynthesisVoice | undefined {
+  const voices = window.speechSynthesis.getVoices();
+  const lang = (v: SpeechSynthesisVoice) => v.lang.replace("_", "-").toLowerCase();
+  return (
+    voices.find((v) => lang(v) === "en-gb" && /google|natural|online/i.test(v.name)) ??
+    voices.find((v) => lang(v) === "en-gb") ??
+    voices.find((v) => lang(v).startsWith("en-") && v.localService === false) ??
+    voices.find((v) => lang(v).startsWith("en"))
+  );
+}
+
+// Ovozlar ro'yxati asinxron yuklanadi — sahifa ochilishi bilan so'rab qo'yamiz.
+if (typeof window !== "undefined" && "speechSynthesis" in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.addEventListener?.("voiceschanged", () => window.speechSynthesis.getVoices());
+}
+
+/** Chrome o'qilayotgan iborani axlatga chiqarib, ovozni uzib qo'ymasligi uchun. */
+let current: SpeechSynthesisUtterance | null = null;
+
 /** Matnni inglizcha ovozda o'qib beradi. */
 export function speak(text: string, rate?: number) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
   const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = SPEECH_LANG;
+  const voice = englishVoice();
+  if (voice) utter.voice = voice;
+  utter.lang = voice?.lang ?? SPEECH_LANG;
   if (rate) utter.rate = rate;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utter);
+  current = utter;
+  utter.onend = () => {
+    if (current === utter) current = null;
+  };
+  const wasBusy = synth.speaking || synth.pending;
+  synth.cancel();
+  // Chrome ba'zan «pauza» holatida qotib qoladi; cancel() dan darhol keyin
+  // speak() esa yangi iborani ham yutib yuboradi — shuning uchun biroz kutamiz.
+  const start = () => {
+    synth.resume();
+    synth.speak(utter);
+  };
+  if (wasBusy) setTimeout(start, 60);
+  else start();
 }
 
 /** Apostrof va tirelarning turli shakllari (telefon klaviaturalari ’ yuboradi)
