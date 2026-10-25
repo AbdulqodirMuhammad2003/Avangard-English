@@ -1171,4 +1171,112 @@ going to dan keyin fe'l **oddiy** shaklda: going to study (going to studying, go
       q("«tez orada» inglizcha qanday?", ["soon", "later", "tonight", "ago"]),
     ]
   ),
+  "A1-29": rule(
+    "be going to: savol · at / on / in",
+    `## Savol: Am / Is / Are + ega + going to + fe'l
+→ **Are** you **going to** learn Korean? — Koreys tilini o'rganmoqchimisan?
+→ **Is** she **going to** work? — U ishlamoqchimi?
+Qisqa javob: **Yes, I am. / No, I'm not.** · **Yes, she is. / No, she isn't.** · **Yes, they are. / No, they aren't.**
+• Do you going to…? — xato. Yes, I do. — xato.
+
+## Wh- savollar
+So'roq so'zi + am / is / are + ega + going to + fe'l:
+→ **What** are you going to do? · **Where** is he going to live?
+→ **When** are they going to leave? · **How long** are you going to stay?
+
+## Vaqt predloglari
+• **at** — soat va aniq payt: at seven, at noon, at midnight, at the weekend
+• **on** — kun va sana: on Monday, on 5 July, on my birthday, on Friday evening
+• **in** — oy, yil, fasl, kun qismi: in March, in 2030, in summer, in the morning / afternoon / evening
+• Istisno: **at night**.
+• **tomorrow, next…, last…, this…** — predlogsiz: I'm going to call you tomorrow.`,
+    [
+      q("___ you going to learn Korean?", ["Are", "Do", "Is", "Will"]),
+      q("___ she going to work?", ["Is", "Are", "Does", "Am"]),
+      q("Are you going to stay? — Yes, I ___.", ["am", "do", "are", "will"]),
+      q("Is he going to drive? — No, he ___.", ["isn't", "doesn't", "aren't", "didn't"]),
+      q("Qaysi savol to'g'ri?", ["Where are you going to live?", "Where you are going to live?", "Where do you going to live?", "Where are you going live?"]),
+      q("The plane leaves ___ midnight.", ["at", "in", "on", "—"]),
+      q("My birthday is ___ 5 July.", ["on", "in", "at", "—"]),
+      q("Navruz is ___ March.", ["in", "on", "at", "—"]),
+      q("We have lessons ___ the afternoon.", ["in", "on", "at", "—"]),
+      q("I'm going to call you ___ tomorrow.", ["—", "on", "in", "at"]),
+    ]
+  ),
+  "A1-30": rule(
+    "would like",
+    `## Xohish: I'd like…
+**would like** — «want» ning odobli shakli. Kafeda, do'konda shunday so'raladi:
+• I'd like (I would like) + ot: **I'd like** a coffee, please.
+• I'd like + **to** + fe'l: **I'd like to** order, please.
+would dan keyin like **o'zgarmaydi**: she'd like, he'd like (she'd likes — xato).
+
+## Taklif: Would you like…?
+→ **Would you like** some tea? — **Yes, please.** / **No, thank you.**
+→ What **would you like** to drink?
+• Javobda «Yes, I like» — xato.
+
+## like va would like
+• **like** — umuman yoqadi: I **like** tea. (Choyni yaxshi ko'raman.) Do you like tea? — Yes, I do.
+• **would like** — hozir xohlayman: I'**d like** a tea. (Bitta choy olaman.)
+
+## Kafedagi iboralar
+• Are you ready to order? · Anything else? · Here you are.
+• Can we have the bill, please? · Can I pay by card / in cash?`,
+    [
+      q("I'm thirsty. I ___ some water, please.", ["'d like", "like", "likes", "'d liking"]),
+      q("I ___ tea. I drink it every day.", ["like", "'d like", "would like", "'d liking"]),
+      q("___ you like some cake?", ["Would", "Do", "Are", "Did"]),
+      q("Would you like a coffee? — ___", ["Yes, please.", "Yes, I like.", "Yes, I do.", "Yes, I'd."]),
+      q("I'd like ___ order, please.", ["to", "—", "for", "at"]),
+      q("She'd ___ a sandwich.", ["like", "likes", "liked", "liking"]),
+      q("Do you like ice cream? — ___", ["Yes, I do.", "Yes, please.", "Yes, I'd like.", "Yes, I would."]),
+      q("Hisobni so'rang:", ["Can we have the bill, please?", "Can we have the menu, please?", "Would you like the bill?", "We'd like the tip."]),
+      q("Can I pay ___ card?", ["by", "in", "with a", "on"]),
+      q("Qaysi gap to'g'ri?", ["What would you like to drink?", "What would you like drink?", "What you would like to drink?", "What do you would like?"]),
+    ]
+  ),
+  "A1-T": rule(
+    "A1 grammatikasi — qisqacha",
+    `## to be
+• I **am** · he / she / it **is** · we / you / they **are** — o'tgan zamon: **was / were**
+→ I'm a student. · We were at home yesterday.
+
+## have got
+• I / you / we / they **have got** · he / she / it **has got**
+→ She's got two brothers. · Have you got a car? — Yes, I have.
+
+## Present Simple — odat, doimiy holat
+• I work · she work**s** · I **don't** work · she **doesn't** work · **Do** you work? / **Does** she work?
+
+## can — qobiliyat va iltimos
+• I **can** swim. · He **can't** drive. · **Can** you help me?
+
+## there is / there are
+• **There's** a bank near here. · **There are** two parks. · Is there…? / Are there…?
+
+## Past Simple — o'tgan voqea
+• work → work**ed**, go → **went** · **didn't** + fe'l · **Did** you…? — Yes, I did.
+
+## be going to — reja
+• I'**m going to** study. · She **isn't going to** come. · **Are** you **going to**…?
+
+## would like — odobli xohish
+• I'**d like** a coffee. · **Would you like** some tea? — Yes, please.
+
+## Bog'lovchilar
+• **and, but, or, so** (natija), **because** (sabab) · tartib: **first, then, after that, finally**`,
+    [
+      q("We ___ at home yesterday.", ["were", "was", "are", "did"]),
+      q("She ___ got two brothers.", ["has", "have", "is", "does"]),
+      q("He ___ like fish.", ["doesn't", "don't", "isn't", "not"]),
+      q("___ you swim? — Yes, I can.", ["Can", "Do", "Are", "Did"]),
+      q("There ___ two parks in our town.", ["are", "is", "be", "has"]),
+      q("I ___ to Samarkand last week.", ["went", "go", "goed", "am going"]),
+      q("Did you ___ the film?", ["see", "saw", "seen", "seeing"]),
+      q("I'm going ___ my aunt next week.", ["to visit", "visit", "visiting", "to visited"]),
+      q("___ you like some tea? — Yes, please.", ["Would", "Do", "Are", "Did"]),
+      q("I was late ___ I missed the bus.", ["because", "so", "but", "or"]),
+    ]
+  ),
 };
