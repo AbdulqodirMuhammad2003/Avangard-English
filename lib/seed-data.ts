@@ -189,6 +189,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-02", level: "A2", title: "2-dars", subtitle: "Oilam va men haqimda: my, his, 's", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-1.mp4", title: "Vox pops 1: oila haqida", kind: "intervyu", start: null, end: null } },
   { code: "A2-03", level: "A2", title: "3-dars", subtitle: "Olimning bir kuni: Present Simple, hardly ever", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-2.mp4", title: "Vox pops 2: kundalik ishlar", kind: "intervyu", start: null, end: null } },
   { code: "A2-04", level: "A2", title: "4-dars", subtitle: "Kosmosda hayot: don't / doesn't, vaqt", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-02.mp4", title: "The Menna family", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-05", level: "A2", title: "5-dars", subtitle: "Uchrashamizmi? Takliflar, and / but / because", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-06", level: "A2", title: "6-dars", subtitle: "G'aroyib kasblar: Is…? / Does…?", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "A2-07", level: "A2", title: "7-dars", subtitle: "Ish dunyosi: Wh- savollar, -er", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-3.mp4", title: "Vox pops 3: ish haqida", kind: "intervyu", start: null, end: null } },
+  { code: "A2-08", level: "A2", title: "8-dars", subtitle: "Iltimos va email: Can I…? / Could you…?", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-03.mp4", title: "An Iranian doctor in the USA", kind: "hujjatli", start: null, end: null } },
 ];
 
 export async function seedDatabase() {

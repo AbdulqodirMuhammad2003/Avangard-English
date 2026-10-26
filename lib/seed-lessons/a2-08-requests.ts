@@ -1,0 +1,296 @@
+/**
+ * A2, 8-dars — «Iltimos va email». Ruxsat so'rash (Can I…? Could I…?),
+ * iltimos qilish (Can you…? Could you…?) va javob berish (Of course. /
+ * I'm afraid not.); rasmiy va norasmiy emailni boshlash va tugatish.
+ * Navigate A2, 3.4 asosida: tinglash mashqlarida kitob treklari (yopiq
+ * ombordan), savollar va matnlar o'zimizniki.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  hearing,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  reading,
+  say,
+  sentences,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-a2/audio/${n}.mp3`;
+
+export const A2_08_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🙏", "request", "rɪˈkwest|rikuest", "ot", "Iltimos, so'rov", "When you ask for something politely.", "I have a small request.", "Bitta kichik iltimosim bor."),
+      w("🔐", "password", "ˈpɑːswɜːd|paasuyord", "ot", "Parol", "A secret word you use to open a computer or website.", "You need a password for the computers.", "Kompyuterlar uchun parol kerak."),
+      w("🗄️", "administrator", "ədˈmɪnɪstreɪtə|administreyta", "ot", "Ma'mur, administrator", "A person who manages the office work of a school or company.", "Give your details to the administrator.", "Ma'lumotlaringizni ma'murga bering."),
+      w("🖊️", "fill in", "ˌfɪl ˈɪn|fil in", "ibora", "To'ldirmoq (anketa)", "Write information in the spaces of a form.", "Please fill in this form.", "Iltimos, bu anketani to'ldiring."),
+      w("✍️", "sign", "saɪn|sayn", "fe'l", "Imzolamoq", "Write your name in your own special way.", "Could you sign here, please?", "Shu yerga imzo qo'ya olasizmi?"),
+      w("📎", "attach", "əˈtætʃ|atech", "fe'l", "Ilova qilmoq, biriktirmoq", "Add a file to an email.", "I attach my CV to this email.", "Ushbu xatga rezyumemni ilova qilaman."),
+      w("📁", "attachment", "əˈtætʃmənt|atechmant", "ot", "Ilova (fayl)", "A file that you send with an email.", "Please open the attachment.", "Iltimos, ilovani oching."),
+      w("↩️", "reply", "rɪˈplaɪ|riplay", "ot, fe'l", "Javob; javob bermoq", "An answer to a letter or email.", "Thanks for your quick reply.", "Tez javobingiz uchun rahmat."),
+      w("📝", "regards", "rɪˈɡɑːdz|rigaadz", "ot", "Hurmat bilan (xat oxirida)", "A polite way to finish an email.", "Regards, Aziz", "Hurmat bilan, Aziz"),
+      w("✅", "permission", "pəˈmɪʃn|pamishn", "ot", "Ruxsat", "When someone says you can do something.", "You need permission to leave early.", "Erta ketish uchun ruxsat kerak."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("🎩", "Yours sincerely", "ˌjɔːz sɪnˈsɪəli|yooz sinsiali", "ibora", "Hurmat bilan (rasmiy xat oxiri)", "A formal way to finish a letter when you know the name.", "Yours sincerely, Takashi Itou", "Hurmat bilan, Takashi Itou"),
+      w("🤗", "all the best", "ˌɔːl ðə ˈbest|ool za best", "ibora", "Hammasi yaxshi bo'lsin (do'stona xat oxiri)", "A friendly way to finish an email.", "See you soon. All the best, Dilnoza", "Ko'rishguncha. Hammasi yaxshi bo'lsin, Dilnoza"),
+      w("🙌", "many thanks", "ˌmeni ˈθæŋks|meni senks", "ibora", "Katta rahmat", "Thank you very much.", "Many thanks for your help.", "Yordamingiz uchun katta rahmat."),
+      w("💌", "I hope you're well", "aɪ ˌhəʊp jɔː ˈwel|ay houp yoo uel", "ibora", "Umid qilamanki, yaxshisiz", "A friendly start to an email.", "Dear Ricardo, I hope you're well.", "Hurmatli Rikardo, umid qilamanki, yaxshisiz."),
+      w("📣", "let me know", "ˌlet mi ˈnəʊ|let mi nou", "ibora", "Menga xabar bering", "Tell me.", "Please let me know when you're free.", "Qachon bo'sh bo'lsangiz, menga xabar bering."),
+      w("🤞", "look forward to", "lʊk ˈfɔːwəd tə|luk foouad ta", "ibora", "…ni intiqlik bilan kutmoq", "Feel happy about something in the future.", "I look forward to your reply.", "Javobingizni intiqlik bilan kutaman."),
+      w("❓", "quick question", "ˌkwɪk ˈkwestʃən|kuik kueschan", "ibora", "Qisqa savol", "A short, simple question.", "I have a quick question.", "Bitta qisqa savolim bor."),
+      w("👉", "by the way", "ˌbaɪ ðə ˈweɪ|bay za uey", "ibora", "Aytgancha", "We use it to add a new idea.", "By the way, can I bring my brother?", "Aytgancha, akamni olib kelsam bo'ladimi?"),
+      w("📞", "in touch", "ɪn ˈtʌtʃ|in tach", "ibora", "Aloqada", "Talking or writing to each other.", "Let's keep in touch!", "Aloqada bo'laylik!"),
+      w("😔", "unfortunately", "ʌnˈfɔːtʃənətli|anfoochanatli", "ravish", "Afsuski", "Sadly; we use it for bad news.", "Unfortunately, the course is full.", "Afsuski, kursda joy qolmagan."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("🌆", "evening class", "ˈiːvnɪŋ klɑːs|iivning klaas", "ibora", "Kechki dars", "A class for adults after work.", "There's an evening class in this room.", "Bu xonada kechki dars bor."),
+      w("🖥️", "computer room", "kəmˈpjuːtə ruːm|kampyuuta ruum", "ibora", "Kompyuter xonasi", "A room with computers for students.", "Can we leave our bags in the computer room?", "Sumkalarimizni kompyuter xonasida qoldirsak bo'ladimi?"),
+      w("🚪", "leave early", "ˌliːv ˈɜːli|liiv yorli", "ibora", "Erta ketmoq", "Go before the normal time.", "Could I leave early tomorrow?", "Ertaga erta ketsam bo'ladimi?"),
+      w("📌", "notice", "ˈnəʊtɪs|noutis", "ot", "E'lon (devordagi)", "A piece of paper with information on a wall.", "Read the notice on the door.", "Eshikdagi e'lonni o'qing."),
+      w("📋", "enrol", "ɪnˈrəʊl|inroul", "fe'l", "Ro'yxatdan o'tmoq (kursga)", "Put your name on the list for a course.", "I want to enrol on the photography course.", "Fotografiya kursiga yozilmoqchiman."),
+      w("💳", "fee", "fiː|fii", "ot", "To'lov (kurs uchun)", "Money you pay for a course or a service.", "The course fee is $100.", "Kurs to'lovi 100 dollar."),
+      w("📜", "certificate", "səˈtɪfɪkət|satifikat", "ot", "Sertifikat, guvohnoma", "An official paper that shows you finished a course.", "You get a certificate at the end of the course.", "Kurs oxirida sertifikat olasiz."),
+      w("🎓", "advanced", "ədˈvɑːnst|advaanst", "sifat", "Yuqori darajali", "At a high level.", "This is an advanced class.", "Bu yuqori darajadagi dars."),
+      w("🙋", "attend", "əˈtend|atend", "fe'l", "Qatnashmoq (darsga)", "Go to a class or meeting.", "You must attend every lesson.", "Har bir darsga qatnashishingiz kerak."),
+      w("🏦", "bank details", "ˈbæŋk ˌdiːteɪlz|benk diiteylz", "ibora", "Bank rekvizitlari", "Information about your bank account.", "Please send your bank details by email.", "Bank rekvizitlaringizni email orqali yuboring."),
+    ],
+  },
+];
+
+const EMAILS = `EMAIL 1
+Dear Mrs Zammit,
+I'm writing about the weekend photography course in January. Could you send me some information about the fee and the timetable, please?
+Many thanks.
+Yours sincerely,
+Takashi Itou
+
+EMAIL 2
+Hi Roz,
+How are you? Quick question: can I bring my brother to your party on Saturday? He's in Tashkent this week.
+By the way, I've got your book — I can bring it on Saturday.
+Love,
+Sally x`;
+const read = reading(EMAILS);
+
+export const A2_08_EXERCISES: SeedExercise[] = [
+  {
+    title: "Nima eshitildi?",
+    skill: "Tinglash",
+    kind: "listen",
+    instructions: "Gap o'qiladi. Eshitganingizni toping.",
+    questions: [
+      listen("Could I open the window?", ["Could I open the window?", "Could you open the window?", "Can I open the window?", "Could I close the window?"]),
+      listen("Can you repeat that, please?", ["Can you repeat that, please?", "Can you report that, please?", "Can you repeat it, please?", "Could you repeat that, please?"]),
+      listen("I'm afraid not.", ["I'm afraid not.", "I'm afraid so.", "I'm not afraid.", "I'm a friend, not."]),
+      listen("Of course you can.", ["Of course you can.", "Of course you can't.", "Of course I can.", "Of course, you could."]),
+      listen("Could I leave early tomorrow?", ["Could I leave early tomorrow?", "Could I leave early today?", "Could I live early tomorrow?", "Could I leave it tomorrow?"]),
+      listen("Yours sincerely", ["Yours sincerely", "Yours, sincerely yours", "Your sincerely", "Yours seriously"]),
+      listen("attachment", ["attachment", "attach", "a touch", "apartment"]),
+      listen("password", ["password", "pass word", "passport", "pastword"]),
+      listen("unfortunately", ["unfortunately", "fortunately", "unfortunate", "unfriendly"]),
+      listen("certificate", ["certificate", "certain", "certificates", "sir to fit"]),
+    ],
+  },
+  {
+    title: "Ruxsatmi yoki iltimosmi?",
+    skill: "Grammatika",
+    kind: "choice",
+    instructions: "To'g'ri variantni tanlang.",
+    questions: [
+      say("Xonada issiq. Derazani o'zingiz ochmoqchisiz: «___ open the window?»", ["Could I", "Could you", "Do I", "Am I"], "O'zingiz qilasiz — ruxsat: Could I…?"),
+      say("Do'stingizdan yordam so'raysiz: «___ help me with my bag?»", ["Could you", "Could I", "Do you", "Are you"], "Boshqa odam qiladi — iltimos: Could you…?"),
+      say("Kompyuterdan foydalanmoqchisiz: «___ use the computer?»", ["Can I", "Can you", "Do I", "Must I"]),
+      say("O'qituvchi tez gapirdi: «___ repeat that, please?»", ["Could you", "Could I", "Do you", "Shall I"]),
+      say("Could I ___ early tomorrow?", ["leave", "to leave", "leaving", "leaves"]),
+      say("Can you ___ me the password?", ["tell", "to tell", "telling", "tells"]),
+      say("Ruxsat berish: Can I sit here? — ___", ["Of course you can.", "Of course you could.", "Yes, you sit.", "I'm afraid yes."]),
+      say("Rad etish: Could I use your phone? — ___", ["I'm afraid not.", "I'm afraid no.", "No, you couldn't.", "Of course not you."]),
+      say("Rad etish: Could I leave early? — ___", ["I'm sorry, but that's not possible.", "Sorry, you can't to.", "I'm sorry, but it's possible.", "Yes, sorry."]),
+      say("Eng odobli iltimos qaysi?", ["Could you send me the information, please?", "Send me the information.", "You send me the information?", "I want the information."]),
+    ],
+  },
+  {
+    title: "Kursning birinchi kuni",
+    skill: "Tinglab tushunish",
+    kind: "audiotext",
+    instructions: "O'qituvchi yangi kurs haqida gapiradi, o'quvchilar savol beradi. Tinglang (kerak bo'lsa, qayta yoki sekinroq) va savollarga javob bering.",
+    questions: [
+      hearing(track("3.15"))("Birinchi o'quvchi nima so'raydi?", ["Derazani ochishga ruxsat", "Kompyuter paroli", "Darsdan erta ketish", "Darslar vaqti"]),
+      hearing(track("3.15"))("O'qituvchi nima deydi?", ["Albatta — bu yer juda issiq", "Afsuski, yo'q", "Keyinroq", "Bu mumkin emas"]),
+      hearing(track("3.15"))("Darslar qachon?", ["Har payshanba va juma soat 2 da", "Har dushanba soat 2 da", "Har kuni ertalab", "Shanba kunlari"]),
+      hearing(track("3.15"))("Darslar qayerda o'tadi?", ["Qo'shni xonada", "Kompyuter xonasida", "Kutubxonada", "Shu xonada"]),
+      hearing(track("3.15"))("Kompyuterlardan darsdan keyin foydalansa bo'ladimi?", ["Ha, lekin parol kerak", "Yo'q", "Faqat ertalab", "Faqat o'qituvchi bilan"]),
+      hearing(track("3.15"))("Parol qanday?", ["student451", "student541", "students451", "student415"]),
+      hearing(track("3.15"))("Kitob va sumkalarni kompyuter xonasida qoldirsa bo'ladimi?", ["Yo'q — u yerda kechki 6 dan kechki darslar bor", "Ha, albatta", "Faqat juma kuni", "Aytilmagan"]),
+      hearing(track("3.15"))("Ketishdan oldin ma'murga nima berish kerak?", ["Shaxsiy ma'lumotlar, jumladan bank rekvizitlari", "Pasport", "Kurs to'lovi", "Rasm"]),
+      hearing(track("3.15"))("O'quvchi ma'lumotlarini qanday yubormoqchi?", ["Keyinroq email orqali", "Ertaga olib keladi", "Telefon orqali", "Pochta orqali"]),
+      hearing(track("3.15"))("O'qituvchi bunga rozimi?", ["Ha, faqat ketishdan oldin ma'murga aytish kerak", "Yo'q", "Faqat bugun", "Aytilmagan"]),
+    ],
+  },
+  {
+    title: "Qisqa iltimoslar",
+    skill: "Tinglab tushunish",
+    kind: "audiotext",
+    instructions: "Qisqa suhbatlarni tinglang. Har bir savolda o'z treki bor — tinglash uchun tugmani bosing.",
+    questions: [
+      hearing(track("3.16"))("1-suhbatda B ruxsat beradimi?", ["Ha, xonada issiq", "Yo'q", "Keyinroq", "Aytilmagan"]),
+      hearing(track("3.16"))("2-suhbatda B nima deydi?", ["Uzr, ma'lumotlar bugun yonida yo'q", "Albatta, mana", "Ertaga beraman", "Ma'murga berdim"]),
+      hearing(track("3.16"))("3-suhbatda A nimani so'raydi?", ["Ma'lumotlarni keyinroq email orqali yuborishni", "Erta ketishni", "Kompyuterdan foydalanishni", "Derazani ochishni"]),
+      hearing(track("3.16"))("4-suhbatda B nima qiladi?", ["Parolni qayta harflab aytadi", "Rad etadi", "Email yuboradi", "Derazani ochadi"]),
+      hearing(track("3.17"))("1-suhbat: shu yerga o'tirsa bo'ladimi?", ["Ha, albatta", "Yo'q, joy band", "Keyinroq", "Aytilmagan"]),
+      hearing(track("3.17"))("2-suhbat: ertaga erta ketsa bo'ladimi?", ["Yo'q, bu mumkin emas", "Ha, albatta", "Faqat bir soatga", "Aytilmagan"]),
+    ],
+  },
+  {
+    title: "Odobli so'rang",
+    skill: "Yozish",
+    kind: "type",
+    instructions: "Odobli iltimos yoki ruxsat so'rovi yozing: Could I…? yoki Could you…? Masalan: (you) open the window → Could you open the window, please?",
+    questions: written([
+      ["(I) open the window", "Could I open the window?|Could I open the window, please?|Can I open the window?|Can I open the window, please?"],
+      ["(you) help me", "Could you help me?|Could you help me, please?|Can you help me?|Can you help me, please?"],
+      ["(I) use your phone", "Could I use your phone?|Could I use your phone, please?|Can I use your phone?|Can I use your phone, please?"],
+      ["(you) repeat that", "Could you repeat that?|Could you repeat that, please?|Can you repeat that?|Can you repeat that, please?"],
+      ["(I) leave early tomorrow", "Could I leave early tomorrow?|Can I leave early tomorrow?|Could I leave early tomorrow, please?"],
+      ["(you) send me the information", "Could you send me the information?|Could you send me the information, please?|Can you send me the information?|Can you send me the information, please?"],
+      ["(I) sit here", "Could I sit here?|Can I sit here?|Could I sit here, please?|Can I sit here, please?"],
+      ["(you) spell your name", "Could you spell your name?|Could you spell your name, please?|Can you spell your name?|Can you spell your name, please?"],
+      ["(I) send my details by email later", "Could I send my details by email later?|Can I send my details by email later?"],
+      ["(you) close the door", "Could you close the door?|Could you close the door, please?|Can you close the door?|Can you close the door, please?"],
+    ]),
+  },
+  {
+    title: "Rasmiy yoki norasmiy?",
+    skill: "Yozish",
+    kind: "choice",
+    instructions: "Emailga mos bosh yoki oxirgi iborani tanlang.",
+    questions: [
+      say("Notanish ayolga rasmiy xat (ismi Zammit): «___»", ["Dear Mrs Zammit,", "Hi Zammit!", "Hello darling,", "Dear Zammit Mrs,"]),
+      say("Rasmiy xat oxiri (ismini bilasiz): «___»", ["Yours sincerely,", "Love,", "See ya,", "All the best x"]),
+      say("Yaqin dugonangizga xat boshi: «___»", ["Hi Roz,", "Dear Mrs Roz,", "Yours sincerely,", "Dear Sir,"]),
+      say("Yaqin dugonangizga xat oxiri: «___»", ["Love, Sally x", "Yours sincerely, Sally", "Regards, Mrs Sally", "Dear Sally"]),
+      say("Hamkasbga xat oxiri (unchalik rasmiy emas): «___»", ["Best wishes,", "Love x", "Yours sincerely, Sir", "Bye-bye!"]),
+      say("Hamkasbga xat boshi: «___»", ["Dear Patricia,", "Hi babe,", "Dear Mrs Patricia Smith Sir,", "Yo Patricia!"]),
+      say("Xat boshida do'stona jumla: «___»", ["I hope you're well.", "I hope you well.", "I'm hope you're well.", "Hope you're good well."]),
+      say("Javobni kutayotganingizni yozing: «I look forward ___ your reply.»", ["to", "for", "at", "—"]),
+      say("Yomon xabar: «___, the course is full.»", ["Unfortunately", "Fortunately", "By the way", "Many thanks"]),
+      say("Qo'shimcha fikr: «___, can I bring my brother?»", ["By the way", "Unfortunately", "Yours sincerely", "Dear"]),
+    ],
+  },
+  {
+    title: "Ikki xat",
+    skill: "Matn bilan ishlash",
+    kind: "reading",
+    instructions: "Ikki emailni o'qing va savollarga javob bering.",
+    questions: [
+      read("Is Email 1 formal or informal?", ["Formal", "Informal", "Both", "The text doesn't say."]),
+      read("What is Takashi writing about?", ["A weekend photography course", "A party", "A job", "A book"]),
+      read("When is the course?", ["In January", "On Saturday", "This week", "The text doesn't say."]),
+      read("What does Takashi want?", ["Information about the fee and the timetable", "A job", "A certificate", "Mrs Zammit's phone number"]),
+      read("How does Takashi finish his email?", ["Yours sincerely", "Love", "All the best", "Regards"]),
+      read("How well does Sally know Roz?", ["Very well — they're friends.", "Not at all", "Roz is her teacher.", "The text doesn't say."]),
+      read("What is Sally's question?", ["Can she bring her brother to the party?", "When is the party?", "Can Roz come to her party?", "Where is the party?"]),
+      read("When is the party?", ["On Saturday", "On Friday", "In January", "Tonight"]),
+      read("Where is Sally's brother this week?", ["In Tashkent", "At home", "At the party", "The text doesn't say."]),
+      read("What has Sally got?", ["Roz's book", "Roz's phone", "A present", "Tickets"]),
+    ],
+  },
+  {
+    title: "Xatni to'ldiring",
+    skill: "Yozish",
+    kind: "fill",
+    instructions: "Bo'sh joyga bitta so'z yozing.",
+    questions: written([
+      ["Dear Mr Karimov, I ___ you're well.", "hope"],
+      ["I'm ___ about the English course in March.", "writing"],
+      ["___ you send me some information, please?", "Could|Can"],
+      ["Please let me ___ when you're free.", "know"],
+      ["I look forward ___ your reply.", "to"],
+      ["Yours ___, Nodira Aliyeva", "sincerely"],
+      ["Many ___ for your help.", "thanks"],
+      ["Please find my CV in the ___. (ilova)", "attachment"],
+      ["___, the class is full. (afsuski)", "Unfortunately"],
+      ["Let's keep in ___!", "touch"],
+    ]),
+  },
+  {
+    title: "Xatoni toping",
+    skill: "Grammatika",
+    kind: "mistake",
+    instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
+    questions: [
+      mistake("Could I *to open the window?", "Could I + fe'l (to siz): open."),
+      mistake("Can you *helping me?", "Can you + fe'l: help."),
+      mistake("Could I use your phone? — I'm afraid *no.", "I'm afraid not."),
+      mistake("Can I sit here? — Of course you *could.", "Javobda: Of course you can."),
+      mistake("Could *you leave early tomorrow? (o'zim ketmoqchiman)", "O'zingiz uchun ruxsat: Could I leave early?"),
+      mistake("I'm *write about the photography course.", "I'm writing about…"),
+      mistake("Yours *sincerly, Takashi", "Yozilishi: sincerely."),
+      mistake("I look forward *for your reply.", "look forward to: I look forward to your reply."),
+      mistake("Please *full in this form.", "To'ldirmoq — fill in."),
+      mistake("Could you send me some *informations?", "information — ko'plik shakli yo'q."),
+    ],
+  },
+  {
+    title: "Gap tuzing",
+    skill: "Gap tuzish",
+    kind: "order",
+    instructions: "So'zlarni to'g'ri tartibda bosib, gap tuzing.",
+    questions: sentences([
+      "Could I open the window?",
+      "Can you repeat that, please?",
+      "Could you send me some information?",
+      "I'm afraid not.",
+      "Of course you can.",
+      "I'm sorry, but that's not possible.",
+      "I hope you're well.",
+      "Please let me know when you're free.",
+      "I look forward to your reply.",
+      "Could I send my details by email later?",
+    ]),
+  },
+  {
+    title: "Juftini toping",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Iltimosni javob bilan yoki iborani tarjimasi bilan ulang.",
+    questions: pairs([
+      ["Can I sit here?|Of course you can.", "Could I leave early?|I'm afraid not.", "Could you help me?|Sure, no problem.", "Can you repeat that?|Sure. It's S-T-U-D-E-N-T."],
+      ["Dear Mrs Zammit,|Yours sincerely,", "Dear Patricia,|Best wishes,", "Hi Roz,|Love,", "Hello Johan,|All the best,"],
+      ["password|parol", "attachment|ilova", "permission|ruxsat", "request|iltimos"],
+      ["enrol|ro'yxatdan o'tmoq", "attend|qatnashmoq", "fee|to'lov", "certificate|sertifikat"],
+      ["unfortunately|afsuski", "by the way|aytgancha", "let me know|xabar bering", "in touch|aloqada"],
+    ]),
+  },
+  {
+    title: "Ayting",
+    skill: "Talaffuz",
+    kind: "speak",
+    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
+    questions: phrases([
+      "Could I open the window?",
+      "Could you repeat that, please?",
+      "Of course you can.",
+      "I'm afraid not.",
+      "I'm sorry, but that's not possible.",
+      "I look forward to your reply.",
+      "Yours sincerely",
+      "unfortunately",
+      "certificate",
+      "administrator",
+    ]),
+  },
+];
