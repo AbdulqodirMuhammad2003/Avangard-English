@@ -607,7 +607,8 @@ export function LessonsBoard({
 
             <div
               className={`flex-1 overflow-y-auto px-6 py-5 ${
-                view === "exercise-run" ? "flex items-center justify-center" : ""
+                // justify-center emas: kontent uzun bo'lsa tepasi scroll qilib bo'lmaydigan bo'lib qoladi.
+                view === "exercise-run" ? "flex flex-col" : ""
               }`}
             >
               {view === "main" && (
@@ -838,7 +839,7 @@ export function LessonsBoard({
               )}
 
               {view === "exercise-run" && activeExercise && (
-                <div className="mx-auto w-full max-w-xl py-4">
+                <div className="m-auto w-full max-w-xl py-4">
                   <ExerciseRun
                     key={runKey}
                     exercise={activeExercise}
