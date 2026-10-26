@@ -87,12 +87,30 @@ export function playListening(textOrRef: string, rate = 0.85) {
 const unifyMarks = (s: string) =>
   s.normalize("NFC").replace(/[’‘`´ʼ]/g, "'").replace(/[‐-―]/g, "-");
 
+/** Qisqartmalarni to'liq shaklga ochadi: I'm → I am, doesn't → does not,
+ *  can't → can not. Ikkala tomon (javob va namuna) bir xil ochilgani uchun
+ *  's (is / has / egalik) farqlanmasa ham solishtirish to'g'ri ishlaydi. */
+const expandContractions = (s: string) =>
+  s
+    .replace(/\bwon't\b/g, "will not")
+    .replace(/\bcan't\b|\bcannot\b/g, "can not")
+    .replace(/\bshan't\b/g, "shall not")
+    .replace(/\blet's\b/g, "let us")
+    .replace(/n't\b/g, " not")
+    .replace(/'m\b/g, " am")
+    .replace(/'re\b/g, " are")
+    .replace(/'ll\b/g, " will")
+    .replace(/'ve\b/g, " have")
+    .replace(/'d\b/g, " would")
+    .replace(/'s got\b/g, " has got")
+    .replace(/'s\b/g, " is");
+
 /** Yozma javobni solishtirish uchun: kichik harf, apostroflar bir xil,
- *  tinish belgilari olib tashlanadi, bo'shliqlar bittaga. «don't» va
- *  «dont» farqlanadi — apostrof javobning bir qismi. */
+ *  qisqartmalar ochiladi (I'm = I am), tinish belgilari olib tashlanadi,
+ *  bo'shliqlar bittaga. «don't» va «dont» farqlanadi — apostrof javobning
+ *  bir qismi. */
 export function normalizeAnswer(s: string) {
-  return unifyMarks(s)
-    .toLowerCase()
+  return expandContractions(unifyMarks(s).toLowerCase())
     .replace(/[^a-z0-9'\s-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
