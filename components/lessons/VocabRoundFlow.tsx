@@ -622,6 +622,24 @@ function SpellingStage({
   const letterSlots = useMemo(() => target.split(""), [target]);
   // Yoziladigan belgilar soni (bo'shliqlarsiz) — kataklar shuncha.
   const letterCount = letterSlots.filter((ch) => ch !== " ").length;
+  // Kataklar o'lchami eng uzun so'zga qarab tanlanadi — telefonda so'z bitta
+  // qatorda qolishi uchun. Bir nechta so'zli ibora bo'shliqlarda bo'linadi.
+  const longest = Math.max(...target.split(" ").map((w) => w.length));
+  const tileSize =
+    longest <= 7
+      ? { tile: "h-11 w-9 text-lg rounded-xl", gap: "gap-1.5" }
+      : longest <= 9
+      ? { tile: "h-10 w-7 text-base rounded-lg", gap: "gap-1" }
+      : longest <= 11
+      ? { tile: "h-9 w-6 text-sm rounded-md", gap: "gap-0.5" }
+      : longest <= 13
+      ? { tile: "h-9 w-5 text-sm rounded-md", gap: "gap-0.5" }
+      : { tile: "h-8 w-4 text-xs rounded", gap: "gap-0.5" };
+  // So'zlar bo'yicha guruhlangan kataklar: [belgi, umumiy tartib raqami].
+  const wordGroups = useMemo(() => {
+    let pos = 0;
+    return target.split(" ").map((w) => w.split("").map((ch) => [ch, pos++] as const));
+  }, [target]);
 
   // O'quvchi yozgan harflar (bo'shliqlarsiz); kataklarga ketma-ket tushadi.
   const [typed, setTyped] = useState("");
@@ -693,7 +711,6 @@ function SpellingStage({
     }
   }
 
-  let k = 0;
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
       <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
@@ -703,31 +720,33 @@ function SpellingStage({
         {word.translation_uz}
       </p>
 
-      <div className="relative flex flex-wrap items-center justify-center gap-1.5">
-        {letterSlots.map((ch, i) => {
-          if (ch === " ") return <span key={i} className="w-3" />;
-          const pos = k++;
-          const letter = typed[pos] ?? "";
-          const isCursor = checked === null && pos === typed.length;
-          return (
-            <span
-              key={i}
-              className={`flex h-11 w-9 items-center justify-center rounded-xl border-2 text-lg font-bold uppercase transition-colors ${
-                checked === true
-                  ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"
-                  : checked === false
-                  ? "border-rose-400 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300"
-                  : letter
-                  ? "border-ink-300 bg-ink-50 text-ink-900 dark:border-white/20 dark:bg-white/10 dark:text-ink-50"
-                  : isCursor
-                  ? "border-azure-500 bg-white dark:bg-white/5"
-                  : "border-dashed border-ink-200 bg-white dark:border-white/15 dark:bg-white/5"
-              }`}
-            >
-              {letter}
-            </span>
-          );
-        })}
+      <div className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+        {wordGroups.map((group, gi) => (
+          <span key={gi} className={`flex flex-wrap justify-center ${tileSize.gap}`}>
+            {group.map(([, pos]) => {
+              const letter = typed[pos] ?? "";
+              const isCursor = checked === null && pos === typed.length;
+              return (
+                <span
+                  key={pos}
+                  className={`flex ${tileSize.tile} items-center justify-center border-2 font-bold uppercase transition-colors ${
+                    checked === true
+                      ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"
+                      : checked === false
+                      ? "border-rose-400 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300"
+                      : letter
+                      ? "border-ink-300 bg-ink-50 text-ink-900 dark:border-white/20 dark:bg-white/10 dark:text-ink-50"
+                      : isCursor
+                      ? "border-azure-500 bg-white dark:bg-white/5"
+                      : "border-dashed border-ink-200 bg-white dark:border-white/15 dark:bg-white/5"
+                  }`}
+                >
+                  {letter}
+                </span>
+              );
+            })}
+          </span>
+        ))}
         {/* Kataklar ustida, ko'rinmas: bosilganda telefon klaviaturasi ochiladi. */}
         {checked === null && (
           <input

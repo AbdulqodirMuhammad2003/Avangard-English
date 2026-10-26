@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
+import { isMediaRef, mediaUrl } from "@/lib/media";
+import { MediaAudioPlayer } from "./MediaAudioPlayer";
 import { matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
 
 /** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi; `media:` — yozib olingan audio fayl. */
@@ -144,7 +146,9 @@ export function ExerciseRun({
   // Tinglab tushunish mashqida matn hamma savollar uchun bitta — u faqat
   // birinchi savolda o'qiladi, keyin o'quvchi o'zi qayta eshitadi.
   useEffect(() => {
-    if (question?.audio_text && !(kind === "audiotext" && qIndex > 0)) speakEn(question.audio_text);
+    // Yozib olingan audioni (media:) pleyerning o'zi boshqaradi.
+    if (question?.audio_text && !isMediaRef(question.audio_text) && !(kind === "audiotext" && qIndex > 0))
+      speakEn(question.audio_text);
   }, [question?.audio_text, qIndex, kind]);
 
   if (result !== null) {
@@ -347,17 +351,24 @@ export function ExerciseRun({
     return selected === i ? "wrong" : "idle";
   }
 
-  const shortOptions = question.options.every((o) => o.length <= 8);
+  // Telefonda 4 ta ustunga faqat juda qisqa variantlar sig'adi (am, is, are);
+  // o'rtacha uzunlikdagilar (Canadian, Greekish) 2 ustunda turadi.
+  const longestOption = Math.max(0, ...question.options.map((o) => o.length));
+  const shortOptions = longestOption <= 12;
   const optionGrid = (prefix = "") => (
     <div
       className={`grid gap-2 ${
         kind === "choice" || kind === "rule"
-          ? shortOptions
-            ? question.options.length === 2
-              ? "grid-cols-2"
-              : question.options.length === 3
+          ? question.options.length === 2 && shortOptions
+            ? "grid-cols-2"
+            : longestOption <= 5
+            ? question.options.length === 3
               ? "grid-cols-3"
               : "grid-cols-4"
+            : shortOptions
+            ? question.options.length === 3
+              ? "grid-cols-1 sm:grid-cols-3"
+              : "grid-cols-2 sm:grid-cols-4"
             : "grid-cols-1 sm:grid-cols-2"
           : kind === "truefalse"
           ? "grid-cols-2"
@@ -368,7 +379,7 @@ export function ExerciseRun({
         <button
           key={i}
           onClick={() => checked === null && setSelected(i)}
-          className={`rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
+          className={`min-w-0 break-words rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
             shortOptions ? "text-center" : "text-left"
           } ${OPTION_STATE_CLASSES[optionState(i)]}`}
         >
@@ -575,26 +586,30 @@ export function ExerciseRun({
 
         {kind === "audiotext" && (
           <>
-            <div className="flex items-center gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30">
-              <button
-                onClick={() => question.audio_text && speakEn(question.audio_text)}
-                className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-                aria-label="Matnni eshitish"
-              >
-                <Volume2 size={26} />
-              </button>
-              <button
-                onClick={() => question.audio_text && speakEn(question.audio_text, 0.6)}
-                className="btn-press flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
-                aria-label="Sekinroq eshitish"
-                title="Sekinroq"
-              >
-                <Snail size={20} />
-              </button>
-              <p className="text-sm text-gold-900 dark:text-gold-100">
-                Matnni tinglang. Qayta eshitish uchun tugmani bosing, sekinroq eshitish uchun — shilliqqurtni.
-              </p>
-            </div>
+            {isMediaRef(question.audio_text) ? (
+              <MediaAudioPlayer key={question.audio_text} src={mediaUrl(question.audio_text)} autoPlay={qIndex === 0} />
+            ) : (
+              <div className="flex items-center gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30">
+                <button
+                  onClick={() => question.audio_text && speakEn(question.audio_text)}
+                  className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
+                  aria-label="Matnni eshitish"
+                >
+                  <Volume2 size={26} />
+                </button>
+                <button
+                  onClick={() => question.audio_text && speakEn(question.audio_text, 0.6)}
+                  className="btn-press flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
+                  aria-label="Sekinroq eshitish"
+                  title="Sekinroq"
+                >
+                  <Snail size={20} />
+                </button>
+                <p className="text-sm text-gold-900 dark:text-gold-100">
+                  Matnni tinglang. Qayta eshitish uchun tugmani bosing, sekinroq eshitish uchun — shilliqqurtni.
+                </p>
+              </div>
+            )}
             <p lang="en" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
               {question.prompt}
             </p>
@@ -708,7 +723,7 @@ export function ExerciseRun({
                       setMatchLeft(i);
                       setMatchFlash(false);
                     }}
-                    className={`rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
+                    className={`min-w-0 break-words rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
                       matched.includes(i)
                         ? OPTION_STATE_CLASSES.right
                         : matchLeft === i
@@ -726,7 +741,7 @@ export function ExerciseRun({
                     key={pairIndex}
                     disabled={matched.includes(pairIndex) || checked !== null}
                     onClick={() => pickMatchRight(pairIndex)}
-                    className={`rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
+                    className={`min-w-0 break-words rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
                       matched.includes(pairIndex) ? OPTION_STATE_CLASSES.right : OPTION_STATE_CLASSES.idle
                     }`}
                   >
