@@ -248,7 +248,8 @@ function TeacherEditor({ teacher, mode, onDone }: { teacher: TeacherAccount; mod
   );
 }
 
-function TeacherCard({ teacher }: { teacher: TeacherAccount }) {
+/** Admin hisoblari (o'zingiz yoki boshqa admin) bu yerdan tahrirlanmaydi. */
+function TeacherCard({ teacher, isMe }: { teacher: TeacherAccount; isMe: boolean }) {
   const [mode, setMode] = useState<Mode | null>(null);
   const stats = [
     { label: "O'quvchilar", value: teacher.students },
@@ -269,7 +270,10 @@ function TeacherCard({ teacher }: { teacher: TeacherAccount }) {
         </span>
         <div className="min-w-0 flex-1">
           <p className="truncate font-semibold text-ink-950 dark:text-ink-50">
-            {teacher.name} {teacher.isAdmin && <span className="text-xs font-normal text-ink-500">(siz, admin)</span>}
+            {teacher.name}{" "}
+            {(isMe || teacher.isAdmin) && (
+              <span className="text-xs font-normal text-ink-500">({[isMe && "siz", teacher.isAdmin && "admin"].filter(Boolean).join(", ")})</span>
+            )}
           </p>
           <p className="truncate text-xs text-ink-500 dark:text-ink-400">
             {teacher.username ? `login: ${teacher.username}` : "login yo'q"}
@@ -291,7 +295,7 @@ function TeacherCard({ teacher }: { teacher: TeacherAccount }) {
 
       <div className="mt-3 flex flex-wrap gap-1.5">
         <Link
-          href={teacher.isAdmin ? "/teacher" : `/teacher?t=${teacher.id}`}
+          href={isMe ? "/teacher" : `/teacher?t=${teacher.id}`}
           className="flex items-center gap-1 rounded-full bg-azure-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-azure-500"
         >
           O'quvchilarini ko'rish <ChevronRight size={13} />
@@ -327,9 +331,11 @@ function TeacherCard({ teacher }: { teacher: TeacherAccount }) {
 
 /** Admin bo'limi: o'qituvchilar, ularning ko'rsatkichlari va hisoblarini boshqarish. */
 export function TeachersPanel({
+  meId,
   teachers,
   candidates,
 }: {
+  meId: number;
   teachers: TeacherAccount[];
   candidates: { id: number; name: string; login: string }[];
 }) {
@@ -356,7 +362,7 @@ export function TeachersPanel({
 
       <ul className="grid gap-3 md:grid-cols-2">
         {teachers.map((t) => (
-          <TeacherCard key={t.id} teacher={t} />
+          <TeacherCard key={t.id} teacher={t} isMe={t.id === meId} />
         ))}
       </ul>
     </div>

@@ -33,7 +33,7 @@ export default async function TeacherPage({ searchParams }: PageProps<"/teacher"
     }));
     title = "O'qituvchilar";
     subtitle = "O'qituvchilarga login va parol bering, ularning o'quvchilari va natijalarini kuzating.";
-    body = <TeachersPanel teachers={teachers} candidates={candidates} />;
+    body = <TeachersPanel meId={me.id} teachers={teachers} candidates={candidates} />;
   } else if (otherId && otherId !== me.id) {
     const [students, levels] = await Promise.all([getTeacherStudents(otherId), getPlacementLevels()]);
     const teacher = (await getTeacherAccounts(students)).find((t) => t.id === otherId);
