@@ -48,6 +48,7 @@ import { loadExerciseQuestions, loadUnitWords, submitExerciseResult } from "@/ap
 import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
 import { levelInfo } from "@/lib/levels";
+import { isMediaRef, mediaUrl } from "@/lib/media";
 
 type View = "main" | "exercise-run" | "clip";
 type Section = "vocab" | "rule" | "exercises";
@@ -867,6 +868,18 @@ export function LessonsBoard({
                     </p>
                   </div>
                   {(() => {
+                    if (isMediaRef(openUnit.clip_url)) {
+                      return (
+                        <video
+                          src={mediaUrl(openUnit.clip_url)}
+                          controls
+                          controlsList="nodownload"
+                          preload="metadata"
+                          playsInline
+                          className="aspect-video w-full rounded-2xl bg-black shadow-md"
+                        />
+                      );
+                    }
                     const embedUrl = toYouTubeEmbedUrl(
                       openUnit.clip_url!,
                       openUnit.clip_start,

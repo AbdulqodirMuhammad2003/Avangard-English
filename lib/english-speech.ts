@@ -2,6 +2,8 @@
  *  natijasini tekshirish va yozma javoblarni solishtirish uchun umumiy
  *  yordamchilar — lug'at bosqichlari, mashqlar va takrorlash ishlatadi. */
 
+import { isMediaRef, mediaUrl } from "./media";
+
 /** Ovoz o'qish va tanish tili — britancha (kitob va IELTS britancha talaffuzda). */
 export const SPEECH_LANG = "en-GB";
 
@@ -51,6 +53,33 @@ export function speak(text: string, rate?: number) {
   };
   if (wasBusy) setTimeout(start, 60);
   else start();
+}
+
+let player: HTMLAudioElement | null = null;
+
+/** Yopiq ombordagi audio faylni (`media:…`) boshidan o'ynatadi; `rate` < 1 —
+ *  sekinroq. Ovozli o'qish ketayotgan bo'lsa, to'xtatiladi. */
+export function playMedia(ref: string, rate = 1) {
+  if (typeof window === "undefined") return;
+  window.speechSynthesis?.cancel();
+  const src = mediaUrl(ref);
+  if (!player || !player.src.endsWith(src)) {
+    player?.pause();
+    player = new Audio(src);
+  }
+  player.currentTime = 0;
+  player.playbackRate = rate;
+  player.play().catch(() => {});
+}
+
+/** Tinglash savoli: `media:` fayli bo'lsa o'ynatiladi, aks holda matn
+ *  ovoz chiqarib o'qiladi. `rate` — o'qish tezligi (0.6 atrofi — sekin). */
+export function playListening(textOrRef: string, rate = 0.85) {
+  if (isMediaRef(textOrRef)) playMedia(textOrRef, rate < 0.8 ? 0.75 : 1);
+  else {
+    player?.pause();
+    speak(textOrRef, rate);
+  }
 }
 
 /** Apostrof va tirelarning turli shakllari (telefon klaviaturalari ’ yuboradi)

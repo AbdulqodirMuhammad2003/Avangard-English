@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
-import { matchesPronunciation, normalizeAnswer, speak, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
+import { matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
 
-/** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi. */
-const speakEn = (text: string, rate = 0.85) => speak(text, rate);
+/** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi; `media:` — yozib olingan audio fayl. */
+const speakEn = (text: string, rate = 0.85) => playListening(text, rate);
 
 /** Har bir savol uchun bir xil tartibda aralashtiradi (sahifa yangilansa ham
  *  plitkalar/juftlar joyidan sakramaydi). */
