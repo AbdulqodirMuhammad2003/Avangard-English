@@ -404,7 +404,7 @@ function StudentCard({ student, levels }: { student: TeacherStudent; levels: Pla
   ];
 
   return (
-    <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
+    <li className="min-w-0 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
       <div className="flex items-start gap-3">
         <span className="font-display flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-azure-600 to-azure-900 text-sm font-bold text-white">
           {student.level}
@@ -534,7 +534,7 @@ export function TeacherPanel({
       </div>
 
       {filtered.length > 0 ? (
-        <ul className="grid gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {filtered.map((s) => (
             <StudentCard key={s.id} student={s} levels={levels} />
           ))}

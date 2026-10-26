@@ -263,7 +263,7 @@ function TeacherCard({ teacher, isMe }: { teacher: TeacherAccount; isMe: boolean
   ];
 
   return (
-    <li className={card}>
+    <li className={`min-w-0 ${card}`}>
       <div className="flex items-start gap-3">
         <span className="font-display flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mint-600 to-mint-800 text-white">
           {teacher.isAdmin ? <ShieldCheck size={20} /> : <Users size={20} />}
@@ -277,8 +277,9 @@ function TeacherCard({ teacher, isMe }: { teacher: TeacherAccount; isMe: boolean
           </p>
           <p className="truncate text-xs text-ink-500 dark:text-ink-400">
             {teacher.username ? `login: ${teacher.username}` : "login yo'q"}
-            {teacher.email ? ` · ${teacher.email}` : ""} · oxirgi faollik: {formatDay(teacher.lastActive)}
+            {teacher.email ? ` · ${teacher.email}` : ""}
           </p>
+          <p className="text-xs text-ink-500 dark:text-ink-400">Oxirgi faollik: {formatDay(teacher.lastActive)}</p>
         </div>
       </div>
 
@@ -286,8 +287,8 @@ function TeacherCard({ teacher, isMe }: { teacher: TeacherAccount; isMe: boolean
 
       <div className="mt-3 grid grid-cols-2 gap-2 text-xs sm:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-xl bg-ink-50/70 px-3 py-2 dark:bg-white/5">
-            <p className="text-ink-500 dark:text-ink-400">{s.label}</p>
+          <div key={s.label} className="min-w-0 rounded-xl bg-ink-50/70 px-3 py-2 dark:bg-white/5">
+            <p className="truncate text-ink-500 dark:text-ink-400">{s.label}</p>
             <p className="font-semibold text-ink-900 dark:text-ink-100">{s.value}</p>
           </div>
         ))}
@@ -360,7 +361,7 @@ export function TeachersPanel({
       {form === "new" && <NewTeacherForm onClose={() => setForm(null)} />}
       {form === "promote" && <PromoteForm candidates={candidates} onClose={() => setForm(null)} />}
 
-      <ul className="grid gap-3 md:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {teachers.map((t) => (
           <TeacherCard key={t.id} teacher={t} isMe={t.id === meId} />
         ))}
