@@ -71,6 +71,9 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS start_unit_id INTEGER REFERENCES unit
 -- o'quvchilarini ko'radi (mavjud bazaga: node scripts/migrate-teacher-id.mjs).
 ALTER TABLE users ADD COLUMN IF NOT EXISTS teacher_id INTEGER REFERENCES users(id) ON DELETE SET NULL;
 CREATE INDEX IF NOT EXISTS users_teacher_id_idx ON users (teacher_id);
+-- Asosiy admin: barcha o'qituvchilarni va ularning o'quvchilarini ko'radi,
+-- o'qituvchi hisoblarini boshqaradi (node scripts/set-admin.mjs <login>).
+ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT false;
 
 CREATE TABLE IF NOT EXISTS vocabulary_rounds (
   id SERIAL PRIMARY KEY,

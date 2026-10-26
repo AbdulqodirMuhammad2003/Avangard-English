@@ -51,6 +51,7 @@ npm run lint                           # linter
 npm run db:add-lessons                 # bazaga yangi darslar (avval quruq sinov)
 npm run db:add-lessons -- --apply      # haqiqatan qo'shish
 npm run handbooks                      # darajalar bo'yicha PDF qo'llanmalar
-node scripts/create-teacher.mjs        # yangi o'qituvchi (o'z o'quvchilarini o'zi qo'shadi)
+node scripts/set-admin.mjs <login> --apply  # asosiy admin: o'qituvchilarni boshqaradi va kuzatadi
+node scripts/create-teacher.mjs        # yangi o'qituvchi (admin panelidan ham bo'ladi)
 npm run db:seed                        # DIQQAT: bazani butunlay o'chirib qayta yaratadi
 ```

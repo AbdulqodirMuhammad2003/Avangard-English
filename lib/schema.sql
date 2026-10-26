@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS units (
 ALTER TABLE users ADD COLUMN IF NOT EXISTS start_unit_id INTEGER REFERENCES units(id) ON DELETE SET NULL;
 -- O'quvchini qaysi o'qituvchi qo'shgan.
 ALTER TABLE users ADD COLUMN IF NOT EXISTS teacher_id INTEGER REFERENCES users(id) ON DELETE SET NULL;
+-- Asosiy admin (barcha o'qituvchilarni ko'radi).
+ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT false;
 
 CREATE TABLE IF NOT EXISTS vocabulary_rounds (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

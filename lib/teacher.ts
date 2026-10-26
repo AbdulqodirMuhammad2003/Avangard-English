@@ -4,15 +4,80 @@ import { sql } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { UNLOCK_THRESHOLD } from "@/lib/data";
 
+export interface TeacherSession {
+  id: number;
+  /** Asosiy admin (users.is_admin): barcha o'qituvchilar va ularning
+   *  o'quvchilarini ko'radi, o'qituvchi hisoblarini boshqaradi. */
+  isAdmin: boolean;
+}
+
 /** Faqat o'qituvchi (users.role = 'teacher') uchun; boshqalarga 404.
- *  O'qituvchi ID sini qaytaradi — o'quvchilar `users.teacher_id` bo'yicha
- *  shu o'qituvchiga biriktirilgan. */
-export async function requireTeacher(): Promise<number> {
+ *  O'quvchilar `users.teacher_id` bo'yicha o'qituvchiga biriktirilgan:
+ *  oddiy o'qituvchi faqat o'z o'quvchilarini ko'radi, admin — hammasini. */
+export async function requireTeacher(): Promise<TeacherSession> {
   const session = await getSession();
   if (!session) notFound();
-  const [me] = await sql<{ role: string }[]>`SELECT role FROM users WHERE id = ${session.userId}`;
+  const [me] = await sql<{ role: string; is_admin: boolean }[]>`
+    SELECT role, is_admin FROM users WHERE id = ${session.userId}
+  `;
   if (me?.role !== "teacher") notFound();
-  return session.userId;
+  return { id: session.userId, isAdmin: me.is_admin };
+}
+
+/** Faqat asosiy admin uchun; boshqalarga 404. */
+export async function requireAdmin(): Promise<TeacherSession> {
+  const me = await requireTeacher();
+  if (!me.isAdmin) notFound();
+  return me;
+}
+
+export interface TeacherAccount {
+  id: number;
+  name: string;
+  username: string | null;
+  email: string | null;
+  passwordViewable: boolean;
+  isAdmin: boolean;
+  createdAt: string;
+  lastActive: string | null;
+  /** O'quvchilari bo'yicha umumiy ko'rsatkichlar. */
+  students: number;
+  activeWeek: number;
+  /** O'quvchilarning joriy darajadagi o'rtacha foizi. */
+  average: number;
+  /** Joriy darajadagi darslardan 80 %+ bo'lganlari (barcha o'quvchilar bo'yicha). */
+  done: number;
+}
+
+/** Admin uchun: barcha o'qituvchilar va `students` (getTeacherStudents
+ *  natijasi) bo'yicha ko'rsatkichlar (admin ro'yxat boshida). */
+export async function getTeacherAccounts(students: TeacherStudent[]): Promise<TeacherAccount[]> {
+  const teachers = await sql<{
+    id: number; name: string; username: string | null; email: string | null; password_viewable: boolean;
+    is_admin: boolean; created_at: Date; last_day: string | null;
+  }[]>`
+    SELECT u.id, u.name, u.username, u.email, u.password_view IS NOT NULL AS password_viewable, u.is_admin, u.created_at,
+           (SELECT to_char(max(day), 'YYYY-MM-DD') FROM user_daily_activity a WHERE a.user_id = u.id) AS last_day
+    FROM users u WHERE u.role = 'teacher' ORDER BY u.is_admin DESC, u.created_at
+  `;
+  const weekAgo = new Date(Date.now() - 7 * 86_400_000).toISOString().slice(0, 10);
+  return teachers.map((t) => {
+    const mine = students.filter((s) => s.teacherId === t.id);
+    return {
+      id: t.id,
+      name: t.name,
+      username: t.username,
+      email: t.email,
+      passwordViewable: t.password_viewable,
+      isAdmin: t.is_admin,
+      createdAt: t.created_at.toISOString().slice(0, 10),
+      lastActive: t.last_day,
+      students: mine.length,
+      activeWeek: mine.filter((s) => s.lastActive && s.lastActive >= weekAgo).length,
+      average: mine.length ? Math.round(mine.reduce((a, s) => a + s.average, 0) / mine.length) : 0,
+      done: mine.reduce((a, s) => a + s.done, 0),
+    };
+  });
 }
 
 export interface PlacementLevel {
@@ -23,6 +88,7 @@ export interface PlacementLevel {
 
 export interface TeacherStudent {
   id: number;
+  teacherId: number | null;
   name: string;
   username: string | null;
   email: string | null;
@@ -62,17 +128,20 @@ export async function getPlacementLevels(): Promise<PlacementLevel[]> {
 
 /** O'qituvchi panelidagi o'quvchilar ro'yxati — har biri joriy darajasidagi
  *  natijasi bilan (dars foizi «Darslar» sahifasidagi kabi: lug'at va mashqlar
- *  foizining o'rtachasi). Faqat shu o'qituvchining o'quvchilari. */
-export async function getTeacherStudents(teacherId: number): Promise<TeacherStudent[]> {
+ *  foizining o'rtachasi). `teacherId` — shu o'qituvchining o'quvchilari,
+ *  null — barcha o'quvchilar (faqat admin uchun). */
+export async function getTeacherStudents(teacherId: number | null): Promise<TeacherStudent[]> {
+  const mine = (col: string) => (teacherId === null ? sql`` : sql`AND ${sql(col)} = ${teacherId}`);
   const [users, units, learned, exercised, activity] = await Promise.all([
     sql<{
       id: number; name: string; username: string | null; email: string | null; has_password: boolean;
       google_linked: boolean; password_viewable: boolean; level: string; start_unit_id: number | null; created_at: Date;
+      teacher_id: number | null;
     }[]>`
       SELECT id, name, username, email, password_hash IS NOT NULL AS has_password,
              password_view IS NOT NULL AS password_viewable,
-             google_sub IS NOT NULL AS google_linked, level, start_unit_id, created_at
-      FROM users WHERE role = 'student' AND teacher_id = ${teacherId} ORDER BY created_at DESC
+             google_sub IS NOT NULL AS google_linked, level, start_unit_id, created_at, teacher_id
+      FROM users WHERE role = 'student' ${mine("teacher_id")} ORDER BY created_at DESC
     `,
     sql<{ id: number; level: string; title: string; words: number; exercises: number }[]>`
       SELECT u.id, l.code AS level, u.title,
@@ -86,7 +155,7 @@ export async function getTeacherStudents(teacherId: number): Promise<TeacherStud
       FROM user_word_progress p
       JOIN vocabulary_words w ON w.id = p.word_id
       JOIN vocabulary_rounds r ON r.id = w.round_id
-      JOIN users us ON us.id = p.user_id AND us.role = 'student' AND us.teacher_id = ${teacherId}
+      JOIN users us ON us.id = p.user_id AND us.role = 'student' ${mine("us.teacher_id")}
       WHERE p.learned = 1
       GROUP BY p.user_id, r.unit_id
     `,
@@ -94,7 +163,7 @@ export async function getTeacherStudents(teacherId: number): Promise<TeacherStud
       SELECT p.user_id, e.unit_id, sum(p.score_pct)::int AS total
       FROM user_exercise_progress p
       JOIN exercises e ON e.id = p.exercise_id
-      JOIN users us ON us.id = p.user_id AND us.role = 'student' AND us.teacher_id = ${teacherId}
+      JOIN users us ON us.id = p.user_id AND us.role = 'student' ${mine("us.teacher_id")}
       GROUP BY p.user_id, e.unit_id
     `,
     sql<{ user_id: number; last_day: string }[]>`
@@ -125,6 +194,7 @@ export async function getTeacherStudents(teacherId: number): Promise<TeacherStud
     }
     return {
       id: u.id,
+      teacherId: u.teacher_id,
       name: u.name,
       username: u.username,
       email: u.email,

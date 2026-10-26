@@ -30,18 +30,18 @@ import { SITE_HOST, SITE_URL } from "@/lib/site";
 
 type Mode = "placement" | "password" | "info" | "delete";
 
-const inputClass =
+export const inputClass =
   "w-full rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-base sm:text-sm text-ink-900 outline-none transition-colors placeholder:text-ink-300 focus:border-azure-500 focus:ring-2 focus:ring-azure-100 dark:border-white/10 dark:bg-white/5 dark:text-ink-50 dark:focus:ring-azure-900/40";
-const labelClass = "mb-1 block text-xs font-semibold text-ink-600 dark:text-ink-300";
+export const labelClass = "mb-1 block text-xs font-semibold text-ink-600 dark:text-ink-300";
 
 /** Chalkashtiriladigan belgilarsiz (0/O, 1/l) tasodifiy parol. */
-function generatePassword() {
+export function generatePassword() {
   const chars = "abcdefghjkmnpqrstuvwxyz23456789";
   const bytes = crypto.getRandomValues(new Uint8Array(8));
   return Array.from(bytes, (b) => chars[b % chars.length]).join("");
 }
 
-function formatDay(iso: string | null) {
+export function formatDay(iso: string | null) {
   if (!iso) return "hali kirmagan";
   return new Date(`${iso}T00:00:00`).toLocaleDateString("uz-UZ", { day: "numeric", month: "long" });
 }
@@ -96,7 +96,15 @@ function PlacementFields({
   );
 }
 
-function PasswordField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+export function PasswordField({
+  value,
+  onChange,
+  placeholder = "kamida 6 belgi",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
   return (
     <div>
       <label className={labelClass}>Parol</label>
@@ -107,7 +115,7 @@ function PasswordField({ value, onChange }: { value: string; onChange: (v: strin
           value={value}
           onChange={(e) => onChange(e.target.value)}
           autoComplete="new-password"
-          placeholder="kamida 6 belgi"
+          placeholder={placeholder}
           className={`${inputClass} font-mono`}
         />
         <button
@@ -122,7 +130,7 @@ function PasswordField({ value, onChange }: { value: string; onChange: (v: strin
   );
 }
 
-function ErrorText({ error }: { error?: string }) {
+export function ErrorText({ error }: { error?: string }) {
   if (!error) return null;
   return <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">{error}</p>;
 }
@@ -468,7 +476,17 @@ function StudentCard({ student, levels }: { student: TeacherStudent; levels: Pla
   );
 }
 
-export function TeacherPanel({ students, levels }: { students: TeacherStudent[]; levels: PlacementLevel[] }) {
+/** `canAdd` — admin boshqa o'qituvchining o'quvchilarini ko'rayotganda
+ *  yangi o'quvchi qo'shilmaydi (u admin nomiga yozilib qolardi). */
+export function TeacherPanel({
+  students,
+  levels,
+  canAdd = true,
+}: {
+  students: TeacherStudent[];
+  levels: PlacementLevel[];
+  canAdd?: boolean;
+}) {
   const [adding, setAdding] = useState(false);
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
@@ -493,12 +511,14 @@ export function TeacherPanel({ students, levels }: { students: TeacherStudent[];
           <p className="text-xs text-ink-500 dark:text-ink-400">Shu hafta faol</p>
           <p className="font-display mt-1 text-2xl font-bold text-ink-950 dark:text-ink-50">{activeWeek}</p>
         </div>
-        <button
-          onClick={() => setAdding(true)}
-          className="btn-press col-span-2 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-azure-600 to-azure-800 p-4 text-sm font-bold text-white shadow-sm sm:col-span-1"
-        >
-          <UserPlus size={18} /> Yangi o'quvchi
-        </button>
+        {canAdd && (
+          <button
+            onClick={() => setAdding(true)}
+            className="btn-press col-span-2 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-azure-600 to-azure-800 p-4 text-sm font-bold text-white shadow-sm sm:col-span-1"
+          >
+            <UserPlus size={18} /> Yangi o'quvchi
+          </button>
+        )}
       </div>
 
       {adding && <NewStudentForm levels={levels} onClose={() => setAdding(false)} />}
@@ -524,9 +544,11 @@ export function TeacherPanel({ students, levels }: { students: TeacherStudent[];
           {students.length === 0 ? (
             <>
               <p>Hali o'quvchi yo'q.</p>
-              <button onClick={() => setAdding(true)} className="flex items-center gap-1.5 font-semibold text-azure-600">
-                <Plus size={16} /> Birinchi o'quvchini qo'shing
-              </button>
+              {canAdd && (
+                <button onClick={() => setAdding(true)} className="flex items-center gap-1.5 font-semibold text-azure-600">
+                  <Plus size={16} /> Birinchi o'quvchini qo'shing
+                </button>
+              )}
             </>
           ) : (
             <p>Hech kim topilmadi.</p>
