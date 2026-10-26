@@ -34,6 +34,10 @@ import { A1_28_EXERCISES, A1_28_ROUNDS } from "./a1-28-plans";
 import { A1_29_EXERCISES, A1_29_ROUNDS } from "./a1-29-new-life";
 import { A1_30_EXERCISES, A1_30_ROUNDS } from "./a1-30-cafe";
 import { A1_T_EXERCISES, A1_T_ROUNDS } from "./a1-t-review";
+import { A2_01_EXERCISES, A2_01_ROUNDS } from "./a2-01-multicultural";
+import { A2_02_EXERCISES, A2_02_ROUNDS } from "./a2-02-family";
+import { A2_03_EXERCISES, A2_03_ROUNDS } from "./a2-03-scientist";
+import { A2_04_EXERCISES, A2_04_ROUNDS } from "./a2-04-space";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -102,6 +106,10 @@ const LESSONS: LessonContent[] = [
   { code: "A1-29", rounds: A1_29_ROUNDS, exercises: A1_29_EXERCISES },
   { code: "A1-30", rounds: A1_30_ROUNDS, exercises: A1_30_EXERCISES },
   { code: "A1-T", rounds: A1_T_ROUNDS, exercises: A1_T_EXERCISES },
+  { code: "A2-01", rounds: A2_01_ROUNDS, exercises: A2_01_EXERCISES },
+  { code: "A2-02", rounds: A2_02_ROUNDS, exercises: A2_02_EXERCISES },
+  { code: "A2-03", rounds: A2_03_ROUNDS, exercises: A2_03_EXERCISES },
+  { code: "A2-04", rounds: A2_04_ROUNDS, exercises: A2_04_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —
