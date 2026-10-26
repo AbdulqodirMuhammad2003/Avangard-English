@@ -123,18 +123,23 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 /** Har darsdan bittadan, qolganini tasodifiy darslardan olib, `count` ta
- *  elementni tanlaydi (bir darsdan ikki martadan ko'p emas). */
-function spreadPick<T>(byLesson: T[][], count: number): { lessonIndex: number; item: T }[] {
+ *  elementni tanlaydi (bir darsdan ikki martadan ko'p emas). Darslar `count`
+ *  dan ko'p bo'lsa, avval `covered` ga kirmagan darslar olinadi — shunda
+ *  lug'at va grammatika bo'limlari birgalikda barcha darslarni qamraydi. */
+function spreadPick<T>(
+  byLesson: T[][],
+  count: number,
+  covered: Set<number> = new Set()
+): { lessonIndex: number; item: T }[] {
   const pools = byLesson.map((items) => shuffle(items));
   const picked: { lessonIndex: number; item: T }[] = [];
-  pools.forEach((pool, i) => {
-    if (pool.length > 0) picked.push({ lessonIndex: i, item: pool.shift()! });
-  });
-  for (const i of shuffle(pools.map((_, i) => i))) {
-    if (picked.length >= count) break;
-    if (pools[i].length > 0) picked.push({ lessonIndex: i, item: pools[i].shift()! });
-  }
-  return picked.slice(0, count);
+  const take = (i: number) => {
+    if (picked.length < count && pools[i].length > 0) picked.push({ lessonIndex: i, item: pools[i].shift()! });
+  };
+  const order = shuffle(pools.map((_, i) => i));
+  for (const i of [...order.filter((i) => !covered.has(i)), ...order.filter((i) => covered.has(i))]) take(i);
+  for (const i of shuffle(pools.map((_, i) => i))) take(i);
+  return picked;
 }
 
 async function levelUnits(level: string) {
@@ -182,7 +187,8 @@ async function buildVariant(level: string): Promise<StoredQuestion[]> {
 
   const grammar = spreadPick(
     units.map((u) => bank[u.code]),
-    EXAM_GRAMMAR_COUNT
+    EXAM_GRAMMAR_COUNT,
+    new Set(vocab.map((q) => q.lesson - 1))
   ).map(({ lessonIndex, item }): StoredQuestion => {
     const options = shuffle(item.options);
     return {

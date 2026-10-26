@@ -6,6 +6,8 @@
  * tuzilayotganda aralashtiriladi.
  */
 
+import { A1_EXAM_BANK } from "./exam-banks/a1";
+
 export interface ExamGrammarItem {
   prompt: string;
   /** options[0] — to'g'ri javob. */
@@ -16,7 +18,7 @@ export interface ExamGrammarItem {
 /** Daraja kodi → (dars kodi → shu dars grammatikasi bo'yicha savollar,
  *  har birida 5 ta). Bank bo'sh daraja uchun imtihon hali ochilmaydi. */
 export const GRAMMAR_BANKS: Record<string, Record<string, ExamGrammarItem[]>> = {
-  A1: {},
+  A1: A1_EXAM_BANK,
   A2: {},
   B1: {},
   B2: {},
