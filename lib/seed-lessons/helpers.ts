@@ -93,6 +93,13 @@ export const sentences = (list: string[]): SeedQuestion[] => list.map((answer) =
 /** «speak»: iboralardan savollar. */
 export const phrases = (list: string[]): SeedQuestion[] => list.map((p) => ({ prompt: p, answer: p }));
 
+/** «listenmatch»: ro'yxatli trek — har bir raqamga (chap) javob (o'ng) tanlanadi. */
+export const slots = (audio: string, rows: [string, string][]): SeedQuestion => ({
+  prompt: "Tinglab, har bir raqamga javobni tanlang",
+  audio,
+  options: rows.map(([label, answer]) => `${label}|${answer}`),
+});
+
 /** «match»: 4 tadan "chap|o'ng" juftlar. */
 export const pairs = (sets: string[][]): SeedQuestion[] => sets.map((options) => ({ prompt: "Juftlarni ulang", options }));
 

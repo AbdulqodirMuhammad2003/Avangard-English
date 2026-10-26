@@ -13,6 +13,7 @@ import {
   pairs,
   phrases,
   say,
+  slots,
   trueFalse,
   w,
   written,
@@ -113,15 +114,17 @@ export const A2_02_EXERCISES: SeedExercise[] = [
   {
     title: "Bu kim?",
     skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions: "Oltita ta'rif o'qiladi (1–6). Tinglang va har biri qaysi qarindosh ekanini toping.",
+    kind: "listenmatch",
+    instructions: "Oltita ta'rif ketma-ket o'qiladi (1–6). Tinglang — kerak bo'lsa, pauza qiling yoki orqaga qayting — va har bir raqam uchun qarindoshni tanlang.",
     questions: [
-      hearing(track("1.21"))("1-ta'rif kim?", ["aunt", "uncle", "niece", "grandmother"]),
-      hearing(track("1.21"))("2-ta'rif kim?", ["grandfather", "father", "uncle", "grandson"]),
-      hearing(track("1.21"))("3-ta'rif kim?", ["niece", "nephew", "daughter", "cousin"]),
-      hearing(track("1.21"))("4-ta'rif kim?", ["granddaughter", "grandson", "niece", "daughter-in-law"]),
-      hearing(track("1.21"))("5-ta'rif kim?", ["uncle", "aunt", "grandfather", "brother-in-law"]),
-      hearing(track("1.21"))("6-ta'rif kim?", ["cousin", "nephew", "uncle", "brother"]),
+      slots(track("1.21"), [
+        ["1", "aunt"],
+        ["2", "grandfather"],
+        ["3", "niece"],
+        ["4", "granddaughter"],
+        ["5", "uncle"],
+        ["6", "cousin"],
+      ]),
     ],
   },
   {

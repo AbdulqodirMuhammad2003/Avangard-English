@@ -118,6 +118,8 @@ export function ExerciseRun({
   const [matchLeft, setMatchLeft] = useState<number | null>(null);
   const [matchMistake, setMatchMistake] = useState(false);
   const [matchFlash, setMatchFlash] = useState(false);
+  // «listenmatch»: har bir raqamga tanlangan javob (juftlar ro'yxatidagi tartib raqami).
+  const [slots, setSlots] = useState<(number | null)[]>([]);
   // Talaffuz: eshitilgan matn va holat.
   const [heard, setHeard] = useState("");
   const [listening, setListening] = useState(false);
@@ -240,9 +242,10 @@ export function ExerciseRun({
           question.id
         )
       : [];
-  const matchPairs = kind === "match" ? question.options.map((o) => o.split("|")) : [];
+  const matchPairs = kind === "match" || kind === "listenmatch" ? question.options.map((o) => o.split("|")) : [];
   const matchRight =
-    kind === "match" ? seededShuffle(matchPairs.map((_, i) => i), question.id) : [];
+    kind === "match" || kind === "listenmatch" ? seededShuffle(matchPairs.map((_, i) => i), question.id) : [];
+  const slotsFilled = matchPairs.length > 0 && matchPairs.every((_, i) => slots[i] != null);
   const answerValue =
     kind === "anagram"
       ? picked.map((i) => letters[i]).join("")
@@ -256,7 +259,8 @@ export function ExerciseRun({
   // telefon raqam klaviaturasida «:» yo'q, shuning uchun 8:15 = 815.
   const normalizeWritten = (s: string) => (kind === "number" ? s.replace(/\D/g, "") : normalizeAnswer(s));
   const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeWritten);
-  const canCheck = isWritten ? answerValue.trim() !== "" : selected !== null;
+  const canCheck =
+    kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
 
   function record(ok: boolean) {
     setChecked(ok);
@@ -267,6 +271,10 @@ export function ExerciseRun({
     if (!canCheck || checked !== null) return;
     if (kind === "speak") {
       record(matchesPronunciation(heard, [speechNorm(question.answer_text ?? question.prompt)]));
+      return;
+    }
+    if (kind === "listenmatch") {
+      record(matchPairs.every((_, i) => slots[i] === i));
       return;
     }
     record(
@@ -336,6 +344,7 @@ export function ExerciseRun({
       setMatchLeft(null);
       setMatchMistake(false);
       setMatchFlash(false);
+      setSlots([]);
       setHeard("");
       setSpeechError(null);
     } else {
@@ -394,7 +403,7 @@ export function ExerciseRun({
     checked === null ? "text-azure-600 dark:text-azure-300" : checked ? "text-mint-600" : "text-rose-500";
   const correctAnswerText = kind === "stress"
     ? question.options.map((o, i) => (i === question.correct_index ? o.toUpperCase() : o)).join("-")
-    : kind === "match"
+    : kind === "match" || kind === "listenmatch"
     ? matchPairs.map((p) => `${p[0]} — ${p[1]}`).join(", ")
     : kind === "mistake"
     ? `«${question.options[question.correct_index]}» — xato so'z`
@@ -425,6 +434,12 @@ export function ExerciseRun({
             {exercise.instructions}
           </p>
         </div>
+      )}
+
+      {/* Yozib olingan audio savol blokidan tashqarida: keyingi savolga o'tganda
+          pleyer qayta yaratilmaydi va to'xtagan joyidan davom etadi. */}
+      {(kind === "audiotext" || kind === "listenmatch") && isMediaRef(question.audio_text) && (
+        <MediaAudioPlayer key={question.audio_text} src={mediaUrl(question.audio_text)} autoPlay={qIndex === 0} />
       )}
 
       <div key={qIndex} className="flex animate-fade-up flex-col gap-4">
@@ -586,9 +601,7 @@ export function ExerciseRun({
 
         {kind === "audiotext" && (
           <>
-            {isMediaRef(question.audio_text) ? (
-              <MediaAudioPlayer key={question.audio_text} src={mediaUrl(question.audio_text)} autoPlay={qIndex === 0} />
-            ) : (
+            {!isMediaRef(question.audio_text) && (
               <div className="flex items-center gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30">
                 <button
                   onClick={() => question.audio_text && speakEn(question.audio_text)}
@@ -754,6 +767,46 @@ export function ExerciseRun({
               <p className="text-center text-sm font-semibold text-rose-500">Bu juft emas — yana urinib ko'ring</p>
             )}
           </>
+        )}
+
+        {kind === "listenmatch" && (
+          <div className="flex flex-col gap-2">
+            {matchPairs.map((pair, i) => {
+              const state =
+                checked === null ? (slots[i] != null ? "selected" : "idle") : slots[i] === i ? "right" : "wrong";
+              return (
+                <label
+                  key={i}
+                  className={`flex items-center gap-3 rounded-xl border-2 px-3 py-2 ${OPTION_STATE_CLASSES[state]}`}
+                >
+                  <span className="min-w-0 shrink-0 font-bold">{pair[0]}</span>
+                  <select
+                    value={slots[i] ?? ""}
+                    disabled={checked !== null}
+                    onChange={(e) => {
+                      const v = e.target.value === "" ? null : Number(e.target.value);
+                      setSlots((cur) => {
+                        const nextSlots = [...cur];
+                        nextSlots[i] = v;
+                        return nextSlots;
+                      });
+                    }}
+                    className="min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-2 py-2 text-base text-ink-900 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
+                  >
+                    <option value="">— tanlang —</option>
+                    {matchRight.map((pairIndex) => (
+                      <option key={pairIndex} value={pairIndex}>
+                        {matchPairs[pairIndex][1]}
+                      </option>
+                    ))}
+                  </select>
+                  {checked !== null && slots[i] !== i && (
+                    <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">{pair[1]}</span>
+                  )}
+                </label>
+              );
+            })}
+          </div>
         )}
 
         {kind === "order" && (

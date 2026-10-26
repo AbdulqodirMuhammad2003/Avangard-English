@@ -15,6 +15,7 @@ import {
   phrases,
   reading,
   say,
+  slots,
   sentences,
   w,
   written,
@@ -190,15 +191,17 @@ export const A2_07_EXERCISES: SeedExercise[] = [
   {
     title: "Kim yoki nima?",
     skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions: "Oltita ta'rif o'qiladi (1–6). Tinglang va har biri uchun -er bilan tugaydigan so'zni toping.",
+    kind: "listenmatch",
+    instructions: "Oltita ta'rif ketma-ket o'qiladi (1–6). Tinglang va har bir raqam uchun -er bilan tugaydigan so'zni tanlang.",
     questions: [
-      hearing(track("3.18"))("1-ta'rif:", ["teacher", "learner", "worker", "speaker"]),
-      hearing(track("3.18"))("2-ta'rif:", ["painter", "designer", "builder", "cleaner"]),
-      hearing(track("3.18"))("3-ta'rif:", ["singer", "dancer", "player", "speaker"]),
-      hearing(track("3.18"))("4-ta'rif:", ["DVD player", "computer", "printer", "speaker"]),
-      hearing(track("3.18"))("5-ta'rif:", ["builder", "painter", "worker", "owner"]),
-      hearing(track("3.18"))("6-ta'rif:", ["baker", "farmer", "cooker", "waiter"]),
+      slots(track("3.18"), [
+        ["1", "teacher"],
+        ["2", "painter"],
+        ["3", "singer"],
+        ["4", "DVD player"],
+        ["5", "builder"],
+        ["6", "baker"],
+      ]),
     ],
   },
   {

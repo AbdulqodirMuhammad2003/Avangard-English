@@ -15,6 +15,7 @@ import {
   phrases,
   reading,
   say,
+  slots,
   w,
   written,
   type Rounds,
@@ -134,15 +135,17 @@ export const A2_04_EXERCISES: SeedExercise[] = [
   {
     title: "Qaysi vaqt?",
     skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions: "Oltita vaqt o'qiladi (1–6). Tinglang (kerak bo'lsa, qayta yoki sekinroq) va har birini toping.",
+    kind: "listenmatch",
+    instructions: "Oltita vaqt ketma-ket o'qiladi (1–6). Tinglang — kerak bo'lsa, pauza qiling yoki orqaga qayting — va har bir raqam uchun vaqtni tanlang. Hammasini tanlab bo'lgach, «Tekshirish»ni bosing.",
     questions: [
-      hearing(track("2.9"))("1-vaqt:", ["8:30", "8:15", "7:30", "8:45"]),
-      hearing(track("2.9"))("2-vaqt:", ["2:45", "3:15", "3:45", "2:15"]),
-      hearing(track("2.9"))("3-vaqt:", ["9:50", "10:10", "10:50", "9:10"]),
-      hearing(track("2.9"))("4-vaqt:", ["5:55", "6:05", "5:45", "6:55"]),
-      hearing(track("2.9"))("5-vaqt:", ["3:20", "2:40", "3:40", "4:20"]),
-      hearing(track("2.9"))("6-vaqt:", ["3:35", "4:25", "3:25", "4:35"]),
+      slots(track("2.9"), [
+        ["1", "8:30"],
+        ["2", "2:45"],
+        ["3", "9:50"],
+        ["4", "5:55"],
+        ["5", "3:20"],
+        ["6", "3:35"],
+      ]),
     ],
   },
   {
