@@ -116,6 +116,33 @@ export function normalizeAnswer(s: string) {
     .trim();
 }
 
+const TIME = /^(\d{1,2})(?:\s*[:.\-\s]\s*|(?=\d{2}\b))?(\d{2})?\s*(a\.?m\.?|p\.?m\.?)?$/i;
+
+/** Vaqt yozuvini [soat 0–11, daqiqa] ga keltiradi: 9:50, 9-50, 9.50, 950,
+ *  9 PM, 21:50 — hammasi bir xil. am/pm farqlanmaydi (tinglashda odatda
+ *  aytilmaydi). Vaqt bo'lmasa — null. */
+function parseTime(s: string): [number, number] | null {
+  const m = unifyMarks(s).trim().match(TIME);
+  if (!m) return null;
+  const hour = Number(m[1]);
+  const minute = Number(m[2] ?? 0);
+  if (hour > 24 || minute > 59) return null;
+  return [hour % 12, minute];
+}
+
+/** O'quvchi yozgan javob namunaga mosmi: vaqt bo'lsa — har xil yozilishi
+ *  (9:50 = 9-50 = 950), aks holda normalizeAnswer bo'yicha (I'm = I am). */
+export function answerMatches(given: string, expected: string) {
+  const want = /^\d{1,2}[:.]\d{2}$/.test(expected.trim()) || /^\d{1,2}\s*(a\.?m\.?|p\.?m\.?)$/i.test(expected.trim())
+    ? parseTime(expected)
+    : null;
+  if (want) {
+    const got = parseTime(given);
+    return !!got && got[0] === want[0] && got[1] === want[1];
+  }
+  return normalizeAnswer(given) === normalizeAnswer(expected);
+}
+
 /** Ovoz tanish uchun normallashtirish: kichik harf, tinish belgilari va
  *  apostroflar olib tashlanadi (brauzer «I'm» ni «I am» deb ham yozishi
  *  mumkin, shuning uchun qisqartmalar ochiladi). */

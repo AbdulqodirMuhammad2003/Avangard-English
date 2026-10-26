@@ -69,7 +69,6 @@ for (const lesson of LESSON_CONTENT) {
         case "listenmatch":
           if (!q.audio) errors.push(`${where}: audio yo'q`);
           if (opts.length < 2 || !opts.every((o) => o.split("|").length === 2)) errors.push(`${where}: juft "raqam|javob" emas`);
-          if (new Set(opts.map((o) => o.split("|")[1])).size !== opts.length) errors.push(`${where}: javoblar takrorlanmasligi kerak`);
           break;
         case "stress":
           if (opts.join("").toLowerCase() !== (q.audio ?? "").toLowerCase()) errors.push(`${where}: bo'g'inlar so'zga teng emas`);

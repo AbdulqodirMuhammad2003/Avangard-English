@@ -12,6 +12,7 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:add-lessons": "tsx scripts/add-lessons.ts",
     "db:rebuild-exercise": "tsx scripts/rebuild-exercise.ts",
+    "db:sync-exercises": "tsx scripts/sync-exercises.ts",
     "handbooks": "tsx scripts/build-handbooks.ts",
     "media:upload": "tsx scripts/upload-media.ts"
   },

@@ -5,7 +5,7 @@ import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, 
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
-import { matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
+import { answerMatches, matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
 
 /** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi; `media:` — yozib olingan audio fayl. */
 const speakEn = (text: string, rate = 0.85) => playListening(text, rate);
@@ -118,8 +118,8 @@ export function ExerciseRun({
   const [matchLeft, setMatchLeft] = useState<number | null>(null);
   const [matchMistake, setMatchMistake] = useState(false);
   const [matchFlash, setMatchFlash] = useState(false);
-  // «listenmatch»: har bir raqamga tanlangan javob (juftlar ro'yxatidagi tartib raqami).
-  const [slots, setSlots] = useState<(number | null)[]>([]);
+  // «listenmatch»: har bir raqam uchun o'quvchi yozgan javob.
+  const [slots, setSlots] = useState<string[]>([]);
   // Talaffuz: eshitilgan matn va holat.
   const [heard, setHeard] = useState("");
   const [listening, setListening] = useState(false);
@@ -245,7 +245,10 @@ export function ExerciseRun({
   const matchPairs = kind === "match" || kind === "listenmatch" ? question.options.map((o) => o.split("|")) : [];
   const matchRight =
     kind === "match" || kind === "listenmatch" ? seededShuffle(matchPairs.map((_, i) => i), question.id) : [];
-  const slotsFilled = matchPairs.length > 0 && matchPairs.every((_, i) => slots[i] != null);
+  const slotsFilled = matchPairs.length > 0 && matchPairs.every((_, i) => (slots[i] ?? "").trim() !== "");
+  // Javobda bir nechta to'g'ri variant «;» bilan ajratiladi.
+  const slotRight = (i: number) =>
+    (matchPairs[i]?.[1] ?? "").split(";").some((a) => answerMatches(slots[i] ?? "", a.trim()));
   const answerValue =
     kind === "anagram"
       ? picked.map((i) => letters[i]).join("")
@@ -274,7 +277,7 @@ export function ExerciseRun({
       return;
     }
     if (kind === "listenmatch") {
-      record(matchPairs.every((_, i) => slots[i] === i));
+      record(matchPairs.every((_, i) => slotRight(i)));
       return;
     }
     record(
@@ -404,7 +407,7 @@ export function ExerciseRun({
   const correctAnswerText = kind === "stress"
     ? question.options.map((o, i) => (i === question.correct_index ? o.toUpperCase() : o)).join("-")
     : kind === "match" || kind === "listenmatch"
-    ? matchPairs.map((p) => `${p[0]} — ${p[1]}`).join(", ")
+    ? matchPairs.map((p) => `${p[0]} — ${p[1].split(";")[0]}`).join(", ")
     : kind === "mistake"
     ? `«${question.options[question.correct_index]}» — xato so'z`
     : isWritten
@@ -772,36 +775,49 @@ export function ExerciseRun({
         {kind === "listenmatch" && (
           <div className="flex flex-col gap-2">
             {matchPairs.map((pair, i) => {
-              const state =
-                checked === null ? (slots[i] != null ? "selected" : "idle") : slots[i] === i ? "right" : "wrong";
+              const filled = (slots[i] ?? "").trim() !== "";
+              // Uzun yorliq (gap) bo'lsa, yozish maydoni uning ostida turadi.
+              const longLabel = pair[0].length > 14;
+              const state = checked === null ? (filled ? "selected" : "idle") : slotRight(i) ? "right" : "wrong";
               return (
                 <label
                   key={i}
-                  className={`flex items-center gap-3 rounded-xl border-2 px-3 py-2 ${OPTION_STATE_CLASSES[state]}`}
+                  className={`flex rounded-xl border-2 px-3 py-2 ${
+                    longLabel ? "flex-col gap-2" : "items-center gap-3"
+                  } ${OPTION_STATE_CLASSES[state]}`}
                 >
-                  <span className="min-w-0 shrink-0 font-bold">{pair[0]}</span>
-                  <select
+                  <span className={longLabel ? "text-sm font-semibold" : "min-w-8 shrink-0 font-bold"}>{pair[0]}</span>
+                  <input
                     value={slots[i] ?? ""}
                     disabled={checked !== null}
                     onChange={(e) => {
-                      const v = e.target.value === "" ? null : Number(e.target.value);
+                      const v = e.target.value;
                       setSlots((cur) => {
                         const nextSlots = [...cur];
                         nextSlots[i] = v;
                         return nextSlots;
                       });
                     }}
-                    className="min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-2 py-2 text-base text-ink-900 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
-                  >
-                    <option value="">— tanlang —</option>
-                    {matchRight.map((pairIndex) => (
-                      <option key={pairIndex} value={pairIndex}>
-                        {matchPairs[pairIndex][1]}
-                      </option>
-                    ))}
-                  </select>
-                  {checked !== null && slots[i] !== i && (
-                    <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">{pair[1]}</span>
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        const inputs = e.currentTarget.closest("div")?.querySelectorAll("input");
+                        const nextInput = inputs?.[i + 1];
+                        if (nextInput) nextInput.focus();
+                        else check();
+                      }
+                    }}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    enterKeyHint={i + 1 < matchPairs.length ? "next" : "done"}
+                    className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
+                  />
+                  {checked !== null && !slotRight(i) && (
+                    <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">
+                      {pair[1].split(";")[0]}
+                    </span>
                   )}
                 </label>
               );
