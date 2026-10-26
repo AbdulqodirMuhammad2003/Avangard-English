@@ -37,7 +37,7 @@ function parseUnit(v: FormDataEntryValue | null) {
 /** Yangi o'quvchi: ism, login, parol, ixtiyoriy email (Google bilan kirish
  *  uchun), daraja va boshlanadigan dars. */
 export async function createStudentAction(formData: FormData): Promise<TeacherActionResult> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const name = clean(formData.get("name"));
   const username = clean(formData.get("username")).toLowerCase();
   const password = String(formData.get("password") ?? "");
@@ -60,9 +60,9 @@ export async function createStudentAction(formData: FormData): Promise<TeacherAc
   if (taken) return { ok: false, error: "Bu login yoki email band." };
 
   await sql`
-    INSERT INTO users (name, username, email, password_hash, password_view, level, start_unit_id, role)
+    INSERT INTO users (name, username, email, password_hash, password_view, level, start_unit_id, role, teacher_id)
     VALUES (${name}, ${username}, ${email}, ${await hashPassword(password)}, ${encryptPasswordView(password)},
-            ${level}, ${startUnitId}, 'student')
+            ${level}, ${startUnitId}, 'student', ${teacherId})
   `;
   revalidatePath("/teacher");
   return { ok: true };
@@ -70,20 +70,20 @@ export async function createStudentAction(formData: FormData): Promise<TeacherAc
 
 /** O'quvchini suhbatdan keyin joylashtirish: daraja va boshlanadigan dars. */
 export async function updatePlacementAction(formData: FormData): Promise<TeacherActionResult> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const id = Number(formData.get("id"));
   const level = clean(formData.get("level"));
   const startUnitId = parseUnit(formData.get("startUnitId"));
   const placementError = await checkPlacement(level, startUnitId);
   if (placementError) return { ok: false, error: placementError };
-  await sql`UPDATE users SET level = ${level}, start_unit_id = ${startUnitId} WHERE id = ${id} AND role = 'student'`;
+  await sql`UPDATE users SET level = ${level}, start_unit_id = ${startUnitId} WHERE id = ${id} AND role = 'student' AND teacher_id = ${teacherId}`;
   revalidatePath("/teacher");
   return { ok: true };
 }
 
 /** Ism va emailni o'zgartirish. */
 export async function updateStudentInfoAction(formData: FormData): Promise<TeacherActionResult> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const id = Number(formData.get("id"));
   const name = clean(formData.get("name"));
   const email = clean(formData.get("email")).toLowerCase() || null;
@@ -100,7 +100,7 @@ export async function updateStudentInfoAction(formData: FormData): Promise<Teach
     UPDATE users SET name = ${name},
       google_sub = CASE WHEN email IS DISTINCT FROM ${email} THEN NULL ELSE google_sub END,
       email = ${email}
-    WHERE id = ${id} AND role = 'student'
+    WHERE id = ${id} AND role = 'student' AND teacher_id = ${teacherId}
   `;
   revalidatePath("/teacher");
   return { ok: true };
@@ -108,13 +108,13 @@ export async function updateStudentInfoAction(formData: FormData): Promise<Teach
 
 /** Yangi parol berish. */
 export async function resetPasswordAction(formData: FormData): Promise<TeacherActionResult> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const id = Number(formData.get("id"));
   const password = String(formData.get("password") ?? "");
   if (password.length < 6) return { ok: false, error: "Parol kamida 6 belgidan iborat bo'lsin." };
   await sql`
     UPDATE users SET password_hash = ${await hashPassword(password)}, password_view = ${encryptPasswordView(password)}
-    WHERE id = ${id} AND role = 'student'
+    WHERE id = ${id} AND role = 'student' AND teacher_id = ${teacherId}
   `;
   revalidatePath("/teacher");
   return { ok: true };
@@ -126,9 +126,9 @@ export async function resetPasswordAction(formData: FormData): Promise<TeacherAc
 export async function revealCredentialsAction(
   id: number
 ): Promise<{ ok: boolean; username?: string | null; password?: string | null }> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const [row] = await sql<{ username: string | null; email: string | null; password_view: string | null }[]>`
-    SELECT username, email, password_view FROM users WHERE id = ${id} AND role = 'student'
+    SELECT username, email, password_view FROM users WHERE id = ${id} AND role = 'student' AND teacher_id = ${teacherId}
   `;
   if (!row) return { ok: false };
   return { ok: true, username: row.username ?? row.email, password: decryptPasswordView(row.password_view) };
@@ -136,9 +136,9 @@ export async function revealCredentialsAction(
 
 /** O'quvchini va uning barcha natijalarini o'chirish. */
 export async function deleteStudentAction(formData: FormData): Promise<TeacherActionResult> {
-  await requireTeacher();
+  const teacherId = await requireTeacher();
   const id = Number(formData.get("id"));
-  await sql`DELETE FROM users WHERE id = ${id} AND role = 'student'`;
+  await sql`DELETE FROM users WHERE id = ${id} AND role = 'student' AND teacher_id = ${teacherId}`;
   revalidatePath("/teacher");
   return { ok: true };
 }

@@ -4,7 +4,9 @@ import { sql } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { UNLOCK_THRESHOLD } from "@/lib/data";
 
-/** Faqat o'qituvchi (users.role = 'teacher') uchun; boshqalarga 404. */
+/** Faqat o'qituvchi (users.role = 'teacher') uchun; boshqalarga 404.
+ *  O'qituvchi ID sini qaytaradi — o'quvchilar `users.teacher_id` bo'yicha
+ *  shu o'qituvchiga biriktirilgan. */
 export async function requireTeacher(): Promise<number> {
   const session = await getSession();
   if (!session) notFound();
@@ -60,8 +62,8 @@ export async function getPlacementLevels(): Promise<PlacementLevel[]> {
 
 /** O'qituvchi panelidagi o'quvchilar ro'yxati — har biri joriy darajasidagi
  *  natijasi bilan (dars foizi «Darslar» sahifasidagi kabi: lug'at va mashqlar
- *  foizining o'rtachasi). */
-export async function getTeacherStudents(): Promise<TeacherStudent[]> {
+ *  foizining o'rtachasi). Faqat shu o'qituvchining o'quvchilari. */
+export async function getTeacherStudents(teacherId: number): Promise<TeacherStudent[]> {
   const [users, units, learned, exercised, activity] = await Promise.all([
     sql<{
       id: number; name: string; username: string | null; email: string | null; has_password: boolean;
@@ -70,7 +72,7 @@ export async function getTeacherStudents(): Promise<TeacherStudent[]> {
       SELECT id, name, username, email, password_hash IS NOT NULL AS has_password,
              password_view IS NOT NULL AS password_viewable,
              google_sub IS NOT NULL AS google_linked, level, start_unit_id, created_at
-      FROM users WHERE role = 'student' ORDER BY created_at DESC
+      FROM users WHERE role = 'student' AND teacher_id = ${teacherId} ORDER BY created_at DESC
     `,
     sql<{ id: number; level: string; title: string; words: number; exercises: number }[]>`
       SELECT u.id, l.code AS level, u.title,
@@ -84,7 +86,7 @@ export async function getTeacherStudents(): Promise<TeacherStudent[]> {
       FROM user_word_progress p
       JOIN vocabulary_words w ON w.id = p.word_id
       JOIN vocabulary_rounds r ON r.id = w.round_id
-      JOIN users us ON us.id = p.user_id AND us.role = 'student'
+      JOIN users us ON us.id = p.user_id AND us.role = 'student' AND us.teacher_id = ${teacherId}
       WHERE p.learned = 1
       GROUP BY p.user_id, r.unit_id
     `,
@@ -92,7 +94,7 @@ export async function getTeacherStudents(): Promise<TeacherStudent[]> {
       SELECT p.user_id, e.unit_id, sum(p.score_pct)::int AS total
       FROM user_exercise_progress p
       JOIN exercises e ON e.id = p.exercise_id
-      JOIN users us ON us.id = p.user_id AND us.role = 'student'
+      JOIN users us ON us.id = p.user_id AND us.role = 'student' AND us.teacher_id = ${teacherId}
       GROUP BY p.user_id, e.unit_id
     `,
     sql<{ user_id: number; last_day: string }[]>`

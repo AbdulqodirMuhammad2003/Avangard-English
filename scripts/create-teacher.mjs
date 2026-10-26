@@ -6,6 +6,10 @@
  *
  * Ism, login, Google orqali kirish uchun email (ixtiyoriy) va parol so'raladi.
  * DATABASE_URL .env.local dan olinadi.
+ *
+ * Har o'qituvchi panelda faqat o'zi qo'shgan o'quvchilarni ko'radi
+ * (users.teacher_id). Yangi o'qituvchi /teacher sahifasiga kirib, o'z
+ * o'quvchilarini qo'shadi.
  */
 import readline from "readline";
 import bcrypt from "bcryptjs";

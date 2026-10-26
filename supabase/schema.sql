@@ -67,6 +67,11 @@ CREATE TABLE IF NOT EXISTS units (
 -- O'qituvchi o'quvchini qaysi darsdan boshlatgan (joriy darajadagi dars).
 ALTER TABLE users ADD COLUMN IF NOT EXISTS start_unit_id INTEGER REFERENCES units(id) ON DELETE SET NULL;
 
+-- O'quvchini qaysi o'qituvchi qo'shgan: har o'qituvchi panelda faqat o'z
+-- o'quvchilarini ko'radi (mavjud bazaga: node scripts/migrate-teacher-id.mjs).
+ALTER TABLE users ADD COLUMN IF NOT EXISTS teacher_id INTEGER REFERENCES users(id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS users_teacher_id_idx ON users (teacher_id);
+
 CREATE TABLE IF NOT EXISTS vocabulary_rounds (
   id SERIAL PRIMARY KEY,
   unit_id INTEGER NOT NULL REFERENCES units(id) ON DELETE CASCADE,

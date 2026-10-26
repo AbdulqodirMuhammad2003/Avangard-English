@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS units (
 
 -- O'qituvchi o'quvchini qaysi darsdan boshlatgan (joriy darajadagi dars).
 ALTER TABLE users ADD COLUMN IF NOT EXISTS start_unit_id INTEGER REFERENCES units(id) ON DELETE SET NULL;
+-- O'quvchini qaysi o'qituvchi qo'shgan.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS teacher_id INTEGER REFERENCES users(id) ON DELETE SET NULL;
 
 CREATE TABLE IF NOT EXISTS vocabulary_rounds (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -2,8 +2,8 @@ import { getPlacementLevels, getTeacherStudents, requireTeacher } from "@/lib/te
 import { TeacherPanel } from "@/components/teacher/TeacherPanel";
 
 export default async function TeacherPage() {
-  await requireTeacher();
-  const [students, levels] = await Promise.all([getTeacherStudents(), getPlacementLevels()]);
+  const teacherId = await requireTeacher();
+  const [students, levels] = await Promise.all([getTeacherStudents(teacherId), getPlacementLevels()]);
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="animate-fade-up">
