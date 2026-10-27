@@ -193,6 +193,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-06", level: "A2", title: "6-dars", subtitle: "Unusual jobs: Is…? / Does…?", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "A2-07", level: "A2", title: "7-dars", subtitle: "The world of work: Wh- questions, -er", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-3.mp4", title: "Vox pops 3: ish haqida", kind: "intervyu", start: null, end: null } },
   { code: "A2-08", level: "A2", title: "8-dars", subtitle: "Requests and emails: Can I…? / Could you…?", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-03.mp4", title: "An Iranian doctor in the USA", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-09", level: "A2", title: "9-dars", subtitle: "Places in a town: there is / there are", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "A2-10", level: "A2", title: "10-dars", subtitle: "Where I live: a / an / the, above, below", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-4.mp4", title: "Vox pops 4: where I live", kind: "intervyu", start: null, end: null } },
+  { code: "A2-11", level: "A2", title: "11-dars", subtitle: "Asking the way: turn left, don't…", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-04.mp4", title: "Almas Tower", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-12", level: "A2", title: "12-dars", subtitle: "Shopping then and now: can / could", color: "green", icon: "chart", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

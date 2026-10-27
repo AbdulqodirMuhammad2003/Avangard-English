@@ -252,6 +252,10 @@ export function ExerciseRun({
   const matchPairs = kind === "match" || kind === "listenmatch" ? question.options.map((o) => o.split("|")) : [];
   const matchRight =
     kind === "match" || kind === "listenmatch" ? seededShuffle(matchPairs.map((_, i) => i), question.id) : [];
+  // «listengap»: [gap, to'g'ri, ...xatolar]; variantlar har qatorda o'z tartibida.
+  const gapRows = kind === "listengap" ? question.options.map((o) => o.split("|")) : [];
+  const gapChoices = gapRows.map((row, i) => seededShuffle(row.slice(1), question.id * 31 + i));
+  const gapsFilled = gapRows.length > 0 && gapRows.every((_, i) => !!slots[i]);
   const slotsFilled = matchPairs.length > 0 && matchPairs.every((_, i) => (slots[i] ?? "").trim() !== "");
   // Javobda bir nechta to'g'ri variant «;» bilan ajratiladi.
   const slotRight = (i: number) =>
@@ -270,7 +274,7 @@ export function ExerciseRun({
   const normalizeWritten = (s: string) => (kind === "number" ? s.replace(/\D/g, "") : normalizeAnswer(s));
   const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeWritten);
   const canCheck =
-    kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
+    kind === "listengap" ? gapsFilled : kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
 
   function record(ok: boolean) {
     setChecked(ok);
@@ -285,6 +289,10 @@ export function ExerciseRun({
     }
     if (kind === "listenmatch") {
       record(matchPairs.every((_, i) => slotRight(i)));
+      return;
+    }
+    if (kind === "listengap") {
+      record(gapRows.every((row, i) => slots[i] === row[1]));
       return;
     }
     record(
@@ -416,6 +424,8 @@ export function ExerciseRun({
     ? question.options.map((o, i) => (i === question.correct_index ? o.toUpperCase() : o)).join("-")
     : kind === "match" || kind === "listenmatch"
     ? matchPairs.map((p) => `${p[0]} — ${p[1].split(";")[0]}`).join(", ")
+    : kind === "listengap"
+    ? gapRows.map((row, i) => `${i + 1}) ${row[1]}`).join(", ")
     : kind === "mistake"
     ? t(`«${question.options[question.correct_index]}» — xato so'z`, `«${question.options[question.correct_index]}» is the wrong word`)
     : isWritten
@@ -452,7 +462,7 @@ export function ExerciseRun({
 
       {/* Yozib olingan audio savol blokidan tashqarida: keyingi savolga o'tganda
           pleyer qayta yaratilmaydi va to'xtagan joyidan davom etadi. */}
-      {(kind === "audiotext" || kind === "listenmatch") && isMediaRef(question.audio_text) && (
+      {(kind === "audiotext" || kind === "listenmatch" || kind === "listengap") && isMediaRef(question.audio_text) && (
         <MediaAudioPlayer key={question.audio_text} src={mediaUrl(question.audio_text)} autoPlay={qIndex === 0} />
       )}
 
@@ -784,6 +794,54 @@ export function ExerciseRun({
               <p className="text-center text-sm font-semibold text-rose-500">{t("Bu juft emas — yana urinib ko'ring", "That's not a pair — try again")}</p>
             )}
           </>
+        )}
+
+        {kind === "listengap" && (
+          <ol className="flex flex-col gap-2">
+            {gapRows.map((row, i) => {
+              const [before, after = ""] = row[0].split("___");
+              const state =
+                checked === null ? (slots[i] ? "selected" : "idle") : slots[i] === row[1] ? "right" : "wrong";
+              return (
+                <li
+                  key={i}
+                  className={`flex items-start gap-3 rounded-xl border-2 px-3 py-2.5 ${OPTION_STATE_CLASSES[state]}`}
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-400 text-xs font-bold text-ink-950">
+                    {i + 1}
+                  </span>
+                  <p lang="en" className="min-w-0 flex-1 leading-9">
+                    {before}
+                    <select
+                      value={slots[i] ?? ""}
+                      disabled={checked !== null}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        setSlots((cur) => {
+                          const nextSlots = [...cur];
+                          nextSlots[i] = v;
+                          return nextSlots;
+                        });
+                      }}
+                      aria-label={t(`${i + 1}-bo'sh joy`, `Gap ${i + 1}`)}
+                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
+                    >
+                      <option value="">…</option>
+                      {gapChoices[i].map((choice) => (
+                        <option key={choice} value={choice}>
+                          {choice}
+                        </option>
+                      ))}
+                    </select>
+                    {after}
+                    {checked !== null && slots[i] !== row[1] && (
+                      <span className="ml-2 text-sm font-semibold text-mint-700 dark:text-mint-300">→ {row[1]}</span>
+                    )}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
         )}
 
         {kind === "listenmatch" && (

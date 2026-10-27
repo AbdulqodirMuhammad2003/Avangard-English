@@ -300,4 +300,146 @@ Wh- savollarda oxirida ovoz **pasayadi** ↘: Where do you live? ↘
       q("Eng odobli iltimos:", ["Could you send me the timetable, please?", "Send me the timetable.", "You send me the timetable?", "Timetable, please now."]),
     ]
   ),
+  "A2-09": rule(
+    "there is / there are",
+    `**There is / there are** — biror joyda nimadir **bor** yoki **yo'q** ekanini aytadi.
+
+## Darak gap
+• Bitta narsa: **There's** (there is) **a / an** + ot → There's a park near my house.
+• Ko'p narsa: **There are (some)** + ko'plik → There are some nice cafes in the centre.
+
+## Inkor gap
+• **There isn't a / an** + ot → There isn't a university in the town.
+• **There aren't any** + ko'plik → There aren't any theatres here.
+
+## So'roq gap va qisqa javob
+• **Is there a…?** — Yes, there **is**. / No, there **isn't**.
+• **Are there any…?** — Yes, there **are**. / No, there **aren't**.
+• **How many** + ko'plik + **are there**? → How many people are there?
+
+## some / any
+• Darak gapda — **some**, inkor va so'roqda — **any**.
+
+## Adashtirmang!
+• Bor-yo'qligi: **There is** a cinema near the hotel. (Mehmonxona yaqinida kino bor.)
+• Narsaning o'zi haqida: **It is** a big cinema. (U — katta kinoteatr.)
+• «It is a cinema near the hotel» — xato.`,
+    [
+      q("___ a chemist near here.", ["There's", "There are", "It's", "They're"]),
+      q("___ some good restaurants in the centre.", ["There are", "There's", "There is", "It is"]),
+      q("There aren't ___ theatres in my town.", ["any", "some", "a", "no"]),
+      q("There ___ a swimming pool at the hotel.", ["isn't", "aren't", "not", "don't"]),
+      q("___ there a bank near here?", ["Is", "Are", "Does", "Has"]),
+      q("Are there any museums? — Yes, there ___.", ["are", "is", "have", "they are"]),
+      q("Is there a school? — No, there ___.", ["isn't", "aren't", "doesn't", "not"]),
+      q("How many people ___ there in your village?", ["are", "is", "have", "do"]),
+      q("Qaysi gap to'g'ri?", ["There's a cinema near the hotel.", "It's a cinema near the hotel.", "There are a cinema near the hotel.", "Is a cinema near the hotel."]),
+      q("There are ___ nice parks in Tashkent.", ["some", "any", "a", "an"]),
+    ]
+  ),
+  "A2-10": rule(
+    "Artikllar: a / an, the, – · joy predloglari",
+    `## a / an — birinchi marta, bitta narsa
+• **a** — undosh **tovush** oldidan: a flat, a university [yu…], a big house
+• **an** — unli **tovush** oldidan: an old building, an hour [aua], an Indian restaurant
+→ I live in **a** flat. It's **an** old building.
+
+## the — qaysiligi ma'lum
+• Avval aytilgan narsa: There's a sofa and a table. **The** table is new.
+• Yagona narsa: **the** centre of the city, **the** fifth floor, **the** East River
+• **the** UK, **the** USA
+
+## Artiklsiz (–)
+• Umuman ko'plik: I love **big cities**. There are **shops** all around me.
+• Shahar, mamlakat, ko'cha nomlari: **Tashkent**, **Uzbekistan**, **Navoi Street**
+
+## Joy predloglari
+• **above** — ustida (tepasida), **below** — ostida (pastida)
+• **in the middle of** — o'rtasida, **against** the wall — devorga tirab
+• **on the left / on the right** — chap / o'ng tomonda
+• **inside** — ichkarida, **outside** — tashqarida, **close to** — yaqinida
+• A1 dan: in, on, under, next to, between, behind, in front of, opposite`,
+    [
+      q("I live in ___ flat.", ["a", "an", "the", "—"]),
+      q("It's ___ old building.", ["an", "a", "the", "—"]),
+      q("My flat is on ___ fifth floor.", ["the", "a", "an", "—"]),
+      q("I love ___ big cities.", ["—", "the", "a", "an"]),
+      q("___ Samarkand is a beautiful city.", ["—", "The", "A", "An"]),
+      q("It takes ___ hour to get there.", ["an", "a", "the", "—"]),
+      q("We went to ___ UK last summer.", ["the", "—", "a", "an"]),
+      q("The lamp is ___ the table. (tepasida)", ["above", "below", "inside", "against"]),
+      q("Put the sofa ___ the wall.", ["against", "above", "inside", "close"]),
+      q("The bathroom is ___ the left.", ["on", "in", "at", "to"]),
+    ]
+  ),
+  "A2-11": rule(
+    "Buyruq gap · yo'l ko'rsatish",
+    `## Buyruq gap (imperative)
+• Fe'lning oddiy shakli bilan boshlanadi, ega aytilmaydi: **Turn** left. **Go** straight on. **Take** the second right.
+• Inkor: **Don't** + fe'l: **Don't cross** the road here. **Don't be** late.
+• Odobli qilish uchun: **Please** turn off your phone. · Turn left, **please**.
+• «Don't to push», «No cross» — xato.
+
+## Yo'l so'rash
+• Excuse me, **is there a** chemist **near here**?
+• Excuse me, **where's** the library?
+• Excuse me, **how do I get to** the post office?
+• Could you give me some **directions**, please?
+
+## Yo'l ko'rsatish
+• **turn left / right** (**into** Albert Street) · **go straight on** · **go past** the bank
+• **take the first / second left / right** · **at the traffic lights / crossroads / roundabout**
+• It's **on the left / right / corner** · It's **at the end of** this road · It's **next to / opposite** the bank
+
+## Qarama-qarshi sifatlar
+strong ↔ weak · high ↔ low · tidy ↔ untidy · modern ↔ old-fashioned · good ↔ bad · hard ↔ soft · quiet ↔ loud / noisy`,
+    [
+      q("___ left at the traffic lights.", ["Turn", "Turning", "To turn", "You turning"]),
+      q("___ cross the road here. It's dangerous.", ["Don't", "No", "Not", "Doesn't"]),
+      q("Don't ___ late!", ["be", "to be", "are", "being"]),
+      q("Go ___ on for five minutes.", ["straight", "past", "right", "across"]),
+      q("Turn right ___ Albert Street.", ["into", "at", "on", "in"]),
+      q("Take the ___ left.", ["second", "two", "twice", "secondly"]),
+      q("It's at the end ___ this road.", ["of", "from", "in", "to"]),
+      q("Yo'l so'rang:", ["Excuse me, how do I get to the station?", "Excuse me, how I get to station?", "Excuse me, where station is?", "Go to the station?"]),
+      q("strong ↔ ___", ["weak", "soft", "low", "bad"]),
+      q("modern ↔ ___", ["old-fashioned", "young", "ugly", "untidy"]),
+    ]
+  ),
+  "A2-12": rule(
+    "can / can't · could / couldn't",
+    `## can / can't — hozir
+• Imkoniyat yoki qobiliyat: You **can** buy almost everything online. · I **can** swim.
+• Inkor: The internet **can't** cut your hair.
+
+## could / couldn't — o'tmishda
+• In the 1970s, you **could** talk to people in the shops.
+• In the 1970s, people **couldn't** shop online. · When I was five, I **couldn't** read.
+
+## Shakli
+• Hamma shaxs uchun bir xil: I / you / he / she / we / they **can**, **could** (cans — xato).
+• Keyin fe'lning **oddiy shakli**, **to siz**: I can **speak** (can to speak — xato).
+• So'roq: **Can** you pay by card? — Yes, you **can**. / No, you **can't**.
+• **Could** people shop online in 1994? — Yes, they **could**. / No, they **couldn't**.
+
+## Talaffuz
+• Gapda va savolda **can** qisqa va kuchsiz: /kən/ — You can pay by card.
+• Qisqa javobda kuchli: /kæn/ — Yes, you **can**.
+• **can't** — uzun: /kɑːnt/ [kaant].
+
+## Do'konlar
+baker's (non) · butcher's (go'sht) · newsagent's (gazeta) · greengrocer's (meva-sabzavot) · chemist (dori)`,
+    [
+      q("Nowadays you ___ buy almost everything online.", ["can", "could", "couldn't", "cans"]),
+      q("In the 1970s, people ___ shop online.", ["couldn't", "can't", "could", "can"]),
+      q("When I was a child, I ___ ride a bike. (o'tmish, +)", ["could", "can", "couldn't", "can't"]),
+      q("She ___ speak three languages.", ["can", "cans", "can to", "is can"]),
+      q("I can't ___ a new phone.", ["afford", "to afford", "affording", "affords"]),
+      q("___ you pay by card here? — Yes, you can.", ["Can", "Could", "Do", "Are"]),
+      q("Could people buy things online in 1994? — Yes, they ___.", ["could", "can", "did", "were"]),
+      q("Qaysi gap to'g'ri?", ["You can't use euros in Norway.", "You don't can use euros in Norway.", "You can't to use euros in Norway.", "You not can use euros in Norway."]),
+      q("Go'sht qayerdan olinadi?", ["butcher's", "baker's", "newsagent's", "greengrocer's"]),
+      q("«Yes, you can» — bu yerda can qanday o'qiladi?", ["/kæn/ — kuchli", "/kən/ — kuchsiz", "/kɑːnt/", "o'qilmaydi"]),
+    ]
+  ),
 };

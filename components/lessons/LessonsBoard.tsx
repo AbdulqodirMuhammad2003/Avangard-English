@@ -74,6 +74,7 @@ const EXERCISE_KIND_ICONS: Record<ExerciseKind, LucideIcon> = {
   reading: BookOpenText,
   audiotext: Radio,
   listenmatch: Headphones,
+  listengap: Headphones,
   rule: GraduationCap,
   mistake: SearchCheck,
 };

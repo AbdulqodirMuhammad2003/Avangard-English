@@ -100,6 +100,14 @@ export const slots = (audio: string, rows: [string, string][]): SeedQuestion => 
   options: rows.map(([label, answer]) => `${label}|${answer}`),
 });
 
+/** «listengap»: tinglab, har bir gapdagi bo'sh joy uchun o'z variantlaridan
+ *  tanlash. Qator: [gap ___ bilan, to'g'ri javob, ...xato variantlar]. */
+export const gaps = (audio: string, rows: string[][]): SeedQuestion => ({
+  prompt: "Tinglab, har bir gapni to'ldiring",
+  audio,
+  options: rows.map((r) => r.join("|")),
+});
+
 /** «match»: 4 tadan "chap|o'ng" juftlar. */
 export const pairs = (sets: string[][]): SeedQuestion[] => sets.map((options) => ({ prompt: "Juftlarni ulang", options }));
 

@@ -66,6 +66,14 @@ for (const lesson of LESSON_CONTENT) {
         case "match":
           if (!opts.every((o) => o.split("|").length === 2)) errors.push(`${where}: juft "chap|o'ng" emas`);
           break;
+        case "listengap":
+          if (!q.audio) errors.push(`${where}: audio yo'q`);
+          for (const row of opts) {
+            const parts = row.split("|");
+            if (parts.length < 3 || !parts[0].includes("___")) errors.push(`${where}: qator "gap ___|to'g'ri|xato…" emas: ${row}`);
+            else if (new Set(parts.slice(1)).size !== parts.length - 1) errors.push(`${where}: takroriy variant: ${row}`);
+          }
+          break;
         case "listenmatch":
           if (!q.audio) errors.push(`${where}: audio yo'q`);
           if (opts.length < 2 || !opts.every((o) => o.split("|").length === 2)) errors.push(`${where}: juft "raqam|javob" emas`);
