@@ -197,6 +197,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-10", level: "A2", title: "10-dars", subtitle: "Where I live: a / an / the, above, below", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-4.mp4", title: "Vox pops 4: where I live", kind: "intervyu", start: null, end: null } },
   { code: "A2-11", level: "A2", title: "11-dars", subtitle: "Asking the way: turn left, don't…", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-04.mp4", title: "Almas Tower", kind: "hujjatli", start: null, end: null } },
   { code: "A2-12", level: "A2", title: "12-dars", subtitle: "Shopping then and now: can / could", color: "green", icon: "chart", locked: 1, date: "", clip: null },
+  { code: "A2-13", level: "A2", title: "13-dars", subtitle: "What are you wearing? Present continuous", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-5.mp4", title: "Vox pops 5: clothes", kind: "intervyu", start: null, end: null } },
+  { code: "A2-14", level: "A2", title: "14-dars", subtitle: "In a shop: adjectives and adverbs", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-05.mp4", title: "Camden Market", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-15", level: "A2", title: "15-dars", subtitle: "Don't give up! was / were", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-6.mp4", title: "Vox pops 6: the past", kind: "intervyu", start: null, end: null } },
+  { code: "A2-16", level: "A2", title: "16-dars", subtitle: "Stories: past simple (-ed)", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-06.mp4", title: "Istanbul", kind: "hujjatli", start: null, end: null } },
 ];
 
 export async function seedDatabase() {

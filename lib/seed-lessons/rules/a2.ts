@@ -442,4 +442,156 @@ baker's (non) · butcher's (go'sht) · newsagent's (gazeta) · greengrocer's (me
       q("«Yes, you can» — bu yerda can qanday o'qiladi?", ["/kæn/ — kuchli", "/kən/ — kuchsiz", "/kɑːnt/", "o'qilmaydi"]),
     ]
   ),
+  "A2-13": rule(
+    "Present Continuous: hozir bo'layotgan ish",
+    `**Present Continuous** — aynan **hozir, shu payt** bo'layotgan ishni aytadi: She's wearing a red dress. (U qizil ko'ylak kiyib turibdi.)
+
+## Yasalishi: am / is / are + fe'l-ing
+• I **am** (I'm) wear**ing** a jacket.
+• He / She / It **is** (he's) smil**ing**.
+• You / We / They **are** (they're) talk**ing**.
+
+## Inkor gap
+• I'm **not** working. · She **isn't** wearing a hat. · They **aren't** listening.
+
+## So'roq gap va qisqa javob
+• **Is** she wearing glasses? — Yes, she **is**. / No, she **isn't**.
+• **Are** you working? — Yes, I **am**. / No, I'm **not**.
+• **What are** you doing? · **Where is** he going?
+
+## -ing imlosi
+• Oddiy: wear → **wearing**, go → **going**.
+• -e tushib qoladi: smile → **smiling**, make → **making**.
+• Qisqa so'z, bitta unli + bitta undosh — undosh ikkilanadi: sit → **sitting**, run → **running**, swim → **swimming**.
+
+## Present Simple yoki Present Continuous?
+• Odat, doim: I usually **wear** jeans. (Odatda jinsi kiyaman.)
+• Hozir: Today I**'m wearing** a suit. (Bugun kostyum kiyib olganman.)
+• Signal so'zlar: usually, every day, often → Simple; now, today, at the moment, look! → Continuous.`,
+    [
+      q("Look! She ___ a beautiful dress.", ["'s wearing", "wears", "wear", "is wear"]),
+      q("I ___ jeans every day.", ["wear", "'m wearing", "wearing", "am wear"]),
+      q("They ___ to music at the moment.", ["are listening", "is listening", "listen", "listening"]),
+      q("He ___ a hat today.", ["isn't wearing", "doesn't wearing", "not wearing", "aren't wearing"]),
+      q("___ you working now? — No, I'm not.", ["Are", "Do", "Is", "Am"]),
+      q("Is he smiling? — Yes, he ___.", ["is", "does", "smiling", "are"]),
+      q("sit → ?", ["sitting", "siting", "sitteing", "sits"]),
+      q("smile → ?", ["smiling", "smileing", "smilling", "smiles"]),
+      q("What ___ you doing?", ["are", "do", "is", "does"]),
+      q("Qaysi gap to'g'ri?", ["Today I'm wearing a suit.", "Today I wearing a suit.", "Today I'm wear a suit.", "Today I am wears a suit."]),
+    ]
+  ),
+  "A2-14": rule(
+    "Sifat va ravish: quick → quickly",
+    `**Sifat** (adjective) otni tasvirlaydi: a **careful** driver (ehtiyotkor haydovchi).
+**Ravish** (adverb) fe'lni tasvirlaydi — ish **qanday** bajarilganini aytadi: He drives **carefully**. (U ehtiyotkorlik bilan haydaydi.)
+
+## Yasalishi: sifat + -ly
+• quick → **quickly**, slow → **slowly**, quiet → **quietly**, careful → **carefully**.
+• -y → -ily: happy → **happily**, easy → **easily**.
+
+## Istisnolar
+• good → **well**: She speaks English **well**. («goodly» degan so'z yo'q!)
+• fast → **fast**, hard → **hard**, late → **late**, early → **early** — o'zgarmaydi.
+• «hardly» — boshqa ma'no (deyarli … emas), «hard» o'rnida ishlatmang.
+
+## Qayerda turadi?
+• Odatda fe'l yoki to'ldiruvchidan **keyin**: She answered the question **correctly**.
+• be / look / feel dan keyin — **sifat**: You look **tired**. The food is **good**.
+
+## Do'konda kerakli iboralar
+• Can I help you? — No, thanks. I'm **just looking**.
+• Can I **try this on**? · Do you **offer a student discount**? · Can I **pay by card**?`,
+    [
+      q("He drives very ___.", ["carefully", "careful", "carefuly", "care"]),
+      q("She is a ___ driver.", ["careful", "carefully", "care", "carefulness"]),
+      q("He speaks English very ___.", ["well", "good", "goodly", "nice"]),
+      q("Why are you talking so ___?", ["quietly", "quiet", "quietness", "quieter"]),
+      q("She works very ___.", ["hard", "hardly", "hards", "harding"]),
+      q("happy → ravish?", ["happily", "happyly", "happly", "happy"]),
+      q("You look ___.", ["tired", "tiredly", "tiring", "tire"]),
+      q("He runs very ___.", ["fast", "fastly", "fasts", "faster"]),
+      q("Can I help you? — No, thanks. I'm just ___.", ["looking", "look", "see", "watching"]),
+      q("Qaysi gap to'g'ri?", ["She answered the question correctly.", "She answered correctly the question.", "She answered the question correct.", "She correctly answer the question."]),
+    ]
+  ),
+  "A2-15": rule(
+    "was / were: o'tgan zamonda «edi»",
+    `**was / were** — **be** fe'lining o'tgan zamon shakli: «edi», «bo'lgan».
+• am / is → **was** · are → **were**.
+
+## Darak gap
+• I / He / She / It **was** … → She **was** a good ice skater.
+• You / We / They **were** … → They **were** very popular.
+• Tug'ilgan yil: I **was born** in 2005. (born bilan doim was / were!)
+
+## Inkor gap
+• **wasn't** (was not) · **weren't** (were not) → It **wasn't** easy. They **weren't** successful.
+
+## So'roq gap va qisqa javob
+• **Was** it easy? — Yes, it **was**. / No, it **wasn't**.
+• **Were** they popular? — Yes, they **were**. / No, they **weren't**.
+• **Where were** you yesterday? · **When was** the first World Cup?
+
+## there was / there were
+• **There was** no ice. · **There were** no bobsleighs.
+
+## O'tgan zamon iboralari
+• **in** + yil / asr / o'n yillik: in 1930, in the 19th century, in the 1990s.
+• **ago** (hozirdan oldin): two days **ago**, 2,800 years **ago**.
+• **last** (artiklsiz!): last week, last summer, last century.
+• **at the age of** 25 · yesterday · the other day · in those days.`,
+    [
+      q("She ___ born in 1949.", ["was", "were", "is", "did"]),
+      q("Her parents ___ from China.", ["were", "was", "are", "did"]),
+      q("It ___ easy. (inkor)", ["wasn't", "weren't", "didn't", "isn't"]),
+      q("___ they successful? — No, they weren't.", ["Were", "Was", "Did", "Are"]),
+      q("Was it expensive? — Yes, it ___.", ["was", "were", "did", "is"]),
+      q("There ___ no bobsleighs for them.", ["were", "was", "is", "are"]),
+      q("The first World Cup was ___ 1930.", ["in", "on", "at", "ago"]),
+      q("I saw him three days ___.", ["ago", "before", "last", "past"]),
+      q("We were in Bukhara ___ summer.", ["last", "the last", "ago", "in"]),
+      q("Qaysi gap to'g'ri?", ["Where were you yesterday?", "Where was you yesterday?", "Where did you were yesterday?", "Where you were yesterday?"]),
+    ]
+  ),
+  "A2-16": rule(
+    "Past Simple: to'g'ri fe'llar (-ed)",
+    `**Past Simple** — o'tmishda bo'lib o'tgan, tugagan ish: I **visited** a museum last week. (O'tgan hafta muzeyga bordim.)
+To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir xil: I / you / he / they **worked**.
+
+## Imlo
+• Oddiy: work → **worked**, visit → **visited**.
+• -e bilan tugasa — faqat **-d**: live → **lived**, prepare → **prepared**.
+• Undosh + **y** → **-ied**: study → **studied**, carry → **carried**.
+• Unli + **y** → **-ed**: play → **played**, enjoy → **enjoyed**.
+• Qisqa so'z, bitta unli + bitta undosh — undosh ikkilanadi: stop → **stopped**, plan → **planned**.
+
+## -ed qanday o'qiladi?
+• **/t/** — p, k, f, s, sh, ch dan keyin: looked, finished, helped.
+• **/d/** — boshqa jarangli tovushlardan keyin: opened, called, loved.
+• **/ɪd/** — faqat **t** yoki **d** dan keyin (bo'g'in qo'shiladi): started, visited, needed.
+
+## «Oxirgi marta qachon…?»
+• **When was the last time you** called a taxi? — Yesterday. / Two hours ago.
+
+## Daraja ravishlari
+• a bit < quite < really < extremely: The journey was **extremely** long.
+• **a bit** — odatda salbiy so'zlar bilan: a bit boring, a bit expensive.
+
+## Xabarga munosabat
+• Yaxshi xabar: That's brilliant! That's great!
+• Yomon xabar: Oh no! That's awful! What a nightmare! Poor you!`,
+    [
+      q("I ___ my grandmother last summer.", ["visited", "visit", "visits", "visiting"]),
+      q("stop → ?", ["stopped", "stoped", "stopt", "stoppd"]),
+      q("study → ?", ["studied", "studyed", "studed", "studies"]),
+      q("play → ?", ["played", "plaied", "plaid", "playd"]),
+      q("live → ?", ["lived", "liveed", "livd", "lifed"]),
+      q("«started» da -ed qanday o'qiladi?", ["/ɪd/", "/t/", "/d/", "o'qilmaydi"]),
+      q("«looked» da -ed qanday o'qiladi?", ["/t/", "/d/", "/ɪd/", "/ed/"]),
+      q("When was the last time you ___ a taxi?", ["called", "call", "calls", "calling"]),
+      q("The film was ___ boring. (sal, biroz)", ["a bit", "extremely", "really", "very very"]),
+      q("I lost my phone. — ___", ["Oh no! Poor you!", "That's brilliant!", "Well done!", "That's great!"]),
+    ]
+  ),
 };
