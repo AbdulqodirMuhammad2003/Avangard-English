@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ChevronRight, CircleCheck, Flame, PartyPopper, RefreshCw } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Flame, PartyPopper, RefreshCw, Sparkles } from "lucide-react";
 import {
   DAILY_GOAL,
   type ActivityOverview,
@@ -8,6 +8,7 @@ import {
   type UserRecord,
 } from "@/lib/data";
 import { EditableAvatar } from "./EditableAvatar";
+import { ProgressRing } from "./ui/ProgressRing";
 import { currentUnitOf, levelUnits } from "@/lib/progress";
 import { langForLevel, localizeLabel, translator, type Lang } from "@/lib/i18n";
 
@@ -58,28 +59,6 @@ function findNextStep(units: UnitDetail[], level: string, lang: Lang): NextStep 
   return null;
 }
 
-function GoalRing({ value, goal }: { value: number; goal: number }) {
-  const r = 19;
-  const circ = 2 * Math.PI * r;
-  const filled = Math.min(value / goal, 1) * circ;
-  return (
-    <svg width="48" height="48" viewBox="0 0 48 48" className="shrink-0" aria-hidden="true">
-      <circle cx="24" cy="24" r={r} fill="none" strokeWidth="5" className="stroke-ink-100 dark:stroke-white/10" />
-      <circle
-        cx="24"
-        cy="24"
-        r={r}
-        fill="none"
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeDasharray={`${filled} ${circ}`}
-        transform="rotate(-90 24 24)"
-        className="stroke-mint-500 transition-[stroke-dasharray] duration-700"
-      />
-    </svg>
-  );
-}
-
 export function TodayPanel({
   user,
   units,
@@ -94,130 +73,138 @@ export function TodayPanel({
   const lang = langForLevel(user.level);
   const t = translator(lang);
   const next = findNextStep(units, user.level, lang);
-  const current = levelUnits(units, user.level);
-  const learned = current.reduce((s, u) => s + u.learnedWords, 0);
-  const totalWords = current.reduce((s, u) => s + u.totalWords, 0);
+  const goalPct = Math.round((Math.min(activity.todayCorrect, DAILY_GOAL) / DAILY_GOAL) * 100);
   const goalReached = activity.todayCorrect >= DAILY_GOAL;
 
   return (
-    <div className="animate-fade-up rounded-3xl bg-white p-5 shadow-sm shadow-ink-950/5 ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#161b26] dark:shadow-none dark:ring-white/10">
-      <div className="mb-5 flex flex-wrap items-center gap-4">
-        <EditableAvatar name={user.name} avatarUrl={user.avatar_url} size={52} triggerClassName="items-center gap-3">
-          <div className="text-left">
-            <p className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">
-              {t("Salom", "Hello")}, {user.name.split(" ")[0]}!
-            </p>
-            <p className="text-sm text-ink-500 dark:text-ink-400">
-              {goalReached
-                ? t("Bugungi maqsad bajarildi — zo'r!", "Today's goal is done — great!")
-                : t("Bugun yana bir qadam — 10 daqiqa yetarli", "One more step today — 10 minutes is enough")}
-            </p>
-          </div>
-        </EditableAvatar>
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr]">
+      {/* Qahramon karta */}
+      <section className="relative min-w-0 animate-fade-up overflow-hidden rounded-[2rem] bg-gradient-to-br from-azure-600 via-azure-700 to-[#6d28d9] p-5 text-white shadow-xl shadow-azure-900/20 sm:p-7">
+        <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-gold-400/25 blur-3xl animate-float-slow" />
         <div
-          className={`ml-auto flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-bold ${
-            activity.streak > 0
-              ? "bg-gold-100 text-gold-800 dark:bg-gold-950/50 dark:text-gold-200"
-              : "bg-ink-50 text-ink-500 dark:bg-white/5 dark:text-ink-400"
-          }`}
-        >
-          <Flame size={20} className={activity.streak > 0 ? "text-gold-600 dark:text-gold-300" : ""} />
-          {activity.streak > 0
-            ? t(`${activity.streak} kun ketma-ket`, `${activity.streak}-day streak`)
-            : t("Ketma-ketlik: 0 kun", "Streak: 0 days")}
-        </div>
-      </div>
+          className="pointer-events-none absolute inset-0 opacity-[0.15]"
+          style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.7) 1px, transparent 1.2px)", backgroundSize: "18px 18px" }}
+        />
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.3fr_1fr]">
-        {next ? (
-          <Link
-            href={next.href}
-            className="group flex flex-col rounded-2xl bg-gradient-to-br from-azure-600 to-azure-900 p-5 text-white shadow-md shadow-azure-900/20 transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            <p className="text-xs font-semibold uppercase tracking-wider text-white/60">{t("Davom ettirish", "Continue")}</p>
-            <p className="font-display mt-1 text-lg font-bold">{next.title}</p>
-            <p className="text-sm text-white/75">{next.detail}</p>
-            <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/20">
-              <div className="h-full rounded-full bg-gold-400" style={{ width: `${next.percent}%` }} />
-            </div>
-            <span className="mt-4 flex items-center justify-center gap-2 rounded-full bg-white py-2.5 text-sm font-bold text-azure-800 transition-colors group-hover:bg-azure-50">
-              {t("Davom ettirish", "Continue")} <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-            </span>
-          </Link>
-        ) : (
-          <Link
-            href="/lessons"
-            className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-mint-500 to-mint-800 p-5 text-center text-white"
-          >
-            <PartyPopper size={28} />
-            <p className="font-bold">{t("Ochiq darslarning hammasi tugallandi!", "All open lessons are finished!")}</p>
-            <p className="text-sm text-white/80">{t("Keyingi dars tez orada ochiladi.", "The next lesson opens soon.")}</p>
-          </Link>
-        )}
-
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-3 rounded-2xl bg-ink-50 p-4 dark:bg-white/5">
-            <GoalRing value={activity.todayCorrect} goal={DAILY_GOAL} />
-            <div>
-              <p className="text-xs text-ink-500 dark:text-ink-400">{t("Bugungi maqsad", "Today's goal")}</p>
-              <p className="font-bold text-ink-950 dark:text-ink-50">
-                {Math.min(activity.todayCorrect, DAILY_GOAL)} / {DAILY_GOAL} {t("to'g'ri javob", "correct answers")}
+        <div className="relative flex flex-wrap items-start justify-between gap-4">
+          <EditableAvatar name={user.name} avatarUrl={user.avatar_url} size={56} triggerClassName="min-w-0 items-center gap-3.5">
+            <div className="min-w-0 text-left">
+              <p className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">
+                {t("Salom", "Hello")}, {user.name.split(" ")[0]}! 👋
+              </p>
+              <p className="mt-0.5 text-sm text-white/75">
+                {goalReached
+                  ? t("Bugungi maqsad bajarildi — zo'r!", "Today's goal is done — great!")
+                  : t("Bugun yana bir qadam — 10 daqiqa yetarli", "One more step today — 10 minutes is enough")}
               </p>
             </div>
+          </EditableAvatar>
+          <div className="flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-bold ring-1 ring-white/25 backdrop-blur">
+            <Flame size={18} className={activity.streak > 0 ? "text-gold-300" : "text-white/60"} fill={activity.streak > 0 ? "currentColor" : "none"} />
+            {activity.streak > 0 ? t(`${activity.streak} kun ketma-ket`, `${activity.streak}-day streak`) : t("0 kun", "0 days")}
           </div>
-          <Link
-            href="/review"
-            className={`group flex items-center gap-3 rounded-2xl p-4 transition-colors ${
-              review.due > 0
-                ? "bg-gold-100 hover:bg-gold-200/70 dark:bg-gold-950/50 dark:hover:bg-gold-950/70"
-                : "bg-ink-50 hover:bg-ink-100 dark:bg-white/5 dark:hover:bg-white/10"
+        </div>
+
+        <div className="relative mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
+          <ProgressRing value={goalPct} size={112} stroke={11} tone="white" track="stroke-white/20">
+            <span className="font-display text-2xl font-extrabold leading-none">{Math.min(activity.todayCorrect, DAILY_GOAL)}</span>
+            <span className="mt-0.5 text-[11px] font-semibold text-white/70">/ {DAILY_GOAL}</span>
+          </ProgressRing>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-white/60">{t("Bugungi maqsad", "Today's goal")}</p>
+            <p className="font-display mt-0.5 text-lg font-bold">
+              {goalReached
+                ? t("Maqsad bajarildi! 🎉", "Goal reached! 🎉")
+                : t(`Yana ${DAILY_GOAL - activity.todayCorrect} ta to'g'ri javob`, `${DAILY_GOAL - activity.todayCorrect} more correct answers`)}
+            </p>
+            {next ? (
+              <Link
+                href={next.href}
+                className="btn-press group mt-3 flex items-center gap-3 rounded-2xl bg-white p-3 pr-4 text-ink-950 shadow-lg shadow-black/15"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-md shadow-gold-700/30">
+                  <Sparkles size={20} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-bold">{next.title}</span>
+                  <span className="block truncate text-xs text-ink-500">{next.detail}</span>
+                  <span className="mt-1.5 block h-1.5 w-full overflow-hidden rounded-full bg-ink-100">
+                    <span className="block h-full rounded-full bg-gradient-to-r from-azure-500 to-[#7c3aed]" style={{ width: `${next.percent}%` }} />
+                  </span>
+                </span>
+                <ArrowRight size={20} className="shrink-0 text-azure-600 transition-transform group-hover:translate-x-1" />
+              </Link>
+            ) : (
+              <Link href="/lessons" className="btn-press mt-3 flex items-center gap-3 rounded-2xl bg-white/15 p-3 ring-1 ring-white/25">
+                <PartyPopper size={22} />
+                <span className="text-sm font-semibold">{t("Ochiq darslarning hammasi tugallandi!", "All open lessons are finished!")}</span>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        <div className="relative mt-6 flex items-center justify-between gap-2 rounded-2xl bg-black/15 px-3 py-2.5 ring-1 ring-white/10 sm:px-4">
+          <span className="hidden text-xs font-semibold text-white/70 sm:block">{t("Bu hafta", "This week")}</span>
+          <div className="flex flex-1 justify-between gap-1 sm:flex-none sm:gap-2.5">
+            {activity.week.map((d, i) => (
+              <div key={d.label} className="flex flex-col items-center gap-1">
+                <span
+                  className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-transform ${
+                    d.active
+                      ? "bg-gradient-to-br from-gold-300 to-gold-500 text-ink-950 shadow-md shadow-gold-700/30"
+                      : d.isToday
+                      ? "bg-white/20 ring-2 ring-gold-300"
+                      : d.isFuture
+                      ? "bg-white/5"
+                      : "bg-white/10"
+                  }`}
+                >
+                  {d.active ? <Check size={16} strokeWidth={3} /> : d.isToday ? <Flame size={15} className="text-gold-300" /> : ""}
+                </span>
+                <span className={`text-[11px] ${d.isToday ? "font-bold text-white" : "text-white/60"}`}>{t(d.label, WEEKDAYS_EN[i] ?? d.label)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Takrorlash kartasi */}
+      <Link
+        href="/review"
+        style={{ animationDelay: "80ms" }}
+        className={`group relative flex min-w-0 animate-fade-up flex-col justify-between overflow-hidden rounded-[2rem] p-6 ring-1 transition-transform duration-300 hover:-translate-y-1 ${
+          review.due > 0
+            ? "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 text-white shadow-xl shadow-gold-700/25 ring-white/10"
+            : "bg-white text-ink-950 ring-ink-950/5 dark:bg-[#151a28] dark:text-ink-50 dark:ring-white/10"
+        }`}
+      >
+        <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-white/15 blur-2xl" />
+        <div className="relative flex items-center justify-between">
+          <span
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:rotate-180 ${
+              review.due > 0 ? "bg-white/20" : "bg-gold-100 text-gold-600 dark:bg-gold-950/50 dark:text-gold-300"
             }`}
           >
-            <RefreshCw
-              size={24}
-              className={`shrink-0 ${review.due > 0 ? "text-gold-600 dark:text-gold-300" : "text-ink-400"}`}
-            />
-            <div className="min-w-0 flex-1">
-              <p className="text-xs text-ink-500 dark:text-ink-400">{t("Takrorlash vaqti", "Time to review")}</p>
-              <p className="font-bold text-ink-950 dark:text-ink-50">
-                {review.due > 0 ? t(`${review.due} ta so'z`, `${review.due} words`) : t("Hozircha yo'q", "Nothing yet")}
-              </p>
-              <p className="text-xs text-ink-600 dark:text-ink-300">
-                {user.level}: {learned} / {totalWords} {t("so'z o'rganilgan", "words learned")}
-              </p>
-            </div>
-            <ChevronRight size={18} className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+            <RefreshCw size={24} />
+          </span>
+          <ChevronRight size={22} className="opacity-60 transition-transform group-hover:translate-x-1" />
         </div>
-      </div>
-
-      <div className="mt-5 flex items-center justify-between border-t border-ink-100 pt-4 dark:border-white/10">
-        <span className="text-xs font-semibold text-ink-600 dark:text-ink-300">{t("Bu hafta", "This week")}</span>
-        <div className="flex gap-2 sm:gap-3">
-          {activity.week.map((d, i) => (
-            <div key={d.label} className="flex flex-col items-center gap-1">
-              {d.active ? (
-                <CircleCheck size={24} className="text-mint-500" />
-              ) : d.isToday ? (
-                <Flame size={24} className="text-gold-500" />
-              ) : (
-                <span
-                  className={`h-6 w-6 rounded-full border-2 ${
-                    d.isFuture ? "border-ink-100 dark:border-white/10" : "border-ink-200 dark:border-white/15"
-                  }`}
-                />
-              )}
-              <span
-                className={`text-xs ${
-                  d.isToday ? "font-bold text-ink-900 dark:text-ink-50" : "text-ink-600 dark:text-ink-300"
-                }`}
-              >
-                {t(d.label, WEEKDAYS_EN[i] ?? d.label)}
-              </span>
-            </div>
-          ))}
+        <div className="relative mt-8">
+          <p className={`text-xs font-bold uppercase tracking-widest ${review.due > 0 ? "text-white/70" : "text-ink-400"}`}>
+            {t("Takrorlash vaqti", "Time to review")}
+          </p>
+          <p className="font-display mt-1 text-4xl font-extrabold tracking-tight">
+            {review.due > 0 ? review.due : "0"}
+            <span className="ml-2 text-base font-bold opacity-80">{t("ta so'z", "words")}</span>
+          </p>
+          <p className={`mt-1 text-sm ${review.due > 0 ? "text-white/80" : "text-ink-500 dark:text-ink-400"}`}>
+            {review.due > 0
+              ? t("So'zlar xotirada mustahkamlansin — 3 daqiqa.", "Lock the words into memory — 3 minutes.")
+              : t("Hozircha takrorlanadigan so'z yo'q.", "Nothing to review right now.")}
+          </p>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

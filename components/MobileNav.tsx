@@ -13,7 +13,7 @@ export function MobileNav({ isTeacher = false }: { isTeacher?: boolean }) {
   const items = isTeacher ? [...NAV_ITEMS, TEACHER_NAV_ITEM] : NAV_ITEMS;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden dark:border-white/10 dark:bg-[#121620]/95">
+    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden dark:border-white/10 dark:bg-[#0b0d16]/90">
       <div className="mx-auto flex max-w-md items-stretch justify-around">
         {items.map((item) => {
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -27,8 +27,8 @@ export function MobileNav({ isTeacher = false }: { isTeacher?: boolean }) {
               }`}
             >
               <span
-                className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
-                  active ? "bg-azure-50 dark:bg-azure-950/50" : ""
+                className={`flex h-8 w-14 items-center justify-center rounded-full transition-all duration-300 ${
+                  active ? "scale-105 bg-gradient-to-r from-azure-500 to-[#7c3aed] text-white shadow-md shadow-azure-700/40" : ""
                 }`}
               >
                 <Icon size={20} />

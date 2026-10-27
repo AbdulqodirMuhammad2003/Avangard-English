@@ -191,7 +191,16 @@ export interface ActivityOverview {
   todayCorrect: number;
   /** Joriy hafta, dushanbadan yakshanbagacha. */
   week: { label: string; active: boolean; isToday: boolean; isFuture: boolean }[];
+  /** Faollik xaritasi: oxirgi HEATMAP_WEEKS hafta, har biri dushanbadan
+   *  yakshanbagacha 7 kun; kelajakdagi kunlar — count: -1. */
+  heatmap: { day: string; count: number }[][];
+  /** Oxirgi yil: faol kunlar, to'g'ri javoblar va eng uzun ketma-ketlik. */
+  activeDays: number;
+  totalCorrect: number;
+  bestStreak: number;
 }
+
+export const HEATMAP_WEEKS = 20;
 
 const WEEKDAY_LABELS = ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"];
 
@@ -229,10 +238,31 @@ export async function getActivityOverview(userId: number): Promise<ActivityOverv
     return { label, active: activeDays.has(day), isToday: day === today, isFuture: day > today };
   });
 
+  const counts = new Map(rows.map((r) => [r.day, r.correct_answers]));
+  const firstMonday = shiftDay(monday, -7 * (HEATMAP_WEEKS - 1));
+  const heatmap = Array.from({ length: HEATMAP_WEEKS }, (_, w) =>
+    Array.from({ length: 7 }, (_, d) => {
+      const day = shiftDay(firstMonday, w * 7 + d);
+      return { day, count: day > today ? -1 : counts.get(day) ?? 0 };
+    })
+  );
+
+  let bestStreak = 0;
+  for (const day of activeDays) {
+    if (activeDays.has(shiftDay(day, -1))) continue; // zanjir boshi emas
+    let len = 0;
+    for (let c = day; activeDays.has(c); c = shiftDay(c, 1)) len++;
+    bestStreak = Math.max(bestStreak, len);
+  }
+
   return {
     streak,
-    todayCorrect: rows.find((r) => r.day === today)?.correct_answers ?? 0,
+    todayCorrect: counts.get(today) ?? 0,
     week,
+    heatmap,
+    activeDays: activeDays.size,
+    totalCorrect: rows.reduce((s, r) => s + r.correct_answers, 0),
+    bestStreak,
   };
 }
 

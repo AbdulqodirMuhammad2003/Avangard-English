@@ -28,10 +28,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <LangProvider lang={lang}>
-    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f7fb] dark:bg-[#0d1017]">
+    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden">
       <Sidebar isTeacher={user.role === "teacher"} />
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-ink-100 bg-white/80 px-4 py-2.5 backdrop-blur-sm sm:px-6 lg:static lg:px-8 lg:py-3 dark:border-white/10 dark:bg-[#121620]/80">
+        <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-ink-100 bg-white/80 px-4 py-2.5 backdrop-blur-sm sm:px-6 lg:static lg:px-8 lg:py-3 dark:border-white/10 dark:bg-[#0b0d16]/75">
           <div className="flex items-center gap-3">
             <LogoMark size={34} className="shrink-0 lg:hidden" />
             <CommandPalette />

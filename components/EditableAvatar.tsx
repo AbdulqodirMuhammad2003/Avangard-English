@@ -85,26 +85,34 @@ export function EditableAvatar({
       onClick={() => setOpen(false)}
     >
       <div
-        className="my-auto max-h-[85vh] w-full max-w-sm animate-pop-in overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl dark:bg-[#161b26]"
+        className="relative my-auto max-h-[85vh] w-full max-w-sm animate-pop-in overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-5 flex items-center justify-between">
-          <h3 className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">{t("Profil", "Profile")}</h3>
+        {/* Muqova: gradient va nuqtali naqsh, avatar uning chetida turadi. */}
+        <div className="relative h-28 overflow-hidden bg-gradient-to-br from-azure-500 via-azure-700 to-[#6d28d9]">
+          <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
+          <div className="absolute -bottom-12 left-6 h-32 w-32 rounded-full bg-gold-400/30 blur-2xl" />
+          <div
+            className="absolute inset-0 opacity-20"
+            style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1.2px)", backgroundSize: "16px 16px" }}
+          />
+          <h3 className="absolute left-5 top-4 font-display text-lg font-bold text-white">{t("Profil", "Profile")}</h3>
           <button
             onClick={() => setOpen(false)}
-            className="rounded-full p-1.5 text-ink-500 transition-colors hover:bg-ink-50 dark:text-ink-300 dark:hover:bg-white/10"
+            className="absolute right-3 top-3 rounded-full bg-white/15 p-1.5 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-white/25"
             aria-label={t("Yopish", "Close")}
           >
             <X size={18} />
           </button>
         </div>
 
+        <div className="px-6 pb-6">
         <form action={formAction} className="flex flex-col gap-4">
-          <div className="flex flex-col items-center gap-2">
+          <div className="-mt-12 flex flex-col items-center gap-2">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="group relative overflow-hidden rounded-full"
+              className="group relative overflow-hidden rounded-full ring-4 ring-white shadow-xl dark:ring-[#151a28]"
               aria-label={t("Rasm tanlash", "Choose a photo")}
             >
               <Avatar name={name} size={88} photoUrl={preview || avatarUrl} />
@@ -137,7 +145,7 @@ export function EditableAvatar({
               defaultValue={name}
               required
               maxLength={60}
-              className="w-full rounded-xl border border-ink-200 px-4 py-2.5 text-sm outline-none transition-colors focus:border-ink-500 focus:ring-2 focus:ring-ink-100 dark:border-white/10 dark:bg-white/5 dark:text-ink-50 dark:focus:border-ink-400 dark:focus:ring-white/10"
+              className="w-full rounded-2xl border border-ink-200 bg-ink-50/50 px-4 py-3 text-base outline-none transition-all focus:border-azure-500 focus:bg-white focus:ring-4 focus:ring-azure-100 dark:border-white/10 dark:bg-white/5 dark:text-ink-50 dark:focus:border-azure-400 dark:focus:ring-azure-950"
             />
           </div>
 
@@ -150,7 +158,7 @@ export function EditableAvatar({
           <button
             type="submit"
             disabled={pending}
-            className="btn-press mt-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-azure-600 to-azure-700 py-2.5 text-sm font-semibold text-white shadow-sm shadow-azure-900/30 transition-colors hover:from-azure-500 hover:to-azure-600 disabled:opacity-60"
+            className="btn-press mt-1 flex items-center justify-center gap-2 rounded-full bg-azure-600 py-3 font-display text-base font-bold text-white disabled:opacity-60"
           >
             {pending && <Loader2 size={16} className="animate-spin" />}
             {pending ? t("Saqlanmoqda...", "Saving...") : t("Saqlash", "Save")}
@@ -174,7 +182,7 @@ export function EditableAvatar({
               {certificates.map((cert) => (
                 <div
                   key={cert.level}
-                  className="flex items-center justify-between gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30"
+                  className="flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-br from-gold-50 to-gold-100 px-4 py-3 ring-1 ring-gold-200 dark:from-gold-950/40 dark:to-gold-900/20 dark:ring-gold-800/40"
                 >
                   <div className="min-w-0">
                     <p className="text-sm font-bold text-ink-950 dark:text-ink-50">{t(`${cert.level} daraja sertifikati`, `${cert.level} level certificate`)}</p>
@@ -197,6 +205,7 @@ export function EditableAvatar({
           )}
         </div>
         )}
+        </div>
       </div>
     </div>
   );

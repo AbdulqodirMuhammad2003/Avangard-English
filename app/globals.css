@@ -397,6 +397,24 @@ button.rounded-xl.border-2.border-rose-400 {
   border-radius: 2px;
 }
 
+/* Doiraviy progress ochilganda noldan to'ladi (components/ui/ProgressRing). */
+@keyframes ring-fill {
+  from {
+    stroke-dashoffset: var(--circ);
+  }
+}
+.ring-fill {
+  animation: ring-fill 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Gradientli matn (katta raqamlar, sarlavhalar). */
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-azure-500), #7c3aed 55%, var(--color-gold-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .pulse-ring {
   animation: ring-pulse 1.6s ease-out infinite;
 }

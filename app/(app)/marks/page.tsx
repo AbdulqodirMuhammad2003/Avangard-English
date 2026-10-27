@@ -1,14 +1,17 @@
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";
+import { Award, BookOpenCheck, PlayCircle, Trophy } from "lucide-react";
+import { ProgressRing } from "@/components/ui/ProgressRing";
+import { StatCard } from "@/components/ui/StatCard";
 import { getLang } from "@/lib/lang-server";
 import { localizeLabel, translator, type Lang, type Translate } from "@/lib/i18n";
 
 /** Dars natijasi doirasining rangi: 80%+ — yashil, 50–79% — sariq, undan past — qizil. */
 function cellColor(pct: number) {
-  if (pct >= 80) return "bg-mint-500 text-white";
-  if (pct >= 50) return "bg-gold-400 text-ink-950";
-  return "bg-rose-500 text-white";
+  if (pct >= 80) return "bg-gradient-to-br from-mint-400 to-mint-600 text-white shadow-sm shadow-mint-700/25";
+  if (pct >= 50) return "bg-gradient-to-br from-gold-300 to-gold-500 text-ink-950 shadow-sm shadow-gold-700/20";
+  return "bg-gradient-to-br from-rose-400 to-rose-600 text-white shadow-sm shadow-rose-700/25";
 }
 
 /** Telefondagi katak yorlig'i: «12-dars» → «12», «Takrorlash» → «T». */
@@ -137,8 +140,49 @@ export default async function MarksPage() {
     ...board.students.filter((s) => !s.is_current_user),
   ];
 
+  const me = board.students.find((s) => s.is_current_user);
+  const myStarted = me ? me.percents.filter((p) => p !== null).length : 0;
+  const myDone = me ? me.percents.filter((p) => p !== null && p >= 80).length : 0;
+  const myPlace = me
+    ? [...board.students].sort((a, b) => b.points - a.points).findIndex((s) => s.id === me.id) + 1
+    : 0;
+
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
+      {me && (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.2fr_2fr]">
+          <section className="relative flex animate-fade-up items-center gap-5 overflow-hidden rounded-[2rem] bg-gradient-to-br from-azure-600 via-azure-700 to-[#6d28d9] p-6 text-white shadow-xl shadow-azure-900/20">
+            <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
+            <ProgressRing value={me.average} size={120} stroke={12} tone="white" track="stroke-white/20">
+              <span className="font-display text-3xl font-extrabold leading-none">{me.average}%</span>
+              <span className="mt-1 text-[11px] font-semibold text-white/70">{t("o'rtacha", "average")}</span>
+            </ProgressRing>
+            <div className="relative min-w-0">
+              <p className="text-xs font-bold uppercase tracking-widest text-white/60">{t("Mening natijam", "My progress")}</p>
+              <p className="font-display mt-1 text-2xl font-extrabold leading-tight">{board.level}</p>
+              <p className="mt-1 text-sm text-white/75">
+                {myDone >= board.units.length && board.units.length > 0
+                  ? t("Barcha darslar 80%+ — imtihonga tayyorsiz!", "All lessons at 80%+ — you're ready for the exam!")
+                  : t(`80% ga yetkazish kerak: ${board.units.length - myDone} ta dars`, `${board.units.length - myDone} lessons still to reach 80%`)}
+              </p>
+            </div>
+          </section>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+            <StatCard icon={PlayCircle} accent="azure" value={myStarted} label={t("Boshlangan", "Started")} hint={t(`${board.units.length} ta darsdan`, `of ${board.units.length} lessons`)} />
+            <StatCard icon={BookOpenCheck} accent="mint" delay={60} value={myDone} label={t("80%+ darslar", "Lessons 80%+")} />
+            <StatCard icon={Trophy} accent="gold" delay={120} value={myPlace ? `#${myPlace}` : "—"} label={t("Reytingda", "In ranking")} hint={t(`${board.students.length} o'quvchi`, `${board.students.length} students`)} />
+            <StatCard
+              icon={Award}
+              accent="rose"
+              delay={180}
+              value={me.exam.attempted ? (me.exam.pct !== null ? `${me.exam.pct}%` : me.exam.passed ? "✓" : "✗") : "—"}
+              label={t("Imtihon", "Exam")}
+              hint={me.exam.attempted ? (me.exam.passed ? t("O'tgan", "Passed") : t("O'tmagan", "Not passed")) : t("Topshirilmagan", "Not taken")}
+            />
+          </div>
+        </div>
+      )}
+
       <div className="animate-fade-up">
         <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Baholar", "Marks")}</h1>
         <p className="text-sm text-ink-700/60 dark:text-ink-300/60">
@@ -172,7 +216,7 @@ export default async function MarksPage() {
       </div>
 
       {/* Kompyuter: jadval */}
-      <div className="hidden animate-fade-up overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink-950/5 md:block dark:bg-[#161b26] dark:shadow-none dark:ring-white/10">
+      <div className="hidden animate-fade-up overflow-hidden rounded-[2rem] bg-white ring-1 ring-ink-950/5 md:block dark:bg-[#151a28] dark:ring-white/10">
         <div className="overflow-x-auto">
           <table className="w-full border-separate border-spacing-0 text-sm">
             <thead>
@@ -227,7 +271,7 @@ export default async function MarksPage() {
                       ) : (
                         <span
                           title={`${board.units[j].title}: ${board.units[j].subtitle}`}
-                          className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ${cellColor(pct)}`}
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold transition-transform duration-150 hover:scale-110 ${cellColor(pct)}`}
                         >
                           {pct}
                         </span>
