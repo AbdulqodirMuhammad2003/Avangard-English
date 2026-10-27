@@ -52,6 +52,8 @@ export interface UnitRecord {
   locked: number;
   date_label: string;
   percent: number;
+  /** Shu darsda «Javobni ko'rish» necha marta ishlatilgan (lib/reveals.ts). */
+  reveals_used: number;
   /** Mashqlar tugatilgach ochiladigan "Inglizcha tomosha" — haqiqiy inglizcha
    *  film, multfilm, hujjatli film yoki intervyudan 5-10 daqiqalik parcha
    *  (YouTube). Parcha tanlanmagan darslar uchun `clip_url` — `null`. */
@@ -309,10 +311,11 @@ export async function getUnitsForUser(userId: number): Promise<UnitRecord[]> {
     SELECT u.id, u.level_id, l.code as level_code, u.code, u.title, u.subtitle, u.color, u.icon,
            u.order_index, u.locked, u.date_label,
            u.clip_url, u.clip_title, u.clip_kind, u.clip_start, u.clip_end,
-           COALESCE(p.percent, 0) as percent
+           COALESCE(p.percent, 0) as percent, COALESCE(r.used, 0) as reveals_used
     FROM units u
     JOIN levels l ON l.id = u.level_id
     LEFT JOIN user_unit_progress p ON p.unit_id = u.id AND p.user_id = ${userId}
+    LEFT JOIN user_answer_reveals r ON r.unit_id = u.id AND r.user_id = ${userId}
     ORDER BY l.order_index ASC, u.order_index ASC
   `;
 }

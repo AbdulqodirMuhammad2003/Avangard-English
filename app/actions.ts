@@ -14,6 +14,7 @@ import {
   type ExerciseQuestion,
   type VocabRoundWithWords,
 } from "@/lib/data";
+import { ANSWER_REVEALS_PER_UNIT } from "@/lib/reveals";
 import { finishExam, saveExamAnswers, startExam, type ExamAnswer, type ExamResult } from "@/lib/exam";
 import {
   AUTH_COOKIE,
@@ -163,6 +164,20 @@ export async function submitExerciseResult(
 
   revalidatePath("/lessons");
   return scorePct;
+}
+
+/** Xato javobdan keyin to'g'ri javobni ko'rish — darsdagi imkoniyatlardan
+ *  bittasini sarflaydi. Qolgan imkoniyatlar sonini, tugagan bo'lsa null qaytaradi. */
+export async function revealAnswerAction(exerciseId: number): Promise<number | null> {
+  const userId = await requireUserId();
+  const rows = await sql<{ used: number }[]>`
+    INSERT INTO user_answer_reveals (user_id, unit_id, used)
+    SELECT ${userId}, unit_id, 1 FROM exercises WHERE id = ${exerciseId}
+    ON CONFLICT (user_id, unit_id) DO UPDATE SET used = user_answer_reveals.used + 1
+    WHERE user_answer_reveals.used < ${ANSWER_REVEALS_PER_UNIT}
+    RETURNING used
+  `;
+  return rows.length > 0 ? ANSWER_REVEALS_PER_UNIT - rows[0].used : null;
 }
 
 export async function bookExtraLesson(lessonId: number) {

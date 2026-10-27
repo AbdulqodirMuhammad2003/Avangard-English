@@ -248,3 +248,13 @@ CREATE TABLE IF NOT EXISTS exam_attempts (
   finished_at TIMESTAMPTZ
 );
 CREATE INDEX IF NOT EXISTS exam_attempts_user_level ON exam_attempts (user_id, level_code);
+
+-- To'g'ri javobni ko'rish: xato javobdan keyin to'g'ri javob avtomatik
+-- ko'rsatilmaydi — o'quvchi har bir darsda ANSWER_REVEALS_PER_UNIT (lib/reveals.ts)
+-- marta «Javobni ko'rish» tugmasini bosishi mumkin; `used` — sarflangani.
+CREATE TABLE IF NOT EXISTS user_answer_reveals (
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  unit_id INTEGER NOT NULL REFERENCES units(id) ON DELETE CASCADE,
+  used INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (user_id, unit_id)
+);

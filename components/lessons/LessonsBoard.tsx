@@ -44,7 +44,8 @@ import type {
   UnitDetail,
   VocabRoundWithWords,
 } from "@/lib/data";
-import { loadExerciseQuestions, loadUnitWords, submitExerciseResult } from "@/app/actions";
+import { loadExerciseQuestions, loadUnitWords, revealAnswerAction, submitExerciseResult } from "@/app/actions";
+import { ANSWER_REVEALS_PER_UNIT } from "@/lib/reveals";
 import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
 import { levelInfo } from "@/lib/levels";
@@ -191,6 +192,9 @@ export function LessonsBoard({
   // ExerciseRun o'z holatini noldan boshlaydi.
   const [runKey, setRunKey] = useState(0);
   const [clipNotice, setClipNotice] = useState(false);
+  // «Javobni ko'rish»dan keyin qolgan imkoniyatlar (dars id → son); sahifa
+  // qayta yuklanguncha serverdagi `reveals_used` o'rniga shu ishlatiladi.
+  const [revealsLeft, setRevealsLeft] = useState<Record<number, number>>({});
   // Dars panelida qaysi yig'ma bo'lim ochiq (lug'at yoki mashqlar).
   const [openSection, setOpenSection] = useState<Section | null>("vocab");
 
@@ -858,6 +862,16 @@ export function LessonsBoard({
                     key={runKey}
                     exercise={activeExercise}
                     onFinish={(answers) => finishExercise(activeExercise.id, answers)}
+                    revealsLeft={
+                      openUnit
+                        ? revealsLeft[openUnit.id] ?? Math.max(0, ANSWER_REVEALS_PER_UNIT - openUnit.reveals_used)
+                        : 0
+                    }
+                    onReveal={async () => {
+                      const left = await revealAnswerAction(activeExercise.id);
+                      if (openUnit) setRevealsLeft((cur) => ({ ...cur, [openUnit.id]: left ?? 0 }));
+                      return left !== null;
+                    }}
                     onRetry={() => startExercise(activeExercise.id)}
                     onDone={(resultPct) => {
                       setView("main");

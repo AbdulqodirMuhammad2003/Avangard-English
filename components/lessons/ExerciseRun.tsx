@@ -100,8 +100,14 @@ export function ExerciseRun({
   onFinish,
   onRetry,
   onDone,
+  revealsLeft,
+  onReveal,
 }: {
   exercise: UnitDetail["exercises"][number];
+  /** Shu darsda «Javobni ko'rish» imkoniyatlaridan nechtasi qolgan. */
+  revealsLeft: number;
+  /** Bitta imkoniyatni sarflaydi; tugagan bo'lsa false. */
+  onReveal: () => Promise<boolean>;
   /** Oxirgi savoldan keyin shu safar berilgan javoblar bilan bir marta
    *  chaqiriladi (server ularni avvalgi natijalar bilan birlashtiradi). */
   onFinish: (answers: { questionId: number; correct: boolean }[]) => void;
@@ -130,6 +136,11 @@ export function ExerciseRun({
   const [speechError, setSpeechError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<{ questionId: number; correct: boolean }[]>([]);
   const [result, setResult] = useState<number | null>(null);
+  // Xato javobdan keyin to'g'ri javob faqat «Javobni ko'rish» bosilsa chiqadi.
+  const [revealed, setRevealed] = useState(false);
+  const [revealing, setRevealing] = useState(false);
+  // Bir sahifali test (matn yoki audio + hamma savollar): har savolda tanlangan variant.
+  const [pagePicks, setPagePicks] = useState<number[]>([]);
 
   // Mashq qisman bajarilgan bo'lsa, faqat hali to'g'ri topilmagan savollar
   // beriladi (mashq ochilgandagi holat saqlanadi). Hammasi to'g'ri yoki
@@ -145,6 +156,12 @@ export function ExerciseRun({
   const question = pending[qIndex];
   const kind = exercise.kind;
   const total = pending.length;
+  // Bitta matn yoki audio bo'yicha savollar bitta sahifada beriladi va birga
+  // tekshiriladi — o'quvchi matnni/audioni savollar orasida yo'qotmaydi.
+  const pageMode = kind === "audiotext" || kind === "reading" || kind === "truefalse";
+  // Juftlikda xato juftlar ulanmaydi, talaffuzda javob — gapning o'zi:
+  // bularda yashiradigan narsa yo'q.
+  const showAnswer = checked === true || revealed || kind === "match" || kind === "speak";
   // Qoida mashqida avval tushuntirish ko'rsatiladi, test undan keyin.
   const [showRule, setShowRule] = useState(kind === "rule");
 
@@ -273,8 +290,9 @@ export function ExerciseRun({
   // telefon raqam klaviaturasida «:» yo'q, shuning uchun 8:15 = 815.
   const normalizeWritten = (s: string) => (kind === "number" ? s.replace(/\D/g, "") : normalizeAnswer(s));
   const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeWritten);
-  const canCheck =
-    kind === "listengap" ? gapsFilled : kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
+  const canCheck = pageMode
+    ? pending.every((_, k) => pagePicks[k] !== undefined)
+    : kind === "listengap" ? gapsFilled : kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
 
   function record(ok: boolean) {
     setChecked(ok);
@@ -283,6 +301,12 @@ export function ExerciseRun({
 
   function check() {
     if (!canCheck || checked !== null) return;
+    if (pageMode) {
+      const results = pending.map((q, k) => ({ questionId: q.id, correct: pagePicks[k] === q.correct_index }));
+      setChecked(results.every((r) => r.correct));
+      setAnswers(results);
+      return;
+    }
     if (kind === "speak") {
       record(matchesPronunciation(heard, [speechNorm(question.answer_text ?? question.prompt)]));
       return;
@@ -295,12 +319,22 @@ export function ExerciseRun({
       record(gapRows.every((row, i) => slots[i] === row[1]));
       return;
     }
-    record(
-      isWritten
-        ? acceptedAnswers.includes(normalizeWritten(answerValue))
-        : selected === question.correct_index
-    );
-    if (kind === "number" && question.audio_text) speakEn(question.audio_text);
+    const ok = isWritten
+      ? acceptedAnswers.includes(normalizeWritten(answerValue))
+      : selected === question.correct_index;
+    record(ok);
+    // Sonni ovoz bilan qayta o'qish javobni aytib qo'yadi — faqat to'g'ri bo'lsa.
+    if (kind === "number" && question.audio_text && ok) speakEn(question.audio_text);
+  }
+
+  async function reveal() {
+    if (revealing || revealed) return;
+    setRevealing(true);
+    try {
+      if (await onReveal()) setRevealed(true);
+    } finally {
+      setRevealing(false);
+    }
   }
 
   function pickMatchRight(pairIndex: number) {
@@ -353,8 +387,9 @@ export function ExerciseRun({
   }
 
   function next() {
-    if (qIndex + 1 < total) {
+    if (!pageMode && qIndex + 1 < total) {
       setQIndex(qIndex + 1);
+      setRevealed(false);
       setSelected(null);
       setTyped("");
       setPicked([]);
@@ -375,8 +410,16 @@ export function ExerciseRun({
 
   function optionState(i: number): keyof typeof OPTION_STATE_CLASSES {
     if (checked === null) return selected === i ? "selected" : "idle";
-    if (i === question.correct_index) return "right";
+    if (i === question.correct_index && (selected === i || showAnswer)) return "right";
     return selected === i ? "wrong" : "idle";
+  }
+
+  function pageOptionState(k: number, i: number): keyof typeof OPTION_STATE_CLASSES {
+    const pick = pagePicks[k];
+    if (checked === null) return pick === i ? "selected" : "idle";
+    const right = pending[k].correct_index;
+    if (pick === i) return i === right ? "right" : "wrong";
+    return i === right && showAnswer ? "right" : "idle";
   }
 
   // Telefonda 4 ta ustunga faqat juda qisqa variantlar sig'adi (am, is, are);
@@ -467,6 +510,7 @@ export function ExerciseRun({
       )}
 
       <div key={qIndex} className="flex animate-fade-up flex-col gap-4">
+        {!pageMode && (
         <div className="flex items-center gap-3">
           <div className="h-2 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
             <div
@@ -478,6 +522,7 @@ export function ExerciseRun({
             {qIndex + 1} / {total}
           </span>
         </div>
+        )}
 
         {kind === "listen" && (
           <>
@@ -593,39 +638,9 @@ export function ExerciseRun({
           </>
         )}
 
-        {kind === "truefalse" && (
+        {pageMode && (
           <>
-            <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
-              <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
-                <BookOpen size={14} /> {t("Matn", "Text")}
-              </p>
-              <p lang="en">{question.prompt.split("||")[0]}</p>
-            </div>
-            <p lang="en" className="text-center text-xl font-semibold text-ink-950 dark:text-ink-50">
-              {question.prompt.split("||")[1]}
-            </p>
-            {optionGrid()}
-          </>
-        )}
-
-        {kind === "reading" && (
-          <>
-            <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
-              <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
-                <BookOpen size={14} /> {t("Matn", "Text")}
-              </p>
-              <p lang="en" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
-            </div>
-            <p lang="en" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
-              {question.prompt.split("||")[1]}
-            </p>
-            {optionGrid()}
-          </>
-        )}
-
-        {kind === "audiotext" && (
-          <>
-            {!isMediaRef(question.audio_text) && (
+            {kind === "audiotext" && !isMediaRef(question.audio_text) && (
               <div className="flex items-center gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30">
                 <button
                   onClick={() => question.audio_text && speakEn(question.audio_text)}
@@ -650,10 +665,61 @@ export function ExerciseRun({
                 </p>
               </div>
             )}
-            <p lang="en" className="text-center text-lg font-semibold text-ink-950 dark:text-ink-50">
-              {question.prompt}
+            {kind !== "audiotext" && (
+              <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
+                <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
+                  <BookOpen size={14} /> {t("Matn", "Text")}
+                </p>
+                <p lang="en" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
+              </div>
+            )}
+            <p className="text-center text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400">
+              {t(`Savollar (${total} ta)`, `Questions (${total})`)}
             </p>
-            {optionGrid()}
+            <ol className="flex flex-col gap-6">
+              {pending.map((q, k) => {
+                const stem = kind === "audiotext" ? q.prompt : q.prompt.split("||")[1];
+                const gotIt = pagePicks[k] === q.correct_index;
+                return (
+                  <li key={q.id} className="flex flex-col gap-2.5">
+                    <p lang="en" className="flex items-start gap-2.5 text-base font-semibold text-ink-950 dark:text-ink-50">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold-400 text-sm font-bold text-ink-950">
+                        {k + 1}
+                      </span>
+                      <span className="min-w-0 pt-0.5">{stem}</span>
+                    </p>
+                    <div className={`grid gap-2 ${kind === "truefalse" ? "grid-cols-2" : "grid-cols-1"}`}>
+                      {q.options.map((opt, i) => (
+                        <button
+                          key={i}
+                          onClick={() =>
+                            checked === null &&
+                            setPagePicks((cur) => {
+                              const picks = [...cur];
+                              picks[k] = i;
+                              return picks;
+                            })
+                          }
+                          className={`flex min-w-0 items-stretch overflow-hidden rounded-xl border-2 text-left text-base transition-all duration-150 ${
+                            OPTION_STATE_CLASSES[pageOptionState(k, i)]
+                          }`}
+                        >
+                          <span className="flex w-10 shrink-0 items-center justify-center border-r border-ink-950/10 font-semibold opacity-70 dark:border-white/10">
+                            {String.fromCharCode(65 + i)}.
+                          </span>
+                          <span lang="en" className="min-w-0 break-words px-3 py-2.5">
+                            {localizeOption(lang, opt)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                    {checked !== null && q.explanation && (gotIt || showAnswer) && (
+                      <p className="text-sm text-ink-600 dark:text-ink-300">{q.explanation}</p>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
           </>
         )}
 
@@ -834,7 +900,7 @@ export function ExerciseRun({
                       ))}
                     </select>
                     {after}
-                    {checked !== null && slots[i] !== row[1] && (
+                    {checked !== null && showAnswer && slots[i] !== row[1] && (
                       <span className="ml-2 text-sm font-semibold text-mint-700 dark:text-mint-300">→ {row[1]}</span>
                     )}
                   </p>
@@ -886,7 +952,7 @@ export function ExerciseRun({
                     enterKeyHint={i + 1 < matchPairs.length ? "next" : "done"}
                     className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
                   />
-                  {checked !== null && !slotRight(i) && (
+                  {checked !== null && showAnswer && !slotRight(i) && (
                     <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">
                       {pair[1].split(";")[0]}
                     </span>
@@ -1068,8 +1134,43 @@ export function ExerciseRun({
                 : "bg-rose-50 text-rose-900 dark:bg-rose-950/40 dark:text-rose-100"
             }`}
           >
-            <p className="font-bold">{checked ? t("To'g'ri!", "Correct!") : t(`To'g'ri javob: ${correctAnswerText}`, `Correct answer: ${correctAnswerText}`)}</p>
-            {question.explanation && <p className="mt-1 opacity-90">{question.explanation}</p>}
+            <p className="font-bold">
+              {checked
+                ? pageMode
+                  ? t("Hammasi to'g'ri!", "All correct!")
+                  : t("To'g'ri!", "Correct!")
+                : pageMode
+                ? t(
+                    `${correctCount} / ${total} to'g'ri.${showAnswer ? " To'g'ri javoblar yashil rangda." : ""}`,
+                    `${correctCount} / ${total} correct.${showAnswer ? " The correct answers are in green." : ""}`
+                  )
+                : showAnswer
+                ? t(`To'g'ri javob: ${correctAnswerText}`, `Correct answer: ${correctAnswerText}`)
+                : t("Noto'g'ri.", "Not quite.")}
+            </p>
+            {!pageMode && question.explanation && (checked || showAnswer) && (
+              <p className="mt-1 opacity-90">{question.explanation}</p>
+            )}
+            {!checked && !showAnswer && (
+              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                {revealsLeft > 0 ? (
+                  <button
+                    onClick={reveal}
+                    disabled={revealing}
+                    className="btn-press rounded-full bg-white px-4 py-1.5 text-xs font-bold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-100 disabled:opacity-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15"
+                  >
+                    {t(`Javobni ko'rish (${revealsLeft} ta qoldi)`, `Show the answer (${revealsLeft} left)`)}
+                  </button>
+                ) : (
+                  <span className="text-xs opacity-80">
+                    {t("Bu darsda javobni ko'rish imkoniyatlari tugadi.", "You've used all your answer reveals for this lesson.")}
+                  </span>
+                )}
+                <span className="text-xs opacity-80">
+                  {t("Xato savollar keyin qayta beriladi.", "You'll get the questions you missed again later.")}
+                </span>
+              </div>
+            )}
           </div>
         )}
 
@@ -1082,7 +1183,7 @@ export function ExerciseRun({
           >
             {checked === null
               ? t("Tekshirish", "Check")
-              : qIndex + 1 < total
+              : !pageMode && qIndex + 1 < total
               ? t("Keyingisi", "Next")
               : t("Natijani ko'rish", "See your result")}
           </button>
