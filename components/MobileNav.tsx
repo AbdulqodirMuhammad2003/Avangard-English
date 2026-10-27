@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS, TEACHER_NAV_ITEM } from "./Sidebar";
+import { useT } from "./LangProvider";
 
 /** Telefon va planshet uchun pastki navigatsiya paneli (katta ekranlarda
  *  uning o'rnini chap yon panel — Sidebar egallaydi). */
 export function MobileNav({ isTeacher = false }: { isTeacher?: boolean }) {
   const pathname = usePathname();
+  const t = useT();
   const items = isTeacher ? [...NAV_ITEMS, TEACHER_NAV_ITEM] : NAV_ITEMS;
 
   return (
@@ -31,7 +33,7 @@ export function MobileNav({ isTeacher = false }: { isTeacher?: boolean }) {
               >
                 <Icon size={20} />
               </span>
-              {item.label}
+              {t(item.label, item.en)}
             </Link>
           );
         })}

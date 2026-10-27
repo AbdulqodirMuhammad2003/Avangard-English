@@ -216,3 +216,13 @@ export const SPEECH_ERRORS: Record<string, string> = {
   "no-speech": "Ovoz eshitilmadi. Mikrofonga yaqinroq, balandroq gapiring.",
   "language-not-supported": "Brauzeringiz ingliz tilidagi ovozni tanimaydi. Chrome yoki Edge'dan foydalaning.",
 };
+
+/** SPEECH_ERRORS ning inglizcha nusxasi (A2 va undan yuqori darajalar uchun). */
+export const SPEECH_ERRORS_EN: Record<string, string> = {
+  "not-allowed": "The microphone is blocked. Tap the lock icon in the address bar and allow the microphone.",
+  "service-not-allowed": "Your browser blocks speech recognition. Open the site in Google Chrome or Microsoft Edge.",
+  "audio-capture": "No microphone found. Check that your microphone is connected.",
+  network: "Can't connect to speech recognition. Check your internet or use Chrome/Edge.",
+  "no-speech": "We didn't hear anything. Speak louder and closer to the microphone.",
+  "language-not-supported": "Your browser can't recognise English speech. Use Chrome or Edge.",
+};

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, RotateCcw, Snail } from "lucide-react";
+import { useT } from "../LangProvider";
 
 const fmt = (s: number) => {
   if (!Number.isFinite(s)) return "0:00";
@@ -13,6 +14,7 @@ const fmt = (s: number) => {
  *  istalgan joyga o'tish, 5 soniya orqaga va sekinroq tezlik. Bir mashqdagi
  *  savollar orasida qayta yaratilmaydi — o'quvchi to'xtagan joyidan davom etadi. */
 export function MediaAudioPlayer({ src, autoPlay = false }: { src: string; autoPlay?: boolean }) {
+  const t = useT();
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
@@ -59,7 +61,7 @@ export function MediaAudioPlayer({ src, autoPlay = false }: { src: string; autoP
         <button
           onClick={toggle}
           className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-          aria-label={playing ? "Pauza" : "Eshitish"}
+          aria-label={playing ? t("Pauza", "Pause") : t("Eshitish", "Play")}
         >
           {playing ? <Pause size={26} /> : <Play size={26} className="ml-0.5" />}
         </button>
@@ -71,7 +73,7 @@ export function MediaAudioPlayer({ src, autoPlay = false }: { src: string; autoP
             step={0.1}
             value={Math.min(time, duration || 0)}
             onChange={(e) => seek(Number(e.target.value))}
-            aria-label="Audio vaqti"
+            aria-label={t("Audio vaqti", "Audio position")}
             className="w-full accent-gold-500"
           />
           <div className="flex justify-between text-xs tabular-nums text-gold-900/70 dark:text-gold-100/70">
@@ -85,7 +87,7 @@ export function MediaAudioPlayer({ src, autoPlay = false }: { src: string; autoP
           onClick={() => seek(time - 5)}
           className="btn-press flex items-center gap-1 rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
         >
-          <RotateCcw size={14} /> 5 soniya orqaga
+          <RotateCcw size={14} /> {t("5 soniya orqaga", "Back 5 seconds")}
         </button>
         <button
           onClick={() => setSlow((s) => !s)}
@@ -96,7 +98,7 @@ export function MediaAudioPlayer({ src, autoPlay = false }: { src: string; autoP
               : "bg-gold-100 text-gold-800 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
           }`}
         >
-          <Snail size={14} /> Sekinroq
+          <Snail size={14} /> {t("Sekinroq", "Slower")}
         </button>
       </div>
     </div>

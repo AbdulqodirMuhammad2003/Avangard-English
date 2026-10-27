@@ -11,6 +11,8 @@ import { InstallAppBanner } from "@/components/InstallAppBanner";
 import { LogoMark } from "@/components/Logo";
 import { logoutAction } from "@/app/actions";
 import { LogOut } from "lucide-react";
+import { LangProvider } from "@/components/LangProvider";
+import { langForLevel, translator } from "@/lib/i18n";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
@@ -21,8 +23,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     getCertificates(session.userId),
   ]);
   if (!user) redirect("/login");
+  const lang = langForLevel(user.level);
+  const t = translator(lang);
 
   return (
+    <LangProvider lang={lang}>
     <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f7fb] dark:bg-[#0d1017]">
       <Sidebar isTeacher={user.role === "teacher"} />
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
@@ -54,7 +59,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <form action={logoutAction} className="lg:hidden">
               <button
                 type="submit"
-                aria-label="Chiqish"
+                aria-label={t("Chiqish", "Log out")}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-50 hover:text-rose-500 dark:text-ink-400 dark:hover:bg-white/10"
               >
                 <LogOut size={18} />
@@ -69,5 +74,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       </div>
       <MobileNav isTeacher={user.role === "teacher"} />
     </div>
+    </LangProvider>
   );
 }

@@ -2,19 +2,24 @@ import { Trophy } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";
+import { getT } from "@/lib/lang-server";
 
 export default async function RankingPage() {
   const session = await getSession();
   const board = await getLevelBoard(session!.userId);
+  const t = await getT();
   // Reyting — darslar foizlari yig'indisi bo'yicha; teng ball bo'lsa, ism bo'yicha.
   const rows = [...board.students].sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <div className="animate-fade-up">
-        <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">Reyting</h1>
+        <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Reyting", "Ranking")}</h1>
         <p className="text-sm text-ink-700/60 dark:text-ink-300/60">
-          {board.level} darajasida o'qiyotgan o'quvchilar. Ball — barcha darslar bo'yicha natijalaringiz yig'indisi.
+          {t(
+            `${board.level} darajasida o'qiyotgan o'quvchilar. Ball — barcha darslar bo'yicha natijalaringiz yig'indisi.`,
+            `Students at level ${board.level}. Points are the total of your results in all lessons.`
+          )}
         </p>
       </div>
 
@@ -52,9 +57,9 @@ export default async function RankingPage() {
                       }`}
                     >
                       {row.name}
-                      {row.is_current_user && " (siz)"}
+                      {row.is_current_user && t(" (siz)", " (you)")}
                     </p>
-                    <p className="text-xs text-ink-500 dark:text-ink-400">O'rtacha natija: {row.average}%</p>
+                    <p className="text-xs text-ink-500 dark:text-ink-400">{t("O'rtacha natija:", "Average:")} {row.average}%</p>
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1 text-sm font-semibold text-ink-700/70 dark:text-ink-300/70">
@@ -65,7 +70,7 @@ export default async function RankingPage() {
             );
           })}
           {rows.length === 0 && (
-            <p className="px-3 py-8 text-center text-sm text-ink-400 dark:text-ink-600">Hozircha o'quvchilar yo'q.</p>
+            <p className="px-3 py-8 text-center text-sm text-ink-400 dark:text-ink-600">{t("Hozircha o'quvchilar yo'q.", "No students yet.")}</p>
           )}
         </div>
       </div>

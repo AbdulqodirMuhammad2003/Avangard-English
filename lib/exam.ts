@@ -4,6 +4,7 @@ import { getLevelBoard, UNLOCK_RULE_ENABLED, UNLOCK_THRESHOLD } from "./data";
 import { GRAMMAR_BANKS, type ExamGrammarItem } from "./exam-bank";
 import { normalizeAnswer } from "./english-speech";
 import { levelInfo } from "./levels";
+import { localizeLabel, translator, type Lang } from "./i18n";
 
 /**
  * Daraja yakuniy imtihoni: o'quvchi o'z darajasining imtihonini topshiradi
@@ -357,7 +358,8 @@ async function resetLevelProgress(userId: number, level: string) {
   });
 }
 
-export async function getExamStatus(userId: number): Promise<ExamStatus> {
+export async function getExamStatus(userId: number, lang: Lang = "uz"): Promise<ExamStatus> {
+  const t = translator(lang);
   const { level, isTeacher } = await examLevelOf(userId);
   let attempts = await attemptsOf(userId, level);
 
@@ -400,7 +402,7 @@ export async function getExamStatus(userId: number): Promise<ExamStatus> {
     ? (JSON.parse(planSource.weak_units_json ?? "[]") as { lesson: number; unitId: number }[]).map((w) => {
         const percent = percentOf(w.unitId);
         const unit = board.units.find((u) => u.id === w.unitId);
-        return { lesson: w.lesson, title: unit?.title ?? `${w.lesson}-dars`, percent, done: percent >= EXAM_REMEDIATION_PCT };
+        return { lesson: w.lesson, title: localizeLabel(lang, unit?.title ?? `${w.lesson}-dars`), percent, done: percent >= EXAM_REMEDIATION_PCT };
       })
     : [];
 
@@ -408,9 +410,9 @@ export async function getExamStatus(userId: number): Promise<ExamStatus> {
 
   let blockReason: string | null = null;
   let nextAvailableAt: string | null = null;
-  if (passed) blockReason = "Imtihondan o'tgansiz.";
+  if (passed) blockReason = t("Imtihondan o'tgansiz.", "You have passed the exam.");
   else if (active) blockReason = null;
-  else if (!isReady(level)) blockReason = "Bu daraja imtihoni hali tayyorlanmoqda.";
+  else if (!isReady(level)) blockReason = t("Bu daraja imtihoni hali tayyorlanmoqda.", "The exam for this level is not ready yet.");
   // O'qituvchi imtihonni tekshirishi uchun: darslar foizi, 24 soat va
   // takrorlash rejasi shartlarisiz.
   else if (isTeacher) blockReason = null;
@@ -419,23 +421,31 @@ export async function getExamStatus(userId: number): Promise<ExamStatus> {
     // o'qilayotgan bo'lsa (2-sikl va keyingilari), imtihon barcha darslar
     // 80 % ga yetgach ochiladi.
     if ((UNLOCK_RULE_ENABLED || cycle > 1) && notReady.length > 0) {
-      blockReason = `Imtihon barcha darslar ${UNLOCK_THRESHOLD}% ga yetgach ochiladi. Qolgan darslar: ${notReady
-        .map((u) => u.title)
-        .join(", ")}.`;
+      const left = notReady.map((u) => localizeLabel(lang, u.title)).join(", ");
+      blockReason = t(
+        `Imtihon barcha darslar ${UNLOCK_THRESHOLD}% ga yetgach ochiladi. Qolgan darslar: ${left}.`,
+        `The exam opens when all lessons reach ${UNLOCK_THRESHOLD}%. Lessons left: ${left}.`
+      );
     } else if (planSource) {
       const readyAt = new Date(planSource.finished_at!.getTime() + EXAM_COOLDOWN_HOURS * 3_600_000);
       if (readyAt.getTime() > Date.now()) {
         nextAvailableAt = readyAt.toISOString();
-        blockReason = "Qayta topshirish oldingi urinishdan kamida 24 soat o'tgach ochiladi.";
+        blockReason = t(
+          "Qayta topshirish oldingi urinishdan kamida 24 soat o'tgach ochiladi.",
+          "You can try again 24 hours after your last attempt."
+        );
       } else if (plan.some((p) => !p.done)) {
-        blockReason = `Avval takrorlash rejasini bajaring: zaif darslarni ${EXAM_REMEDIATION_PCT}% ga yetkazing.`;
+        blockReason = t(
+          `Avval takrorlash rejasini bajaring: zaif darslarni ${EXAM_REMEDIATION_PCT}% ga yetkazing.`,
+          `First do your review plan: get your weak lessons to ${EXAM_REMEDIATION_PCT}%.`
+        );
       }
     }
   }
 
   return {
     level,
-    title: EXAMS[level].title,
+    title: t(EXAMS[level].title, `${levelInfo(level)?.en ?? level} (${level}) exam`),
     passed,
     cycle,
     attemptsUsed,

@@ -10,13 +10,15 @@
  *  - turi yoki savollar soni o'zgargan — savollar qayta yoziladi, lekin faqat
  *    shu mashq bo'yicha hech kimning natijasi bo'lmasa;
  *  - kodda yangi mashq bo'lsa — oxiriga qo'shiladi.
- * Lug'atga tegmaydi. --apply siz faqat nima o'zgarishi ko'rsatiladi.
+ * Darsning nomi (subtitle) ham yangilanadi. Lug'atga tegmaydi. --apply siz
+ * faqat nima o'zgarishi ko'rsatiladi.
  */
 import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
 
 import { getDb } from "../lib/db";
 import { LESSON_CONTENT } from "../lib/seed-lessons";
+import { UNITS } from "../lib/seed-data";
 import type { SeedExercise } from "../lib/seed-exercises";
 
 const apply = process.argv.includes("--apply");
@@ -42,6 +44,9 @@ async function main() {
     if (!lesson) throw new Error(`${code}: kodda yo'q`);
     const [unit] = await sql<{ id: number }[]>`SELECT id FROM units WHERE code = ${code}`;
     if (!unit) throw new Error(`${code}: bazada yo'q`);
+    // Darsning nomi (subtitle) ham koddagidek bo'ladi.
+    const unitSeed = UNITS.find((u) => u.code === code);
+    if (unitSeed && apply) await sql`UPDATE units SET subtitle = ${unitSeed.subtitle} WHERE id = ${unit.id}`;
     const dbExercises = await sql<{ id: number; kind: string; title: string; order_index: number; questions: number; progress: number }[]>`
       SELECT e.id, e.kind, e.title, e.order_index,
         (SELECT count(*)::int FROM exercise_questions q WHERE q.exercise_id = e.id) AS questions,
@@ -84,12 +89,29 @@ async function main() {
         await t`UPDATE exercises SET title = ${ex.title}, skill_label = ${ex.skill}, kind = ${ex.kind},
                   instructions = ${ex.instructions ?? null} WHERE id = ${db.id}`;
         if (sameShape) {
-          for (const r of questionRows(db.id, ex)) {
-            await t`UPDATE exercise_questions SET prompt = ${r.prompt}, options_json = ${r.options_json},
-                      correct_index = ${r.correct_index}, audio_text = ${r.audio_text}, answer_text = ${r.answer_text},
-                      explanation = ${r.explanation}
-                    WHERE exercise_id = ${db.id} AND order_index = ${r.order_index}`;
-          }
+          // Hamma savol bitta so'rovda (masofaviy bazada qatorma-qator sekin).
+          const rows = questionRows(db.id, ex);
+          await t`
+            UPDATE exercise_questions AS q
+            SET prompt = v.prompt, options_json = v.options_json, correct_index = v.correct_index,
+                audio_text = v.audio_text, answer_text = v.answer_text, explanation = v.explanation
+            FROM unnest(
+              ${t.array(rows.map((r) => r.order_index))}::int[],
+              ${t.array(rows.map((r) => r.prompt))}::text[],
+              ${t.array(rows.map((r) => r.options_json))}::text[],
+              ${t.array(rows.map((r) => r.correct_index))}::int[],
+              ${t.array(rows.map((r) => r.audio_text ?? ""))}::text[],
+              ${t.array(rows.map((r) => r.answer_text ?? ""))}::text[],
+              ${t.array(rows.map((r) => r.explanation ?? ""))}::text[]
+            ) AS v(order_index, prompt, options_json, correct_index, audio_text, answer_text, explanation)
+            WHERE q.exercise_id = ${db.id} AND q.order_index = v.order_index
+          `;
+          // unnest ichida NULL ni bo'sh satr bilan uzatdik — qaytaramiz.
+          await t`
+            UPDATE exercise_questions SET
+              audio_text = NULLIF(audio_text, ''), answer_text = NULLIF(answer_text, ''), explanation = NULLIF(explanation, '')
+            WHERE exercise_id = ${db.id}
+          `;
         } else {
           await t`DELETE FROM exercise_questions WHERE exercise_id = ${db.id}`;
           await t`INSERT INTO exercise_questions ${t(questionRows(db.id, ex))}`;

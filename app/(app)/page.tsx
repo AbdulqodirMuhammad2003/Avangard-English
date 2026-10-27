@@ -5,6 +5,7 @@ import { getUserStats, getAllUnitsDetailed, withoutQuestions, getActivityOvervie
 import { TodayPanel } from "@/components/TodayPanel";
 import { VocabGauge } from "@/components/VocabGauge";
 import { currentUnitOf, levelUnits } from "@/lib/progress";
+import { langForLevel, localizeLabel, translator } from "@/lib/i18n";
 
 export default async function HomePage() {
   const session = await getSession();
@@ -16,6 +17,8 @@ export default async function HomePage() {
     getReviewSummary(userId),
   ]);
   const user = userRow!;
+  const lang = langForLevel(user.level);
+  const t = translator(lang);
 
   // Hisoblagichlar va joriy dars — faqat o'quvchining joriy darajasi bo'yicha.
   const myUnits = levelUnits(unitsDetailed, user.level);
@@ -27,15 +30,15 @@ export default async function HomePage() {
   const LIBRARY_CARDS = [
     {
       href: "/lessons",
-      label: "Darslar",
-      desc: `${user.level} darajasida ${totalUnits} ta dars`,
+      label: t("Darslar", "Lessons"),
+      desc: t(`${user.level} darajasida ${totalUnits} ta dars`, `${totalUnits} lessons at level ${user.level}`),
       icon: GraduationCap,
       color: "text-ink-600",
     },
     {
       href: "/lessons",
-      label: "Lug'at",
-      desc: `${user.level} darajasida ${totalWords} ta so'z`,
+      label: t("Lug'at", "Vocabulary"),
+      desc: t(`${user.level} darajasida ${totalWords} ta so'z`, `${totalWords} words at level ${user.level}`),
       icon: BookOpen,
       color: "text-gold-600",
     },
@@ -43,11 +46,11 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
-      <h1 className="sr-only">Bosh sahifa</h1>
+      <h1 className="sr-only">{t("Bosh sahifa", "Home")}</h1>
       <TodayPanel user={user} units={unitsDetailed} activity={activity} review={review} />
 
       <div>
-        <h2 className="font-display mb-3 text-lg font-semibold text-ink-950 dark:text-ink-50">Kutubxona</h2>
+        <h2 className="font-display mb-3 text-lg font-semibold text-ink-950 dark:text-ink-50">{t("Kutubxona", "Library")}</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {LIBRARY_CARDS.map((c, i) => {
             const Icon = c.icon;
@@ -70,7 +73,7 @@ export default async function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <VocabGauge learned={learnedWords} total={totalWords} />
+        <VocabGauge learned={learnedWords} total={totalWords} lang={lang} />
 
         {currentUnit ? (
           <Link
@@ -83,10 +86,10 @@ export default async function HomePage() {
               className="absolute right-5 top-5 opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
             <div className="relative">
-              <p className="text-sm font-semibold text-white/80">Joriy dars</p>
+              <p className="text-sm font-semibold text-white/80">{t("Joriy dars", "Current lesson")}</p>
               <p className="font-display mt-1 text-lg font-bold">{currentUnit.subtitle}</p>
               <p className="text-xs text-white/80">
-                {currentUnit.level_code} · {currentUnit.title}
+                {currentUnit.level_code} · {localizeLabel(lang, currentUnit.title)}
               </p>
             </div>
             <div className="relative mt-6">
@@ -99,8 +102,8 @@ export default async function HomePage() {
         ) : (
           <div className="flex animate-fade-up flex-col items-center justify-center gap-2 rounded-3xl bg-gradient-to-br from-gold-600 to-ink-900 p-6 text-center text-white shadow-sm">
             <PartyPopper size={28} />
-            <p className="font-bold">Barcha darslar tugallandi!</p>
-            <p className="text-xs text-white/80">Ajoyib natija — davom eting.</p>
+            <p className="font-bold">{t("Barcha darslar tugallandi!", "All lessons are finished!")}</p>
+            <p className="text-xs text-white/80">{t("Ajoyib natija — davom eting.", "Great result — keep going.")}</p>
           </div>
         )}
       </div>

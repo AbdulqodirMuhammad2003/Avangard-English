@@ -9,6 +9,7 @@ import { Avatar } from "./Avatar";
 import { updateProfileAction, type ProfileState } from "@/app/actions";
 import type { Certificate } from "@/lib/exam";
 import { downloadCertificate } from "@/lib/certificate";
+import { useT } from "./LangProvider";
 
 const initialState: ProfileState = {};
 
@@ -33,6 +34,7 @@ export function EditableAvatar({
   certificates?: Certificate[];
 }) {
   const router = useRouter();
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -87,11 +89,11 @@ export function EditableAvatar({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-5 flex items-center justify-between">
-          <h3 className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">Profil</h3>
+          <h3 className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">{t("Profil", "Profile")}</h3>
           <button
             onClick={() => setOpen(false)}
             className="rounded-full p-1.5 text-ink-500 transition-colors hover:bg-ink-50 dark:text-ink-300 dark:hover:bg-white/10"
-            aria-label="Yopish"
+            aria-label={t("Yopish", "Close")}
           >
             <X size={18} />
           </button>
@@ -103,7 +105,7 @@ export function EditableAvatar({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               className="group relative overflow-hidden rounded-full"
-              aria-label="Rasm tanlash"
+              aria-label={t("Rasm tanlash", "Choose a photo")}
             >
               <Avatar name={name} size={88} photoUrl={preview || avatarUrl} />
               <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-ink-950/0 text-transparent transition-colors duration-200 group-hover:bg-ink-950/45 group-hover:text-white">
@@ -123,12 +125,12 @@ export function EditableAvatar({
               onClick={() => fileInputRef.current?.click()}
               className="text-xs font-semibold text-ink-600 transition-colors hover:text-ink-800 dark:text-ink-300 dark:hover:text-ink-100"
             >
-              Rasm tanlash
+              {t("Rasm tanlash", "Choose a photo")}
             </button>
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink-800 dark:text-ink-200">Ism</label>
+            <label className="mb-1 block text-sm font-medium text-ink-800 dark:text-ink-200">{t("Ism", "Name")}</label>
             <input
               type="text"
               name="name"
@@ -151,18 +153,21 @@ export function EditableAvatar({
             className="btn-press mt-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-azure-600 to-azure-700 py-2.5 text-sm font-semibold text-white shadow-sm shadow-azure-900/30 transition-colors hover:from-azure-500 hover:to-azure-600 disabled:opacity-60"
           >
             {pending && <Loader2 size={16} className="animate-spin" />}
-            {pending ? "Saqlanmoqda..." : "Saqlash"}
+            {pending ? t("Saqlanmoqda...", "Saving...") : t("Saqlash", "Save")}
           </button>
         </form>
 
         {certificates && (
         <div className="mt-6 border-t border-ink-100 pt-5 dark:border-white/10">
           <h4 className="flex items-center gap-2 font-display text-base font-bold text-ink-950 dark:text-ink-50">
-            <Award size={18} className="text-gold-500" /> Sertifikatlar
+            <Award size={18} className="text-gold-500" /> {t("Sertifikatlar", "Certificates")}
           </h4>
           {certificates.length === 0 ? (
             <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">
-              Daraja imtihonidan o'tganingizdan keyin sertifikatni shu yerdan yuklab olishingiz mumkin.
+              {t(
+                "Daraja imtihonidan o'tganingizdan keyin sertifikatni shu yerdan yuklab olishingiz mumkin.",
+                "When you pass a level exam, you can download your certificate here."
+              )}
             </p>
           ) : (
             <div className="mt-3 flex flex-col gap-2">
@@ -172,7 +177,7 @@ export function EditableAvatar({
                   className="flex items-center justify-between gap-3 rounded-2xl bg-gold-50 px-4 py-3 dark:bg-gold-950/30"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-bold text-ink-950 dark:text-ink-50">{cert.level} daraja sertifikati</p>
+                    <p className="text-sm font-bold text-ink-950 dark:text-ink-50">{t(`${cert.level} daraja sertifikati`, `${cert.level} level certificate`)}</p>
                     <p className="text-xs text-ink-500 dark:text-ink-400">
                       {cert.pct}% · {cert.number}
                     </p>
@@ -184,7 +189,7 @@ export function EditableAvatar({
                     className="btn-press flex shrink-0 items-center gap-1.5 rounded-full bg-azure-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-azure-500 disabled:opacity-60"
                   >
                     {downloading === cert.level ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
-                    Yuklab olish
+                    {t("Yuklab olish", "Download")}
                   </button>
                 </div>
               ))}
@@ -202,7 +207,7 @@ export function EditableAvatar({
         type="button"
         onClick={() => setOpen(true)}
         className={`group flex items-center rounded-xl transition-opacity duration-150 hover:opacity-90 ${triggerClassName}`}
-        aria-label="Profilni tahrirlash"
+        aria-label={t("Profilni tahrirlash", "Edit profile")}
       >
         <span
           className="relative shrink-0 overflow-hidden rounded-full transition-transform group-hover:scale-[1.04]"

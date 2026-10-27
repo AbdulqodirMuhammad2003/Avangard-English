@@ -5,7 +5,9 @@ import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, 
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
-import { answerMatches, matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_LANG } from "@/lib/english-speech";
+import { localizeOption } from "@/lib/i18n";
+import { useLang, useT } from "../LangProvider";
+import { answerMatches, matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_ERRORS_EN, SPEECH_LANG } from "@/lib/english-speech";
 
 /** Mashqlarda so'z va gaplar biroz sekinroq o'qiladi; `media:` — yozib olingan audio fayl. */
 const speakEn = (text: string, rate = 0.85) => playListening(text, rate);
@@ -107,6 +109,8 @@ export function ExerciseRun({
   /** Natija oynasidan chiqish; yakuniy natija (%) bilan. */
   onDone: (resultPct: number) => void;
 }) {
+  const lang = useLang();
+  const t = useT();
   const [qIndex, setQIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [typed, setTyped] = useState("");
@@ -169,8 +173,8 @@ export function ExerciseRun({
         </div>
         <p className="font-display text-4xl font-bold text-ink-950 dark:text-ink-50">{result}%</p>
         <p className="text-sm text-ink-600 dark:text-ink-300">
-          {great ? "Ajoyib natija!" : "Xato qilingan savollarni yana bir marta ishlab ko'ring."}{" "}
-          To'g'ri javoblar: {alreadyCorrect + correctCount} / {exercise.questions.length}
+          {great ? t("Ajoyib natija!", "Great result!") : t("Xato qilingan savollarni yana bir marta ishlab ko'ring.", "Try the questions you got wrong once more.")}{" "}
+          {t("To'g'ri javoblar:", "Correct answers:")} {alreadyCorrect + correctCount} / {exercise.questions.length}
         </p>
         {kind === "rule" && (
           <p
@@ -181,8 +185,11 @@ export function ExerciseRun({
             }`}
           >
             {rulePassed
-              ? "Testdan o'tdingiz — mashqlar ochildi!"
-              : `Mashqlarga o'tish uchun kamida ${RULE_PASS_PCT}% kerak. Qoidani yana bir ko'rib, xatolarni qayta ishlang.`}
+              ? t("Testdan o'tdingiz — mashqlar ochildi!", "You passed the test — the exercises are open!")
+              : t(
+                  `Mashqlarga o'tish uchun kamida ${RULE_PASS_PCT}% kerak. Qoidani yana bir ko'rib, xatolarni qayta ishlang.`,
+                  `You need at least ${RULE_PASS_PCT}% to open the exercises. Read the rule again and try the mistakes again.`
+                )}
           </p>
         )}
         <div className="mt-2 flex gap-2">
@@ -190,13 +197,13 @@ export function ExerciseRun({
             onClick={onRetry}
             className="btn-press rounded-full bg-ink-100 px-5 py-2.5 text-sm font-bold text-ink-800 hover:bg-ink-200 dark:bg-white/10 dark:text-ink-100"
           >
-            Qayta ishlash
+            {t("Qayta ishlash", "Try again")}
           </button>
           <button
             onClick={() => onDone(result)}
             className="btn-press rounded-full bg-azure-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-azure-500"
           >
-            Tayyor
+            {t("Tayyor", "Done")}
           </button>
         </div>
       </div>
@@ -211,7 +218,7 @@ export function ExerciseRun({
             <GraduationCap size={22} />
           </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">Qoida</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">{t("Qoida", "Rule")}</p>
             <p className="font-display text-lg font-bold leading-tight text-ink-950 dark:text-ink-50">
               {exercise.title.replace(/^Qoida:\s*/, "")}
             </p>
@@ -224,7 +231,7 @@ export function ExerciseRun({
           onClick={() => setShowRule(false)}
           className="btn-press self-center rounded-full bg-azure-600 px-7 py-3 text-sm font-bold text-white shadow-md hover:bg-azure-500"
         >
-          {qIndex > 0 ? "Testga qaytish" : `Testni boshlash (${total} savol)`}
+          {qIndex > 0 ? t("Testga qaytish", "Back to the test") : t(`Testni boshlash (${total} savol)`, `Start the test (${total} questions)`)}
         </button>
       </div>
     );
@@ -308,7 +315,7 @@ export function ExerciseRun({
       (window as unknown as { SpeechRecognition?: new () => any }).SpeechRecognition ||
       (window as unknown as { webkitSpeechRecognition?: new () => any }).webkitSpeechRecognition;
     if (!SR) {
-      setSpeechError("Brauzeringiz ovozni tanimaydi (Chrome yoki Edge tavsiya etiladi).");
+      setSpeechError(t("Brauzeringiz ovozni tanimaydi (Chrome yoki Edge tavsiya etiladi).", "Your browser can't recognise speech (try Chrome or Edge)."));
       return;
     }
     window.speechSynthesis?.cancel();
@@ -323,7 +330,8 @@ export function ExerciseRun({
     };
     recog.onerror = (e: any) => {
       setListening(false);
-      if (e.error !== "aborted") setSpeechError(SPEECH_ERRORS[e.error] ?? "Ovozni tanib bo'lmadi.");
+      if (e.error !== "aborted")
+        setSpeechError((lang === "en" ? SPEECH_ERRORS_EN : SPEECH_ERRORS)[e.error] ?? t("Ovozni tanib bo'lmadi.", "We couldn't recognise your voice."));
     };
     recog.onend = () => setListening(false);
     setSpeechError(null);
@@ -396,7 +404,7 @@ export function ExerciseRun({
           } ${OPTION_STATE_CLASSES[optionState(i)]}`}
         >
           {prefix}
-          {opt}
+          {localizeOption(lang, opt)}
         </button>
       ))}
     </div>
@@ -409,16 +417,19 @@ export function ExerciseRun({
     : kind === "match" || kind === "listenmatch"
     ? matchPairs.map((p) => `${p[0]} — ${p[1].split(";")[0]}`).join(", ")
     : kind === "mistake"
-    ? `«${question.options[question.correct_index]}» — xato so'z`
+    ? t(`«${question.options[question.correct_index]}» — xato so'z`, `«${question.options[question.correct_index]}» is the wrong word`)
     : isWritten
     ? question.answer_text!.split("|")[0]
-    : question.options[question.correct_index];
+    : localizeOption(lang, question.options[question.correct_index]);
 
   return (
     <div className="flex flex-col gap-4">
       {resuming && (
         <p className="rounded-2xl bg-gold-50 px-4 py-2.5 text-sm font-semibold text-gold-800 dark:bg-gold-950/40 dark:text-gold-200">
-          Faqat xato qilingan {total} ta savol qoldi — {alreadyCorrect} tasi avval to'g'ri topilgan.
+          {t(
+            `Faqat xato qilingan ${total} ta savol qoldi — ${alreadyCorrect} tasi avval to'g'ri topilgan.`,
+            `Only the ${total} questions you got wrong are left — you already got ${alreadyCorrect} right.`
+          )}
         </p>
       )}
       {kind === "rule" && (
@@ -426,14 +437,14 @@ export function ExerciseRun({
           onClick={() => setShowRule(true)}
           className="flex items-center gap-2 self-start rounded-full bg-gold-50 px-4 py-2 text-sm font-semibold text-gold-800 hover:bg-gold-100 dark:bg-gold-950/40 dark:text-gold-200"
         >
-          <GraduationCap size={16} /> Qoidani ko'rish
+          <GraduationCap size={16} /> {t("Qoidani ko'rish", "See the rule")}
         </button>
       )}
       {exercise.instructions && kind !== "rule" && (
         <div className="flex gap-2.5 rounded-2xl bg-azure-50 px-4 py-3 text-sm leading-relaxed text-azure-900 dark:bg-azure-950/40 dark:text-azure-100">
           <Info size={18} className="mt-0.5 shrink-0" />
           <p>
-            <span className="font-bold">Shart: </span>
+            <span className="font-bold">{t("Shart:", "Task:")} </span>
             {exercise.instructions}
           </p>
         </div>
@@ -463,7 +474,7 @@ export function ExerciseRun({
             <button
               onClick={() => question.audio_text && speakEn(question.audio_text)}
               className="btn-press mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-              aria-label="Eshitish"
+              aria-label={t("Eshitish", "Listen")}
             >
               <Volume2 size={34} />
             </button>
@@ -558,7 +569,7 @@ export function ExerciseRun({
               disabled={picked.length === 0 || checked !== null}
               className="mx-auto flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink-500 hover:bg-ink-100 disabled:opacity-40 dark:text-ink-400 dark:hover:bg-white/10"
             >
-              <Delete size={14} /> Oxirgi harfni o'chirish
+              <Delete size={14} /> {t("Oxirgi harfni o'chirish", "Delete the last letter")}
             </button>
           </>
         )}
@@ -576,7 +587,7 @@ export function ExerciseRun({
           <>
             <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
               <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
-                <BookOpen size={14} /> Matn
+                <BookOpen size={14} /> {t("Matn", "Text")}
               </p>
               <p lang="en">{question.prompt.split("||")[0]}</p>
             </div>
@@ -591,7 +602,7 @@ export function ExerciseRun({
           <>
             <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
               <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
-                <BookOpen size={14} /> Matn
+                <BookOpen size={14} /> {t("Matn", "Text")}
               </p>
               <p lang="en" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
             </div>
@@ -609,20 +620,23 @@ export function ExerciseRun({
                 <button
                   onClick={() => question.audio_text && speakEn(question.audio_text)}
                   className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-                  aria-label="Matnni eshitish"
+                  aria-label={t("Matnni eshitish", "Listen to the text")}
                 >
                   <Volume2 size={26} />
                 </button>
                 <button
                   onClick={() => question.audio_text && speakEn(question.audio_text, 0.6)}
                   className="btn-press flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-900/50 dark:text-gold-200"
-                  aria-label="Sekinroq eshitish"
-                  title="Sekinroq"
+                  aria-label={t("Sekinroq eshitish", "Listen more slowly")}
+                  title={t("Sekinroq", "Slower")}
                 >
                   <Snail size={20} />
                 </button>
                 <p className="text-sm text-gold-900 dark:text-gold-100">
-                  Matnni tinglang. Qayta eshitish uchun tugmani bosing, sekinroq eshitish uchun — shilliqqurtni.
+                  {t(
+                    "Matnni tinglang. Qayta eshitish uchun tugmani bosing, sekinroq eshitish uchun — shilliqqurtni.",
+                    "Listen to the text. Tap the button to hear it again, or the snail to hear it more slowly."
+                  )}
                 </p>
               </div>
             )}
@@ -648,7 +662,7 @@ export function ExerciseRun({
             <button
               onClick={() => question.audio_text && speakEn(question.audio_text)}
               className="btn-press flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-              aria-label="Eshitish"
+              aria-label={t("Eshitish", "Listen")}
             >
               <Volume2 size={28} />
             </button>
@@ -656,8 +670,8 @@ export function ExerciseRun({
               <button
                 onClick={() => question.audio_text && speakEn(question.audio_text, 0.55)}
                 className="btn-press flex h-12 w-12 items-center justify-center rounded-full bg-gold-100 text-gold-700 hover:bg-gold-200 dark:bg-gold-950/40 dark:text-gold-200"
-                aria-label="Sekinroq eshitish"
-                title="Sekinroq"
+                aria-label={t("Sekinroq eshitish", "Listen more slowly")}
+                title={t("Sekinroq", "Slower")}
               >
                 <Snail size={22} />
               </button>
@@ -691,7 +705,7 @@ export function ExerciseRun({
             disabled={checked !== null}
             inputMode="numeric"
             placeholder="?"
-            aria-label="Raqam"
+            aria-label={t("Raqam", "Number")}
             className={`mx-auto w-36 rounded-2xl border-2 bg-white py-3 text-center text-4xl font-bold text-ink-900 outline-none dark:bg-white/5 dark:text-ink-50 ${
               checked === true
                 ? "border-mint-500"
@@ -715,7 +729,7 @@ export function ExerciseRun({
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Eshitganingizni yozing"
+              placeholder={t("Eshitganingizni yozing", "Write what you hear")}
               className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-xl font-semibold text-ink-900 outline-none transition-colors placeholder:text-sm placeholder:font-normal placeholder:text-ink-300 dark:bg-white/5 dark:text-ink-50 ${
                 checked === true
                   ? "border-mint-500"
@@ -767,7 +781,7 @@ export function ExerciseRun({
               </div>
             </div>
             {matchFlash && (
-              <p className="text-center text-sm font-semibold text-rose-500">Bu juft emas — yana urinib ko'ring</p>
+              <p className="text-center text-sm font-semibold text-rose-500">{t("Bu juft emas — yana urinib ko'ring", "That's not a pair — try again")}</p>
             )}
           </>
         )}
@@ -872,7 +886,7 @@ export function ExerciseRun({
               disabled={picked.length === 0 || checked !== null}
               className="mx-auto flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink-500 hover:bg-ink-100 disabled:opacity-40 dark:text-ink-400 dark:hover:bg-white/10"
             >
-              <Delete size={14} /> Oxirgi so'zni o'chirish
+              <Delete size={14} /> {t("Oxirgi so'zni o'chirish", "Delete the last word")}
             </button>
           </>
         )}
@@ -897,7 +911,7 @@ export function ExerciseRun({
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Tushib qolgan so'zni yozing"
+              placeholder={t("Tushib qolgan so'zni yozing", "Write the missing word")}
               className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-lg font-semibold text-ink-900 outline-none transition-colors placeholder:text-sm placeholder:font-normal placeholder:text-ink-300 dark:bg-white/5 dark:text-ink-50 ${
                 checked === true
                   ? "border-mint-500"
@@ -918,12 +932,12 @@ export function ExerciseRun({
               onClick={() => speakEn(question.prompt)}
               className="flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-gold-500"
             >
-              <Volume2 size={16} /> Namunani eshitish
+              <Volume2 size={16} /> {t("Namunani eshitish", "Listen to the example")}
             </button>
             <button
               onClick={listen}
               disabled={checked !== null}
-              aria-label="Yozib olish"
+              aria-label={t("Yozib olish", "Record")}
               className={`btn-press flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg transition-all ${
                 listening
                   ? "animate-pulse bg-gold-500"
@@ -934,12 +948,12 @@ export function ExerciseRun({
             </button>
             <p className="min-h-5 text-center text-sm text-ink-500 dark:text-ink-400">
               {listening
-                ? "Tinglanmoqda…"
+                ? t("Tinglanmoqda…", "Listening…")
                 : speechError
                 ? speechError
                 : heard
-                ? `Eshitildi: «${heard}»`
-                : "Mikrofonni bosib, iborani ayting"}
+                ? t(`Eshitildi: «${heard}»`, `We heard: «${heard}»`)
+                : t("Mikrofonni bosib, iborani ayting", "Tap the microphone and say the phrase")}
             </p>
             {speechError && checked === null && (
               <div className="flex gap-2">
@@ -947,13 +961,13 @@ export function ExerciseRun({
                   onClick={() => record(true)}
                   className="btn-press rounded-full bg-azure-600 px-4 py-2 text-xs font-bold text-white hover:bg-azure-500"
                 >
-                  To'g'ri aytdim
+                  {t("To'g'ri aytdim", "I said it right")}
                 </button>
                 <button
                   onClick={() => record(false)}
                   className="btn-press rounded-full bg-rose-600 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500"
                 >
-                  Xato qildim
+                  {t("Xato qildim", "I made a mistake")}
                 </button>
               </div>
             )}
@@ -976,7 +990,7 @@ export function ExerciseRun({
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Javobni inglizcha yozing"
+              placeholder={t("Javobni inglizcha yozing", "Write the answer in English")}
               className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-lg font-semibold text-ink-900 outline-none transition-colors placeholder:text-sm placeholder:font-normal placeholder:text-ink-300 dark:bg-white/5 dark:text-ink-50 ${
                 checked === true
                   ? "border-mint-500"
@@ -996,7 +1010,7 @@ export function ExerciseRun({
                 : "bg-rose-50 text-rose-900 dark:bg-rose-950/40 dark:text-rose-100"
             }`}
           >
-            <p className="font-bold">{checked ? "To'g'ri!" : `To'g'ri javob: ${correctAnswerText}`}</p>
+            <p className="font-bold">{checked ? t("To'g'ri!", "Correct!") : t(`To'g'ri javob: ${correctAnswerText}`, `Correct answer: ${correctAnswerText}`)}</p>
             {question.explanation && <p className="mt-1 opacity-90">{question.explanation}</p>}
           </div>
         )}
@@ -1008,7 +1022,11 @@ export function ExerciseRun({
             disabled={checked === null && !canCheck}
             className="btn-press mt-1 rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-40"
           >
-            {checked === null ? "Tekshirish" : qIndex + 1 < total ? "Keyingisi" : "Natijani ko'rish"}
+            {checked === null
+              ? t("Tekshirish", "Check")
+              : qIndex + 1 < total
+              ? t("Keyingisi", "Next")
+              : t("Natijani ko'rish", "See your result")}
           </button>
         )}
       </div>

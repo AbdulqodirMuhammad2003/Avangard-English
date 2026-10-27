@@ -1,6 +1,8 @@
 import { BookMarked } from "lucide-react";
+import { translator, type Lang } from "@/lib/i18n";
 
-export function VocabGauge({ learned, total }: { learned: number; total: number }) {
+export function VocabGauge({ learned, total, lang = "uz" }: { learned: number; total: number; lang?: Lang }) {
+  const t = translator(lang);
   const pct = total === 0 ? 0 : Math.min(100, Math.round((learned / total) * 100));
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
@@ -28,10 +30,10 @@ export function VocabGauge({ learned, total }: { learned: number; total: number 
 
       <div className="relative flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-gold-200/90">Lug'at</p>
-          <p className="font-display mt-1 text-lg font-bold">O'rganilgan so'zlar</p>
+          <p className="text-sm font-semibold text-gold-200/90">{t("Lug'at", "Vocabulary")}</p>
+          <p className="font-display mt-1 text-lg font-bold">{t("O'rganilgan so'zlar", "Words learned")}</p>
           <p className="mt-3 text-xs text-white/60">
-            Jami {total} ta so'zdan {learned} tasini o'rgandingiz
+            {t(`Jami ${total} ta so'zdan ${learned} tasini o'rgandingiz`, `You have learned ${learned} of ${total} words`)}
           </p>
         </div>
 

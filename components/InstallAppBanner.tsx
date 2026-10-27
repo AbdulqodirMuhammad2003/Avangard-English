@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download, Share, X } from "lucide-react";
+import { useT } from "./LangProvider";
 
 /** Ilova o'rnatilgan — taklif boshqa ko'rsatilmaydi. */
 const INSTALLED_KEY = "avangard-app-installed";
@@ -18,6 +19,7 @@ interface BeforeInstallPromptEvent extends Event {
  *  Safari'da — «Ulashish → Bosh ekranga» ko'rsatmasi. Faqat ilovani
  *  o'rnatganlarga ko'rinmaydi; × bilan yopilsa, keyingi kirishda yana chiqadi. */
 export function InstallAppBanner() {
+  const t = useT();
   const [promptEvent, setPromptEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [showIosHint, setShowIosHint] = useState(false);
   const [hidden, setHidden] = useState(true);
@@ -93,13 +95,13 @@ export function InstallAppBanner() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/icon-192.png" alt="" className="h-11 w-11 shrink-0 rounded-xl" />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-bold">Avangard English ilovasi</p>
+        <p className="text-sm font-bold">{t("Avangard English ilovasi", "Avangard English app")}</p>
         {showIosHint ? (
           <p className="text-xs text-white/75">
-            <Share size={12} className="inline align-[-1px]" /> «Ulashish» → «На экран Домой / Add to Home Screen»
+            <Share size={12} className="inline align-[-1px]" /> {t("«Ulashish»", "«Share»")} → «На экран Домой / Add to Home Screen»
           </p>
         ) : (
-          <p className="text-xs text-white/75">Telefoningizga o&apos;rnating — bir bosishda ochiladi</p>
+          <p className="text-xs text-white/75">{t("Telefoningizga o'rnating — bir bosishda ochiladi", "Install it on your phone — open it with one tap")}</p>
         )}
       </div>
       {promptEvent && (
@@ -107,10 +109,10 @@ export function InstallAppBanner() {
           onClick={install}
           className="btn-press flex shrink-0 items-center gap-1.5 rounded-full bg-gold-400 px-3 py-2 text-xs font-bold text-ink-950"
         >
-          <Download size={14} /> O&apos;rnatish
+          <Download size={14} /> {t("O'rnatish", "Install")}
         </button>
       )}
-      <button onClick={dismiss} aria-label="Yopish" className="shrink-0 rounded-full p-1 text-white/60 hover:text-white">
+      <button onClick={dismiss} aria-label={t("Yopish", "Close")} className="shrink-0 rounded-full p-1 text-white/60 hover:text-white">
         <X size={16} />
       </button>
     </div>

@@ -12,19 +12,21 @@ import {
 } from "lucide-react";
 import { logoutAction } from "@/app/actions";
 import { LogoMark } from "./Logo";
+import { useT } from "./LangProvider";
 
 export const NAV_ITEMS = [
-  { href: "/", label: "Bosh sahifa", icon: Home },
-  { href: "/lessons", label: "Darslar", icon: GraduationCap },
-  { href: "/marks", label: "Baholar", icon: ListChecks },
-  { href: "/ranking", label: "Reyting", icon: Trophy },
+  { href: "/", label: "Bosh sahifa", en: "Home", icon: Home },
+  { href: "/lessons", label: "Darslar", en: "Lessons", icon: GraduationCap },
+  { href: "/marks", label: "Baholar", en: "Marks", icon: ListChecks },
+  { href: "/ranking", label: "Reyting", en: "Ranking", icon: Trophy },
 ];
 
 /** O'qituvchi uchun qo'shimcha bo'lim. */
-export const TEACHER_NAV_ITEM = { href: "/teacher", label: "O'qituvchi", icon: Presentation };
+export const TEACHER_NAV_ITEM = { href: "/teacher", label: "O'qituvchi", en: "Teacher", icon: Presentation };
 
 export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
   const pathname = usePathname();
+  const t = useT();
   const items = isTeacher ? [...NAV_ITEMS, TEACHER_NAV_ITEM] : NAV_ITEMS;
 
   return (
@@ -40,7 +42,7 @@ export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
         <LogoMark size={42} className="shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]" />
         <div>
           <p className="font-display text-sm font-bold leading-tight tracking-wide">Avangard English</p>
-          <p className="text-[11px] text-ink-200/70">Ingliz tili maktabi</p>
+          <p className="text-[11px] text-ink-200/70">{t("Ingliz tili maktabi", "English school")}</p>
         </div>
       </div>
 
@@ -63,7 +65,7 @@ export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
                 size={18}
                 className={active ? "text-gold-300" : "transition-colors group-hover:text-gold-300"}
               />
-              {item.label}
+              {t(item.label, item.en)}
             </Link>
           );
         })}
@@ -75,7 +77,7 @@ export function Sidebar({ isTeacher = false }: { isTeacher?: boolean }) {
           className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-200/70 transition-colors duration-200 hover:bg-white/5 hover:text-rose-300"
         >
           <LogOut size={18} />
-          Chiqish
+          {t("Chiqish", "Log out")}
         </button>
       </form>
     </aside>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
+import { getLang } from "@/lib/lang-server";
 
 // Manrope — sarlavhalar uchun zamonaviy, do'stona geometrik shrift; Inter —
 // ekranda o'qish uchun eng qulay matn shriftlaridan biri.
@@ -38,9 +39,10 @@ const THEME_INIT_SCRIPT = `
   } catch (e) {}
 `;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const lang = await getLang();
   return (
-    <html lang="uz" className={`h-full antialiased ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`h-full antialiased ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {/* next/script'ning "beforeInteractive" strategiyasi o'rniga oddiy
             inline <script> ishlatilmoqda — u HTML parse qilinayotganda,

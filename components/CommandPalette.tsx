@@ -11,17 +11,19 @@ import {
   Trophy,
   CornerDownLeft,
 } from "lucide-react";
+import { useT } from "./LangProvider";
 
 const COMMANDS = [
-  { href: "/", label: "Bosh sahifa", icon: Home, keywords: "home dashboard bosh" },
-  { href: "/lessons", label: "Darslar", icon: GraduationCap, keywords: "lessons darslar lugat" },
-  { href: "/marks", label: "Baholar", icon: ListChecks, keywords: "marks baho natija" },
-  { href: "/ranking", label: "Reyting", icon: Trophy, keywords: "ranking reyting" },
-  { href: "/exam", label: "Daraja imtihoni", icon: GraduationCap, keywords: "imtihon exam test" },
+  { href: "/", label: "Bosh sahifa", en: "Home", icon: Home, keywords: "home dashboard bosh" },
+  { href: "/lessons", label: "Darslar", en: "Lessons", icon: GraduationCap, keywords: "lessons darslar lugat vocabulary" },
+  { href: "/marks", label: "Baholar", en: "Marks", icon: ListChecks, keywords: "marks baho natija results" },
+  { href: "/ranking", label: "Reyting", en: "Ranking", icon: Trophy, keywords: "ranking reyting" },
+  { href: "/exam", label: "Daraja imtihoni", en: "Level exam", icon: GraduationCap, keywords: "imtihon exam test level" },
 ];
 
 export function CommandPalette() {
   const router = useRouter();
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
@@ -55,7 +57,7 @@ export function CommandPalette() {
     const q = query.trim().toLowerCase();
     if (!q) return COMMANDS;
     return COMMANDS.filter(
-      (c) => c.label.toLowerCase().includes(q) || c.keywords.includes(q)
+      (c) => c.label.toLowerCase().includes(q) || c.en.toLowerCase().includes(q) || c.keywords.includes(q)
     );
   }, [query]);
 
@@ -83,10 +85,10 @@ export function CommandPalette() {
         type="button"
         onClick={() => setOpen(true)}
         className="group flex items-center gap-2 rounded-full border border-ink-100 bg-white px-3 py-1.5 text-xs text-ink-500 transition-colors hover:border-ink-300 hover:bg-ink-50 dark:border-white/10 dark:bg-white/5 dark:text-ink-200/70 dark:hover:bg-white/10"
-        aria-label="Tezkor qidiruv (Cmd+K)"
+        aria-label={t("Tezkor qidiruv (Cmd+K)", "Quick search (Cmd+K)")}
       >
         <Search size={14} />
-        <span className="hidden sm:inline">Qidirish</span>
+        <span className="hidden sm:inline">{t("Qidirish", "Search")}</span>
         <kbd className="hidden rounded border border-ink-200 bg-ink-50 px-1 text-[10px] font-semibold text-ink-500 sm:inline dark:border-white/10 dark:bg-white/10 dark:text-ink-200/70">
           ⌘K
         </kbd>
@@ -112,7 +114,7 @@ export function CommandPalette() {
                       setActiveIndex(0);
                     }}
                     onKeyDown={onKeyDown}
-                    placeholder="Sahifa qidirish..."
+                    placeholder={t("Sahifa qidirish...", "Search pages...")}
                     className="flex-1 bg-transparent text-sm text-ink-950 outline-none placeholder:text-ink-300 dark:text-ink-50 dark:placeholder:text-ink-500"
                   />
                   <kbd className="rounded border border-ink-200 px-1.5 py-0.5 text-[10px] text-ink-400 dark:border-white/10 dark:text-ink-300/60">
@@ -121,7 +123,7 @@ export function CommandPalette() {
                 </div>
                 <div className="max-h-72 overflow-y-auto p-2">
                   {filtered.length === 0 && (
-                    <p className="px-3 py-6 text-center text-sm text-ink-400">Hech narsa topilmadi.</p>
+                    <p className="px-3 py-6 text-center text-sm text-ink-400">{t("Hech narsa topilmadi.", "Nothing found.")}</p>
                   )}
                   {filtered.map((c, i) => {
                     const Icon = c.icon;
@@ -137,7 +139,7 @@ export function CommandPalette() {
                         }`}
                       >
                         <Icon size={16} className="text-ink-500 dark:text-gold-300" />
-                        {c.label}
+                        {t(c.label, c.en)}
                         {i === activeIndex && <CornerDownLeft size={13} className="ml-auto text-ink-300" />}
                       </button>
                     );

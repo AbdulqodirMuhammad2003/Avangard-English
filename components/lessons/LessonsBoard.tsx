@@ -49,6 +49,8 @@ import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
 import { levelInfo } from "@/lib/levels";
 import { isMediaRef, mediaUrl } from "@/lib/media";
+import { localizeLabel, localizeLockReason } from "@/lib/i18n";
+import { useLang, useT } from "../LangProvider";
 
 type View = "main" | "exercise-run" | "clip";
 type Section = "vocab" | "rule" | "exercises";
@@ -76,11 +78,11 @@ const EXERCISE_KIND_ICONS: Record<ExerciseKind, LucideIcon> = {
   mistake: SearchCheck,
 };
 
-const CLIP_KIND_LABELS: Record<ClipKind, string> = {
-  film: "Film",
-  multfilm: "Multfilm",
-  hujjatli: "Hujjatli film",
-  intervyu: "Intervyu",
+const CLIP_KIND_LABELS: Record<ClipKind, [string, string]> = {
+  film: ["Film", "Film"],
+  multfilm: ["Multfilm", "Cartoon"],
+  hujjatli: ["Hujjatli film", "Documentary"],
+  intervyu: ["Intervyu", "Interviews"],
 };
 
 /** Turli YouTube havola shakllarini (watch?v=, youtu.be/, shorts/) o'rnatib
@@ -150,6 +152,8 @@ export function LessonsBoard({
   previewAll?: boolean;
 }) {
   const router = useRouter();
+  const lang = useLang();
+  const t = useT();
   const searchParams = useSearchParams();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [, startTransition] = useTransition();
@@ -384,7 +388,7 @@ export function LessonsBoard({
     <div className="relative">
       {/* Darajalar yorliqlari (bittadan ko'p ochiq daraja bo'lsa) */}
       {openLevels.length > 1 && (
-        <div role="tablist" aria-label="Darajalar" className="mb-4 inline-flex rounded-full bg-ink-100 p-1 dark:bg-white/5">
+        <div role="tablist" aria-label={t("Darajalar", "Levels")} className="mb-4 inline-flex rounded-full bg-ink-100 p-1 dark:bg-white/5">
           {openLevels.map((level) => {
             const selected = level.code === shownLevel?.code;
             return (
@@ -401,7 +405,7 @@ export function LessonsBoard({
               >
                 {level.code}
                 {level.code === currentLevel?.code ? (
-                  <span className="ml-1 text-xs font-semibold text-azure-600 dark:text-azure-300">· joriy</span>
+                  <span className="ml-1 text-xs font-semibold text-azure-600 dark:text-azure-300">· {t("joriy", "current")}</span>
                 ) : level.order_index < (currentLevel?.order_index ?? 0) ? (
                   // ✓ — faqat o'tilgan (joriydan oldingi) daraja; o'qituvchiga
                   // ochiq keyingi darajalar belgisiz.
@@ -428,7 +432,9 @@ export function LessonsBoard({
                 </span>
               )}
             </p>
-            <p className="text-sm text-ink-600 dark:text-ink-300">{shownLevel.description}</p>
+            <p className="text-sm text-ink-600 dark:text-ink-300">
+              {lang === "en" ? levelInfo(shownLevel.code)?.descriptionEn ?? shownLevel.description : shownLevel.description}
+            </p>
           </div>
         </div>
       )}
@@ -445,7 +451,7 @@ export function LessonsBoard({
               className="btn-press flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-ink-800 shadow-sm ring-1 ring-ink-950/5 transition-colors hover:bg-ink-50 dark:bg-white/5 dark:text-ink-100 dark:ring-white/10 dark:hover:bg-white/10"
             >
               <Download size={14} className="text-azure-600 dark:text-azure-300" />
-              {level.code} qo&apos;llanmasi (PDF)
+              {t(`${level.code} qo'llanmasi (PDF)`, `${level.code} handbook (PDF)`)}
             </a>
           ))}
         </div>
@@ -454,7 +460,7 @@ export function LessonsBoard({
       {visibleUnits.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#161b26] dark:shadow-none">
           <Lock size={28} className="text-ink-200 dark:text-ink-700" />
-          <p className="font-semibold text-ink-700 dark:text-ink-200">Hozircha ochiq darslar yo'q</p>
+          <p className="font-semibold text-ink-700 dark:text-ink-200">{t("Hozircha ochiq darslar yo'q", "No open lessons yet")}</p>
         </div>
       ) : (
         <div>
@@ -507,7 +513,7 @@ export function LessonsBoard({
                       {unit.level_code}
                     </span>
                     <p className="font-display relative mt-3 text-3xl font-bold tracking-tight">
-                      {unit.title}
+                      {localizeLabel(lang, unit.title)}
                     </p>
                     <p className="relative mt-2 text-sm leading-snug text-white/80 line-clamp-3">
                       {unit.subtitle}
@@ -517,7 +523,7 @@ export function LessonsBoard({
                       {unit.locked ? (
                         <span className="flex h-12 items-center gap-2 rounded-full bg-black/25 px-6 text-base font-bold text-white/90 ring-1 ring-inset ring-white/25 backdrop-blur-sm">
                           <LockKeyhole size={20} strokeWidth={2.4} />{" "}
-                          {unit.lock_reason === "Tez orada" ? "Tez orada" : "Yopiq"}
+                          {unit.lock_reason === "Tez orada" ? t("Tez orada", "Coming soon") : t("Yopiq", "Locked")}
                         </span>
                       ) : (
                         <div className="relative h-12 w-full overflow-hidden rounded-full bg-white/90 shadow-lg shadow-black/20">
@@ -534,7 +540,7 @@ export function LessonsBoard({
                         {unit.locked
                           ? unit.lock_reason === "Tez orada"
                             ? ""
-                            : unit.lock_reason
+                            : localizeLockReason(lang, unit.lock_reason ?? "")
                           : unit.date_label}
                       </span>
                     </div>
@@ -547,7 +553,7 @@ export function LessonsBoard({
               onClick={() => scrollToCard(activeCard - 1)}
               disabled={activeCard === 0}
               className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#161b26]/90 dark:text-ink-100"
-              aria-label="Chapga aylantirish"
+              aria-label={t("Chapga aylantirish", "Scroll left")}
             >
               <ChevronLeft size={20} />
             </button>
@@ -555,7 +561,7 @@ export function LessonsBoard({
               onClick={() => scrollToCard(activeCard + 1)}
               disabled={activeCard === items.length - 1}
               className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#161b26]/90 dark:text-ink-100"
-              aria-label="O’ngga aylantirish"
+              aria-label={t("O’ngga aylantirish", "Scroll right")}
             >
               <ChevronRight size={20} />
             </button>
@@ -567,7 +573,7 @@ export function LessonsBoard({
               <button
                 key={item.kind === "unit" ? item.unit.id : `exam-${item.level}`}
                 onClick={() => scrollToCard(i)}
-                aria-label={item.kind === "unit" ? item.unit.title : `${item.level} imtihoni`}
+                aria-label={item.kind === "unit" ? localizeLabel(lang, item.unit.title) : t(`${item.level} imtihoni`, `${item.level} exam`)}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   i === activeCard
                     ? "w-6 bg-gold-400"
@@ -600,7 +606,7 @@ export function LessonsBoard({
                     <ChevronLeft size={18} />
                   </button>
                 ) : null}
-                {openUnit.title}
+                {localizeLabel(lang, openUnit.title)}
               </h2>
               <button onClick={closePanel} className="rounded-full p-1.5 text-ink-500 transition-colors hover:bg-ink-50 dark:text-ink-300 dark:hover:bg-white/10">
                 <X size={20} />
@@ -616,8 +622,8 @@ export function LessonsBoard({
               {view === "main" && (
                 <div className="flex flex-col gap-4">
                   <LessonSection
-                    title="Lug'at"
-                    subtitle={`${openUnit.totalWords} ta so'z`}
+                    title={t("Lug'at", "Vocabulary")}
+                    subtitle={t(`${openUnit.totalWords} ta so'z`, `${openUnit.totalWords} words`)}
                     percent={unitVocabPercent(openUnit)}
                     icon={<BookOpen size={22} />}
                     gradient="from-azure-500 to-azure-900"
@@ -642,14 +648,14 @@ export function LessonsBoard({
                               pct === 100 ? "bg-gold-500" : "bg-mint-500"
                             }`}
                           >
-                            {pct === 100 ? "Tugallandi" : "Faol"}
+                            {pct === 100 ? t("Tugallandi", "Done") : t("Faol", "Active")}
                           </span>
                           {pct === 100 && (
                             <Medal size={26} className="absolute right-2.5 top-2 text-gold-500" />
                           )}
-                          <p className="font-semibold text-ink-950 dark:text-ink-50">{round.title}</p>
+                          <p className="font-semibold text-ink-950 dark:text-ink-50">{localizeLabel(lang, round.title)}</p>
                           <p className="mb-3 mt-0.5 text-xs text-ink-500 dark:text-ink-400">
-                            {round.word_count} ta so'z
+                            {t(`${round.word_count} ta so'z`, `${round.word_count} words`)}
                           </p>
                           <div className="mt-auto flex items-center gap-2">
                             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
@@ -667,8 +673,8 @@ export function LessonsBoard({
 
                   {openUnit.exercises.some((ex) => ex.kind === "rule") && (
                     <LessonSection
-                      title="Qoida"
-                      subtitle="Grammatika sodda tilda + 10 ta test"
+                      title={t("Qoida", "Grammar rule")}
+                      subtitle={t("Grammatika sodda tilda + 10 ta test", "Grammar explained in Uzbek + a 10-question test")}
                       percent={Math.round(
                         openUnit.exercises.filter((ex) => ex.kind === "rule").reduce((s, ex) => s + ex.score_pct, 0) /
                           openUnit.exercises.filter((ex) => ex.kind === "rule").length
@@ -680,7 +686,7 @@ export function LessonsBoard({
                       lockNote={
                         unitVocabDone(openUnit)
                           ? null
-                          : `Qoida lug'at ${VOCAB_PASS_PCT}% ga yetgach ochiladi.`
+                          : t(`Qoida lug'at ${VOCAB_PASS_PCT}% ga yetgach ochiladi.`, `The rule opens when your vocabulary reaches ${VOCAB_PASS_PCT}%.`)
                       }
                       onToggle={() => setOpenSection(openSection === "rule" ? null : "rule")}
                       delay={60}
@@ -697,7 +703,7 @@ export function LessonsBoard({
                             }`}
                           >
                             <span className="absolute left-0 top-0 rounded-br-xl rounded-tl-2xl bg-gold-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                              Qoida
+                              {t("Qoida", "Rule")}
                             </span>
                             {ex.score_pct === 100 ? (
                               <Medal size={26} className="absolute right-2.5 top-2 text-gold-500" />
@@ -708,7 +714,7 @@ export function LessonsBoard({
                               {ex.title.replace(/^Qoida:\s*/, "")}
                             </p>
                             <p className="mb-3 mt-0.5 text-xs text-ink-500 dark:text-ink-400">
-                              Tushuntirish va {ex.question_count} ta test
+                              {t(`Tushuntirish va ${ex.question_count} ta test`, `Explanation and ${ex.question_count} questions`)}
                             </p>
                             <div className="mt-auto flex items-center gap-2">
                               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
@@ -752,35 +758,40 @@ export function LessonsBoard({
                               unitClipUnlocked(openUnit) ? "text-white/75" : "text-ink-500 dark:text-ink-400"
                             }`}
                           >
-                            Inglizcha tomosha
-                            {openUnit.clip_kind ? ` · ${CLIP_KIND_LABELS[openUnit.clip_kind]}` : ""}
+                            {t("Inglizcha tomosha", "Watch in English")}
+                            {openUnit.clip_kind ? ` · ${t(...CLIP_KIND_LABELS[openUnit.clip_kind])}` : ""}
                           </p>
                           <p
                             className={`truncate font-semibold ${
                               unitClipUnlocked(openUnit) ? "" : "text-ink-800 dark:text-ink-100"
                             }`}
                           >
-                            {openUnit.clip_title || "Inglizcha parcha"}
+                            {openUnit.clip_title || t("Inglizcha parcha", "An English clip")}
                           </p>
                         </div>
                         {!unitClipUnlocked(openUnit) && (
                           <span className="rounded-full bg-ink-200/70 px-2.5 py-1 text-xs font-semibold text-ink-600 dark:bg-white/10 dark:text-ink-300">
-                            Yopiq
+                            {t("Yopiq", "Locked")}
                           </span>
                         )}
                       </button>
                       {clipNotice && !unitClipUnlocked(openUnit) && (
                         <p className="-mt-2 animate-fade-up rounded-xl bg-gold-50 px-3 py-2 text-xs text-gold-700 dark:bg-gold-950/40 dark:text-gold-300">
-                          Mashqlarni bajarib bo'lgach, darsni inglizcha film yoki multfilmdan parcha
-                          bilan yakunlaysiz.
+                          {t(
+                            "Mashqlarni bajarib bo'lgach, darsni inglizcha film yoki multfilmdan parcha bilan yakunlaysiz.",
+                            "When you finish the exercises, you end the lesson with a video in English."
+                          )}
                         </p>
                       )}
                     </>
                   )}
 
                   <LessonSection
-                    title="Mashqlar"
-                    subtitle={`${openUnit.exercises.filter((ex) => ex.kind !== "rule").length} ta mashq`}
+                    title={t("Mashqlar", "Exercises")}
+                    subtitle={t(
+                      `${openUnit.exercises.filter((ex) => ex.kind !== "rule").length} ta mashq`,
+                      `${openUnit.exercises.filter((ex) => ex.kind !== "rule").length} exercises`
+                    )}
                     percent={unitExercisePercent(openUnit)}
                     icon={<ListChecks size={22} />}
                     gradient="from-mint-500 to-mint-900"
@@ -788,9 +799,9 @@ export function LessonsBoard({
                     disabled={openUnit.exercises.length === 0}
                     lockNote={
                       !unitVocabDone(openUnit)
-                        ? `Mashqlar lug'at ${VOCAB_PASS_PCT}% ga yetgach ochiladi.`
+                        ? t(`Mashqlar lug'at ${VOCAB_PASS_PCT}% ga yetgach ochiladi.`, `The exercises open when your vocabulary reaches ${VOCAB_PASS_PCT}%.`)
                         : !unitRuleDone(openUnit)
-                          ? `Mashqlar qoida testidan kamida ${RULE_PASS_PCT}% olgach ochiladi.`
+                          ? t(`Mashqlar qoida testidan kamida ${RULE_PASS_PCT}% olgach ochiladi.`, `The exercises open when you get at least ${RULE_PASS_PCT}% in the rule test.`)
                           : null
                     }
                     onToggle={() => setOpenSection(openSection === "exercises" ? null : "exercises")}
@@ -820,7 +831,7 @@ export function LessonsBoard({
                             {i + 1}. {ex.title}
                           </p>
                           <p className="mb-3 mt-0.5 text-xs text-ink-500 dark:text-ink-400">
-                            {ex.question_count} ta savol
+                            {t(`${ex.question_count} ta savol`, `${ex.question_count} questions`)}
                           </p>
                           <div className="mt-auto flex items-center gap-2">
                             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
@@ -861,7 +872,7 @@ export function LessonsBoard({
                   <div>
                     {openUnit.clip_kind && (
                       <span className="mb-1 inline-block rounded-full bg-gold-100 px-2 py-0.5 text-[10px] font-bold uppercase text-gold-700 dark:bg-gold-950/40 dark:text-gold-300">
-                        {CLIP_KIND_LABELS[openUnit.clip_kind]}
+                        {t(...CLIP_KIND_LABELS[openUnit.clip_kind])}
                       </span>
                     )}
                     <p className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">
@@ -889,7 +900,7 @@ export function LessonsBoard({
                     if (!embedUrl) {
                       return (
                         <p className="text-sm text-ink-600/70 dark:text-ink-300/60">
-                          Video havolasi noto'g'ri formatda.
+                          {t("Video havolasi noto'g'ri formatda.", "The video link is not valid.")}
                         </p>
                       );
                     }
@@ -897,7 +908,7 @@ export function LessonsBoard({
                       <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-md">
                         <iframe
                           src={embedUrl}
-                          title={openUnit.clip_title || `${openUnit.title} — inglizcha parcha`}
+                          title={openUnit.clip_title || t(`${openUnit.title} — inglizcha parcha`, "An English clip")}
                           className="h-full w-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
@@ -906,8 +917,10 @@ export function LessonsBoard({
                     );
                   })()}
                   <p className="rounded-xl bg-ink-50 px-3 py-2 text-xs text-ink-600 dark:bg-white/5 dark:text-ink-300">
-                    Hamma so'zni tushunish shart emas. Bu darsda o'rgangan so'zlaringizni jonli
-                    inglizcha nutqda eshitishga harakat qiling.
+                    {t(
+                      "Hamma so'zni tushunish shart emas. Bu darsda o'rgangan so'zlaringizni jonli inglizcha nutqda eshitishga harakat qiling.",
+                      "You don't need to understand every word. Try to hear the words from this lesson in real English."
+                    )}
                   </p>
                 </div>
               )}
@@ -948,6 +961,7 @@ function ExamCarouselCard({
   delay: number;
   onClick: () => void;
 }) {
+  const t = useT();
   const current = level === exam.level;
   const passed = !current || exam.passed;
   const open = current && exam.open && !exam.passed;
@@ -972,25 +986,31 @@ function ExamCarouselCard({
       <span className="relative mt-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
         {passed ? <Trophy size={28} /> : <GraduationCap size={28} />}
       </span>
-      <p className="font-display relative mt-3 text-2xl font-bold tracking-tight">Daraja imtihoni</p>
-      <p className="relative mt-1 text-sm leading-snug text-white/80">40 savol · 40 daqiqa · o'tish bali 80%</p>
+      <p className="font-display relative mt-3 text-2xl font-bold tracking-tight">{t("Daraja imtihoni", "Level exam")}</p>
+      <p className="relative mt-1 text-sm leading-snug text-white/80">
+        {t("40 savol · 40 daqiqa · o'tish bali 80%", "40 questions · 40 minutes · pass mark 80%")}
+      </p>
 
       <div className="relative mt-auto flex w-full flex-col items-center gap-2">
         {passed ? (
           <span className="flex h-12 items-center gap-2 rounded-full bg-white/90 px-6 text-base font-bold text-gold-700 shadow-lg shadow-black/20">
-            <Trophy size={20} /> Topshirilgan
+            <Trophy size={20} /> {t("Topshirilgan", "Passed")}
           </span>
         ) : open ? (
           <span className="flex h-12 items-center rounded-full bg-white/90 px-6 text-base font-bold text-azure-800 shadow-lg shadow-black/20">
-            Imtihonga o'tish
+            {t("Imtihonga o'tish", "Go to the exam")}
           </span>
         ) : (
           <span className="flex h-12 items-center gap-2 rounded-full bg-black/25 px-6 text-base font-bold text-white/90 ring-1 ring-inset ring-white/25 backdrop-blur-sm">
-            <LockKeyhole size={20} strokeWidth={2.4} /> Yopiq
+            <LockKeyhole size={20} strokeWidth={2.4} /> {t("Yopiq", "Locked")}
           </span>
         )}
         <span className="min-h-5 text-center text-xs font-semibold leading-tight text-white/85">
-          {passed ? "Keyingi daraja ochilgan" : open ? exam.note : "Barcha darslarni 80% ga yetkazing"}
+          {passed
+            ? t("Keyingi daraja ochilgan", "The next level is open")
+            : open
+            ? exam.note
+            : t("Barcha darslarni 80% ga yetkazing", "Get all lessons to 80%")}
         </span>
       </div>
     </button>

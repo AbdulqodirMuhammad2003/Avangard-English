@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { sql } from "@/lib/db";
+import { getT } from "@/lib/lang-server";
 import {
   getExerciseQuestions,
   getUnitWords,
@@ -256,23 +257,24 @@ export async function updateProfileAction(
   formData: FormData
 ): Promise<ProfileState> {
   const userId = await requireUserId();
+  const t = await getT();
 
   const name = String(formData.get("name") || "").trim();
   if (!name) {
-    return { error: "Ism kiritilishi shart." };
+    return { error: t("Ism kiritilishi shart.", "Please enter your name.") };
   }
   if (name.length > 60) {
-    return { error: "Ism juda uzun (60 belgidan oshmasin)." };
+    return { error: t("Ism juda uzun (60 belgidan oshmasin).", "The name is too long (60 characters max).") };
   }
 
   const avatar = formData.get("avatar");
 
   if (avatar instanceof File && avatar.size > 0) {
     if (!avatar.type.startsWith("image/")) {
-      return { error: "Faqat rasm fayli yuklash mumkin." };
+      return { error: t("Faqat rasm fayli yuklash mumkin.", "You can only upload an image file.") };
     }
     if (avatar.size > MAX_AVATAR_BYTES) {
-      return { error: "Rasm hajmi 2MB dan oshmasligi kerak." };
+      return { error: t("Rasm hajmi 2MB dan oshmasligi kerak.", "The image must be 2 MB or smaller.") };
     }
     const buf = Buffer.from(await avatar.arrayBuffer());
     const dataUrl = `data:${avatar.type};base64,${buf.toString("base64")}`;

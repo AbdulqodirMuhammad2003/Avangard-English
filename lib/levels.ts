@@ -12,6 +12,8 @@ export interface LevelInfo {
   /** Taxminiy IELTS bali, masalan "4.0–5.0". */
   ielts: string;
   description: string;
+  /** Inglizcha tavsif (A2 va undan yuqori darajadagi o'quvchilar uchun). */
+  descriptionEn: string;
 }
 
 export const LEVEL_INFO: LevelInfo[] = [
@@ -21,6 +23,7 @@ export const LEVEL_INFO: LevelInfo[] = [
     en: "Beginner",
     ielts: "2.0–3.0",
     description: "Ingliz tilini noldan boshlaymiz: alifbo, salomlashish, oila, sonlar va kundalik so'zlar.",
+    descriptionEn: "English from zero: the alphabet, greetings, family, numbers and everyday words.",
   },
   {
     code: "A2",
@@ -28,6 +31,7 @@ export const LEVEL_INFO: LevelInfo[] = [
     en: "Elementary",
     ielts: "3.0–4.0",
     description: "Oddiy suhbatlar, o'tgan va kelasi zamon, kengroq so'z boyligi.",
+    descriptionEn: "Simple conversations, the past and the future, and a bigger vocabulary.",
   },
   {
     code: "B1",
@@ -35,6 +39,7 @@ export const LEVEL_INFO: LevelInfo[] = [
     en: "Intermediate",
     ielts: "4.0–5.0",
     description: "Murakkabroq grammatika va erkin muloqot ko'nikmalari.",
+    descriptionEn: "More complex grammar and the skills to speak freely.",
   },
   {
     code: "B2",
@@ -42,6 +47,7 @@ export const LEVEL_INFO: LevelInfo[] = [
     en: "Upper-Intermediate",
     ielts: "5.5–6.5",
     description: "Ilg'or grammatika, rasmiy nutq va o'z fikrini asoslab bayon qilish.",
+    descriptionEn: "Advanced grammar, formal speech and giving reasons for your opinions.",
   },
   {
     code: "IELTS",
@@ -49,6 +55,7 @@ export const LEVEL_INFO: LevelInfo[] = [
     en: "IELTS Preparation",
     ielts: "6.0–7.5",
     description: "Imtihonning to'rt qismi: Listening, Reading, Writing va Speaking strategiyalari.",
+    descriptionEn: "All four parts of the exam: strategies for Listening, Reading, Writing and Speaking.",
   },
 ];
 

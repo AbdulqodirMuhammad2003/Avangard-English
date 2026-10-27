@@ -21,9 +21,12 @@ import {
   pronunciationTargets,
   speak,
   SPEECH_ERRORS,
+  SPEECH_ERRORS_EN,
   SPEECH_LANG,
 } from "@/lib/english-speech";
 import { formatTranscription } from "@/lib/transcription";
+import { localizeLabel, localizePos } from "@/lib/i18n";
+import { useLang, useT } from "../LangProvider";
 
 // ---------- Yordamchi funksiyalar ----------
 
@@ -47,6 +50,7 @@ function StageNext({
   answer: string;
   onNext: () => void;
 }) {
+  const t = useT();
   const [sent, setSent] = useState(false);
   return (
     <div className="flex animate-fade-up flex-col gap-3">
@@ -59,10 +63,10 @@ function StageNext({
       >
         <p className="font-bold">
           {correct ? (
-            "To'g'ri!"
+            t("To'g'ri!", "Correct!")
           ) : (
             <>
-              To'g'ri javob: <span lang="en">{answer}</span>
+              {t("To'g'ri javob:", "Correct answer:")} <span lang="en">{answer}</span>
             </>
           )}
         </p>
@@ -76,7 +80,7 @@ function StageNext({
         }}
         className="btn-press rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500"
       >
-        Keyingisi
+        {t("Keyingisi", "Next")}
       </button>
     </div>
   );
@@ -110,11 +114,11 @@ function splitSentenceOnWord(sentence: string, word: string) {
   };
 }
 
-const STAGES: { key: VocabStage; label: string; hint: string }[] = [
-  { key: "spelling", label: "Imlo", hint: "So'zni harflardan tering" },
-  { key: "definition", label: "Ta'rif", hint: "Ta'rifga mos so'zni tanlang" },
-  { key: "pronunciation", label: "Talaffuz", hint: "So'zni talaffuz qiling" },
-  { key: "sentence", label: "Gap", hint: "Bo'sh joyni to'ldiring" },
+const STAGES: { key: VocabStage; label: string; en: string }[] = [
+  { key: "spelling", label: "Imlo", en: "Spelling" },
+  { key: "definition", label: "Ta'rif", en: "Meaning" },
+  { key: "pronunciation", label: "Talaffuz", en: "Pronunciation" },
+  { key: "sentence", label: "Gap", en: "Sentence" },
 ];
 
 type QueueItem = { word: VocabWord; attempt: number };
@@ -142,6 +146,8 @@ export function VocabRoundFlow({
   showPictures?: boolean;
   onClose: () => void;
 }) {
+  const t = useT();
+  const lang = useLang();
   const [mounted, setMounted] = useState(false);
   // Saqlanayotgan javoblar: bosqich yopilganda hammasi tugashi kutiladi,
   // shundan keyingina sahifa yangilanadi (aks holda foiz eski holicha qoladi).
@@ -286,23 +292,23 @@ export function VocabRoundFlow({
       <div className="flex items-center justify-between border-b border-ink-900/10 px-5 py-4 dark:border-white/10 sm:px-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">
-            {round.title}
+            {localizeLabel(lang, round.title)}
           </p>
           <p className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">
             {phase === "learn" || phase === "learn-summary"
               ? resuming
-                ? `Qolgan so'zlar (${learnWords.length} ta)`
-                : "So'zlarni o'rganish"
+                ? t(`Qolgan so'zlar (${learnWords.length} ta)`, `Words left (${learnWords.length})`)
+                : t("So'zlarni o'rganish", "Learn the words")
               : phase === "check"
-              ? STAGES[stageIdx].label + " bosqichi"
-              : "Natija"}
+              ? t(STAGES[stageIdx].label + " bosqichi", STAGES[stageIdx].en)
+              : t("Natija", "Result")}
           </p>
         </div>
         <button
           onClick={close}
           disabled={closing}
           className="flex h-10 w-10 items-center justify-center rounded-full bg-white/70 disabled:animate-pulse text-ink-600 shadow-sm transition-colors hover:bg-white dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/15"
-          aria-label="Yopish"
+          aria-label={t("Yopish", "Close")}
         >
           <X size={20} />
         </button>
@@ -349,12 +355,18 @@ export function VocabRoundFlow({
             </div>
             <div>
               <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">
-                Ajoyib!
+                {t("Ajoyib!", "Great!")}
               </p>
               <p className="mt-1 text-sm text-ink-700/70 dark:text-ink-300/60">
                 {resuming
-                  ? `Siz hali o'rganilmagan ${learnWords.length} ta so'zni qayta ko'rib chiqdingiz. Endi faqat shularni tekshiramiz.`
-                  : `Siz ${learnWords.length} ta so'zni ko'rib chiqdingiz. Endi bilimingizni tekshirib ko'ramizmi?`}
+                  ? t(
+                      `Siz hali o'rganilmagan ${learnWords.length} ta so'zni qayta ko'rib chiqdingiz. Endi faqat shularni tekshiramiz.`,
+                      `You looked at the ${learnWords.length} words you haven't learned yet. Now we'll check only these.`
+                    )
+                  : t(
+                      `Siz ${learnWords.length} ta so'zni ko'rib chiqdingiz. Endi bilimingizni tekshirib ko'ramizmi?`,
+                      `You looked at ${learnWords.length} words. Shall we check what you know now?`
+                    )}
               </p>
             </div>
             <div className="mt-2 flex flex-col gap-2 sm:flex-row">
@@ -365,13 +377,13 @@ export function VocabRoundFlow({
                 }}
                 className="btn-press flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10"
               >
-                <RotateCcw size={16} /> Qayta o'rganish
+                <RotateCcw size={16} /> {t("Qayta o'rganish", "Learn again")}
               </button>
               <button
                 onClick={startChecking}
                 className="btn-press flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-azure-600 to-azure-700 px-6 py-2.5 text-sm font-bold text-white shadow-sm shadow-azure-900/30 hover:from-azure-500 hover:to-azure-600"
               >
-                Tekshiruvni boshlash <ArrowRight size={16} />
+                {t("Tekshiruvni boshlash", "Start the check")} <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -404,7 +416,7 @@ export function VocabRoundFlow({
         {phase === "mistakes-review" && mistakes[mistakeIdx] && (
           <div className="flex w-full flex-col items-center gap-3">
             <p className="text-xs font-semibold uppercase tracking-wide text-rose-600 dark:text-rose-300">
-              Oxirgi imkoniyat · {mistakeIdx + 1} / {mistakes.length}
+              {t("Oxirgi imkoniyat", "Last chance")} · {mistakeIdx + 1} / {mistakes.length}
             </p>
             <StageQuestion
               key={`mistake-${mistakes[mistakeIdx].word.id}-${mistakes[mistakeIdx].stage}-${mistakeIdx}`}
@@ -425,12 +437,15 @@ export function VocabRoundFlow({
             </div>
             <div>
               <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">
-                Round yakunlandi
+                {t("Round yakunlandi", "Round finished")}
               </p>
               <p className="mt-1 text-sm text-ink-700/70 dark:text-ink-300/60">
-                {fixedMistakes} ta xato tuzatildi
+                {t(`${fixedMistakes} ta xato tuzatildi`, `You fixed ${fixedMistakes} mistakes`)}
                 {mistakes.length - fixedMistakes > 0
-                  ? `, ${mistakes.length - fixedMistakes} tasi keyingi safar takrorlanadi.`
+                  ? t(
+                      `, ${mistakes.length - fixedMistakes} tasi keyingi safar takrorlanadi.`,
+                      `; ${mistakes.length - fixedMistakes} will come back next time.`
+                    )
                   : "."}
               </p>
             </div>
@@ -439,7 +454,7 @@ export function VocabRoundFlow({
               disabled={closing}
               className="btn-press rounded-full bg-gradient-to-b from-azure-600 to-azure-700 px-6 py-2.5 text-sm font-bold text-white shadow-sm shadow-azure-900/30 hover:from-azure-500 hover:to-azure-600 disabled:opacity-70"
             >
-              {closing ? "Saqlanmoqda…" : "Tugatish"}
+              {closing ? t("Saqlanmoqda…", "Saving…") : t("Tugatish", "Finish")}
             </button>
           </div>
         )}
@@ -464,6 +479,8 @@ function LearnCard({
   total: number;
   onNext: () => void;
 }) {
+  const t = useT();
+  const lang = useLang();
   if (!word) return null;
   return (
     <div
@@ -471,7 +488,7 @@ function LearnCard({
       className="flex w-full max-w-md animate-pop-in flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none"
     >
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
-        So'z {index + 1} / {total}
+        {t("So'z", "Word")} {index + 1} / {total}
       </p>
       <div className="flex h-36 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-6xl dark:from-white/5 dark:to-gold-950/30">
         {word.emoji}
@@ -480,7 +497,7 @@ function LearnCard({
         <button
           onClick={() => speak(word.word)}
           className="btn-press flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-sm shadow-gold-700/30 hover:bg-gold-400"
-          aria-label="Talaffuzni eshitish"
+          aria-label={t("Talaffuzni eshitish", "Listen to the pronunciation")}
         >
           <Volume2 size={18} />
         </button>
@@ -494,15 +511,15 @@ function LearnCard({
         </div>
       </div>
       <div className="rounded-2xl bg-ink-50/70 p-4 dark:bg-white/5">
-        <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">{word.part_of_speech}</p>
+        <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">{localizePos(lang, word.part_of_speech)}</p>
         <p className="mb-3 text-base font-bold text-ink-900 dark:text-ink-50">
           {word.translation_uz}
         </p>
-        <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">Izoh:</p>
+        <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">{t("Izoh:", "Meaning:")}</p>
         <p className="mb-3 text-sm text-ink-700 dark:text-ink-200/80">{word.definition}</p>
         {word.example_sentence && (
           <>
-            <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">Misol:</p>
+            <p className="mb-1 text-xs text-ink-500 dark:text-ink-400">{t("Misol:", "Example:")}</p>
             <p className="text-sm italic text-ink-700 dark:text-ink-200/80">
               {word.example_sentence}
             </p>
@@ -518,7 +535,7 @@ function LearnCard({
         onClick={onNext}
         className="btn-press flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-azure-600 to-azure-700 py-2.5 text-sm font-bold text-white shadow-sm shadow-azure-900/30 hover:from-azure-500 hover:to-azure-600"
       >
-        {index + 1 < total ? "Keyingisi" : "Tayyor"} <ArrowRight size={16} />
+        {index + 1 < total ? t("Keyingisi", "Next") : t("Tayyor", "Done")} <ArrowRight size={16} />
       </button>
     </div>
   );
@@ -537,6 +554,7 @@ function RoundSummary({
   onReview: () => void;
   onFinish: () => void;
 }) {
+  const t = useT();
   return (
     <div className="flex animate-pop-in flex-col items-center gap-4 text-center">
       <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-mint-600 to-mint-900 text-white shadow-lg shadow-mint-900/30">
@@ -544,12 +562,15 @@ function RoundSummary({
       </div>
       <div>
         <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">
-          Round yakunlandi!
+          {t("Round yakunlandi!", "Round finished!")}
         </p>
         <p className="mt-1 text-sm text-ink-700/70 dark:text-ink-300/60">
           {mistakeCount > 0
-            ? `${mistakeCount} ta savolda ikkinchi marta xato qildingiz — ularni qayta ko'rib chiqishingiz mumkin.`
-            : "Barcha savollarga muvaffaqiyatli javob berdingiz."}
+            ? t(
+                `${mistakeCount} ta savolda ikkinchi marta xato qildingiz — ularni qayta ko'rib chiqishingiz mumkin.`,
+                `You made a mistake twice in ${mistakeCount} questions — you can look at them again.`
+              )
+            : t("Barcha savollarga muvaffaqiyatli javob berdingiz.", "You answered all the questions correctly.")}
         </p>
       </div>
       <div className="mt-2 flex flex-col gap-2 sm:flex-row">
@@ -558,14 +579,14 @@ function RoundSummary({
             onClick={onReview}
             className="btn-press flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-rose-600 to-rose-800 px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-rose-900/30 hover:from-rose-500 hover:to-rose-700"
           >
-            Xatolarni qayta ko'rish
+            {t("Xatolarni qayta ko'rish", "Look at the mistakes again")}
           </button>
         )}
         <button
           onClick={onFinish}
           className="btn-press rounded-full border border-ink-200 bg-white px-6 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10"
         >
-          Yakunlash
+          {t("Yakunlash", "Finish")}
         </button>
       </div>
     </div>
@@ -589,10 +610,11 @@ function StageQuestion({
   showPicture: boolean;
   onResult: (correct: boolean) => void;
 }) {
+  const t = useT();
   return (
     <div className="flex w-full max-w-md flex-col gap-3">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
-        Qolgan savollar: {remaining}
+        {t("Qolgan savollar:", "Questions left:")} {remaining}
       </p>
       {stage === "spelling" && <SpellingStage word={word} onResult={onResult} />}
       {stage === "definition" && (
@@ -618,6 +640,7 @@ function SpellingStage({
   word: VocabWord;
   onResult: (correct: boolean) => void;
 }) {
+  const t = useT();
   const target = word.word;
   const letterSlots = useMemo(() => target.split(""), [target]);
   // Yoziladigan belgilar soni (bo'shliqlarsiz) — kataklar shuncha.
@@ -760,7 +783,7 @@ function SpellingStage({
               }
             }}
             autoFocus
-            aria-label="So'zni inglizcha yozing"
+            aria-label={t("So'zni inglizcha yozing", "Write the word in English")}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -772,7 +795,7 @@ function SpellingStage({
       </div>
 
       <p className="text-center text-xs text-ink-500 dark:text-ink-400">
-        So&apos;zni inglizcha yozing · {letterCount} ta belgi
+        {t(`So'zni inglizcha yozing · ${letterCount} ta belgi`, `Write the word in English · ${letterCount} letters`)}
       </p>
 
       <button
@@ -780,7 +803,7 @@ function SpellingStage({
         disabled={checked !== null || typed.length === 0}
         className="mx-auto flex items-center gap-1.5 text-xs font-semibold text-ink-500 hover:text-ink-700 disabled:opacity-40 dark:text-ink-400 dark:hover:text-ink-200"
       >
-        <Delete size={14} /> Oxirgi harfni o'chirish
+        <Delete size={14} /> {t("Oxirgi harfni o'chirish", "Delete the last letter")}
       </button>
       {checked === null ? (
         <button
@@ -808,6 +831,7 @@ function DefinitionStage({
   allWords: VocabWord[];
   onResult: (correct: boolean) => void;
 }) {
+  const t = useT();
   // Variantlar savol ochilganda bir marta aralashtiriladi. useMemo emas:
   // javob saqlangach sahifa ma'lumoti yangilanadi (revalidatePath) va
   // `allWords` yangi massiv bo'lib keladi — bu variantlarni savol ustida
@@ -840,7 +864,7 @@ function DefinitionStage({
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
-        Ta'rifga mos so'zni tanlang
+        {t("Ta'rifga mos so'zni tanlang", "Choose the word for this meaning")}
       </p>
       <p className="rounded-2xl bg-ink-50/70 p-4 text-center text-base font-semibold text-ink-900 dark:bg-white/5 dark:text-ink-50">
         {word.definition}
@@ -884,6 +908,8 @@ function PronunciationStage({
   word: VocabWord;
   onResult: (correct: boolean) => void;
 }) {
+  const t = useT();
+  const lang = useLang();
   const [listening, setListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [checked, setChecked] = useState<boolean | null>(null);
@@ -953,12 +979,15 @@ function PronunciationStage({
     recog.onerror = (e: any) => {
       setListening(false);
       if (e.error === "aborted") return;
-      setError(SPEECH_ERRORS[e.error] ?? "Ovozni tanib bo'lmadi. Qayta urinib ko'ring.");
+      setError(
+        (lang === "en" ? SPEECH_ERRORS_EN : SPEECH_ERRORS)[e.error] ??
+          t("Ovozni tanib bo'lmadi. Qayta urinib ko'ring.", "We couldn't recognise your voice. Try again.")
+      );
     };
     recog.onend = () => {
       setListening(false);
       if (!gotResultRef.current) {
-        setError((prev) => prev ?? SPEECH_ERRORS["no-speech"]);
+        setError((prev) => prev ?? (lang === "en" ? SPEECH_ERRORS_EN : SPEECH_ERRORS)["no-speech"]);
       }
     };
     recognitionRef.current = recog;
@@ -967,25 +996,26 @@ function PronunciationStage({
       recog.start();
     } catch {
       setListening(false);
-      setError("Mikrofonni ishga tushirib bo'lmadi. Sahifani yangilab, qayta urinib ko'ring.");
+      setError(t("Mikrofonni ishga tushirib bo'lmadi. Sahifani yangilab, qayta urinib ko'ring.", "Couldn't start the microphone. Reload the page and try again."));
     }
   }
 
   const retriesLeft = MAX_PRONUNCIATION_ATTEMPTS - attempts;
   // Texnik xato (ruxsat, tarmoq, brauzer) bo'lsa, o'quvchi to'xtab qolmasligi
   // uchun natijani o'zi belgilash imkoni ham beriladi.
-  const showManual = unsupported || (error !== null && !error.startsWith("Ovoz eshitilmadi"));
+  const showManual =
+    unsupported || (error !== null && error !== SPEECH_ERRORS["no-speech"] && error !== SPEECH_ERRORS_EN["no-speech"]);
 
   return (
     <div className="flex animate-pop-in flex-col items-center gap-5 rounded-3xl bg-white p-6 text-center shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
       <p className="text-xs font-semibold text-ink-500 dark:text-ink-400">
-        So'zni to'g'ri talaffuz qiling
+        {t("So'zni to'g'ri talaffuz qiling", "Say the word correctly")}
       </p>
 
       <button
         onClick={() => speak(targets[0] ?? word.word)}
         className="btn-press flex h-11 w-11 items-center justify-center rounded-full bg-gold-500 text-white shadow-sm shadow-gold-700/30 hover:bg-gold-400"
-        aria-label="Namunani eshitish"
+        aria-label={t("Namunani eshitish", "Listen to the example")}
       >
         <Volume2 size={20} />
       </button>
@@ -1011,22 +1041,25 @@ function PronunciationStage({
                 ? "animate-pulse bg-gold-500 shadow-gold-600/40"
                 : "bg-gradient-to-b from-azure-600 to-azure-800 shadow-azure-900/30 hover:from-azure-500 hover:to-azure-700"
             }`}
-            aria-label={listening ? "Yozishni to'xtatish" : "Yozib olish"}
+            aria-label={listening ? t("Yozishni to'xtatish", "Stop recording") : t("Yozib olish", "Record")}
           >
             {checked === true ? <Check size={30} /> : <Mic size={30} />}
           </button>
           <p className="min-h-[2.5rem] max-w-xs text-xs text-ink-500 dark:text-ink-400">
             {listening
-              ? "Tinglanmoqda… Gapirib bo'lgach, tugmani yana bossangiz ham bo'ladi."
+              ? t("Tinglanmoqda… Gapirib bo'lgach, tugmani yana bossangiz ham bo'ladi.", "Listening… When you finish, you can tap the button again.")
               : checked === true
-              ? `To'g'ri! ${transcript ? `Eshitildi: “${transcript}”` : ""}`
+              ? t(`To'g'ri! ${transcript ? `Eshitildi: “${transcript}”` : ""}`, `Correct! ${transcript ? `We heard: “${transcript}”` : ""}`)
               : checked === false
-              ? `Keyingi safar albatta chiqadi. Eshitildi: “${transcript}”`
+              ? t(`Keyingi safar albatta chiqadi. Eshitildi: “${transcript}”`, `You'll get it next time. We heard: “${transcript}”`)
               : error
               ? error
               : transcript
-              ? `Eshitildi: “${transcript}”. Yana urinib ko'ring (${retriesLeft} ta imkoniyat qoldi).`
-              : "Mikrofon tugmasini bosib, so'zni aniq ayting"}
+              ? t(
+                  `Eshitildi: “${transcript}”. Yana urinib ko'ring (${retriesLeft} ta imkoniyat qoldi).`,
+                  `We heard: “${transcript}”. Try again (${retriesLeft} tries left).`
+                )
+              : t("Mikrofon tugmasini bosib, so'zni aniq ayting", "Tap the microphone and say the word clearly")}
           </p>
         </>
       )}
@@ -1035,9 +1068,12 @@ function PronunciationStage({
         <div className="flex flex-col items-center gap-2">
           <p className="max-w-xs text-xs text-ink-500 dark:text-ink-400">
             {unsupported
-              ? "Brauzeringiz ovozni tanib olishni qo'llab-quvvatlamaydi (Chrome yoki Edge tavsiya etiladi). "
+              ? t(
+                  "Brauzeringiz ovozni tanib olishni qo'llab-quvvatlamaydi (Chrome yoki Edge tavsiya etiladi). ",
+                  "Your browser can't recognise speech (try Chrome or Edge). "
+                )
               : ""}
-            So'zni ovoz chiqarib ayting, so'ng natijani o'zingiz belgilang.
+            {t("So'zni ovoz chiqarib ayting, so'ng natijani o'zingiz belgilang.", "Say the word out loud, then mark the result yourself.")}
           </p>
           <div className="flex gap-2">
             <button
@@ -1045,14 +1081,14 @@ function PronunciationStage({
               disabled={checked !== null}
               className="btn-press rounded-full bg-azure-600 px-4 py-2 text-xs font-bold text-white hover:bg-azure-500"
             >
-              To'g'ri aytdim
+              {t("To'g'ri aytdim", "I said it right")}
             </button>
             <button
               onClick={() => finish(false)}
               disabled={checked !== null}
               className="btn-press rounded-full bg-rose-600 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500"
             >
-              Xato qildim
+              {t("Xato qildim", "I made a mistake")}
             </button>
           </div>
         </div>
@@ -1073,6 +1109,7 @@ function SentenceStage({
   showPicture: boolean;
   onResult: (correct: boolean) => void;
 }) {
+  const t = useT();
   const { before, after, found } = useMemo(
     () => splitSentenceOnWord(word.example_sentence, word.word),
     [word.example_sentence, word.word]
@@ -1088,7 +1125,7 @@ function SentenceStage({
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
-        Bo'sh joyga mos so'zni yozing
+        {t("Bo'sh joyga mos so'zni yozing", "Write the missing word")}
       </p>
       {showPicture && (
         <div className="flex h-24 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
@@ -1119,7 +1156,7 @@ function SentenceStage({
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && submit()}
         disabled={checked !== null}
-        placeholder="So'zni yozing…"
+        placeholder={t("So'zni yozing…", "Write the word…")}
         className={`w-full rounded-xl border-2 px-4 py-2.5 text-center text-sm font-semibold outline-none transition-colors ${
           checked === true
             ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"

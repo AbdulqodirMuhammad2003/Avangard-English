@@ -1,6 +1,8 @@
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";
+import { getLang } from "@/lib/lang-server";
+import { localizeLabel, translator, type Lang, type Translate } from "@/lib/i18n";
 
 /** Dars natijasi doirasining rangi: 80%+ — yashil, 50–79% — sariq, undan past — qizil. */
 function cellColor(pct: number) {
@@ -19,12 +21,12 @@ type Student = Board["students"][number];
 
 /** Daraja imtihoni natijasi: o'quvchining o'zida foiz, boshqalarda faqat
  *  o'tdi (✓) / o'tmadi (✗); topshirilmagan bo'lsa — «—». */
-function ExamBadge({ exam }: { exam: Student["exam"] }) {
+function ExamBadge({ exam, t }: { exam: Student["exam"]; t: Translate }) {
   if (!exam.attempted) return <span className="text-ink-300 dark:text-ink-600">—</span>;
   if (exam.pct !== null) {
     return (
       <span
-        title={exam.passed ? "Imtihondan o'tgan" : "Imtihondan o'tmagan"}
+        title={exam.passed ? t("Imtihondan o'tgan", "Passed the exam") : t("Imtihondan o'tmagan", "Didn't pass the exam")}
         className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-1.5 text-xs font-bold ${cellColor(exam.pct)}`}
       >
         {exam.pct}
@@ -33,7 +35,7 @@ function ExamBadge({ exam }: { exam: Student["exam"] }) {
   }
   return (
     <span
-      title={exam.passed ? "Imtihondan o'tgan" : "Imtihondan o'tmagan"}
+      title={exam.passed ? t("Imtihondan o'tgan", "Passed the exam") : t("Imtihondan o'tmagan", "Didn't pass the exam")}
       className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-base font-bold ${
         exam.passed ? "bg-mint-500 text-white" : "bg-rose-500 text-white"
       }`}
@@ -45,7 +47,17 @@ function ExamBadge({ exam }: { exam: Student["exam"] }) {
 
 /** Telefon uchun o'quvchi kartasi: darslar raqamlangan kataklar to'rida —
  *  gorizontal aylantirishsiz hammasi bir qarashda ko'rinadi. */
-function StudentCard({ student, units, rank }: { student: Student; units: Board["units"]; rank: number }) {
+function StudentCard({
+  student,
+  units,
+  rank,
+  t,
+}: {
+  student: Student;
+  units: Board["units"];
+  rank: number;
+  t: Translate;
+}) {
   const started = student.percents.filter((p) => p !== null).length;
   const done = student.percents.filter((p) => p !== null && p >= 80).length;
   return (
@@ -64,12 +76,14 @@ function StudentCard({ student, units, rank }: { student: Student; units: Board[
             {student.name}
             {student.is_current_user && (
               <span className="ml-1.5 rounded-full bg-gold-400 px-2 py-0.5 align-middle text-[10px] font-bold text-ink-950">
-                siz
+                {t("siz", "you")}
               </span>
             )}
           </p>
           <p className="text-xs text-ink-500 dark:text-ink-400">
-            {started === 0 ? "Hali boshlanmagan" : `${started} ta dars boshlangan · ${done} tasi 80%+`}
+            {started === 0
+              ? t("Hali boshlanmagan", "Not started yet")
+              : t(`${started} ta dars boshlangan · ${done} tasi 80%+`, `${started} lessons started · ${done} at 80%+`)}
           </p>
         </div>
       </div>
@@ -93,21 +107,21 @@ function StudentCard({ student, units, rank }: { student: Student; units: Board[
       </div>
 
       <div className="mt-3 flex items-center justify-between rounded-xl bg-ink-50/70 px-3 py-2 dark:bg-white/5">
-        <span className="text-xs font-semibold text-ink-600 dark:text-ink-300">Daraja imtihoni</span>
-        <ExamBadge exam={student.exam} />
+        <span className="text-xs font-semibold text-ink-600 dark:text-ink-300">{t("Daraja imtihoni", "Level exam")}</span>
+        <ExamBadge exam={student.exam} t={t} />
       </div>
     </li>
   );
 }
 
-function Legend() {
+function Legend({ t }: { t: Translate }) {
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-500 dark:text-ink-400">
       <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-mint-500" /> 80%+</span>
       <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-gold-400" /> 50–79%</span>
-      <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> 50% dan past</span>
-      <span className="flex items-center gap-1.5"><span className="text-ink-300 dark:text-ink-600">—</span> boshlanmagan</span>
-      <span className="flex items-center gap-1.5"><span className="font-bold text-mint-600">✓</span>/<span className="font-bold text-rose-500">✗</span> imtihondan o'tgan / o'tmagan</span>
+      <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> {t("50% dan past", "below 50%")}</span>
+      <span className="flex items-center gap-1.5"><span className="text-ink-300 dark:text-ink-600">—</span> {t("boshlanmagan", "not started")}</span>
+      <span className="flex items-center gap-1.5"><span className="font-bold text-mint-600">✓</span>/<span className="font-bold text-rose-500">✗</span> {t("imtihondan o'tgan / o'tmagan", "passed / didn't pass the exam")}</span>
     </div>
   );
 }
@@ -115,6 +129,8 @@ function Legend() {
 export default async function MarksPage() {
   const session = await getSession();
   const board = await getLevelBoard(session!.userId);
+  const lang: Lang = await getLang();
+  const t = translator(lang);
   // Telefonda o'z kartangiz doim birinchi.
   const mobileStudents = [
     ...board.students.filter((s) => s.is_current_user),
@@ -124,16 +140,18 @@ export default async function MarksPage() {
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="animate-fade-up">
-        <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">Baholar</h1>
+        <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Baholar", "Marks")}</h1>
         <p className="text-sm text-ink-700/60 dark:text-ink-300/60">
-          {board.level} darajasidagi o'quvchilarning har bir dars bo'yicha natijasi (lug'at va mashqlar) va
-          daraja imtihoni.
+          {t(
+            `${board.level} darajasidagi o'quvchilarning har bir dars bo'yicha natijasi (lug'at va mashqlar) va daraja imtihoni.`,
+            `Results of the students at level ${board.level} in every lesson (vocabulary and exercises) and the level exam.`
+          )}
         </p>
       </div>
 
       {/* Telefon: o'quvchi kartalari */}
       <div className="flex animate-fade-up flex-col gap-3 md:hidden">
-        <Legend />
+        <Legend t={t} />
         {mobileStudents.length > 0 ? (
           <ul className="flex flex-col gap-3">
             {mobileStudents.map((student) => (
@@ -142,12 +160,13 @@ export default async function MarksPage() {
                 student={student}
                 units={board.units}
                 rank={board.students.indexOf(student) + 1}
+                t={t}
               />
             ))}
           </ul>
         ) : (
           <p className="rounded-2xl bg-white px-4 py-8 text-center text-sm text-ink-400 dark:bg-[#161b26] dark:text-ink-600">
-            Hozircha natijalar yo'q.
+            {t("Hozircha natijalar yo'q.", "No results yet.")}
           </p>
         )}
       </div>
@@ -159,7 +178,7 @@ export default async function MarksPage() {
             <thead>
               <tr className="text-xs text-ink-500 dark:text-ink-400">
                 <th className="sticky left-0 z-10 min-w-44 border-b border-ink-100 bg-white px-4 py-3 text-left font-semibold dark:border-white/10 dark:bg-[#161b26]">
-                  O'quvchilar
+                  {t("O'quvchilar", "Students")}
                 </th>
                 {board.units.map((unit) => (
                   <th
@@ -167,11 +186,11 @@ export default async function MarksPage() {
                     title={unit.subtitle}
                     className="whitespace-nowrap border-b border-ink-100 px-1.5 py-3 text-center font-semibold dark:border-white/10"
                   >
-                    {unit.title}
+                    {localizeLabel(lang, unit.title)}
                   </th>
                 ))}
                 <th className="whitespace-nowrap border-b border-ink-100 px-3 py-3 text-center font-semibold dark:border-white/10">
-                  Imtihon
+                  {t("Imtihon", "Exam")}
                 </th>
               </tr>
             </thead>
@@ -192,7 +211,7 @@ export default async function MarksPage() {
                         }`}
                       >
                         {student.name}
-                        {student.is_current_user && " (siz)"}
+                        {student.is_current_user && t(" (siz)", " (you)")}
                       </span>
                     </div>
                   </td>
@@ -220,14 +239,14 @@ export default async function MarksPage() {
                       student.is_current_user ? "bg-gold-50/60 dark:bg-gold-950/20" : ""
                     }`}
                   >
-                    <ExamBadge exam={student.exam} />
+                    <ExamBadge exam={student.exam} t={t} />
                   </td>
                 </tr>
               ))}
               {board.students.length === 0 && (
                 <tr>
                   <td colSpan={board.units.length + 2} className="px-4 py-8 text-center text-ink-400 dark:text-ink-600">
-                    Hozircha natijalar yo'q.
+                    {t("Hozircha natijalar yo'q.", "No results yet.")}
                   </td>
                 </tr>
               )}
@@ -235,7 +254,7 @@ export default async function MarksPage() {
           </table>
         </div>
         <div className="border-t border-ink-100 px-4 py-3 dark:border-white/10">
-          <Legend />
+          <Legend t={t} />
         </div>
       </div>
     </div>

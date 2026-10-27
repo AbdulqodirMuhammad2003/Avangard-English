@@ -9,6 +9,9 @@ import {
 } from "@/lib/data";
 import { EditableAvatar } from "./EditableAvatar";
 import { currentUnitOf, levelUnits } from "@/lib/progress";
+import { langForLevel, localizeLabel, translator, type Lang } from "@/lib/i18n";
+
+const WEEKDAYS_EN = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
 interface NextStep {
   title: string;
@@ -21,7 +24,8 @@ interface NextStep {
  *  darsi) tugallanmagan lug'at bosqichi yoki ishlanmagan mashq; u to'liq
  *  bo'lsa — joriy darajaning boshqa ochiq darslaridan. Oldingi darajalar
  *  hisobga olinmaydi (o'qituvchi o'quvchini daraja o'rtasidan boshlatishi mumkin). */
-function findNextStep(units: UnitDetail[], level: string): NextStep | null {
+function findNextStep(units: UnitDetail[], level: string, lang: Lang): NextStep | null {
+  const t = translator(lang);
   const current = currentUnitOf(units, level);
   const ordered = [
     ...(current ? [current] : []),
@@ -33,8 +37,8 @@ function findNextStep(units: UnitDetail[], level: string): NextStep | null {
       const left = round.word_count - round.learned_count;
       if (left > 0) {
         return {
-          title: `${unit.title} · Lug'at, ${round.title}`,
-          detail: `${left} ta so'z qoldi`,
+          title: t(`${unit.title} · Lug'at, ${round.title}`, `${localizeLabel(lang, unit.title)} · Vocabulary, ${localizeLabel(lang, round.title)}`),
+          detail: t(`${left} ta so'z qoldi`, `${left} words left`),
           percent: Math.round((round.learned_count / round.word_count) * 100),
           href: `/lessons?unit=${unit.id}`,
         };
@@ -44,7 +48,7 @@ function findNextStep(units: UnitDetail[], level: string): NextStep | null {
     const next = unit.exercises.find((e) => !e.attempted);
     if (next) {
       return {
-        title: `${unit.title} · Mashqlar`,
+        title: t(`${unit.title} · Mashqlar`, `${localizeLabel(lang, unit.title)} · Exercises`),
         detail: next.title,
         percent: Math.round((done / unit.exercises.length) * 100),
         href: `/lessons?unit=${unit.id}`,
@@ -87,7 +91,9 @@ export function TodayPanel({
   activity: ActivityOverview;
   review: ReviewSummary;
 }) {
-  const next = findNextStep(units, user.level);
+  const lang = langForLevel(user.level);
+  const t = translator(lang);
+  const next = findNextStep(units, user.level, lang);
   const current = levelUnits(units, user.level);
   const learned = current.reduce((s, u) => s + u.learnedWords, 0);
   const totalWords = current.reduce((s, u) => s + u.totalWords, 0);
@@ -99,10 +105,12 @@ export function TodayPanel({
         <EditableAvatar name={user.name} avatarUrl={user.avatar_url} size={52} triggerClassName="items-center gap-3">
           <div className="text-left">
             <p className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">
-              Salom, {user.name.split(" ")[0]}!
+              {t("Salom", "Hello")}, {user.name.split(" ")[0]}!
             </p>
             <p className="text-sm text-ink-500 dark:text-ink-400">
-              {goalReached ? "Bugungi maqsad bajarildi — zo'r!" : "Bugun yana bir qadam — 10 daqiqa yetarli"}
+              {goalReached
+                ? t("Bugungi maqsad bajarildi — zo'r!", "Today's goal is done — great!")
+                : t("Bugun yana bir qadam — 10 daqiqa yetarli", "One more step today — 10 minutes is enough")}
             </p>
           </div>
         </EditableAvatar>
@@ -114,7 +122,9 @@ export function TodayPanel({
           }`}
         >
           <Flame size={20} className={activity.streak > 0 ? "text-gold-600 dark:text-gold-300" : ""} />
-          {activity.streak > 0 ? `${activity.streak} kun ketma-ket` : "Ketma-ketlik: 0 kun"}
+          {activity.streak > 0
+            ? t(`${activity.streak} kun ketma-ket`, `${activity.streak}-day streak`)
+            : t("Ketma-ketlik: 0 kun", "Streak: 0 days")}
         </div>
       </div>
 
@@ -124,14 +134,14 @@ export function TodayPanel({
             href={next.href}
             className="group flex flex-col rounded-2xl bg-gradient-to-br from-azure-600 to-azure-900 p-5 text-white shadow-md shadow-azure-900/20 transition-transform duration-200 hover:-translate-y-0.5"
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-white/60">Davom ettirish</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-white/60">{t("Davom ettirish", "Continue")}</p>
             <p className="font-display mt-1 text-lg font-bold">{next.title}</p>
             <p className="text-sm text-white/75">{next.detail}</p>
             <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/20">
               <div className="h-full rounded-full bg-gold-400" style={{ width: `${next.percent}%` }} />
             </div>
             <span className="mt-4 flex items-center justify-center gap-2 rounded-full bg-white py-2.5 text-sm font-bold text-azure-800 transition-colors group-hover:bg-azure-50">
-              Davom ettirish <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+              {t("Davom ettirish", "Continue")} <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </span>
           </Link>
         ) : (
@@ -140,8 +150,8 @@ export function TodayPanel({
             className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-mint-500 to-mint-800 p-5 text-center text-white"
           >
             <PartyPopper size={28} />
-            <p className="font-bold">Ochiq darslarning hammasi tugallandi!</p>
-            <p className="text-sm text-white/80">Keyingi dars tez orada ochiladi.</p>
+            <p className="font-bold">{t("Ochiq darslarning hammasi tugallandi!", "All open lessons are finished!")}</p>
+            <p className="text-sm text-white/80">{t("Keyingi dars tez orada ochiladi.", "The next lesson opens soon.")}</p>
           </Link>
         )}
 
@@ -149,9 +159,9 @@ export function TodayPanel({
           <div className="flex items-center gap-3 rounded-2xl bg-ink-50 p-4 dark:bg-white/5">
             <GoalRing value={activity.todayCorrect} goal={DAILY_GOAL} />
             <div>
-              <p className="text-xs text-ink-500 dark:text-ink-400">Bugungi maqsad</p>
+              <p className="text-xs text-ink-500 dark:text-ink-400">{t("Bugungi maqsad", "Today's goal")}</p>
               <p className="font-bold text-ink-950 dark:text-ink-50">
-                {Math.min(activity.todayCorrect, DAILY_GOAL)} / {DAILY_GOAL} to'g'ri javob
+                {Math.min(activity.todayCorrect, DAILY_GOAL)} / {DAILY_GOAL} {t("to'g'ri javob", "correct answers")}
               </p>
             </div>
           </div>
@@ -168,12 +178,12 @@ export function TodayPanel({
               className={`shrink-0 ${review.due > 0 ? "text-gold-600 dark:text-gold-300" : "text-ink-400"}`}
             />
             <div className="min-w-0 flex-1">
-              <p className="text-xs text-ink-500 dark:text-ink-400">Takrorlash vaqti</p>
+              <p className="text-xs text-ink-500 dark:text-ink-400">{t("Takrorlash vaqti", "Time to review")}</p>
               <p className="font-bold text-ink-950 dark:text-ink-50">
-                {review.due > 0 ? `${review.due} ta so'z` : "Hozircha yo'q"}
+                {review.due > 0 ? t(`${review.due} ta so'z`, `${review.due} words`) : t("Hozircha yo'q", "Nothing yet")}
               </p>
               <p className="text-xs text-ink-600 dark:text-ink-300">
-                {user.level}: {learned} / {totalWords} so'z o'rganilgan
+                {user.level}: {learned} / {totalWords} {t("so'z o'rganilgan", "words learned")}
               </p>
             </div>
             <ChevronRight size={18} className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-0.5" />
@@ -182,9 +192,9 @@ export function TodayPanel({
       </div>
 
       <div className="mt-5 flex items-center justify-between border-t border-ink-100 pt-4 dark:border-white/10">
-        <span className="text-xs font-semibold text-ink-600 dark:text-ink-300">Bu hafta</span>
+        <span className="text-xs font-semibold text-ink-600 dark:text-ink-300">{t("Bu hafta", "This week")}</span>
         <div className="flex gap-2 sm:gap-3">
-          {activity.week.map((d) => (
+          {activity.week.map((d, i) => (
             <div key={d.label} className="flex flex-col items-center gap-1">
               {d.active ? (
                 <CircleCheck size={24} className="text-mint-500" />
@@ -202,7 +212,7 @@ export function TodayPanel({
                   d.isToday ? "font-bold text-ink-900 dark:text-ink-50" : "text-ink-600 dark:text-ink-300"
                 }`}
               >
-                {d.label}
+                {t(d.label, WEEKDAYS_EN[i] ?? d.label)}
               </span>
             </div>
           ))}

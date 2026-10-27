@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useT } from "./LangProvider";
 
 const THEME_KEY = "avangard-theme";
 
@@ -19,6 +20,7 @@ const BUILDINGS = [
 ];
 
 export function ThemeToggle() {
+  const t = useT();
   const [dark, setDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -40,8 +42,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label={dark ? "Kunduzgi rejimga o'tish" : "Tungi rejimga o'tish"}
-      title={dark ? "Kunduzgi rejim" : "Tungi rejim"}
+      aria-label={dark ? t("Kunduzgi rejimga o'tish", "Switch to light mode") : t("Tungi rejimga o'tish", "Switch to dark mode")}
+      title={dark ? t("Kunduzgi rejim", "Light mode") : t("Tungi rejim", "Dark mode")}
       className={`relative h-8 w-16 shrink-0 overflow-hidden rounded-full border shadow-inner transition-colors duration-500 ${
         dark
           ? "border-white/10 bg-gradient-to-b from-[#151829] via-[#10121f] to-[#0a0b13]"

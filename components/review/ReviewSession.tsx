@@ -7,6 +7,8 @@ import type { ReviewWord } from "@/lib/data";
 import { submitReviewAnswer } from "@/app/actions";
 import { speak } from "@/lib/english-speech";
 import { formatTranscription } from "@/lib/transcription";
+import { translator, type Translate } from "@/lib/i18n";
+import { useLang } from "../LangProvider";
 
 export interface ReviewItem {
   word: ReviewWord;
@@ -19,21 +21,22 @@ export interface ReviewItem {
 
 const speakEn = (text: string) => speak(text, 0.85);
 
-function formatNextDue(iso: string | null) {
+function formatNextDue(iso: string | null, t: Translate) {
   if (!iso) return null;
   const days = Math.ceil((new Date(iso).getTime() - Date.now()) / 86_400_000);
-  if (days <= 0) return "bugun";
-  if (days === 1) return "ertaga";
-  return `${days} kundan keyin`;
+  if (days <= 0) return t("bugun", "today");
+  if (days === 1) return t("ertaga", "tomorrow");
+  return t(`${days} kundan keyin`, `in ${days} days`);
 }
 
-const MODE_LABELS: Record<ReviewItem["mode"], string> = {
-  "en-uz": "Tarjimasini toping",
-  "uz-en": "Inglizchasini toping",
-  audio: "Eshitgan so'zingizni toping",
+const MODE_LABELS: Record<ReviewItem["mode"], [string, string]> = {
+  "en-uz": ["Tarjimasini toping", "Find the translation"],
+  "uz-en": ["Inglizchasini toping", "Find the English word"],
+  audio: ["Eshitgan so'zingizni toping", "Find the word you hear"],
 };
 
 export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextDueAt: string | null }) {
+  const t = translator(useLang());
   const [, startTransition] = useTransition();
   // Xato javob berilgan so'z seans oxirida yana bir marta so'raladi (qutichasi
   // esa faqat birinchi javobga qarab o'zgaradi).
@@ -51,21 +54,24 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
   }, [item, pos]);
 
   if (items.length === 0) {
-    const when = formatNextDue(nextDueAt);
+    const when = formatNextDue(nextDueAt, t);
     return (
       <div className="flex animate-fade-up flex-col items-center gap-3 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
         <CalendarClock size={40} className="text-mint-500" />
-        <p className="font-display text-xl font-bold text-ink-950 dark:text-ink-50">Hozircha takrorlash yo'q</p>
+        <p className="font-display text-xl font-bold text-ink-950 dark:text-ink-50">{t("Hozircha takrorlash yo'q", "Nothing to review yet")}</p>
         <p className="max-w-sm text-sm text-ink-500 dark:text-ink-400">
           {when
-            ? `Keyingi so'zlar ${when} takrorlashga chiqadi.`
-            : "Darslarda so'zlarni o'rganing — o'rganilgan har bir so'z ertasi kuni shu yerda takrorlanadi."}
+            ? t(`Keyingi so'zlar ${when} takrorlashga chiqadi.`, `The next words come for review ${when}.`)
+            : t(
+                "Darslarda so'zlarni o'rganing — o'rganilgan har bir so'z ertasi kuni shu yerda takrorlanadi.",
+                "Learn words in the lessons — every word you learn comes back here the next day."
+              )}
         </p>
         <Link
           href="/lessons"
           className="btn-press mt-2 rounded-full bg-azure-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-azure-500"
         >
-          Darslarga o'tish
+          {t("Darslarga o'tish", "Go to lessons")}
         </Link>
       </div>
     );
@@ -80,16 +86,22 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
         </div>
         <p className="font-display text-3xl font-bold text-ink-950 dark:text-ink-50">{pct}%</p>
         <p className="text-sm text-ink-600 dark:text-ink-300">
-          {items.length} ta so'zdan {firstTryCorrect} tasini birinchi urinishda esladingiz.
+          {t(
+            `${items.length} ta so'zdan ${firstTryCorrect} tasini birinchi urinishda esladingiz.`,
+            `You remembered ${firstTryCorrect} of ${items.length} words the first time.`
+          )}
         </p>
         <p className="max-w-sm text-xs text-ink-500 dark:text-ink-400">
-          Yaxshi eslangan so'zlar endi kamroq so'raladi, qiyinlari esa ertaga yana chiqadi.
+          {t(
+            "Yaxshi eslangan so'zlar endi kamroq so'raladi, qiyinlari esa ertaga yana chiqadi.",
+            "Words you know well will come less often; the difficult ones come back tomorrow."
+          )}
         </p>
         <Link
           href="/"
           className="btn-press mt-2 rounded-full bg-azure-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-azure-500"
         >
-          Bosh sahifaga
+          {t("Bosh sahifaga", "Home")}
         </Link>
       </div>
     );
@@ -138,15 +150,15 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
         className="flex animate-fade-up flex-col gap-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#161b26] dark:ring-white/10"
       >
         <p className="text-center text-xs font-semibold uppercase tracking-wider text-ink-400 dark:text-ink-500">
-          {MODE_LABELS[item.mode]}
-          {!isFirstAttempt && " · yana bir marta"}
+          {t(...MODE_LABELS[item.mode])}
+          {!isFirstAttempt && t(" · yana bir marta", " · one more time")}
         </p>
 
         {item.mode === "audio" ? (
           <button
             onClick={() => speakEn(item.word.word)}
             className="btn-press mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
-            aria-label="Eshitish"
+            aria-label={t("Eshitish", "Listen")}
           >
             <Volume2 size={34} />
           </button>
@@ -204,9 +216,9 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
           >
             {isRight && <CheckCircle2 size={20} className="shrink-0" />}
             <p>
-              <span className="font-bold">{isRight ? "To'g'ri! " : "Eslab qoling: "}</span>
+              <span className="font-bold">{isRight ? t("To'g'ri! ", "Correct! ") : t("Eslab qoling: ", "Remember: ")}</span>
               {item.word.word} — {item.word.translation_uz}
-              {!isRight && ". Bu so'z oxirida yana so'raladi."}
+              {!isRight && t(". Bu so'z oxirida yana so'raladi.", ". You'll get this word again at the end.")}
             </p>
           </div>
         )}
@@ -216,7 +228,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
           disabled={!checked}
           className="btn-press rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-40"
         >
-          Keyingisi
+          {t("Keyingisi", "Next")}
         </button>
       </div>
     </div>
