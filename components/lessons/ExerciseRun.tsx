@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Check, Delete, X, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
+import { BookOpen, Check, Delete, Eye, X, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
@@ -160,6 +160,11 @@ export function ExerciseRun({
   // Xato javobdan keyin to'g'ri javob faqat «Javobni ko'rish» bosilsa chiqadi.
   const [revealed, setRevealed] = useState(false);
   const [revealing, setRevealing] = useState(false);
+  // Ko'p qatorli mashqlarda (gaplar, ro'yxat, bir sahifali test) har bir xato
+  // qator alohida ochiladi; `askReveal` — tasdiqlash oynasi qaysi qator uchun
+  // (yoki «all» — butun savol uchun) ochilgani.
+  const [revealedRows, setRevealedRows] = useState<number[]>([]);
+  const [askReveal, setAskReveal] = useState<number | "all" | null>(null);
   // Bir sahifali test (matn yoki audio + hamma savollar): har savolda tanlangan variant.
   // «Choose TWO» savolida ikkita variant tanlanadi, shuning uchun har savolga ro'yxat.
   const [pagePicks, setPagePicks] = useState<number[][]>([]);
@@ -184,6 +189,8 @@ export function ExerciseRun({
   // Juftlikda xato juftlar ulanmaydi, talaffuzda javob — gapning o'zi:
   // bularda yashiradigan narsa yo'q.
   const showAnswer = checked === true || revealed || kind === "match" || kind === "speak";
+  const rowMode = pageMode || kind === "listengap" || kind === "listenmatch";
+  const rowShown = (i: number) => showAnswer || revealedRows.includes(i);
   // Qoida mashqida avval tushuntirish ko'rsatiladi, test undan keyin.
   const [showRule, setShowRule] = useState(kind === "rule");
 
@@ -361,15 +368,35 @@ export function ExerciseRun({
     if (kind === "number" && question.audio_text && ok) speakEn(question.audio_text);
   }
 
-  async function reveal() {
-    if (revealing || revealed) return;
+  async function confirmReveal() {
+    const target = askReveal;
+    if (target === null || revealing) return;
     setRevealing(true);
     try {
-      if (await onReveal()) setRevealed(true);
+      if (await onReveal()) {
+        if (target === "all") setRevealed(true);
+        else setRevealedRows((rows) => [...rows, target]);
+      }
     } finally {
       setRevealing(false);
+      setAskReveal(null);
     }
   }
+
+  /** Xato qatordagi «Javob» tugmasi: bosilganda tasdiqlash oynasi chiqadi. */
+  const revealPill = (i: number) => (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setAskReveal(i);
+      }}
+      className="btn-press ml-2 inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-2.5 py-1 align-middle text-xs font-bold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15 dark:hover:bg-white/15"
+    >
+      <Eye size={13} /> {t("Javob", "Answer")}
+    </button>
+  );
 
   function pickMatchRight(pairIndex: number) {
     if (matchLeft === null || checked !== null) return;
@@ -424,6 +451,8 @@ export function ExerciseRun({
     if (!pageMode && qIndex + 1 < total) {
       setQIndex(qIndex + 1);
       setRevealed(false);
+      setRevealedRows([]);
+      setAskReveal(null);
       setSelected(null);
       setTyped("");
       setPicked([]);
@@ -454,7 +483,7 @@ export function ExerciseRun({
     if (checked === null) return picked ? "selected" : "idle";
     const right = rightOptions(pending[k]).includes(i);
     if (picked) return right ? "right" : "wrong";
-    return right && showAnswer ? "right" : "idle";
+    return right && rowShown(k) ? "right" : "idle";
   }
 
   function pageQuestionRight(k: number) {
@@ -464,7 +493,10 @@ export function ExerciseRun({
   }
 
   function pickPageOption(k: number, i: number) {
-    if (checked !== null) return;
+    if (checked !== null) {
+      if (!pageQuestionRight(k) && !rowShown(k)) setAskReveal(k);
+      return;
+    }
     const need = rightOptions(pending[k]).length;
     setPagePicks((cur) => {
       const all = [...cur];
@@ -769,7 +801,8 @@ export function ExerciseRun({
                         </button>
                       ))}
                     </div>
-                    {checked !== null && q.explanation && (gotIt || showAnswer) && (
+                    {checked === false && !gotIt && !rowShown(k) && <div>{revealPill(k)}</div>}
+                    {checked !== null && q.explanation && (gotIt || rowShown(k)) && (
                       <p className="text-sm text-ink-600 dark:text-ink-300">{q.explanation}</p>
                     )}
                   </li>
@@ -927,7 +960,10 @@ export function ExerciseRun({
               return (
                 <li
                   key={i}
-                  className={`flex items-start gap-3 rounded-xl border-2 px-3 py-2.5 ${OPTION_STATE_CLASSES[state]}`}
+                  onClick={() => state === "wrong" && !rowShown(i) && setAskReveal(i)}
+                  className={`flex items-start gap-3 rounded-xl border-2 px-3 py-2.5 ${OPTION_STATE_CLASSES[state]} ${
+                    state === "wrong" && !rowShown(i) ? "cursor-pointer" : ""
+                  }`}
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-400 text-xs font-bold text-ink-950">
                     {i + 1}
@@ -956,9 +992,12 @@ export function ExerciseRun({
                       ))}
                     </select>
                     {after}
-                    {checked !== null && showAnswer && slots[i] !== row[1] && (
-                      <span className="ml-2 text-sm font-semibold text-mint-700 dark:text-mint-300">→ {row[1]}</span>
-                    )}
+                    {checked !== null && slots[i] !== row[1] &&
+                      (rowShown(i) ? (
+                        <span className="ml-2 text-sm font-semibold text-mint-700 dark:text-mint-300">→ {row[1]}</span>
+                      ) : (
+                        revealPill(i)
+                      ))}
                   </p>
                 </li>
               );
@@ -976,7 +1015,8 @@ export function ExerciseRun({
               return (
                 <label
                   key={i}
-                  className={`flex rounded-xl border-2 px-3 py-2 ${
+                  onClick={() => state === "wrong" && !rowShown(i) && setAskReveal(i)}
+                  className={`flex rounded-xl border-2 px-3 py-2 ${state === "wrong" && !rowShown(i) ? "cursor-pointer " : ""}${
                     longLabel ? "flex-col gap-2" : "items-center gap-3"
                   } ${OPTION_STATE_CLASSES[state]}`}
                 >
@@ -1008,11 +1048,15 @@ export function ExerciseRun({
                     enterKeyHint={i + 1 < matchPairs.length ? "next" : "done"}
                     className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
                   />
-                  {checked !== null && showAnswer && !slotRight(i) && (
-                    <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">
-                      {pair[1].split(";")[0]}
-                    </span>
-                  )}
+                  {checked !== null &&
+                    !slotRight(i) &&
+                    (rowShown(i) ? (
+                      <span className="shrink-0 text-sm font-semibold text-mint-700 dark:text-mint-300">
+                        {pair[1].split(";")[0]}
+                      </span>
+                    ) : (
+                      revealPill(i)
+                    ))}
                 </label>
               );
             })}
@@ -1217,9 +1261,18 @@ export function ExerciseRun({
             )}
             {!checked && !showAnswer && (
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                {revealsLeft > 0 ? (
+                {rowMode ? (
+                  <span className="text-xs font-semibold opacity-90">
+                    {revealsLeft > 0
+                      ? t(
+                          `Xato qatordagi «Javob» tugmasini bosing — faqat o'sha savolning javobi ochiladi (${revealsLeft} ta imkoniyat qoldi).`,
+                          `Tap «Answer» on a wrong row to see just that answer (${revealsLeft} reveals left).`
+                        )
+                      : t("Bu darsda javobni ko'rish imkoniyatlari tugadi.", "You've used all your answer reveals for this lesson.")}
+                  </span>
+                ) : revealsLeft > 0 ? (
                   <button
-                    onClick={reveal}
+                    onClick={() => setAskReveal("all")}
                     disabled={revealing}
                     className="btn-press rounded-full bg-white px-4 py-1.5 text-xs font-bold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-100 disabled:opacity-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15"
                   >
@@ -1257,6 +1310,57 @@ export function ExerciseRun({
           </button>
         )}
       </div>
+
+      {askReveal !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-ink-950/50 p-4 backdrop-blur-sm sm:items-center"
+          onClick={() => !revealing && setAskReveal(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reveal-title"
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10"
+          >
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-lg shadow-gold-700/30">
+              <Eye size={26} />
+            </span>
+            <p id="reveal-title" className="mt-3 font-display text-lg font-bold text-ink-950 dark:text-ink-50">
+              {revealsLeft > 0 ? t("Javobni ochasizmi?", "Show this answer?") : t("Imkoniyatlar tugadi", "No reveals left")}
+            </p>
+            <p className="mt-1.5 text-sm text-ink-600 dark:text-ink-300">
+              {revealsLeft > 0
+                ? t(
+                    `Bu darsdagi ${revealsLeft} ta imkoniyatdan bittasi ishlatiladi.`,
+                    `This uses 1 of your ${revealsLeft} answer reveals for this lesson.`
+                  )
+                : t(
+                    "Bu darsda javobni ko'rish imkoniyatlari tugadi. Xato savollar keyin qayta beriladi.",
+                    "You've used all your answer reveals for this lesson. You'll get the questions you missed again later."
+                  )}
+            </p>
+            <div className="mt-5 flex gap-2">
+              <button
+                onClick={() => setAskReveal(null)}
+                disabled={revealing}
+                className="btn-press flex-1 rounded-full bg-ink-100 py-3 text-sm font-bold text-ink-800 hover:bg-ink-200 disabled:opacity-50 dark:bg-white/10 dark:text-ink-100 dark:hover:bg-white/15"
+              >
+                {revealsLeft > 0 ? t("Bekor qilish", "Cancel") : t("Yopish", "Close")}
+              </button>
+              {revealsLeft > 0 && (
+                <button
+                  onClick={confirmReveal}
+                  disabled={revealing}
+                  className="btn-press flex-1 rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-50"
+                >
+                  {revealing ? t("Ochilmoqda…", "Opening…") : t("Ha, ko'rsat", "Yes, show it")}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
