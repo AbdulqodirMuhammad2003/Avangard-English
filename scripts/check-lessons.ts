@@ -100,6 +100,11 @@ for (const lesson of LESSON_CONTENT) {
           break;
         case "audiotext":
           if (!q.audio) errors.push(`${where}: tinglanadigan matn yo'q`);
+          // «Choose TWO»: answer — variantlardan ikkitasi.
+          if (q.answer) {
+            const right = q.answer.split("|");
+            if (right.length !== 2 || !right.every((r) => opts.includes(r))) errors.push(`${where}: ikki to'g'ri javob variantlar ichida emas`);
+          }
           break;
         case "mistake":
           if (q.correct === -1) errors.push(`${where}: xato so'z belgilanmagan (*)`);

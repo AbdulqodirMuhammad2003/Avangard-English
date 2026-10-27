@@ -83,6 +83,20 @@ export const hearing =
     explanation,
   });
 
+/** «audiotext»: ikki to'g'ri javobli savol («Choose TWO»). `answer` — to'g'ri
+ *  variantlar "|" bilan; ikkinchi to'g'ri javob xatolar orasiga qo'yiladi,
+ *  birinchisini mixAnswers aralashtiradi. */
+export const hearingTwo =
+  (audio: string) =>
+  (question: string, right: [string, string], wrong: string[], explanation?: string): SeedQuestion => ({
+    prompt: question,
+    audio,
+    options: [right[0], wrong[0], right[1], ...wrong.slice(1)],
+    correct: 0,
+    answer: right.join("|"),
+    explanation,
+  });
+
 /** [prompt, answer, explanation?] juftlaridan yozma savollar (type, fill). */
 export const written = (rows: (string | undefined)[][]): SeedQuestion[] =>
   rows.map(([prompt, answer, explanation]) => ({ prompt: prompt!, answer, explanation }));

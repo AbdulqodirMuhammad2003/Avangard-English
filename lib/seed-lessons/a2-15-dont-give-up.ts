@@ -10,6 +10,8 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   gaps,
+  hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -286,5 +288,19 @@ export const A2_15_EXERCISES: SeedExercise[] = [
       "invention",
       "decade",
     ]),
+  },
+  {
+    title: "The Jamaican team",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen and answer the questions. Some questions have TWO correct answers — choose both. Pause or go back if you need to.",
+    questions: [
+      hearingTwo(track("6.1"))("Why was it difficult to practise in Jamaica?", ["There was no ice.","There were no bobsleighs."], ["There was no money.","The team was too young."]),
+      hearing(track("6.1"))("Where were the 1988 Winter Olympics?", ["In Canada","In Jamaica","In the USA","In Norway"]),
+      hearingTwo(track("6.1"))("Which TWO sentences about the team are true?", ["They weren't successful in their races.","They were popular with the people watching."], ["They won a medal.","Nobody watched them."]),
+      hearing(track("6.1"))("Why were they popular?", ["They tried so hard.","They were very fast.","They won all their races.","They were famous actors."]),
+      hearing(track("6.1"))("What was the name of the film?", ["Cool Runnings","Cool Jamaica","Ice Runners","The Bobsleigh"]),
+      hearingTwo(track("6.1"))("Which TWO facts about the film are correct?", ["It was in 1993.","It made $150,000,000."], ["It was in 1988.","It wasn't successful."]),
+    ],
   },
 ];

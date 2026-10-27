@@ -14,6 +14,16 @@ const speakEn = (text: string, rate = 0.85) => playListening(text, rate);
 
 /** Har bir savol uchun bir xil tartibda aralashtiradi (sahifa yangilansa ham
  *  plitkalar/juftlar joyidan sakramaydi). */
+type Question = UnitDetail["exercises"][number]["questions"][number];
+
+/** Bir sahifali testda savolning to'g'ri variantlari. «audiotext»da
+ *  `answer_text` bo'lsa — «Choose TWO»: to'g'ri variant matnlari "|" bilan. */
+function rightOptions(q: Question): number[] {
+  if (!q.answer_text) return [q.correct_index];
+  const right = q.answer_text.split("|");
+  return q.options.flatMap((o, i) => (right.includes(o) ? [i] : []));
+}
+
 function seededShuffle<T>(items: T[], seed: number): T[] {
   const a = [...items];
   let x = (seed * 7 + 3) % 9973;
@@ -140,7 +150,8 @@ export function ExerciseRun({
   const [revealed, setRevealed] = useState(false);
   const [revealing, setRevealing] = useState(false);
   // Bir sahifali test (matn yoki audio + hamma savollar): har savolda tanlangan variant.
-  const [pagePicks, setPagePicks] = useState<number[]>([]);
+  // «Choose TWO» savolida ikkita variant tanlanadi, shuning uchun har savolga ro'yxat.
+  const [pagePicks, setPagePicks] = useState<number[][]>([]);
 
   // Mashq qisman bajarilgan bo'lsa, faqat hali to'g'ri topilmagan savollar
   // beriladi (mashq ochilgandagi holat saqlanadi). Hammasi to'g'ri yoki
@@ -291,7 +302,7 @@ export function ExerciseRun({
   const normalizeWritten = (s: string) => (kind === "number" ? s.replace(/\D/g, "") : normalizeAnswer(s));
   const acceptedAnswers = (question.answer_text ?? "").split("|").map(normalizeWritten);
   const canCheck = pageMode
-    ? pending.every((_, k) => pagePicks[k] !== undefined)
+    ? pending.every((q, k) => (pagePicks[k]?.length ?? 0) === rightOptions(q).length)
     : kind === "listengap" ? gapsFilled : kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
 
   function record(ok: boolean) {
@@ -302,7 +313,7 @@ export function ExerciseRun({
   function check() {
     if (!canCheck || checked !== null) return;
     if (pageMode) {
-      const results = pending.map((q, k) => ({ questionId: q.id, correct: pagePicks[k] === q.correct_index }));
+      const results = pending.map((q, k) => ({ questionId: q.id, correct: pageQuestionRight(k) }));
       setChecked(results.every((r) => r.correct));
       setAnswers(results);
       return;
@@ -415,11 +426,31 @@ export function ExerciseRun({
   }
 
   function pageOptionState(k: number, i: number): keyof typeof OPTION_STATE_CLASSES {
-    const pick = pagePicks[k];
-    if (checked === null) return pick === i ? "selected" : "idle";
-    const right = pending[k].correct_index;
-    if (pick === i) return i === right ? "right" : "wrong";
-    return i === right && showAnswer ? "right" : "idle";
+    const picked = (pagePicks[k] ?? []).includes(i);
+    if (checked === null) return picked ? "selected" : "idle";
+    const right = rightOptions(pending[k]).includes(i);
+    if (picked) return right ? "right" : "wrong";
+    return right && showAnswer ? "right" : "idle";
+  }
+
+  function pageQuestionRight(k: number) {
+    const picks = pagePicks[k] ?? [];
+    const right = rightOptions(pending[k]);
+    return picks.length === right.length && picks.every((i) => right.includes(i));
+  }
+
+  function pickPageOption(k: number, i: number) {
+    if (checked !== null) return;
+    const need = rightOptions(pending[k]).length;
+    setPagePicks((cur) => {
+      const all = [...cur];
+      const picks = all[k] ?? [];
+      // Ko'p javobli savolda: qayta bosish — bekor qilish; to'lgan bo'lsa eng
+      // birinchi tanlangani almashadi.
+      all[k] =
+        need === 1 ? [i] : picks.includes(i) ? picks.filter((p) => p !== i) : [...picks, i].slice(-need);
+      return all;
+    });
   }
 
   // Telefonda 4 ta ustunga faqat juda qisqa variantlar sig'adi (am, is, are);
@@ -679,27 +710,28 @@ export function ExerciseRun({
             <ol className="flex flex-col gap-6">
               {pending.map((q, k) => {
                 const stem = kind === "audiotext" ? q.prompt : q.prompt.split("||")[1];
-                const gotIt = pagePicks[k] === q.correct_index;
+                const gotIt = checked !== null && pageQuestionRight(k);
+                const multi = rightOptions(q).length > 1;
                 return (
                   <li key={q.id} className="flex flex-col gap-2.5">
                     <p lang="en" className="flex items-start gap-2.5 text-base font-semibold text-ink-950 dark:text-ink-50">
                       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold-400 text-sm font-bold text-ink-950">
                         {k + 1}
                       </span>
-                      <span className="min-w-0 pt-0.5">{stem}</span>
+                      <span className="min-w-0 pt-0.5">
+                        {stem}
+                        {multi && (
+                          <span className="ml-2 inline-block rounded-full bg-gold-100 px-2.5 py-0.5 align-middle text-xs font-bold text-gold-800 dark:bg-gold-900/50 dark:text-gold-200">
+                            {t("IKKITA to'g'ri javobni tanlang", "Choose TWO correct answers")}
+                          </span>
+                        )}
+                      </span>
                     </p>
                     <div className={`grid gap-2 ${kind === "truefalse" ? "grid-cols-2" : "grid-cols-1"}`}>
                       {q.options.map((opt, i) => (
                         <button
                           key={i}
-                          onClick={() =>
-                            checked === null &&
-                            setPagePicks((cur) => {
-                              const picks = [...cur];
-                              picks[k] = i;
-                              return picks;
-                            })
-                          }
+                          onClick={() => pickPageOption(k, i)}
                           className={`flex min-w-0 items-stretch overflow-hidden rounded-xl border-2 text-left text-base transition-all duration-150 ${
                             OPTION_STATE_CLASSES[pageOptionState(k, i)]
                           }`}

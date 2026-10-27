@@ -9,6 +9,8 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   gaps,
+  hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -311,5 +313,20 @@ export const A2_13_EXERCISES: SeedExercise[] = [
       "hard-working",
       "generous",
     ]),
+  },
+  {
+    title: "What do your colours say?",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen and answer the questions. Some questions have TWO correct answers — choose both. Pause or go back if you need to.",
+    questions: [
+      hearingTwo(track("5.7"))("What does the speaker say about people who often wear black?", ["They like to be the boss.","They can look serious and important."], ["They don't like change.","They are a lot of fun."]),
+      hearing(track("5.7"))("What colour is the speaker wearing today?", ["White","Black","Blue","Red"]),
+      hearingTwo(track("5.7"))("People who often wear white…", ["like things to be tidy and clean.","enjoy a simple life."], ["like to be the boss.","always try hard."]),
+      hearingTwo(track("5.7"))("Blue means that you…", ["are a peaceful person.","don't like change."], ["love learning.","are a strong person."]),
+      hearingTwo(track("5.7"))("Which TWO colours does the speaker call «less common»?", ["red","yellow"], ["black","white"]),
+      hearingTwo(track("5.7"))("People who wear red…", ["are probably strong people.","always try hard at everything they do."], ["are tidy and clean.","don't like change."]),
+      hearingTwo(track("5.7"))("People who wear yellow…", ["are good students.","are a lot of fun."], ["like to be the boss.","look serious."]),
+    ],
   },
 ];

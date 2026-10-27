@@ -11,6 +11,7 @@ import type { SeedExercise } from "../seed-exercises";
 import {
   gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -331,5 +332,21 @@ export const A2_16_EXERCISES: SeedExercise[] = [
       "sculpture",
       "valuable",
     ]),
+  },
+  {
+    title: "What a nightmare!",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen and answer the questions. Some questions have TWO correct answers — choose both. Pause or go back if you need to.",
+    questions: [
+      hearing(track("6.18"))("What was on Saturday?", ["A class dinner","A birthday party","A business meeting","A wedding"]),
+      hearing(track("6.18"))("Did the speaker go to the dinner?", ["No.","Yes, but late.","Yes, on time.","The speaker doesn't say."]),
+      hearingTwo(track("6.18"))("Which TWO problems happened first?", ["I couldn't find my shoes.","The bus was late."], ["I lost my phone.","The bus was full."]),
+      hearing(track("6.18"))("How long did the speaker wait for the bus?", ["Half an hour","An hour","Two hours","Ten minutes"]),
+      hearingTwo(track("6.18"))("What happened after that?", ["It started to rain.","The taxi never came."], ["It started to snow.","The taxi was expensive."]),
+      hearing(track("6.18"))("How did the speaker get home in the end?", ["On foot","By taxi","By bus","By car"]),
+      hearingTwo(track("6.18"))("Which TWO things does the friend say?", ["Oh no! That's awful!","What a nightmare! Poor you!"], ["That's brilliant!","Well done!"]),
+      hearing(track("6.18"))("How does the speaker feel about it?", ["Really angry","Very happy","A bit bored","Excited"]),
+    ],
   },
 ];

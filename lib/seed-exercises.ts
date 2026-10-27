@@ -22,7 +22,7 @@ export type ExerciseKind =
   | "dictation" // `audio` — so'z (ko'rsatilmaydi), `answer` — o'quvchi yozadi
   | "truefalse" // `prompt` — "matn||gap", variantlar: To'g'ri / Noto'g'ri
   | "reading" // `prompt` — "matn||savol", javob variantlardan tanlanadi
-  | "audiotext" // `audio` — tinglanadigan matn, `prompt` — savol, variantlar
+  | "audiotext" // `audio` — tinglanadigan matn, `prompt` — savol, variantlar; `answer` bo'lsa — «Choose TWO» (to'g'rilari "|" bilan)
   | "listengap" // `audio` — trek, `options` — "gap ___ matni|to'g'ri|xato|xato"; har gap ichida o'z ro'yxati
   | "listenmatch" // `audio` — ro'yxatli trek (1–6), `options` — "raqam|javob" juftlar; har raqamga javob tanlanadi
   | "mistake" // `options` — gap so'zlari, `correct` — xato so'z o'rni, `explanation` — to'g'risi

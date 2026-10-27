@@ -10,6 +10,7 @@ import type { SeedExercise } from "../seed-exercises";
 import {
   gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -308,5 +309,20 @@ export const A2_14_EXERCISES: SeedExercise[] = [
       "recommend",
       "customer service",
     ]),
+  },
+  {
+    title: "Three customers",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen and answer the questions. Some questions have TWO correct answers — choose both. Pause or go back if you need to.",
+    questions: [
+      hearingTwo(track("5.16"))("What does the first customer want to buy?", ["a magazine","batteries"], ["a hoodie","sandwiches"]),
+      hearing(track("5.16"))("How much is the magazine?", ["£4.99","£9.99","£4.90","£14.99"]),
+      hearing(track("5.16"))("How much discount do students get?", ["20%","10%","25%","50%"]),
+      hearingTwo(track("5.16"))("What does the second customer say?", ["I'm just looking.","Can I try this hoodie on?"], ["Can I pay by card?","Do you sell batteries?"]),
+      hearingTwo(track("5.16"))("What does the third customer order?", ["egg and tomato sandwiches","coffees"], ["cakes","tea"]),
+      hearing(track("5.16"))("How does the third customer pay?", ["In cash","By card","Online","With a phone"]),
+      hearingTwo(track("5.16"))("What else does the third customer want?", ["a small bag","a receipt"], ["a big bag","a discount"]),
+    ],
   },
 ];
