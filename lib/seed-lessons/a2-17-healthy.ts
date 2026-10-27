@@ -1,0 +1,293 @@
+/**
+ * A2, 17-dars — «Sog'lig'im — o'z ishim». Sog'lom turmush tarzi iboralari
+ * (take the stairs, ride a bicycle, keep fit), odatlar va so'rovnoma natijalari.
+ * Grammatika: past simple — noto'g'ri fe'llar (go → went, eat → ate,
+ * think → thought) va ularning talaffuzi.
+ * Navigate A2, 7.1 asosida: tinglash mashqlarida kitob treklari (yopiq
+ * ombordan), savollar va matnlar o'zimizniki. Mashqlar inglizcha.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  reading,
+  say,
+  sentences,
+  slots,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-a2/audio/${n}.mp3`;
+
+export const A2_17_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🪜", "take the stairs", "ˌteɪk ðə ˈsteəz|teyk za steaz", "ibora", "Zinapoyadan chiqmoq (liftsiz)", "Walk up the stairs, not use the lift.", "I always take the stairs, not the lift.", "Men doim liftga emas, zinapoyaga chiqaman."),
+      w("🚲", "ride a bicycle", "ˌraɪd ə ˈbaɪsɪkl|rayd a baysikl", "ibora", "Velosiped haydamoq", "Travel on a bike.", "I ride a bicycle to work every day.", "Har kuni ishga velosipedda boraman."),
+      w("🥗", "healthy lifestyle", "ˌhelθi ˈlaɪfstaɪl|helsi layfstayl", "ibora", "Sog'lom turmush tarzi", "A way of living that is good for your body.", "Sleep and good food are part of a healthy lifestyle.", "Uyqu va to'g'ri ovqat — sog'lom turmush tarzining bir qismi."),
+      w("💪", "keep fit", "ˌkiːp ˈfɪt|kiip fit", "ibora", "Sog'lom va baquvvat bo'lib yurmoq", "Do exercise so your body stays strong.", "I swim twice a week to keep fit.", "Sog'lom yurish uchun haftada ikki marta suzaman."),
+      w("🧹", "physical", "ˈfɪzɪkl|fizikl", "sifat", "Jismoniy", "Using your body.", "Cleaning the house is hard physical work.", "Uyni tozalash — og'ir jismoniy ish."),
+      w("🍪", "snack", "snæk|snek", "ot", "Yengil tamaddi (ovqatlar orasida)", "A small amount of food between meals.", "I usually have a snack at eleven o'clock.", "Odatda soat o'n birda biror narsa tamaddi qilaman."),
+      w("🔢", "calorie", "ˈkæləri|kelari", "ot", "Kaloriya", "A unit that shows how much energy is in food.", "This burger has more than one calorie for every gram!", "Bu burgerda har grammda bir kaloriyadan ko'p bor!"),
+      w("💊", "vitamin", "ˈvɪtəmɪn|vitamin", "ot", "Vitamin", "Something in food that your body needs to be healthy.", "Oranges have a lot of vitamin C.", "Apelsinda C vitamini ko'p."),
+      w("⚖️", "lose weight", "ˌluːz ˈweɪt|luuz weyt", "ibora", "Ozmoq, vazn yo'qotmoq", "Become thinner.", "He wants to lose weight before the summer.", "U yozgacha ozmoqchi."),
+      w("🍟", "unhealthy", "ʌnˈhelθi|anhelsi", "sifat", "Zararli, sog'lom emas", "Bad for your health.", "Fast food is tasty but unhealthy.", "Fast-fud mazali, lekin zararli."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("🔁", "habit", "ˈhæbɪt|hebit", "ot", "Odat", "Something you do often, usually without thinking.", "Eating late at night is a bad habit.", "Kechasi kech ovqatlanish — yomon odat."),
+      w("🚫", "ban", "bæn|ben", "fe'l", "Taqiqlamoq", "Say that something is not allowed.", "The city wants to ban cars from the centre.", "Shahar markazda mashinalarni taqiqlamoqchi."),
+      w("📉", "reduce", "rɪˈdjuːs|ridyuus", "fe'l", "Kamaytirmoq", "Make something smaller or less.", "Try to reduce the sugar in your tea.", "Choyingizdagi shakarni kamaytirishga harakat qiling."),
+      w("🏛️", "mayor", "meə|mea", "ot", "Shahar hokimi (mer)", "The head of a city.", "The mayor wanted people to be healthy.", "Shahar hokimi odamlarning sog'lom bo'lishini xohlardi."),
+      w("🚉", "public place", "ˌpʌblɪk ˈpleɪs|pablik pleys", "ibora", "Jamoat joyi", "A place where everyone can go, like a station or a park.", "You can't smoke in a public place.", "Jamoat joyida chekish mumkin emas."),
+      w("🥤", "sweet drink", "ˌswiːt ˈdrɪŋk|swiit drink", "ibora", "Shirin ichimlik", "A drink with a lot of sugar.", "Water is better than a sweet drink.", "Suv shirin ichimlikdan yaxshiroq."),
+      w("📋", "survey", "ˈsɜːveɪ|syorvey", "ot", "So'rovnoma", "A list of questions you ask a lot of people.", "We did a survey of 200 students.", "200 talaba o'rtasida so'rovnoma o'tkazdik."),
+      w("💯", "per cent", "pə ˈsent|pa sent", "ot", "Foiz", "One part in a hundred (%).", "Eighty per cent of students eat snacks.", "Talabalarning sakson foizi tamaddi qiladi."),
+      w("💼", "business", "ˈbɪznəs|biznas", "ot", "Shaxsiy ish; biznes", "Something only you should decide about; work of a company.", "My health is my business!", "Sog'lig'im — o'z ishim!"),
+      w("⬇️", "at least", "ət ˈliːst|at liist", "ibora", "Kamida", "Not less than.", "Sleep at least seven hours a night.", "Kechasi kamida yetti soat uxlang."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("⌚", "gadget", "ˈɡædʒɪt|gejit", "ot", "Kichik qurilma, gadjet", "A small useful machine.", "This gadget counts my steps.", "Bu gadjet qadamlarimni sanaydi."),
+      w("👣", "step", "step|step", "ot", "Qadam", "One movement of your foot when you walk.", "Take one more step!", "Yana bir qadam tashlang!"),
+      w("🔢", "count", "kaʊnt|kaunt", "fe'l", "Sanamoq", "Say numbers in order to find how many.", "Can you count to a hundred in English?", "Inglizcha yuzgacha sanay olasanmi?"),
+      w("🎯", "target", "ˈtɑːɡɪt|taagit", "ot", "Maqsad, reja (raqam)", "A number or result you want to get.", "The target is 10,000 steps a day.", "Maqsad — kuniga 10 000 qadam."),
+      w("🗓️", "routine", "ruːˈtiːn|ruutiin", "ot", "Kun tartibi, odatiy tartib", "The things you usually do every day.", "Exercise is part of my morning routine.", "Mashq — ertalabki kun tartibimning bir qismi."),
+      w("😴", "deeply", "ˈdiːpli|diipli", "ravish", "Qattiq, chuqur (uxlamoq)", "In a strong way; very well (sleep).", "The baby slept deeply all night.", "Chaqaloq tun bo'yi qattiq uxladi."),
+      w("📈", "progress", "ˈprəʊɡres|prougres", "ot", "Natija, o'sish", "Getting better over time.", "The teacher was happy with our progress.", "O'qituvchi natijamizdan mamnun edi."),
+      w("📅", "daily", "ˈdeɪli|deyli", "sifat", "Kundalik, har kungi", "Happening every day.", "A daily walk is good for you.", "Kundalik sayr sizga foydali."),
+      w("👩", "female", "ˈfiːmeɪl|fiimeyl", "sifat", "Ayol (jinsi)", "Woman or girl.", "Three female office workers tried the gadget.", "Uchta ayol ofis xodimi gadjetni sinab ko'rdi."),
+      w("📨", "message", "ˈmesɪdʒ|mesij", "ot", "Xabar; murojaat", "Information or an idea you give to people.", "The mayor had a message for everyone: walk more!", "Hokimning hammaga murojaati bor edi: ko'proq yuring!"),
+    ],
+  },
+];
+
+const ARTICLE = `THE OFFICE THAT GOT FIT
+Last year, the boss of a small IT company in Tashkent made a big decision. She thought her workers had unhealthy habits: they ate snacks all day, they drank a lot of sweet drinks and they sat at their computers for ten hours.
+So she changed a few things. First, she took the sweets out of the kitchen and put fruit there. Then she gave every worker a gadget to count their steps. The target was 8,000 steps a day. She also wrote a message on the lift: «Take the stairs!»
+Not everyone was happy. Some workers said their health was their business. But after six months, most people felt better. Ten workers lost weight, and three people rode a bicycle to work every day. The boss said: «We didn't work less — we worked better.»`;
+const read = reading(ARTICLE);
+
+export const A2_17_EXERCISES: SeedExercise[] = [
+  {
+    title: "What do you hear?",
+    skill: "Listening",
+    kind: "listen",
+    instructions: "Listen to the sentence. Choose what you hear.",
+    questions: [
+      listen("I took the stairs.", ["I took the stairs.", "I take the stairs.", "I'll take the stairs.", "I took the stars."]),
+      listen("She ate a lot of fruit.", ["She ate a lot of fruit.", "She eats a lot of fruit.", "She ate a lot of food.", "She'd eat a lot of fruit."]),
+      listen("We went to the gym.", ["We went to the gym.", "We go to the gym.", "We want the gym.", "We went to the game."]),
+      listen("He drove to work.", ["He drove to work.", "He drives to work.", "He drew at work.", "He drove for work."]),
+      listen("They slept for eight hours.", ["They slept for eight hours.", "They sleep for eight hours.", "They slept for eighteen hours.", "They stepped for eight hours."]),
+      listen("I thought it was a good idea.", ["I thought it was a good idea.", "I think it was a good idea.", "I taught it was a good idea.", "I thought it is a good idea."]),
+      listen("She gave me a gadget.", ["She gave me a gadget.", "She gives me a gadget.", "She gave me a jacket.", "She gave him a gadget."]),
+      listen("We had a snack.", ["We had a snack.", "We have a snack.", "We had a snake.", "We'd have a snack."]),
+      listen("He bought some vitamins.", ["He bought some vitamins.", "He brought some vitamins.", "He buys some vitamins.", "He bought some vitamin."]),
+      listen("healthy lifestyle", ["healthy lifestyle", "healthy life", "wealthy lifestyle", "healthy lifestyles"]),
+    ],
+  },
+  {
+    title: "A healthy lifestyle",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to nine ideas for a healthy lifestyle. Choose the correct verb for each one.",
+    questions: [
+      gaps(track("7.1"), [
+        ["___ lots of fruit and vegetables", "eat", "drink", "take"],
+        ["___ the stairs, not the lift", "take", "go", "walk"],
+        ["___ to work", "walk", "ride", "drive"],
+        ["___ a bicycle", "ride", "drive", "do"],
+        ["___ eight glasses of water a day", "drink", "eat", "take"],
+        ["___ an hour of exercise each day", "do", "make", "play"],
+        ["___ seven to eight hours a night", "sleep", "rest", "stay"],
+        ["___ to the gym or an evening class", "go", "do", "take"],
+        ["___ physical jobs around the house", "do", "make", "go"],
+      ]),
+    ],
+  },
+  {
+    title: "Irregular verbs",
+    skill: "Grammar",
+    kind: "type",
+    instructions: "Write the past simple. These verbs are irregular — they don't end in -ed.",
+    questions: written([
+      ["go", "went"],
+      ["eat", "ate"],
+      ["drink", "drank"],
+      ["take", "took"],
+      ["think", "thought"],
+      ["buy", "bought"],
+      ["sleep", "slept"],
+      ["choose", "chose"],
+      ["give", "gave"],
+      ["sit", "sat"],
+    ]),
+  },
+  {
+    title: "Present and past",
+    skill: "Listening",
+    kind: "listenmatch",
+    instructions: "Listen to eleven verbs in the present and the past. Write the past form you hear for each verb (1–9).",
+    questions: [
+      slots(track("7.2"), [
+        ["1. do", "did"],
+        ["2. eat", "ate"],
+        ["3. drive", "drove"],
+        ["4. give", "gave"],
+        ["5. write", "wrote"],
+        ["6. have", "had"],
+        ["7. tell", "told"],
+        ["8. take", "took"],
+        ["9. think", "thought"],
+      ]),
+    ],
+  },
+  {
+    title: "Same or different?",
+    skill: "Pronunciation",
+    kind: "listengap",
+    instructions: "Listen to six groups of past simple verbs. Are the vowel sounds in each group the same or different?",
+    questions: [
+      gaps(track("7.3"), [
+        ["thought / bought / taught — the vowels are ___", "the same", "different"],
+        ["got / chose / wrote — the vowels are ___", "different", "the same"],
+        ["sat / went / had — the vowels are ___", "different", "the same"],
+        ["came / made / ate — the vowels are ___", "the same", "different"],
+        ["flew / took / put — the vowels are ___", "different", "the same"],
+        ["met / said / slept — the vowels are ___", "the same", "different"],
+      ]),
+    ],
+  },
+  {
+    title: "The office that got fit",
+    skill: "Reading",
+    kind: "reading",
+    instructions: "Read the article and answer the questions.",
+    questions: [
+      read("Who made the big decision?", ["The boss of the company", "The workers", "The mayor of Tashkent", "A doctor"]),
+      read("Which of these was an unhealthy habit of the workers?", ["They drank a lot of sweet drinks.", "They walked a lot.", "They slept at work.", "They smoked."]),
+      read("What did the boss put in the kitchen?", ["Fruit", "Sweets", "A gadget", "Sweet drinks"]),
+      read("What did the gadget do?", ["It counted steps.", "It counted calories.", "It checked sleep.", "It sent messages."]),
+      read("What was the target?", ["8,000 steps a day", "10,000 steps a day", "8,000 steps a week", "Ten hours a day"]),
+      read("Where did she write «Take the stairs!»?", ["On the lift", "On the computers", "In the kitchen", "On the door"]),
+      read("What did some workers say?", ["Their health was their business.", "The gadget was too expensive.", "They wanted more snacks.", "They loved the idea."]),
+      read("How many workers lost weight?", ["Ten", "Three", "Six", "Eight"]),
+      read("How did three people come to work?", ["By bicycle", "On foot", "By car", "By bus"]),
+      read("What does the boss think?", ["They worked better.", "They worked less.", "The idea didn't work.", "The workers were lazy."]),
+    ],
+  },
+  {
+    title: "Student health survey",
+    skill: "Grammar",
+    kind: "fill",
+    instructions: "Write the verb in brackets in the past simple.",
+    questions: written([
+      ["80% of students ___ snacks between meals. (eat)", "ate"],
+      ["65% ___ sport every week. (play)", "played"],
+      ["40% ___ only six hours a night. (sleep)", "slept"],
+      ["20% ___ extra vitamins. (take)", "took"],
+      ["75% ___ they were worried about exams. (say)", "said"],
+      ["55% ___ at a computer for six hours a day. (sit)", "sat"],
+      ["30% ___ they had a healthy lifestyle. (think)", "thought"],
+      ["Last year I ___ a new bike. (buy)", "bought"],
+      ["We ___ to the gym after work. (go)", "went"],
+      ["He ___ me about the survey. (tell)", "told"],
+    ]),
+  },
+  {
+    title: "Choose the past form",
+    skill: "Grammar",
+    kind: "choice",
+    instructions: "Choose the correct answer.",
+    questions: [
+      say("Yesterday I ___ eight glasses of water.", ["drank", "drinked", "drunk", "drink"]),
+      say("In 2002 New Yorkers ___ a new mayor.", ["chose", "choosed", "choose", "chosed"]),
+      say("He ___ the stairs, not the lift.", ["took", "taked", "takes", "tooked"]),
+      say("We ___ to the gym last night.", ["went", "goed", "gone", "go"]),
+      say("She ___ a message on the door.", ["wrote", "writed", "written", "write"]),
+      say("I ___ a healthy breakfast this morning.", ["had", "haved", "has", "have"]),
+      say("They ___ about it for a long time.", ["thought", "thinked", "thinks", "taught"]),
+      say("Which verb is regular?", ["wanted", "chose", "came", "made"]),
+      say("He ___ me a step counter for my birthday.", ["gave", "gived", "give", "gaved"]),
+      say("I ___ to work last week — it was great exercise!", ["rode", "rided", "ride", "ridden"]),
+    ],
+  },
+  {
+    title: "Find the mistake",
+    skill: "Grammar",
+    kind: "mistake",
+    instructions: "Each sentence has one wrong word. Tap it.",
+    questions: [
+      mistake("Yesterday I *goed to the gym.", "go → went."),
+      mistake("She *eated a lot of fruit.", "eat → ate."),
+      mistake("We *buyed some vitamins.", "buy → bought."),
+      mistake("He *taked the stairs.", "take → took."),
+      mistake("I *sleeped for nine hours.", "sleep → slept."),
+      mistake("They *thinked it was a good idea.", "think → thought."),
+      mistake("Last year she *lose weight.", "Past: lost."),
+      mistake("I *drive to work yesterday.", "Past: drove."),
+      mistake("Eat lots of fruit and *vegetable.", "Plural: vegetables."),
+      mistake("*Make an hour of exercise each day.", "We say do exercise."),
+    ],
+  },
+  {
+    title: "Make a sentence",
+    skill: "Word order",
+    kind: "order",
+    instructions: "Tap the words in the correct order.",
+    questions: sentences([
+      "I took the stairs, not the lift.",
+      "She ate a lot of snacks between meals.",
+      "We went to the gym last night.",
+      "He gave every worker a gadget.",
+      "They drank eight glasses of water a day.",
+      "The mayor wanted people to be healthy.",
+      "I slept for seven hours.",
+      "My health is my business.",
+      "She rode a bicycle to work.",
+      "We did a survey of 200 students.",
+    ]),
+  },
+  {
+    title: "Find the pairs",
+    skill: "Matching",
+    kind: "match",
+    instructions: "Match the words.",
+    questions: pairs([
+      ["go|went", "eat|ate", "take|took", "buy|bought"],
+      ["think|thought", "give|gave", "write|wrote", "sleep|slept"],
+      ["take|the stairs", "ride|a bicycle", "do|exercise", "drink|water"],
+      ["keep|fit", "lose|weight", "healthy|lifestyle", "public|place"],
+      ["ban|not allow", "reduce|make smaller", "habit|something you do often", "target|a number you want to get"],
+    ]),
+  },
+  {
+    title: "Say it",
+    skill: "Pronunciation",
+    kind: "speak",
+    instructions: "Listen, then tap the microphone and say it yourself.",
+    questions: phrases([
+      "I always take the stairs.",
+      "I went to the gym yesterday.",
+      "She ate a lot of fruit.",
+      "We thought it was a good idea.",
+      "My health is my business.",
+      "Sleep at least seven hours a night.",
+      "healthy lifestyle",
+      "vitamin",
+      "calorie",
+      "routine",
+    ]),
+  },
+];
