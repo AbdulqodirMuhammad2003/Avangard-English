@@ -201,6 +201,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-14", level: "A2", title: "14-dars", subtitle: "In a shop: adjectives and adverbs", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-05.mp4", title: "Camden Market", kind: "hujjatli", start: null, end: null } },
   { code: "A2-15", level: "A2", title: "15-dars", subtitle: "Don't give up! was / were", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-6.mp4", title: "Vox pops 6: the past", kind: "intervyu", start: null, end: null } },
   { code: "A2-16", level: "A2", title: "16-dars", subtitle: "Stories: past simple (-ed)", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-06.mp4", title: "Istanbul", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-17", level: "A2", title: "17-dars", subtitle: "My health, my business: irregular past", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-7.mp4", title: "Vox pops 7: health", kind: "intervyu", start: null, end: null } },
+  { code: "A2-18", level: "A2", title: "18-dars", subtitle: "Sporting heroes: didn't, opinions", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-07.mp4", title: "Health and fitness in New York", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-19", level: "A2", title: "19-dars", subtitle: "I went to…: past simple questions", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-8.mp4", title: "Vox pops 8: holidays", kind: "intervyu", start: null, end: null } },
+  { code: "A2-20", level: "A2", title: "20-dars", subtitle: "Journeys: should, have to", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-08.mp4", title: "Adventure holidays", kind: "hujjatli", start: null, end: null } },
 ];
 
 export async function seedDatabase() {

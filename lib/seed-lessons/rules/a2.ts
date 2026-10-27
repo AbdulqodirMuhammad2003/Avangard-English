@@ -594,4 +594,152 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("I lost my phone. — ___", ["Oh no! Poor you!", "That's brilliant!", "Well done!", "That's great!"]),
     ]
   ),
+  "A2-17": rule(
+    "Past Simple: noto'g'ri fe'llar",
+    `Ko'p fe'llar o'tgan zamonda **-ed** olmaydi — ularning o'z shakli bor. Ular **noto'g'ri (irregular) fe'llar** deyiladi va yod olinadi.
+
+## Eng ko'p ishlatiladiganlari
+• go → **went** · come → **came** · see → **saw**
+• eat → **ate** · drink → **drank** · have → **had**
+• take → **took** · give → **gave** · make → **made**
+• think → **thought** · buy → **bought** · tell → **told**
+• sleep → **slept** · sit → **sat** · write → **wrote**
+• drive → **drove** · ride → **rode** · choose → **chose**
+• say → **said** · do → **did** · get → **got**
+
+## Shakl hamma shaxslar uchun bir xil
+• I / you / he / she / we / they **went** to the gym. (He goes emas, **he went**.)
+
+## Talaffuz
+• thought / bought / taught — bir xil unli /ɔː/.
+• came / made / ate — bir xil unli /eɪ/.
+• said — /sed/ deb o'qiladi («seyd» emas!).
+
+## Sog'lom turmush iboralari
+• **eat** fruit · **drink** water · **take** the stairs · **ride** a bicycle · **do** exercise · **go** to the gym.`,
+    [
+      q("Yesterday I ___ to the gym.", ["went", "goed", "go", "gone"]),
+      q("She ___ a lot of fruit last week.", ["ate", "eated", "eats", "eaten"]),
+      q("He ___ the stairs, not the lift.", ["took", "taked", "takes", "tooked"]),
+      q("think → ?", ["thought", "thinked", "taught", "thoughted"]),
+      q("buy → ?", ["bought", "buyed", "brought", "boughted"]),
+      q("We ___ eight hours last night.", ["slept", "sleeped", "sleep", "slep"]),
+      q("Qaysi fe'l to'g'ri (regular)?", ["wanted", "chose", "gave", "wrote"]),
+      q("«said» qanday o'qiladi?", ["/sed/", "/seɪd/", "/saɪd/", "/sɪd/"]),
+      q("___ an hour of exercise each day.", ["Do", "Make", "Play", "Go"]),
+      q("Qaysi gap to'g'ri?", ["He drove to work yesterday.", "He drived to work yesterday.", "He drive to work yesterday.", "He drives to work yesterday."]),
+    ]
+  ),
+  "A2-18": rule(
+    "Past Simple: inkor gap (didn't)",
+    `O'tgan zamonda inkor gap: **didn't (did not) + fe'lning asosiy shakli**.
+
+## Yasalishi
+• He walked. → He **didn't walk**.
+• She went. → She **didn't go**. (didn't went — xato!)
+• Barcha shaxslar uchun bir xil: I / she / they **didn't** play.
+
+## Diqqat!
+• **didn't** dan keyin fe'l doim oddiy shaklda: didn't **see**, didn't **win**, didn't **feel**.
+• was / were bilan did ishlatilmaydi: It **wasn't** easy. (It didn't was — xato.)
+
+## Sport: play, go yoki do?
+• **play** + to'p bilan o'yinlar: play football, play tennis, play basketball.
+• **go** + -ing: go swimming, go fishing; go to the gym.
+• **do** + boshqa sportlar: do judo, do yoga, do athletics.
+
+## Oson adashtiriladigan so'zlar
+• **lend** — qarzga bermoq / **borrow** — qarzga olmoq.
+• **say** something / **tell** somebody: He said «hi». He told me a story.
+• **look at** (rasm, telefon) / **watch** (TV, sport, film).
+• **bring** — bu yerga olib kelmoq / **take** — u yerga olib ketmoq.
+
+## Fikr bildirish
+• So'rash: What do you think of…? What's your opinion?
+• Aytish: I think… · For me,… · In my opinion,…
+• Rozi: You're right. I agree with that.
+• Rozi emas: Yes, but… · I don't know about that. · I disagree.`,
+    [
+      q("He ___ before he was five.", ["didn't walk", "didn't walked", "not walked", "doesn't walked"]),
+      q("We ___ to the gym yesterday.", ["didn't go", "didn't went", "don't went", "not go"]),
+      q("It ___ easy.", ["wasn't", "didn't was", "didn't", "weren't"]),
+      q("___ judo", ["do", "play", "go", "make"]),
+      q("___ basketball", ["play", "do", "go", "make"]),
+      q("Can I ___ your pen, please?", ["borrow", "lend", "take", "bring"]),
+      q("He ___ me about the race.", ["told", "said", "spoke", "talked"]),
+      q("They ___ the final on TV.", ["watched", "looked at", "looked", "saw at"]),
+      q("Rozi emasligini muloyim bildiradi:", ["I don't know about that.", "You're right.", "I agree with that.", "I think it's great."]),
+      q("Qaysi gap to'g'ri?", ["In my opinion, sport is important.", "At my opinion, sport is important.", "On my opinion, sport is important.", "I'm agree that sport is important."]),
+    ]
+  ),
+  "A2-19": rule(
+    "Past Simple: so'roq gap (Did you…?)",
+    `O'tgan zamonda so'roq gap **did** yordamchi fe'li bilan tuziladi. **did** dan keyin fe'l oddiy shaklda bo'ladi.
+
+## Ha / yo'q savollari
+• **Did** + ega + fe'l? → **Did** you **go** on your own?
+• Qisqa javob: Yes, I **did**. / No, I **didn't**.
+• «Yes, I went» yoki «Yes, I liked» — qisqa javob emas.
+
+## So'roq so'zli savollar
+• So'roq so'z + **did** + ega + fe'l? → Where **did** you **go**? What **did** you **do**? How long **did** you **stay**?
+• «Where you went?» yoki «Where did you went?» — xato.
+
+## was / were bilan — did kerak emas
+• **Was** the food good? **Were** you tired? (Did the food was… — xato.)
+
+## Talaffuz
+• **did you** odatda tez aytiladi: /dɪdʒə/ — How long did you stay?
+• **did he** — /dɪdi/.
+
+## Ta'til iboralari
+• rent an apartment · lie on the beach · go sightseeing · go on a guided tour · get lost · stay in a guest house · trek in the mountains.`,
+    [
+      q("Where ___ you go on holiday?", ["did", "do", "were", "was"]),
+      q("Did you ___ the food?", ["like", "liked", "likes", "liking"]),
+      q("Did you have a good time? — Yes, I ___.", ["did", "had", "have", "was"]),
+      q("Did he stay in hotels? — No, he ___.", ["didn't", "doesn't", "wasn't", "not"]),
+      q("How ___ did you stay?", ["long", "much", "many", "time"]),
+      q("___ the hotel expensive?", ["Was", "Did", "Were", "Does"]),
+      q("Qaysi savol to'g'ri?", ["What did you do?", "What you did?", "What did you did?", "What do you did?"]),
+      q("«Did you…» tez nutqda qanday eshitiladi?", ["/dɪdʒə/", "/daɪ juː/", "/dɪd jə/ har doim aniq", "/duː juː/"]),
+      q("I always get ___ in big cities.", ["lost", "lose", "losing", "loss"]),
+      q("We lie ___ the beach all day.", ["on", "in", "at", "by"]),
+    ]
+  ),
+  "A2-20": rule(
+    "should / shouldn't · have to / don't have to",
+    `## should / shouldn't — maslahat
+• **should** + fe'l — shunday qilish **yaxshi** (maslahat): You **should** have a map.
+• **shouldn't** + fe'l — shunday qilish **yaxshi emas**: You **shouldn't** take a taxi in rush hour.
+• should dan keyin **to** yo'q: should **go** (should to go — xato). he / she uchun ham **should**.
+
+## have to / don't have to — majburiyat
+• **have to** — **shart, majburiy** (qoida, qonun): You **have to** wear a helmet.
+• **don't have to** — **shart emas**, lekin taqiq ham emas: You **don't have to** pay. Walking is free!
+• he / she / it: **has to** / **doesn't have to**: She **has to** work on Saturday.
+• So'roq: **Do** I **have to** buy a ticket? **Does** he **have to**…?
+
+## Adashtirmang!
+• don't have to = shart emas (xohlasang qil).
+• shouldn't = qilmagan ma'qul (yomon fikr).
+
+## Transport iboralari
+• **take / get** the train, a taxi, the bus · **miss** the bus · go **on** foot · go **by** bike / car / public transport.
+
+## Vokzalda
+• When's the next train? · How long does it take? · A single / A return, please. · Which platform does it leave from?`,
+    [
+      q("It's a good idea. You ___ have a map.", ["should", "have to", "don't have to", "shouldn't"]),
+      q("It's the law. You ___ wear a seat belt.", ["have to", "should", "don't have to", "shouldn't"]),
+      q("It's free. You ___ pay.", ["don't have to", "shouldn't", "have to", "has to"]),
+      q("It's a bad idea. You ___ drive fast.", ["shouldn't", "don't have to", "have to", "should"]),
+      q("She ___ work on Saturdays.", ["has to", "have to", "has", "should to"]),
+      q("You should ___ earlier.", ["get up", "to get up", "getting up", "gets up"]),
+      q("___ I have to buy a ticket?", ["Do", "Am", "Have", "Should"]),
+      q("I go to work ___ foot.", ["on", "by", "with", "in"]),
+      q("I was late, so I ___ the bus.", ["missed", "lost", "lose", "passed"]),
+      q("Which platform does it ___ from?", ["leave", "leaves", "left", "leaving"]),
+    ]
+  ),
 };

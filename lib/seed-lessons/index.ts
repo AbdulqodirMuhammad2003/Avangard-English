@@ -49,6 +49,10 @@ import { A2_13_EXERCISES, A2_13_ROUNDS } from "./a2-13-wearing";
 import { A2_14_EXERCISES, A2_14_ROUNDS } from "./a2-14-in-a-shop";
 import { A2_15_EXERCISES, A2_15_ROUNDS } from "./a2-15-dont-give-up";
 import { A2_16_EXERCISES, A2_16_ROUNDS } from "./a2-16-stories";
+import { A2_17_EXERCISES, A2_17_ROUNDS } from "./a2-17-healthy";
+import { A2_18_EXERCISES, A2_18_ROUNDS } from "./a2-18-sporting-heroes";
+import { A2_19_EXERCISES, A2_19_ROUNDS } from "./a2-19-holidays";
+import { A2_20_EXERCISES, A2_20_ROUNDS } from "./a2-20-journeys";
 import { A2_09_EXERCISES, A2_09_ROUNDS } from "./a2-09-places";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
@@ -133,6 +137,10 @@ const LESSONS: LessonContent[] = [
   { code: "A2-14", rounds: A2_14_ROUNDS, exercises: A2_14_EXERCISES },
   { code: "A2-15", rounds: A2_15_ROUNDS, exercises: A2_15_EXERCISES },
   { code: "A2-16", rounds: A2_16_ROUNDS, exercises: A2_16_EXERCISES },
+  { code: "A2-17", rounds: A2_17_ROUNDS, exercises: A2_17_EXERCISES },
+  { code: "A2-18", rounds: A2_18_ROUNDS, exercises: A2_18_EXERCISES },
+  { code: "A2-19", rounds: A2_19_ROUNDS, exercises: A2_19_EXERCISES },
+  { code: "A2-20", rounds: A2_20_ROUNDS, exercises: A2_20_EXERCISES },
   { code: "A2-09", rounds: A2_09_ROUNDS, exercises: A2_09_EXERCISES },
 ];
 
