@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Delete, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
+import { BookOpen, Check, Delete, X, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
+import { buzz, celebrate } from "@/lib/celebrate";
 import { localizeOption } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
 import { answerMatches, matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_ERRORS_EN, SPEECH_LANG } from "@/lib/english-speech";
@@ -101,6 +102,16 @@ const OPTION_STATE_CLASSES = {
   selected: "border-azure-500 bg-azure-50 font-semibold text-azure-900 dark:bg-azure-950/40 dark:text-azure-100",
   idle: "border-ink-100 bg-white hover:border-ink-200 hover:bg-ink-50/60 dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10",
 };
+
+/** To'g'ri javobdan keyingi maqtovlar (savolga qarab almashib turadi). */
+const PRAISE: [string, string][] = [
+  ["To'g'ri!", "Correct!"],
+  ["Zo'r!", "Great!"],
+  ["Barakalla!", "Well done!"],
+  ["Ajoyib!", "Excellent!"],
+  ["Aynan shunday!", "Exactly right!"],
+  ["Davom eting!", "Keep it up!"],
+];
 
 /** Qoida testidan o'tish (mashqlar ochilishi) uchun kerakli natija. */
 export const RULE_PASS_PCT = 60;
@@ -305,7 +316,18 @@ export function ExerciseRun({
     ? pending.every((q, k) => (pagePicks[k]?.length ?? 0) === rightOptions(q).length)
     : kind === "listengap" ? gapsFilled : kind === "listenmatch" ? slotsFilled : isWritten ? answerValue.trim() !== "" : selected !== null;
 
+  /** To'g'ri javobda — «Tekshirish» tugmasi ustidan kichik konfetti va
+   *  qisqa tebranish; xatoda — ikki marta qisqa tebranish. */
+  function feel(ok: boolean) {
+    if (ok) {
+      const btn = document.querySelector<HTMLElement>("[data-check-button]")?.getBoundingClientRect();
+      celebrate({ origin: btn ? { x: btn.left + btn.width / 2, y: btn.top } : undefined, count: 18, spread: 0.7 });
+      buzz(12);
+    } else buzz([18, 60, 18]);
+  }
+
   function record(ok: boolean) {
+    feel(ok);
     setChecked(ok);
     setAnswers((a) => [...a, { questionId: question.id, correct: ok }]);
   }
@@ -315,6 +337,7 @@ export function ExerciseRun({
     if (pageMode) {
       const results = pending.map((q, k) => ({ questionId: q.id, correct: pageQuestionRight(k) }));
       setChecked(results.every((r) => r.correct));
+      feel(results.every((r) => r.correct));
       setAnswers(results);
       return;
     }
@@ -415,6 +438,7 @@ export function ExerciseRun({
     } else {
       const pct = Math.round(((alreadyCorrect + correctCount) / exercise.questions.length) * 100);
       setResult(pct);
+      if (pct >= 80) setTimeout(() => celebrate({ count: 70, spread: 1.4 }), 150);
       onFinish(answers);
     }
   }
@@ -1160,17 +1184,25 @@ export function ExerciseRun({
 
         {checked !== null && (
           <div
-            className={`animate-fade-up rounded-2xl px-4 py-3 text-sm ${
+            className={`flex animate-pop-in gap-3 rounded-2xl px-4 py-3.5 text-sm ring-1 ${
               checked
-                ? "bg-mint-50 text-mint-900 dark:bg-mint-950/40 dark:text-mint-100"
-                : "bg-rose-50 text-rose-900 dark:bg-rose-950/40 dark:text-rose-100"
+                ? "bg-gradient-to-br from-mint-50 to-mint-100/70 text-mint-900 ring-mint-200 dark:from-mint-950/50 dark:to-mint-900/30 dark:text-mint-100 dark:ring-mint-800/50"
+                : "bg-gradient-to-br from-rose-50 to-rose-100/60 text-rose-900 ring-rose-200 dark:from-rose-950/50 dark:to-rose-900/20 dark:text-rose-100 dark:ring-rose-900/50"
             }`}
           >
-            <p className="font-bold">
+            <span
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-md ${
+                checked ? "bg-mint-500 shadow-mint-700/30" : "bg-rose-500 shadow-rose-700/30"
+              }`}
+            >
+              {checked ? <Check size={20} strokeWidth={3} /> : <X size={20} strokeWidth={3} />}
+            </span>
+            <div className="min-w-0 flex-1">
+            <p className="font-display text-base font-bold">
               {checked
                 ? pageMode
-                  ? t("Hammasi to'g'ri!", "All correct!")
-                  : t("To'g'ri!", "Correct!")
+                  ? t("Hammasi to'g'ri! Barakalla!", "All correct! Brilliant!")
+                  : PRAISE[question.id % PRAISE.length][lang === "en" ? 1 : 0]
                 : pageMode
                 ? t(
                     `${correctCount} / ${total} to'g'ri.${showAnswer ? " To'g'ri javoblar yashil rangda." : ""}`,
@@ -1203,15 +1235,19 @@ export function ExerciseRun({
                 </span>
               </div>
             )}
+            </div>
           </div>
         )}
 
         {/* Juftlikda "Tekshirish" kerak emas — hamma juft ulanganda o'zi tekshiriladi. */}
         {!(kind === "match" && checked === null) && (
           <button
+            data-check-button
             onClick={checked === null ? check : next}
             disabled={checked === null && !canCheck}
-            className="btn-press mt-1 rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-40"
+            className={`btn-press mt-1 rounded-full py-3.5 font-display text-base font-bold tracking-wide text-white disabled:opacity-40 ${
+              checked ? "bg-mint-600 hover:bg-mint-500" : "bg-azure-600 hover:bg-azure-500"
+            }`}
           >
             {checked === null
               ? t("Tekshirish", "Check")

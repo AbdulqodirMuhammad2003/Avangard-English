@@ -1,19 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Figtree, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { getLang } from "@/lib/lang-server";
+import { ClickSpark } from "@/components/ClickSpark";
 
-// Manrope — sarlavhalar uchun zamonaviy, do'stona geometrik shrift; Inter —
-// ekranda o'qish uchun eng qulay matn shriftlaridan biri.
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
+// Plus Jakarta Sans — sarlavhalar uchun zamonaviy, ishonchli geometrik shrift;
+// Figtree — ochiq, do'stona harflar: ekranda uzoq o'qisa ham ko'z charchamaydi.
+const display = Plus_Jakarta_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-display-face",
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const body = Figtree({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-body-face",
   display: "swap",
 });
 
@@ -42,7 +43,7 @@ const THEME_INIT_SCRIPT = `
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const lang = await getLang();
   return (
-    <html lang={lang} className={`h-full antialiased ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`h-full antialiased ${display.variable} ${body.variable}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {/* next/script'ning "beforeInteractive" strategiyasi o'rniga oddiy
             inline <script> ishlatilmoqda — u HTML parse qilinayotganda,
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           id="avangard-theme-init"
           dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
         />
+        <ClickSpark />
         {children}
       </body>
     </html>
