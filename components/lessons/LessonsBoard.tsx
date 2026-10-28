@@ -294,9 +294,10 @@ export function LessonsBoard({
   }
 
   /** "Inglizcha tomosha" faqat shu darsdagi barcha mashqlar kamida bir marta
-   *  yakunlangach (ball qanday bo'lishidan qat'iy nazar) ochiladi. */
+   *  yakunlangach (ball qanday bo'lishidan qat'iy nazar) ochiladi. O'qituvchi
+   *  (previewAll) videoning sifatini tekshirish uchun uni har doim ochadi. */
   function unitClipUnlocked(unit: UnitDetail) {
-    return unit.exercises.length > 0 && unit.exercises.every((e) => e.attempted);
+    return previewAll || (unit.exercises.length > 0 && unit.exercises.every((e) => e.attempted));
   }
 
   /** Dars bosqichlari ketma-ket ochiladi: lug'at VOCAB_PASS_PCT ga yetmaguncha qoida, qoida
