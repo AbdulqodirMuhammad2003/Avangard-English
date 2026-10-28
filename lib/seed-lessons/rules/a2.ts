@@ -742,4 +742,140 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("Which platform does it ___ from?", ["leave", "leaves", "left", "leaving"]),
     ]
   ),
+  "A2-21": rule(
+    "Sanaladigan / sanalmaydigan otlar · some / any",
+    `## Ikki xil ot
+• **Sanaladigan** (countable): bitta, ikkita… sanash mumkin — a lemon, two lemons, a pear, mushrooms.
+• **Sanalmaydigan** (uncountable): sanab bo'lmaydi, ko'pligi yo'q — rice, beef, bread, water, honey, sugar.
+• «two rices», «a bread» — xato. To'g'ri: some rice, **a bag of** rice, **a loaf of** bread, **a bottle of** water.
+
+## a / an
+• Faqat **birlikdagi sanaladigan** ot bilan: **a** pear, **an** onion, **an** egg (unli tovushdan oldin **an**).
+• Sanalmaydigan va ko'plikdagi otlar bilan **a / an ishlatilmaydi**: I have yoghurt for breakfast. I like mushrooms.
+
+## some / any
+• **some** — darak gapda: We have **some** rice. There are **some** olives.
+• **any** — inkor gapda: We don't have **any** bread.
+• **any** — so'roq gapda: Do you have **any** beef? Is there **any** honey?
+• Biror narsa so'raganda yoki taklif qilganda — **some**: Can I have **some** noodles? Would you like **some** tea?
+
+## Talaffuz
+• some va any gapda kuchsiz aytiladi: /səm/, /əni/ — Do you have any meat?`,
+    [
+      q("Qaysi ot sanalmaydi?", ["rice", "pear", "lemon", "mushroom"]),
+      q("I'd like ___ pear, please.", ["a", "an", "some", "any"]),
+      q("Can I have ___ onion?", ["an", "a", "some", "any"]),
+      q("We have ___ rice.", ["some", "any", "a", "an"]),
+      q("We don't have ___ bread.", ["any", "some", "a", "an"]),
+      q("Do you have ___ beef?", ["any", "a", "an", "many"]),
+      q("Can I have ___ sweetcorn, please?", ["some", "any", "a", "an"]),
+      q("I'll have a ___ of rice.", ["bag", "bread", "slice", "cup"]),
+      q("Qaysi gap to'g'ri?", ["I have yoghurt for breakfast.", "I have an yoghurt for breakfast.", "I have yoghurts for breakfast.", "I have a yoghurts for breakfast."]),
+      q("Qaysi gap to'g'ri?", ["There's some bread on the table.", "There are some breads on the table.", "There's a bread on the table.", "There's any bread on the table."]),
+    ]
+  ),
+  "A2-22": rule(
+    "Miqdor: much / many / a lot of",
+    `## much — sanalmaydigan otlar bilan
+• So'roq va inkor gapda: How **much** time do you spend cooking? I don't drink **much** coffee.
+
+## many — ko'plikdagi sanaladigan otlar bilan
+• So'roq va inkor gapda: How **many** eggs do we need? There aren't **many** vegetables.
+
+## a lot of — ikkalasi bilan ham
+• Odatda darak gapda: We eat **a lot of** food. She has **a lot of** recipes.
+• «much» darak gapda kam ishlatiladi: «We eat much food» — g'alati eshitiladi.
+
+## Qisqa javoblar (ko'pdan kamga)
+• **A lot.** → **Quite a lot.** → **Some.** → **Not much / Not many.** → **None.**
+• How much meat do you eat? — **Not much.** How many cookbooks? — **None.**
+
+## Restoranda
+• Would you like to order? · Would you like a starter? · Could I have the grilled chicken, please?
+• Would you like a side dish with that? · Can we pay by credit card?
+
+## Sonlar
+• 7.35 — seven **point** three five · ¾ — three-**quarters** · ½ — a **half**
+• 82.4% — eighty-two point four **per cent** · –14°C — **minus** fourteen degrees.`,
+    [
+      q("How ___ time do you spend cooking?", ["much", "many", "a lot"]),
+      q("How ___ eggs do we need?", ["many", "much", "a lot"]),
+      q("We eat ___ food.", ["a lot of", "much", "many"]),
+      q("There aren't ___ vegetables in it.", ["many", "much", "a lot"]),
+      q("I don't drink ___ coffee.", ["much", "many", "a lot"]),
+      q("How much meat do you eat? — ___", ["Not much.", "Not many.", "A lot of.", "Much."]),
+      q("Could I ___ the grilled chicken, please?", ["have", "having", "to have", "had"]),
+      q("Would you like a ___ dish with that?", ["side", "main", "first", "small"]),
+      q("¾ qanday o'qiladi?", ["three-quarters", "three-fourth", "three by four", "third-four"]),
+      q("7.35 qanday o'qiladi?", ["seven point three five", "seven comma thirty-five", "seven and thirty-five", "seven dot thirty-five"]),
+    ]
+  ),
+  "A2-23": rule(
+    "Qiyosiy daraja: bigger, more expensive",
+    `Ikki narsani solishtirganda **qiyosiy daraja** + **than** ishlatiladi: Moscow is **colder than** Tashkent.
+
+## Yasalishi
+• Qisqa sifat (1 bo'g'in) + **-er**: cold → **colder**, warm → **warmer**.
+• -e bilan tugasa + **-r**: large → **larger**.
+• Bitta unli + bitta undosh — undosh ikkilanadi: big → **bigger**, hot → **hotter**, wet → **wetter**.
+• Undosh + **-y** → **-ier**: dry → **drier**, sunny → **sunnier**, heavy → **heavier**.
+• Uzun sifat (2+ bo'g'in) — **more** + sifat: expensive → **more expensive**, beautiful → **more beautiful**.
+• Noto'g'ri: good → **better**, bad → **worse**.
+
+## Diqqat!
+• **than**, «that» yoki «then» emas: Dublin is wetter **than** Paris.
+• Ikkalasini birga ishlatmang: «more colder» — xato.
+• Kichik farq: Canada is **slightly** bigger than the USA.
+• than kuchsiz aytiladi: /ðən/.
+
+## Ob-havo so'zlari (ot → sifat)
+• snow → **snowy** · rain → **rainy** · sun → **sunny** · wind → **windy** · fog → **foggy** · ice → **icy** / **freezing**.`,
+    [
+      q("Moscow is ___ than Tashkent in winter.", ["colder", "more cold", "coldest", "more colder"]),
+      q("big → ?", ["bigger", "biger", "more big", "biggest"]),
+      q("dry → ?", ["drier", "dryer", "more dry", "dryier"]),
+      q("expensive → ?", ["more expensive", "expensiver", "most expensive", "expensivest"]),
+      q("good → ?", ["better", "gooder", "more good", "best"]),
+      q("bad → ?", ["worse", "badder", "worst", "more bad"]),
+      q("Dublin is wetter ___ Paris.", ["than", "that", "then", "as"]),
+      q("fog → sifat?", ["foggy", "fogy", "fogging", "fogged"]),
+      q("Canada is ___ bigger than the USA.", ["slightly", "slight", "more", "most"]),
+      q("Qaysi gap to'g'ri?", ["Tokyo is more expensive than Singapore.", "Tokyo is expensiver than Singapore.", "Tokyo is more expensiver than Singapore.", "Tokyo is more expensive that Singapore."]),
+    ]
+  ),
+  "A2-24": rule(
+    "Orttirma daraja: the biggest, the most beautiful",
+    `Biror narsani butun guruh bilan solishtirganda **orttirma daraja** ishlatiladi; oldidan odatda **the** keladi: Baikal is **the deepest** lake in the world.
+
+## Yasalishi
+• Qisqa sifat + **-est**: tall → **the tallest**, deep → **the deepest**.
+• -e bilan tugasa + **-st**: large → **the largest**.
+• Undosh ikkilanadi: big → **the biggest**, hot → **the hottest**.
+• Undosh + **-y** → **-iest**: easy → **the easiest**, busy → **the busiest**.
+• Uzun sifat — **the most** + sifat: **the most beautiful**, **the most dangerous**.
+• Noto'g'ri: good → **the best**, bad → **the worst**, many → **the most**.
+
+## Iboralar
+• **one of the** + orttirma + **ko'plik**: one of the easiest **mountains**.
+• … **in** the world / **in** Africa / **in** the country.
+
+## Talaffuz
+• the — /ðə/ (undoshdan oldin), -est — /əst/: the biggest /ðə ˈbɪɡəst/.
+
+## Dunyo tomonlari va afzal ko'rish
+• north, south, east, west · north-west, south-east · **in the south of** Siberia · **near the west coast** of Thailand.
+• **I'd prefer** + **to** + fe'l: I'd prefer **to stay** in a hotel.`,
+    [
+      q("Baikal is ___ lake in the world.", ["the deepest", "the deeper", "deepest", "the most deep"]),
+      q("big → ?", ["the biggest", "the bigest", "the most big", "the bigger"]),
+      q("easy → ?", ["the easiest", "the easyest", "the most easy", "the easier"]),
+      q("beautiful → ?", ["the most beautiful", "the beautifulest", "the more beautiful", "most beautifullest"]),
+      q("good → ?", ["the best", "the goodest", "the better", "the most good"]),
+      q("It's one of the easiest ___ to climb.", ["mountains", "mountain", "mountain's", "of mountain"]),
+      q("Lake Baikal is in ___ of Siberia.", ["the south", "south", "the southern", "a south"]),
+      q("I'd prefer ___ in a hotel.", ["to stay", "stay", "staying", "stayed"]),
+      q("«the biggest» da «the» qanday o'qiladi?", ["/ðə/", "/ðiː/", "/ðeɪ/", "o'qilmaydi"]),
+      q("Qaysi gap to'g'ri?", ["Which river is the longest in the world?", "Which river is the longer in the world?", "Which river is the most long in the world?", "Which river is longest than the world?"]),
+    ]
+  ),
 };

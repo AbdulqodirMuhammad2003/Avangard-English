@@ -1,0 +1,316 @@
+/**
+ * A2, 24-dars — «Tabiat mo'jizalari». Tabiat va geografiya (mountain,
+ * waterfall, desert, coast), dunyo tomonlari, sayohatga nima olish kerak.
+ * Grammatika: sifatlarning orttirma darajasi — the …-est / the most …,
+ * good → the best, bad → the worst; I'd prefer…
+ * Navigate A2, 10.2–10.4 asosida: tinglash mashqlarida kitob treklari (yopiq
+ * ombordan), savollar va matnlar o'zimizniki. Mashqlar inglizcha.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  hearing,
+  hearingTwo,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  say,
+  sentences,
+  trueFalse,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-a2/audio/${n}.mp3`;
+
+export const A2_24_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("⛰️", "mountain", "ˈmaʊntən|mauntan", "ot", "Tog'", "A very high hill.", "Kilimanjaro is the highest mountain in Africa.", "Kilimanjaro — Afrikadagi eng baland tog'."),
+      w("🌊", "waterfall", "ˈwɔːtəfɔːl|wootafool", "ot", "Sharshara", "Water that falls from a high place.", "Victoria Falls is a very big waterfall.", "Viktoriya — juda katta sharshara."),
+      w("🏞️", "river", "ˈrɪvə|riva", "ot", "Daryo", "A long line of water that goes to the sea.", "Which river is the longest in the world?", "Dunyodagi eng uzun daryo qaysi?"),
+      w("🌴", "oasis", "əʊˈeɪsɪs|oueysis", "ot", "Voha", "A place with water and trees in a desert.", "Al Hasa is the largest oasis in Saudi Arabia.", "Al-Hasa — Saudiya Arabistonidagi eng katta voha."),
+      w("🗺️", "continent", "ˈkɒntɪnənt|kontinant", "ot", "Qit'a", "One of the seven big areas of land on Earth.", "Asia is the biggest continent.", "Osiyo — eng katta qit'a."),
+      w("🌐", "ocean", "ˈəʊʃn|oushn", "ot", "Okean", "A very big area of salt water.", "The Pacific is the biggest ocean.", "Tinch okeani — eng katta okean."),
+      w("🏔️", "valley", "ˈvæli|veli", "ot", "Vodiy", "Low land between hills or mountains.", "The Fergana Valley is very green.", "Farg'ona vodiysi juda yashil."),
+      w("⛰️", "hill", "hɪl|hil", "ot", "Tepalik", "A small mountain.", "We walked up the hill to see the city.", "Shaharni ko'rish uchun tepalikka chiqdik."),
+      w("🌿", "jungle", "ˈdʒʌŋɡl|jangl", "ot", "Changalzor, o'rmon (tropik)", "A thick tropical forest.", "The Amazon jungle is mostly in Brazil.", "Amazonka changalzori asosan Braziliyada."),
+      w("🖼️", "scenery", "ˈsiːnəri|siinari", "ot", "Manzara", "The natural beauty of a place.", "The scenery in the mountains is amazing.", "Tog'lardagi manzara ajoyib."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("✨", "natural wonder", "ˌnætʃrəl ˈwʌndə|nechral wanda", "ibora", "Tabiat mo'jizasi", "A famous and amazing place made by nature.", "Victoria Falls is a natural wonder.", "Viktoriya sharsharasi — tabiat mo'jizasi."),
+      w("🕳️", "cave", "keɪv|keyv", "ot", "G'or", "A big hole in a mountain or under the ground.", "We went inside a cave with a torch.", "Fonar bilan g'or ichiga kirdik."),
+      w("🔺", "peak", "piːk|piik", "ot", "Cho'qqi", "The top of a mountain.", "The peak is covered with snow.", "Cho'qqi qor bilan qoplangan."),
+      w("🧊", "glacier", "ˈɡlæsiə|glesia", "ot", "Muzlik", "A very big river of ice.", "There is a glacier near the top of the mountain.", "Tog' cho'qqisi yaqinida muzlik bor."),
+      w("⬆️", "north", "nɔːθ|noos", "ot", "Shimol", "The direction to the North Pole.", "Siberia is in the north of Russia.", "Sibir Rossiyaning shimolida."),
+      w("⬇️", "south", "saʊθ|saus", "ot", "Janub", "The opposite of north.", "Lake Baikal is in the south of Siberia.", "Baykal ko'li Sibirning janubida."),
+      w("➡️", "east", "iːst|iist", "ot", "Sharq", "The direction where the sun comes up.", "Tanzania is in East Africa.", "Tanzaniya Sharqiy Afrikada."),
+      w("⬅️", "west", "west|west", "ot", "G'arb", "The direction where the sun goes down.", "Phuket is near the west coast of Thailand.", "Phuket Tailandning g'arbiy qirg'og'i yaqinida."),
+      w("🏖️", "sandy beach", "ˌsændi ˈbiːtʃ|sendi biich", "ibora", "Qumli plyaj", "A beach with sand, not stones.", "We found a quiet sandy beach on the island.", "Orolda tinch qumli plyaj topdik."),
+      w("🌺", "tropical", "ˈtrɒpɪkl|tropikl", "sifat", "Tropik", "From the hot, wet parts of the world.", "There are some very beautiful tropical islands.", "Juda chiroyli tropik orollar bor."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("🔦", "torch", "tɔːtʃ|tooch", "ot", "Fonar (qo'l fonari)", "A small electric light you carry.", "I don't like the forest at night without a torch.", "Fonarsiz tunda o'rmonni yoqtirmayman."),
+      w("🧭", "compass", "ˈkʌmpəs|kampas", "ot", "Kompas", "A tool that shows north.", "A map and compass are very useful.", "Xarita va kompas juda foydali."),
+      w("🩹", "first-aid kit", "ˌfɜːst ˈeɪd kɪt|fyorst eyd kit", "ibora", "Dori qutisi (birinchi yordam)", "A box with things for small injuries.", "Always take a first-aid kit when you go camping.", "Lagerga borganda doim dori qutisini oling."),
+      w("🔥", "lighter", "ˈlaɪtə|layta", "ot", "Zajigalka", "A small thing that makes fire.", "A lighter is more important than a stove.", "Zajigalka plitadan muhimroq."),
+      w("🍳", "stove", "stəʊv|stouv", "ot", "Plita (kichik, lager)", "A small cooker for camping.", "We can cook inside the tent with a stove.", "Plita bilan chodir ichida ovqat pishirishimiz mumkin."),
+      w("📡", "GPS", "ˌdʒiː piː ˈes|jii pii es", "ot", "GPS (navigator)", "A system that shows exactly where you are.", "I have GPS on my phone.", "Telefonimda GPS bor."),
+      w("🙋", "I'd prefer", "aɪd prɪˈfɜː|ayd prifyor", "ibora", "…ni afzal ko'rardim", "I would like it more.", "I'd prefer to stay in a hotel.", "Mehmonxonada qolishni afzal ko'rardim."),
+      w("🔋", "run out of", "ˌrʌn ˈaʊt əv|ran aut av", "ibora", "Tugab qolmoq", "Have no more of something.", "The GPS could run out of battery.", "GPS'ning batareyasi tugab qolishi mumkin."),
+      w("🪢", "rope", "rəʊp|roup", "ot", "Arqon", "A thick, strong string.", "We used a rope to climb the rocks.", "Qoyalarga chiqish uchun arqondan foydalandik."),
+      w("🏕️", "survive", "səˈvaɪv|savayv", "fe'l", "Omon qolmoq", "Stay alive in a difficult situation.", "You need water to survive in the desert.", "Cho'lda omon qolish uchun suv kerak."),
+    ],
+  },
+];
+
+const TEXT = `NATURAL WONDERS OF UZBEKISTAN
+Uzbekistan doesn't have a sea, but it has some amazing scenery.
+In the north-west is the Kyzylkum, one of the biggest deserts in Central Asia. It's the hottest place in the country in summer — but at night it can be very cold. In the middle of the desert there are some beautiful lakes, and Aydarkul is the most popular for camping.
+In the east are the mountains. Big Chimgan, near Tashkent, is more than 3,300 metres high. It isn't the highest mountain in the country, but it's the easiest to visit — you can get there in two hours by car. In winter people ski there, and in summer they walk in the valleys and swim in Charvak lake.
+The best time to visit? Spring, when the hills are green and the weather is warm but not boiling.`;
+const tf = trueFalse(TEXT);
+
+export const A2_24_EXERCISES: SeedExercise[] = [
+  {
+    title: "What do you hear?",
+    skill: "Listening",
+    kind: "listen",
+    instructions: "Listen. Choose what you hear.",
+    questions: [
+      listen("It's the highest mountain in Africa.", ["It's the highest mountain in Africa.", "It's a high mountain in Africa.", "It's the highest mountain in America.", "It's higher than the mountains in Africa."]),
+      listen("It's the biggest and deepest lake in the world.", ["It's the biggest and deepest lake in the world.", "It's a big and deep lake in the world.", "It's the biggest and cheapest lake in the world.", "It's bigger and deeper than the lake."]),
+      listen("Which river's the longest in the world?", ["Which river's the longest in the world?", "Which river's longer in the world?", "Which river's the largest in the world?", "Which river is long in the world?"]),
+      listen("the most beautiful", ["the most beautiful", "the more beautiful", "most beautiful", "the most useful"]),
+      listen("one of the easiest mountains", ["one of the easiest mountains", "one of the oldest mountains", "one of the easier mountains", "the easiest mountain"]),
+      listen("on the west coast", ["on the west coast", "on the east coast", "in the west coast", "on the best coast"]),
+      listen("I'd prefer to stay in a hotel.", ["I'd prefer to stay in a hotel.", "I prefer to stay in a hotel.", "I'd prefer to stay at home.", "I'd prefer a hotel."]),
+      listen("first-aid kit", ["first-aid kit", "first aid", "fast aid kit", "first-aid kits"]),
+      listen("waterfall", ["waterfall", "water fall down", "water ball", "waterfalls"]),
+      listen("desert", ["desert", "dessert", "deserts", "the shirt"]),
+    ],
+  },
+  {
+    title: "Six natural wonders",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to descriptions of six natural wonders. Answer the questions. Some questions have TWO correct answers — choose both.",
+    questions: [
+      hearingTwo(track("10.7"))("What does the speaker say about Mount Kilimanjaro?", ["It's the highest mountain in Africa.", "It's not difficult to climb."], ["It's in West Africa.", "It's very cold all year."]),
+      hearing(track("10.7"))("What does «Kilimanjaro» mean?", ["Mountain of light", "Roof of Africa", "White mountain", "Big hill"]),
+      hearingTwo(track("10.7"))("Victoria Falls is between which TWO countries?", ["Zimbabwe", "Zambia"], ["Tanzania", "Kenya"]),
+      hearing(track("10.7"))("Why does Lake Baikal often freeze in winter?", ["Siberia has a very cold climate.", "It's very small.", "It's very high.", "There's no sun."]),
+      hearing(track("10.7"))("Where is most of the Amazon rainforest?", ["In Brazil", "In Peru", "In Ecuador", "In Bolivia"]),
+      hearing(track("10.7"))("How many of the world's plants and animals live in rainforests?", ["About half", "About a quarter", "Most of them", "About ten per cent"]),
+      hearingTwo(track("10.7"))("What does the speaker say about the Andaman Sea?", ["It has tropical islands with white sandy beaches.", "Phuket is the biggest and most famous island."], ["It's on the east coast of Thailand.", "It's very cold."]),
+      hearing(track("10.7"))("Why is the Gobi a cold desert?", ["It's very far north.", "It's very high.", "It's near the sea.", "It rains a lot."]),
+    ],
+  },
+  {
+    title: "North, south, east, west",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to three sentences. Choose the correct word.",
+    questions: [
+      gaps(track("10.8"), [
+        ["Lake Baikal is in the ___ of Siberia.", "south", "north", "west"],
+        ["The Gobi Desert is in ___ China and Mongolia.", "north-west", "south-east", "north-east"],
+        ["Phuket island is near the ___ coast of Thailand.", "west", "east", "south"],
+      ]),
+    ],
+  },
+  {
+    title: "Travel tips in numbers",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to three texts about natural wonders. Choose the correct number.",
+    questions: [
+      gaps(track("10.9"), [
+        ["Lake Baikal is more than ___ metres deep.", "1,600", "6,100", "160"],
+        ["It's more than ___ million years old.", "25", "15", "5"],
+        ["It has almost ___ per cent of the world's fresh water.", "20", "10", "30"],
+        ["Kilimanjaro is ___ metres tall.", "5,895", "5,985", "8,595"],
+        ["The oldest person to climb it was ___ years old.", "87", "78", "67"],
+        ["Al Hasa covers over ___ km².", "12", "20", "120"],
+        ["It gives water to over ___ million trees.", "3", "30", "13"],
+      ]),
+    ],
+  },
+  {
+    title: "Superlatives",
+    skill: "Grammar",
+    kind: "type",
+    instructions: "Write the superlative with the. Example: big → the biggest.",
+    questions: written([
+      ["tall", "the tallest"],
+      ["big", "the biggest", "Double the g."],
+      ["deep", "the deepest"],
+      ["large", "the largest", "Ends in -e: add -st."],
+      ["hot", "the hottest"],
+      ["easy", "the easiest", "y → -iest."],
+      ["beautiful", "the most beautiful"],
+      ["dangerous", "the most dangerous"],
+      ["good", "the best"],
+      ["bad", "the worst"],
+    ]),
+  },
+  {
+    title: "The biggest, the oldest",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to three answers about airports, islands and monuments. Choose the correct word.",
+    questions: [
+      gaps(track("10.12"), [
+        ["The busiest airport of the three is ___.", "Beijing", "Dubai", "Los Angeles"],
+        ["Of these islands, ___ is the biggest.", "Greenland", "Madagascar", "Sumatra"],
+        ["Madagascar is ___ than Sumatra.", "bigger", "smaller", "colder"],
+        ["The Great Pyramid isn't the ___ monument in the world.", "oldest", "biggest", "most famous"],
+        ["But it's the oldest ___.", "in this group", "in Egypt", "in Africa"],
+        ["The Parthenon's older than the ___.", "Colosseum", "Pyramid", "Eiffel Tower"],
+      ]),
+    ],
+  },
+  {
+    title: "What should we take?",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Three friends decide what to take on a camping trip. Answer the questions. Some questions have TWO correct answers.",
+    questions: [
+      hearingTwo(track("10.14"))("What does everyone take?", ["a tent", "a sleeping bag"], ["a torch", "a stove"]),
+      hearing(track("10.14"))("How many more things can they take?", ["Five", "Three", "Two", "Ten"]),
+      hearing(track("10.14"))("Why does one person want only one stove?", ["They don't need one each.", "Stoves are expensive.", "Stoves are heavy.", "They can make a fire."]),
+      hearing(track("10.14"))("Why does Z think a stove is better than a fire?", ["It might rain.", "Fires are dangerous.", "There's no wood.", "It's faster."]),
+      hearingTwo(track("10.14"))("What could happen to a GPS?", ["It could break.", "It could run out of battery."], ["It could get wet.", "It could get lost."]),
+      hearing(track("10.14"))("Why don't they need a torch?", ["It gets dark late and they'll go to bed early.", "They have phones.", "They don't like torches.", "There's a light at the camp."]),
+      hearingTwo(track("10.14"))("What are the last TWO things they choose?", ["the GPS", "the first-aid kit"], ["the map and compass", "the torch"]),
+    ],
+  },
+  {
+    title: "I'd prefer…",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to six opinions. Choose the word you hear.",
+    questions: [
+      gaps(track("10.15"), [
+        ["I think a compass is ___ than a GPS.", "better", "worse", "cheaper"],
+        ["I'd prefer to stay in a ___.", "hotel", "tent", "cave"],
+        ["The most important thing to take is ___.", "food", "water", "a map"],
+        ["I think we should take only one ___.", "torch", "stove", "tent"],
+        ["Taking a first-aid kit is more important than taking a ___.", "knife", "lighter", "rope"],
+        ["I'd prefer to have my own ___.", "tent", "room", "stove"],
+      ]),
+    ],
+  },
+  {
+    title: "Natural wonders of Uzbekistan",
+    skill: "Reading",
+    kind: "truefalse",
+    instructions: "Read the text. Are the sentences true or false?",
+    questions: [
+      tf("Uzbekistan has a sea.", false, "It doesn't have a sea."),
+      tf("The Kyzylkum is in the north-west.", true),
+      tf("It's the coldest place in the country in summer.", false, "It's the hottest."),
+      tf("It can be very cold in the desert at night.", true),
+      tf("Aydarkul is the most popular lake for camping.", true),
+      tf("The mountains are in the west.", false, "They're in the east."),
+      tf("Big Chimgan is the highest mountain in the country.", false, "It isn't the highest."),
+      tf("Big Chimgan is the easiest to visit.", true),
+      tf("People ski there in winter.", true),
+      tf("The best time to visit is summer.", false, "Spring."),
+    ],
+  },
+  {
+    title: "Choose the superlative",
+    skill: "Grammar",
+    kind: "choice",
+    instructions: "Choose the correct answer.",
+    questions: [
+      say("Lake Baikal is ___ lake in the world.", ["the deepest", "the deeper", "deepest", "the most deep"]),
+      say("Kilimanjaro is ___ mountain in Africa.", ["the highest", "the higher", "the most high", "highest than"]),
+      say("It's one of ___ mountains to climb.", ["the easiest", "the easyest", "the most easy", "the easier"]),
+      say("Al Hasa is ___ area to visit in the country.", ["the most beautiful", "the beautifulest", "the more beautiful", "most beautifullest"]),
+      say("This is ___ café in town. I love it!", ["the best", "the goodest", "the better", "the most good"]),
+      say("That was ___ day of my life.", ["the worst", "the baddest", "the worse", "the most bad"]),
+      say("Which river is ___ in the world?", ["the longest", "the longer", "longest than", "the most long"]),
+      say("Greenland is ___ of these islands.", ["the biggest", "the bigest", "the most big", "bigger"]),
+      say("Beijing is ___ airport of the three.", ["the busiest", "the busyest", "the most busy", "busier"]),
+      say("Which is correct?", ["the hottest", "the hotest", "the most hot", "the hotter"]),
+    ],
+  },
+  {
+    title: "Find the mistake",
+    skill: "Grammar",
+    kind: "mistake",
+    instructions: "Each sentence has one wrong word. Tap it.",
+    questions: [
+      mistake("It's *the most big lake in the world.", "Short adjective: the biggest."),
+      mistake("Everest is the *taller mountain in the world.", "Superlative: the tallest."),
+      mistake("This is the *goodest restaurant in town.", "good → the best."),
+      mistake("It's the *beautifulest place in the country.", "Long adjective: the most beautiful."),
+      mistake("Phuket is near the west *cost of Thailand.", "coast."),
+      mistake("Lake Baikal is in the *southern of Siberia.", "in the south of."),
+      mistake("I'd prefer *stay in a hotel.", "I'd prefer to stay."),
+      mistake("The GPS could run out *battery.", "run out of."),
+      mistake("It's one of the easiest *mountain to climb.", "one of the + plural: mountains."),
+      mistake("Which river is the *longer in the world?", "Superlative: the longest."),
+    ],
+  },
+  {
+    title: "Make a sentence",
+    skill: "Word order",
+    kind: "order",
+    instructions: "Tap the words in the correct order.",
+    questions: sentences([
+      "Kilimanjaro is the highest mountain in Africa.",
+      "Lake Baikal is the deepest lake in the world.",
+      "Which river's the longest in the world?",
+      "It's one of the easiest mountains to climb.",
+      "Phuket is near the west coast of Thailand.",
+      "The Gobi is in north-west China.",
+      "I'd prefer to stay in a hotel.",
+      "A map and compass are very useful.",
+      "We should take a first-aid kit.",
+      "This is the best place to visit.",
+    ]),
+  },
+  {
+    title: "Find the pairs",
+    skill: "Matching",
+    kind: "match",
+    instructions: "Match the words.",
+    questions: pairs([
+      ["big|the biggest", "easy|the easiest", "beautiful|the most beautiful", "good|the best"],
+      ["Kilimanjaro|mountain", "Victoria Falls|waterfall", "Baikal|lake", "Gobi|desert"],
+      ["torch|light", "compass|north", "lighter|fire", "first-aid kit|small injuries"],
+      ["north|south", "east|west", "highest|lowest", "best|worst"],
+      ["peak|top of a mountain", "valley|low land between hills", "oasis|water in a desert", "glacier|river of ice"],
+    ]),
+  },
+  {
+    title: "Say it",
+    skill: "Pronunciation",
+    kind: "speak",
+    instructions: "Listen, then tap the microphone and say it yourself. the is weak /ðə/ and -est is /əst/.",
+    questions: phrases([
+      "It's the highest mountain in Africa.",
+      "Which river's the longest in the world?",
+      "I think the Nile's the longest.",
+      "It's one of the easiest mountains to climb.",
+      "I'd prefer to stay in a hotel.",
+      "the most beautiful",
+      "waterfall",
+      "first-aid kit",
+      "scenery",
+      "tropical",
+    ]),
+  },
+];

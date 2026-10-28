@@ -1,0 +1,292 @@
+/**
+ * A2, 21-dars — «Ovqat va ichimliklar». Oziq-ovqat nomlari, Camden bozoridagi
+ * ko'cha oshxonalari, do'konda xarid.
+ * Grammatika: sanaladigan va sanalmaydigan otlar; a / an, some / any.
+ * Navigate A2, 9.1 asosida: tinglash mashqlarida kitob treklari (yopiq
+ * ombordan), savollar va matnlar o'zimizniki. Mashqlar inglizcha.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  hearing,
+  hearingTwo,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  say,
+  sentences,
+  trueFalse,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-a2/audio/${n}.mp3`;
+
+export const A2_21_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🍐", "pear", "peə|pea", "ot", "Nok", "A sweet green or yellow fruit.", "I'd like a pear, please.", "Menga bitta nok bering."),
+      w("🥩", "beef", "biːf|biif", "ot", "Mol go'shti", "Meat from a cow.", "Do you have any beef?", "Mol go'shtingiz bormi?"),
+      w("🍗", "chicken", "ˈtʃɪkɪn|chikin", "ot", "Tovuq (go'shti)", "A bird; its meat.", "We had chicken and rice for dinner.", "Kechki ovqatga tovuq va guruch yedik."),
+      w("🍯", "honey", "ˈhʌni|hani", "ot", "Asal", "Sweet food that bees make.", "I put honey in my tea.", "Choyimga asal solaman."),
+      w("🍓", "jam", "dʒæm|jem", "ot", "Murabbo", "Sweet food made from fruit and sugar.", "My grandmother makes cherry jam.", "Buvim olcha murabbosi qiladi."),
+      w("🍄", "mushroom", "ˈmʌʃrʊm|mashrum", "ot", "Qo'ziqorin", "A small plant with a round top that you can eat.", "There's one mushroom left on the plate.", "Likopchada bitta qo'ziqorin qoldi."),
+      w("🍜", "noodles", "ˈnuːdlz|nuudlz", "ot", "Lag'mon, ugra", "Long thin pieces of pasta.", "It comes with some noodles.", "Uning yonida ugra beriladi."),
+      w("🫒", "olive", "ˈɒlɪv|oliv", "ot", "Zaytun", "A small green or black fruit with oil in it.", "Put an olive on the pizza.", "Pitsaga bitta zaytun qo'ying."),
+      w("🍝", "pasta", "ˈpæstə|pesta", "ot", "Makaron", "Italian food made from flour and water.", "Pasta is quick and easy to cook.", "Makaron tez va oson pishadi."),
+      w("🍚", "rice", "raɪs|rays", "ot", "Guruch", "Small white grains that you cook. Plov is made with it.", "We don't have any bread, but we have some rice.", "Nonimiz yo'q, lekin guruchimiz bor."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("🌽", "sweetcorn", "ˈswiːtkɔːn|swiitkoon", "ot", "Makkajo'xori (donlari)", "Sweet yellow seeds that you eat as a vegetable.", "Can I have some sweetcorn?", "Bir oz makkajo'xori bera olasizmi?"),
+      w("🥛", "yoghurt", "ˈjɒɡət|yogat", "ot", "Yogurt, qatiq", "A thick white food made from milk.", "I have yoghurt for breakfast.", "Nonushtaga yogurt yeyman."),
+      w("🥩", "steak", "steɪk|steyk", "ot", "Steyk (qalin go'sht bo'lagi)", "A thick piece of meat for cooking.", "I'd like a small steak, please.", "Menga kichkina steyk bering."),
+      w("🧊", "cube", "kjuːb|kyuub", "ot", "Kubik, kub shaklidagi bo'lak", "A shape like a box with six square sides.", "Cut the meat into one small cube at a time.", "Go'shtni bittadan kichik kubik qilib to'g'rang."),
+      w("⚖️", "kilo", "ˈkiːləʊ|kiilou", "ot", "Kilo(gramm)", "A thousand grams.", "About a kilo, please.", "Taxminan bir kilo, iltimos."),
+      w("🛍️", "bag of rice", "ˌbæɡ əv ˈraɪs|beg av rays", "ibora", "Bir xalta guruch", "Rice that you buy in a bag.", "I'll just have a bag of rice, please.", "Faqat bir xalta guruch olaman."),
+      w("📦", "packet", "ˈpækɪt|pekit", "ot", "Paket, quti (kichik)", "A small box or bag that food is sold in.", "Can I have a packet of biscuits?", "Bir quti pechenye bera olasizmi?"),
+      w("🏪", "stall", "stɔːl|stool", "ot", "Rasta, do'koncha (bozorda)", "A table or small shop in a market.", "Let's eat at the Chinese stall.", "Xitoy oshxonasi rastasida ovqatlanaylik."),
+      w("🍽️", "it comes with", "ɪt ˈkʌmz wɪð|it kamz wiz", "ibora", "Yoniga … beriladi", "It is served together with.", "It comes with rice or noodles.", "Yoniga guruch yoki ugra beriladi."),
+      w("🧀", "dairy", "ˈdeəri|deari", "sifat", "Sut mahsulotlari(ga oid)", "Made from milk.", "Cheese and yoghurt are dairy foods.", "Pishloq va yogurt — sut mahsulotlari."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("🔢", "countable", "ˈkaʊntəbl|kauntabl", "sifat", "Sanaladigan", "That you can count: one apple, two apples.", "Apple is a countable noun.", "«Apple» — sanaladigan ot."),
+      w("🌊", "uncountable", "ʌnˈkaʊntəbl|ankauntabl", "sifat", "Sanalmaydigan", "That you can't count: water, rice.", "Rice is an uncountable noun.", "«Rice» — sanalmaydigan ot."),
+      w("🧾", "ingredient", "ɪnˈɡriːdiənt|ingriidiant", "ot", "Masalliq", "One of the foods you use to make a dish.", "Rice is the main ingredient of plov.", "Guruch — oshning asosiy masallig'i."),
+      w("🧀", "cheese", "tʃiːz|chiiz", "ot", "Pishloq", "A yellow or white food made from milk.", "Do you have any cheese?", "Pishlog'ingiz bormi?"),
+      w("🧈", "butter", "ˈbʌtə|bata", "ot", "Sariyog'", "Yellow fat made from milk.", "I like bread with butter and jam.", "Sariyog' va murabbo surtilgan nonni yaxshi ko'raman."),
+      w("🍬", "sugar", "ˈʃʊɡə|shuga", "ot", "Shakar", "Something sweet you put in tea or cakes.", "No sugar in my tea, thanks.", "Choyimga shakar solmang, rahmat."),
+      w("🌾", "flour", "ˈflaʊə|flaua", "ot", "Un", "White powder for making bread and cakes.", "We need flour to make bread.", "Non yopish uchun un kerak."),
+      w("🧅", "onion", "ˈʌnjən|anyan", "ot", "Piyoz", "A round vegetable that makes your eyes water.", "Cut an onion for the salad.", "Salatga bitta piyoz to'g'rang."),
+      w("🧄", "garlic", "ˈɡɑːlɪk|gaalik", "ot", "Sarimsoq", "A small white vegetable with a strong taste.", "There's a lot of garlic in this soup.", "Bu sho'rvada sarimsoq ko'p."),
+      w("🥔", "potato", "pəˈteɪtəʊ|pateytou", "ot", "Kartoshka", "A brown vegetable that grows under the ground.", "I'd like a baked potato, please.", "Menga pishirilgan kartoshka bering."),
+    ],
+  },
+];
+
+const BAZAAR = `A MORNING AT CHORSU BAZAAR
+Chorsu Bazaar is the biggest market in Tashkent. Every morning hundreds of people come here to buy food.
+Inside the big blue dome there are stalls with meat, cheese, butter and yoghurt. Outside, you can buy fruit and vegetables: there are always some onions, potatoes and tomatoes, and in summer there are lots of melons. There are also stalls with honey and jam — you can taste them before you buy.
+Don't forget the bread! There are some famous bakers here, and their bread is still hot. But you won't find any ready-made pizza or burgers — this is a market for real ingredients.
+Tip: bring a bag. The sellers don't have any plastic bags at some stalls.`;
+const tf = trueFalse(BAZAAR);
+
+export const A2_21_EXERCISES: SeedExercise[] = [
+  {
+    title: "What do you hear?",
+    skill: "Listening",
+    kind: "listen",
+    instructions: "Listen. Choose what you hear.",
+    questions: [
+      listen("Do you have any beef?", ["Do you have any beef?", "Do you have some beef?", "Do you have any beer?", "Do you have a beef?"]),
+      listen("We have some rice.", ["We have some rice.", "We have any rice.", "We have a rice.", "We have some ice."]),
+      listen("I'd like a pear.", ["I'd like a pear.", "I'd like a pair.", "I like a pear.", "I'd like some pears."]),
+      listen("We don't have any bread.", ["We don't have any bread.", "We don't have some bread.", "We don't have a bread.", "We didn't have any bread."]),
+      listen("Can I have some sweetcorn?", ["Can I have some sweetcorn?", "Can I have any sweetcorn?", "Can I have some sweet corn soup?", "Can you have some sweetcorn?"]),
+      listen("It comes with some noodles.", ["It comes with some noodles.", "It comes with any noodles.", "It comes with some needles.", "It came with some noodles."]),
+      listen("mushrooms", ["mushrooms", "mushroom", "much rooms", "rooms"]),
+      listen("yoghurt", ["yoghurt", "yoghurts", "yogurt cake", "your heart"]),
+      listen("olives", ["olives", "olive", "all of us", "lives"]),
+      listen("honey", ["honey", "money", "funny", "hungry"]),
+    ],
+  },
+  {
+    title: "Countable or uncountable?",
+    skill: "Grammar",
+    kind: "choice",
+    instructions: "Can you count it? Choose countable or uncountable.",
+    questions: [
+      say("rice", ["uncountable", "countable"], "We say some rice, not two rices."),
+      say("pear", ["countable", "uncountable"], "a pear, two pears."),
+      say("honey", ["uncountable", "countable"]),
+      say("mushroom", ["countable", "uncountable"]),
+      say("beef", ["uncountable", "countable"]),
+      say("olive", ["countable", "uncountable"]),
+      say("bread", ["uncountable", "countable"], "We say some bread or a loaf of bread."),
+      say("lemon", ["countable", "uncountable"]),
+      say("water", ["uncountable", "countable"], "We say some water or a bottle of water."),
+      say("noodles", ["countable", "uncountable"], "Noodles is plural."),
+    ],
+  },
+  {
+    title: "At Camden Market",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Lars and Carla are at a food market in London. Listen and answer the questions. Some questions have TWO correct answers — choose both.",
+    questions: [
+      hearing(track("9.2"))("Why don't they have pizza?", ["They can have pizza any day.", "The pizza is too expensive.", "There isn't any pizza.", "Carla doesn't like pizza."]),
+      hearing(track("9.2"))("What is the dish they ask about?", ["Kung Pao chicken", "Chicken noodle soup", "Sweet and sour beef", "Fried rice"]),
+      hearing(track("9.2"))("What does it come with?", ["Some noodles", "Some bread", "Some salad", "Some chips"]),
+      hearing(track("9.2"))("Is there any bread?", ["No, there isn't.", "Yes, there is.", "Only for Lars.", "They don't say."]),
+      hearingTwo(track("9.2"))("What does Carla order?", ["a small Kung Pao chicken", "some rice"], ["some noodles", "some bread"]),
+      hearingTwo(track("9.2"))("What drinks do they have at the stall?", ["Coke", "water"], ["lemonade", "tea"]),
+      hearing(track("9.2"))("What drink do Lars and Carla have?", ["A Coke", "A bottle of lemonade", "Water", "Nothing"]),
+    ],
+  },
+  {
+    title: "some or any?",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to six sentences from the market. Choose the word you hear.",
+    questions: [
+      gaps(track("9.3"), [
+        ["It comes with ___ noodles.", "some", "any", "a"],
+        ["Is there ___ bread?", "any", "some", "a"],
+        ["We don't have ___ bread.", "any", "some", "a"],
+        ["We have ___ rice.", "some", "any", "a"],
+        ["Would you like ___ drinks?", "any", "some", "a"],
+        ["We don't have any ___ of lemonade.", "bottles", "cups", "glasses"],
+      ]),
+    ],
+  },
+  {
+    title: "At the food shop",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "A customer is shopping for food. Listen and choose the correct word for each sentence.",
+    questions: [
+      gaps(track("9.4"), [
+        ["Do you have ___ beef?", "any", "some", "a"],
+        ["Yes, we have ___ nice steaks here.", "some", "any", "a"],
+        ["We also have ___ small beef cubes.", "some", "a", "any"],
+        ["Can I have ___ beef cubes? About a kilo, please.", "some", "any", "a"],
+        ["And I'd also like ___ small steak.", "a", "some", "any"],
+        ["Do you have ___ yoghurt?", "any", "a", "some"],
+        ["Do you have ___ rice?", "any", "some", "a"],
+        ["Yes, we have ___ bags of rice.", "some", "any", "a"],
+        ["I'll just have ___ bag of rice, please.", "a", "some", "any"],
+        ["Do you have ___ lemons?", "any", "some", "a"],
+        ["We don't sell ___ fruit or vegetables.", "any", "a", "some"],
+      ]),
+    ],
+  },
+  {
+    title: "a, an, some or any?",
+    skill: "Grammar",
+    kind: "fill",
+    instructions: "Write a, an, some or any.",
+    questions: written([
+      ["I'd like ___ pear, please.", "a"],
+      ["Can I have ___ onion?", "an"],
+      ["We have ___ rice, but we don't have any pasta.", "some"],
+      ["Do you have ___ honey?", "any"],
+      ["There isn't ___ milk in the fridge.", "any"],
+      ["I bought ___ mushrooms at the market.", "some"],
+      ["Can I have ___ sugar in my tea, please?", "some"],
+      ["Are there ___ olives on the pizza?", "any"],
+      ["She has ___ egg for breakfast every day.", "an"],
+      ["We don't have ___ lemons, I'm afraid.", "any"],
+    ]),
+  },
+  {
+    title: "Chorsu Bazaar",
+    skill: "Reading",
+    kind: "truefalse",
+    instructions: "Read the text. Are the sentences true or false?",
+    questions: [
+      tf("Chorsu is the biggest market in Tashkent.", true),
+      tf("People only come in the evening.", false, "They come every morning."),
+      tf("You can buy cheese and yoghurt inside the dome.", true),
+      tf("There are never any onions.", false, "There are always some onions."),
+      tf("There are lots of melons in summer.", true),
+      tf("You can taste the honey before you buy it.", true),
+      tf("The bread is cold.", false, "It's still hot."),
+      tf("You can buy ready-made pizza at the bazaar.", false, "You won't find any."),
+      tf("It's a market for real ingredients.", true),
+      tf("All stalls have plastic bags.", false, "Some stalls don't have any."),
+    ],
+  },
+  {
+    title: "At the market stall",
+    skill: "Conversation",
+    kind: "dialog",
+    instructions: "You are the customer. Choose the best answer.",
+    questions: [
+      say("Hello. Can I help you?", ["Yes, please. Do you have any cheese?", "Yes, please. Do you have some cheeses?", "Yes, I help.", "No, I'm a cheese."]),
+      say("Yes, we have some nice goat's cheese.", ["Great. Can I have some, please?", "Great. Can I have any, please?", "Great. Can I have a cheese?", "Great. I have."]),
+      say("How much would you like?", ["About half a kilo, please.", "About half a kilos.", "Many, please.", "Some kilo."]),
+      say("Anything else?", ["Yes. Do you have any honey?", "Yes. Do you have some honeys?", "Yes. Any honey I have.", "Yes, a honey."]),
+      say("I'm sorry, we don't have any honey today.", ["OK. What about jam?", "OK. What about a jam?", "OK, any jam.", "Yes, please."]),
+      say("Yes, we have some cherry jam.", ["Lovely. I'll have a jar, please.", "Lovely. I'll have a jam, please.", "Lovely. I have jam.", "Lovely. Any jar."]),
+      say("Would you like a bag?", ["No, thanks. I have one.", "No, thanks. I have some.", "No, any bag.", "Yes, a bags."]),
+      say("That's 85,000 sum, please.", ["Here you are.", "Here are you.", "You are here.", "That's me."]),
+      say("Here's your change.", ["Thanks. Have a nice day!", "Thanks. Have a change!", "Me too.", "You're welcome."]),
+      say("Would you like any bread?", ["No, thanks. That's everything.", "No, thanks. That's anything.", "No, any bread.", "Yes, a breads."]),
+    ],
+  },
+  {
+    title: "Find the mistake",
+    skill: "Grammar",
+    kind: "mistake",
+    instructions: "Each sentence has one wrong word. Tap it.",
+    questions: [
+      mistake("Do you have *some beef?", "In questions we usually use any."),
+      mistake("We don't have *some bread.", "Negative: any."),
+      mistake("I'd like *a rice, please.", "Rice is uncountable: some rice."),
+      mistake("Can I have *a onion?", "Before a vowel sound: an."),
+      mistake("I have *an yoghurt for breakfast.", "Yoghurt is uncountable: some yoghurt."),
+      mistake("There are some *breads on the table.", "Bread is uncountable: some bread."),
+      mistake("I bought two *honeys.", "Honey is uncountable: two jars of honey."),
+      mistake("We have *any mushrooms.", "Positive: some."),
+      mistake("It *come with rice.", "It comes with."),
+      mistake("Are there *a olives in the salad?", "Plural question: any olives."),
+    ],
+  },
+  {
+    title: "Make a sentence",
+    skill: "Word order",
+    kind: "order",
+    instructions: "Tap the words in the correct order.",
+    questions: sentences([
+      "Do you have any beef?",
+      "We have some nice steaks.",
+      "I'd like a small steak, please.",
+      "We don't have any bread.",
+      "It comes with some noodles.",
+      "Can I have some sweetcorn?",
+      "I have yoghurt for breakfast.",
+      "Is there any honey?",
+      "We don't sell any fruit.",
+      "Rice is an uncountable noun.",
+    ]),
+  },
+  {
+    title: "Find the pairs",
+    skill: "Matching",
+    kind: "match",
+    instructions: "Match the words.",
+    questions: pairs([
+      ["a bottle of|lemonade", "a bag of|rice", "a jar of|honey", "a packet of|biscuits"],
+      ["beef|meat", "pear|fruit", "mushroom|vegetable", "yoghurt|dairy"],
+      ["a|lemon", "an|onion", "some|rice", "any|bread?"],
+      ["positive|some", "negative|any", "question|any", "asking for something|some"],
+      ["Is there any bread?|No, there isn't.", "Do you have any beef?|Yes, we do.", "Would you like any drinks?|Just water, please.", "Anything else?|No, that's everything."],
+    ]),
+  },
+  {
+    title: "Say it",
+    skill: "Pronunciation",
+    kind: "speak",
+    instructions: "Listen, then tap the microphone and say it yourself. some and any are weak: /səm/, /əni/.",
+    questions: phrases([
+      "I'd like some beef, please.",
+      "Do you have any mushrooms?",
+      "Can I have some sweetcorn?",
+      "We don't have any sweetcorn.",
+      "It comes with some noodles.",
+      "That's everything, thanks.",
+      "yoghurt",
+      "ingredient",
+      "mushroom",
+      "uncountable",
+    ]),
+  },
+];

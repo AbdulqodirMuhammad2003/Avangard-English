@@ -205,6 +205,10 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-18", level: "A2", title: "18-dars", subtitle: "Sporting heroes: didn't, opinions", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-07.mp4", title: "Health and fitness in New York", kind: "hujjatli", start: null, end: null } },
   { code: "A2-19", level: "A2", title: "19-dars", subtitle: "I went to…: past simple questions", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-8.mp4", title: "Vox pops 8: holidays", kind: "intervyu", start: null, end: null } },
   { code: "A2-20", level: "A2", title: "20-dars", subtitle: "Journeys: should, have to", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-08.mp4", title: "Adventure holidays", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-21", level: "A2", title: "21-dars", subtitle: "Food and drink: some / any", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-9.mp4", title: "Vox pops 9: food", kind: "intervyu", start: null, end: null } },
+  { code: "A2-22", level: "A2", title: "22-dars", subtitle: "In the kitchen: much / many / a lot of", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-09.mp4", title: "Making a pizza", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-23", level: "A2", title: "23-dars", subtitle: "The weather: comparatives", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-10.mp4", title: "The Grand Canyon", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-24", level: "A2", title: "24-dars", subtitle: "Natural wonders: superlatives", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-10.mp4", title: "Vox pops 10: natural wonders", kind: "intervyu", start: null, end: null } },
 ];
 
 export async function seedDatabase() {

@@ -53,6 +53,10 @@ import { A2_17_EXERCISES, A2_17_ROUNDS } from "./a2-17-healthy";
 import { A2_18_EXERCISES, A2_18_ROUNDS } from "./a2-18-sporting-heroes";
 import { A2_19_EXERCISES, A2_19_ROUNDS } from "./a2-19-holidays";
 import { A2_20_EXERCISES, A2_20_ROUNDS } from "./a2-20-journeys";
+import { A2_21_EXERCISES, A2_21_ROUNDS } from "./a2-21-food";
+import { A2_22_EXERCISES, A2_22_ROUNDS } from "./a2-22-kitchen";
+import { A2_23_EXERCISES, A2_23_ROUNDS } from "./a2-23-weather";
+import { A2_24_EXERCISES, A2_24_ROUNDS } from "./a2-24-natural-wonders";
 import { A2_09_EXERCISES, A2_09_ROUNDS } from "./a2-09-places";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
@@ -141,6 +145,10 @@ const LESSONS: LessonContent[] = [
   { code: "A2-18", rounds: A2_18_ROUNDS, exercises: A2_18_EXERCISES },
   { code: "A2-19", rounds: A2_19_ROUNDS, exercises: A2_19_EXERCISES },
   { code: "A2-20", rounds: A2_20_ROUNDS, exercises: A2_20_EXERCISES },
+  { code: "A2-21", rounds: A2_21_ROUNDS, exercises: A2_21_EXERCISES },
+  { code: "A2-22", rounds: A2_22_ROUNDS, exercises: A2_22_EXERCISES },
+  { code: "A2-23", rounds: A2_23_ROUNDS, exercises: A2_23_EXERCISES },
+  { code: "A2-24", rounds: A2_24_ROUNDS, exercises: A2_24_EXERCISES },
   { code: "A2-09", rounds: A2_09_ROUNDS, exercises: A2_09_EXERCISES },
 ];
 
