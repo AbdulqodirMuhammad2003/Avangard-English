@@ -50,7 +50,7 @@ import { ANSWER_REVEALS_PER_UNIT } from "@/lib/reveals";
 import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
 import { levelInfo } from "@/lib/levels";
-import { isMediaRef, mediaUrl } from "@/lib/media";
+import { isMediaRef, LEVEL_BOOKS, mediaUrl } from "@/lib/media";
 import { localizeLabel, localizeLockReason } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
 
@@ -446,21 +446,40 @@ export function LessonsBoard({
         </div>
       )}
 
-      {/* Tanlangan darajaning qo'llanmasi (lug'at, qoidalar, testlar — PDF).
-          Fayllar scripts/build-handbooks.ts bilan yasaladi. */}
+      {/* Darajaning darsligi (Navigate kitobi, yopiq ombordan, qismlarga
+          bo'lingan); kitobi yo'q darajada — o'zimizning qo'llanma
+          (scripts/build-handbooks.ts). */}
       {shownLevel && (
         <div className="mb-2 flex flex-wrap items-center gap-2">
-          {[shownLevel].map((level) => (
+          {LEVEL_BOOKS[shownLevel.code] ? (
+            <>
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-ink-600 dark:text-ink-300">
+                <BookOpen size={14} className="text-azure-600 dark:text-azure-300" />
+                {LEVEL_BOOKS[shownLevel.code].title}:
+              </span>
+              {LEVEL_BOOKS[shownLevel.code].parts.map((ref, i, all) => (
+                <a
+                  key={ref}
+                  href={mediaUrl(ref)}
+                  target="_blank"
+                  rel="noopener"
+                  className="btn-press flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-ink-800 shadow-sm ring-1 ring-ink-950/5 transition-colors hover:bg-ink-50 dark:bg-white/5 dark:text-ink-100 dark:ring-white/10 dark:hover:bg-white/10"
+                >
+                  <Download size={14} className="text-azure-600 dark:text-azure-300" />
+                  {t(`Kitob, ${i + 1}/${all.length}-qism (PDF)`, `Book, part ${i + 1}/${all.length} (PDF)`)}
+                </a>
+              ))}
+            </>
+          ) : (
             <a
-              key={level.code}
-              href={`/handbooks/Avangard-English-${level.code}-qollanma.pdf`}
+              href={`/handbooks/Avangard-English-${shownLevel.code}-qollanma.pdf`}
               download
               className="btn-press flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-ink-800 shadow-sm ring-1 ring-ink-950/5 transition-colors hover:bg-ink-50 dark:bg-white/5 dark:text-ink-100 dark:ring-white/10 dark:hover:bg-white/10"
             >
               <Download size={14} className="text-azure-600 dark:text-azure-300" />
-              {t(`${level.code} qo'llanmasi (PDF)`, `${level.code} handbook (PDF)`)}
+              {t(`${shownLevel.code} qo'llanmasi (PDF)`, `${shownLevel.code} handbook (PDF)`)}
             </a>
-          ))}
+          )}
         </div>
       )}
 

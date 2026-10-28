@@ -10,6 +10,9 @@
  * yuklanadi: Track_1.2.mp3 → 1.2.mp3, GR/Track_GR_1.1a.mp3 → gr-1.1a.mp3,
  * report_u01_olb.mp4 → report-01.mp4, voxpops_video_11_1.mp4 → voxpops-11-1.mp4.
  * Bor fayl ustidan yoziladi. --apply siz faqat ro'yxat ko'rsatiladi.
+ *
+ * Bitta fayl (masalan, kitob PDF) — ikkinchi argument uning to'liq manzili:
+ *   npm run media:upload -- "C:/…/Navigate A1.pdf" books/navigate-a1.pdf --apply
  */
 import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
@@ -65,8 +68,11 @@ async function ensureBucket() {
 }
 
 async function main() {
-  const files = listFiles(srcDir).sort();
-  const targets = files.map((f) => ({ file: f, dest: `${destDir}/${shortName(f.split(/[\\/]/).pop()!)}` }));
+  const single = statSync(srcDir).isFile();
+  const files = single ? [srcDir] : listFiles(srcDir).sort();
+  const targets = single
+    ? [{ file: srcDir, dest: destDir }]
+    : files.map((f) => ({ file: f, dest: `${destDir}/${shortName(f.split(/[\\/]/).pop()!)}` }));
   const dupes = targets.filter((t, i) => targets.findIndex((u) => u.dest === t.dest) !== i);
   if (dupes.length) throw new Error(`Bir xil nomlar: ${dupes.map((d) => d.dest).join(", ")}`);
 
@@ -81,7 +87,7 @@ async function main() {
   await ensureBucket();
   let done = 0;
   for (const t of targets) {
-    const type = t.dest.endsWith(".mp4") ? "video/mp4" : "audio/mpeg";
+    const type = t.dest.endsWith(".mp4") ? "video/mp4" : t.dest.endsWith(".pdf") ? "application/pdf" : "audio/mpeg";
     const res = await fetch(`${base}/storage/v1/object/${MEDIA_BUCKET}/${t.dest}`, {
       method: "POST",
       headers: { ...headers, "Content-Type": type, "x-upsert": "true", "Cache-Control": "max-age=31536000" },
