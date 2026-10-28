@@ -59,14 +59,18 @@ function createConnection() {
     ssl: "require",
     // Session pooler (5432) bir vaqtda ko'pi bilan 15 ta mijoz ulanishiga ruxsat
     // beradi (Supabase → Connection pooling → Pool size); limit to'lsa sahifalar
-    // EMAXCONNSESSION bilan yiqiladi. Shu sababli bitta server nusxasi ko'pi
-    // bilan 3 ta ulanish ochadi (qolgan so'rovlar navbatda kutadi) va bo'sh
-    // ulanishlarni 5 soniyada yopadi — Vercel'ning bir nechta nusxasi limitni
-    // to'ldirib qo'ymasligi uchun. Transaction pooler (6543) bu muammodan
-    // xoli, lekin Next.js ichida so'rovlarni qotiradi (2026-10-04 da yana
-    // tekshirildi) — unga qaytmang.
-    max: 3,
+    // EMAXCONNSESSION bilan yiqiladi. Vercel javobdan keyin server nusxasini
+    // «muzlatadi» — idle_timeout taymeri ishlamaydi va nusxa o'z ulanishlarini
+    // o'chirilguncha ushlab turadi (2026-10-28: ketma-ket deploylardan keyin 5 ta
+    // muzlagan nusxa × 3 ulanish = 15, sayt yiqildi). Shu sababli bitta nusxa
+    // faqat 1 ta ulanish ochadi: so'rovlar navbat bilan ketadi (sahifa biroz
+    // sekinroq), lekin 15 ta nusxagacha limit to'lmaydi. Transaction pooler
+    // (6543) bu muammodan xoli, lekin Next.js ichida so'rovlarni qotiradi
+    // (2026-10-04 da yana tekshirildi) — unga qaytmang.
+    max: 1,
     idle_timeout: 5,
+    // Muzlashdan uyg'ongan nusxa eski ulanishni qayta ishlatmasin.
+    max_lifetime: 60,
   });
 }
 
