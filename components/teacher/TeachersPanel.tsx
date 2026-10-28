@@ -15,7 +15,7 @@ import {
 import { SITE_HOST, SITE_URL } from "@/lib/site";
 import { ErrorText, PasswordField, formatDay, generatePassword, inputClass, labelClass } from "./TeacherPanel";
 
-const card = "rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10";
+const card = "rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10";
 const saveBtn =
   "btn-press rounded-full bg-azure-600 px-4 py-2 text-sm font-bold text-white hover:bg-azure-500 disabled:opacity-60";
 
@@ -352,7 +352,7 @@ export function TeachersPanel({
         </button>
         <button
           onClick={() => setForm("promote")}
-          className="btn-press flex items-center justify-center gap-2 rounded-2xl bg-white p-4 text-sm font-bold text-ink-800 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:text-ink-100 dark:ring-white/10"
+          className="btn-press flex items-center justify-center gap-2 rounded-2xl bg-white p-4 text-sm font-bold text-ink-800 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:text-ink-100 dark:ring-white/10"
         >
           <ShieldCheck size={18} /> O'quvchini o'qituvchi qilish
         </button>

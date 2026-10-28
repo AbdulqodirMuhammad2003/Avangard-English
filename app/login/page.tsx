@@ -29,16 +29,16 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   }
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f131c] via-[#141925] to-[#1d1a14] px-4">
+    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[#0b0d16] via-[#16143a] to-[#2a1640] px-4">
       {/* Premium fon bezaklari */}
-      <div className="pointer-events-none absolute -left-24 top-[-10%] h-80 w-80 animate-float-slow rounded-full bg-gold-500/15 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 top-[-10%] h-80 w-80 animate-float-slow rounded-full bg-azure-500/30 blur-3xl" />
       <div
-        className="pointer-events-none absolute -right-20 bottom-[-10%] h-96 w-96 animate-float-slow rounded-full bg-ink-400/15 blur-3xl"
+        className="pointer-events-none absolute -right-20 bottom-[-10%] h-96 w-96 animate-float-slow rounded-full bg-[#7c3aed]/25 blur-3xl"
         style={{ animationDelay: "1.5s" }}
       />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(207,162,73,0.08),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(165,169,252,0.12)_1px,transparent_1.2px)] bg-[length:22px_22px]" />
 
-      <div className="relative w-full max-w-md animate-fade-up rounded-3xl bg-white/95 p-6 text-ink-950 sm:p-8 shadow-2xl shadow-black/40 backdrop-blur-sm">
+      <div className="relative w-full max-w-md animate-pop-in rounded-[2rem] bg-white/95 p-6 text-ink-950 sm:p-8 shadow-2xl shadow-black/40 backdrop-blur-sm">
         <div className="mb-8 flex items-center gap-3">
           <LogoMark size={46} className="shrink-0 drop-shadow-[0_2px_8px_rgba(30,32,18,0.35)]" />
           <div>

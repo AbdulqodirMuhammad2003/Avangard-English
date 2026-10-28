@@ -982,7 +982,7 @@ export function ExerciseRun({
                         });
                       }}
                       aria-label={t(`${i + 1}-bo'sh joy`, `Gap ${i + 1}`)}
-                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
+                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#151a28] dark:text-ink-50"
                     >
                       <option value="">…</option>
                       {gapChoices[i].map((choice) => (
@@ -1046,7 +1046,7 @@ export function ExerciseRun({
                     autoCapitalize="off"
                     spellCheck={false}
                     enterKeyHint={i + 1 < matchPairs.length ? "next" : "done"}
-                    className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#161b26] dark:text-ink-50"
+                    className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#151a28] dark:text-ink-50"
                   />
                   {checked !== null &&
                     !slotRight(i) &&
@@ -1321,7 +1321,7 @@ export function ExerciseRun({
             aria-modal="true"
             aria-labelledby="reveal-title"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10"
+            className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
           >
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-lg shadow-gold-700/30">
               <Eye size={26} />

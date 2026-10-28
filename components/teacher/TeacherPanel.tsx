@@ -185,7 +185,7 @@ function NewStudentForm({ levels, onClose }: { levels: PlacementLevel[]; onClose
           else setError(res.error);
         })
       }
-      className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10"
+      className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
     >
       <div className="flex items-center justify-between">
         <p className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">Yangi o'quvchi</p>
@@ -404,7 +404,7 @@ function StudentCard({ student, levels }: { student: TeacherStudent; levels: Pla
   ];
 
   return (
-    <li className="min-w-0 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
+    <li className="min-w-0 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
       <div className="flex items-start gap-3">
         <span className="font-display flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-azure-600 to-azure-900 text-sm font-bold text-white">
           {student.level}
@@ -503,11 +503,11 @@ export function TeacherPanel({
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
+        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
           <p className="flex items-center gap-1.5 text-xs text-ink-500 dark:text-ink-400"><Users size={14} /> O'quvchilar</p>
           <p className="font-display mt-1 text-2xl font-bold text-ink-950 dark:text-ink-50">{students.length}</p>
         </div>
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#161b26] dark:ring-white/10">
+        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
           <p className="text-xs text-ink-500 dark:text-ink-400">Shu hafta faol</p>
           <p className="font-display mt-1 text-2xl font-bold text-ink-950 dark:text-ink-50">{activeWeek}</p>
         </div>
@@ -540,7 +540,7 @@ export function TeacherPanel({
           ))}
         </ul>
       ) : (
-        <div className="flex flex-col items-center gap-2 rounded-2xl bg-white p-10 text-center text-sm text-ink-500 dark:bg-[#161b26] dark:text-ink-400">
+        <div className="flex flex-col items-center gap-2 rounded-2xl bg-white p-10 text-center text-sm text-ink-500 dark:bg-[#151a28] dark:text-ink-400">
           {students.length === 0 ? (
             <>
               <p>Hali o'quvchi yo'q.</p>

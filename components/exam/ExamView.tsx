@@ -7,9 +7,11 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Clock, GraduationCap, RotateCcw, T
 import type { ExamAnswer, ExamResult, ExamStatus } from "@/lib/exam";
 import { saveExamAnswersAction, startExamAction, submitExamAction } from "@/app/actions";
 import { useLang, useT } from "../LangProvider";
+import { ProgressRing } from "../ui/ProgressRing";
+import { celebrate } from "@/lib/celebrate";
 
 const CARD =
-  "rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-7 dark:bg-[#161b26] dark:shadow-none dark:ring-white/10";
+  "rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-7 dark:bg-[#151a28] dark:shadow-none dark:ring-white/10";
 
 function formatDateTime(iso: string, lang: string) {
   return new Date(iso).toLocaleString(lang === "en" ? "en-GB" : "uz-UZ", { day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit" });
@@ -412,6 +414,17 @@ function ExamRun({
 
 function ExamResultView({ result }: { result: ExamResult }) {
   const t = useT();
+  // Imtihondan o'tilganda — katta bayram: uch to'lqin konfetti.
+  useEffect(() => {
+    if (!result.passed) return;
+    celebrate({ count: 80, spread: 1.5 });
+    const a = setTimeout(() => celebrate({ origin: { x: window.innerWidth * 0.2, y: window.innerHeight * 0.4 }, count: 40 }), 400);
+    const b = setTimeout(() => celebrate({ origin: { x: window.innerWidth * 0.8, y: window.innerHeight * 0.4 }, count: 40 }), 700);
+    return () => {
+      clearTimeout(a);
+      clearTimeout(b);
+    };
+  }, [result.passed]);
   return (
     <div className="flex flex-col gap-5">
       <div className={CARD}>
@@ -428,20 +441,20 @@ function ExamResultView({ result }: { result: ExamResult }) {
           </h1>
         </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          <div className="rounded-2xl bg-ink-50 p-4 dark:bg-white/5">
-            <p className="text-xs text-ink-500 dark:text-ink-400">{t("Umumiy natija", "Total score")}</p>
-            <p className={`font-display text-3xl font-bold ${result.passed ? "text-mint-600" : "text-rose-500"}`}>{result.pct}%</p>
-            <p className="text-xs text-ink-500 dark:text-ink-400">{result.score} / {result.total} · {t("kerak 80%", "you need 80%")}</p>
-          </div>
-          <div className="rounded-2xl bg-ink-50 p-4 dark:bg-white/5">
-            <p className="text-xs text-ink-500 dark:text-ink-400">{t("Lug'at", "Vocabulary")}</p>
-            <p className="font-display text-3xl font-bold text-ink-950 dark:text-ink-50">{result.vocabPct}%</p>
-          </div>
-          <div className="rounded-2xl bg-ink-50 p-4 dark:bg-white/5">
-            <p className="text-xs text-ink-500 dark:text-ink-400">{t("Grammatika", "Grammar")}</p>
-            <p className="font-display text-3xl font-bold text-ink-950 dark:text-ink-50">{result.grammarPct}%</p>
-          </div>
+        <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
+          {[
+            { label: t("Umumiy natija", "Total score"), pct: result.pct, tone: result.passed ? ("mint" as const) : ("gold" as const), note: `${result.score} / ${result.total} · ${t("kerak 80%", "you need 80%")}` },
+            { label: t("Lug'at", "Vocabulary"), pct: result.vocabPct, tone: "azure" as const, note: "" },
+            { label: t("Grammatika", "Grammar"), pct: result.grammarPct, tone: "azure" as const, note: "" },
+          ].map((s) => (
+            <div key={s.label} className="flex min-w-0 flex-col items-center gap-2 rounded-2xl bg-ink-50 p-3 text-center sm:p-4 dark:bg-white/5">
+              <ProgressRing value={s.pct} size={84} stroke={9} tone={s.tone}>
+                <span className="font-display text-xl font-extrabold text-ink-950 dark:text-ink-50">{s.pct}%</span>
+              </ProgressRing>
+              <p className="text-xs font-semibold text-ink-600 dark:text-ink-300">{s.label}</p>
+              {s.note && <p className="text-[11px] text-ink-400">{s.note}</p>}
+            </div>
+          ))}
         </div>
 
         {result.passed ? (

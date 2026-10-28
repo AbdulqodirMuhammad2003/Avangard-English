@@ -28,6 +28,7 @@ import {
   Mic,
   Ear,
   BookOpenCheck,
+  Check,
   BookOpenText,
   Radio,
   GraduationCap,
@@ -135,8 +136,8 @@ const DONE_PCT = 80;
  *  o'tilgan — yashil, joriy (ochiq, hali 80 % ga yetmagan) — ko'k. */
 function unitGradient(unit: UnitDetail) {
   if (unit.locked) return "from-ink-400 to-ink-700 dark:from-ink-600 dark:to-ink-900";
-  if (unit.percent >= DONE_PCT) return "from-mint-500 to-mint-800";
-  return "from-azure-500 to-azure-900";
+  if (unit.percent >= DONE_PCT) return "from-mint-400 via-mint-600 to-mint-800";
+  return "from-azure-500 via-azure-700 to-[#6d28d9]";
 }
 
 type CarouselItem = { kind: "unit"; unit: UnitDetail } | { kind: "exam"; level: string };
@@ -464,7 +465,7 @@ export function LessonsBoard({
       )}
 
       {visibleUnits.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#161b26] dark:shadow-none">
+        <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#151a28] dark:shadow-none">
           <Lock size={28} className="text-ink-200 dark:text-ink-700" />
           <p className="font-semibold text-ink-700 dark:text-ink-200">{t("Hozircha ochiq darslar yo'q", "No open lessons yet")}</p>
         </div>
@@ -514,6 +515,15 @@ export function LessonsBoard({
                     <span className="pointer-events-none absolute -bottom-6 -right-4 h-24 w-24 rounded-full bg-black/10" />
                     <span className="pointer-events-none absolute bottom-16 right-10 h-8 w-8 rounded-full bg-black/10" />
                     <span className="pointer-events-none absolute -left-6 top-24 h-16 w-16 rounded-full bg-white/5" />
+                    <span
+                      className="pointer-events-none absolute inset-0 opacity-[0.12]"
+                      style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1.2px)", backgroundSize: "16px 16px" }}
+                    />
+                    {!unit.locked && unit.percent >= DONE_PCT && (
+                      <span className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-mint-600 shadow-lg">
+                        <Check size={18} strokeWidth={3} />
+                      </span>
+                    )}
 
                     <span className="relative rounded-full bg-white/15 px-3 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
                       {unit.level_code}
@@ -558,7 +568,7 @@ export function LessonsBoard({
             <button
               onClick={() => scrollToCard(activeCard - 1)}
               disabled={activeCard === 0}
-              className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#161b26]/90 dark:text-ink-100"
+              className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#151a28]/90 dark:text-ink-100"
               aria-label={t("Chapga aylantirish", "Scroll left")}
             >
               <ChevronLeft size={20} />
@@ -566,7 +576,7 @@ export function LessonsBoard({
             <button
               onClick={() => scrollToCard(activeCard + 1)}
               disabled={activeCard === items.length - 1}
-              className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#161b26]/90 dark:text-ink-100"
+              className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#151a28]/90 dark:text-ink-100"
               aria-label={t("O’ngga aylantirish", "Scroll right")}
             >
               <ChevronRight size={20} />
@@ -596,7 +606,7 @@ export function LessonsBoard({
 
       {/* Dars yon paneli (mashq bajarilayotganda butun ekranga kengayadi) */}
       <div
-        className={`fixed right-0 top-0 z-50 flex h-full flex-col bg-white shadow-2xl transition-all duration-300 dark:bg-[#121620] ${
+        className={`fixed right-0 top-0 z-50 flex h-full flex-col bg-white shadow-2xl transition-all duration-300 dark:bg-[#0f1220] ${
           openUnit ? "translate-x-0" : "translate-x-full"
         } ${view === "exercise-run" ? "w-full" : "w-full max-w-md"}`}
       >
@@ -645,7 +655,7 @@ export function LessonsBoard({
                           onClick={() => openRound(round.id)}
                           aria-busy={loadingRoundId === round.id}
                           style={{ animationDelay: `${i * 50}ms` }}
-                          className={`relative flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-sm ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:bg-white/5 dark:shadow-none dark:ring-white/10 ${
+                          className={`relative flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-[0_4px_0_0_var(--tile-edge)] ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_0_var(--tile-edge)] active:translate-y-0.5 active:shadow-none dark:bg-white/5 dark:ring-white/10 ${
                             loadingRoundId === round.id ? "animate-pulse opacity-70" : ""
                           }`}
                         >
@@ -666,7 +676,7 @@ export function LessonsBoard({
                           <div className="mt-auto flex items-center gap-2">
                             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
                               <div
-                                className="h-full rounded-full bg-mint-500 transition-[width] duration-500"
+                                className="h-full rounded-full bg-gradient-to-r from-mint-400 to-mint-600 transition-[width] duration-500"
                                 style={{ width: `${pct}%` }}
                               />
                             </div>
@@ -704,7 +714,7 @@ export function LessonsBoard({
                             key={ex.id}
                             onClick={() => startExercise(ex.id)}
                             aria-busy={loadingExerciseId === ex.id}
-                            className={`relative col-span-2 flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-sm ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:bg-white/5 dark:shadow-none dark:ring-white/10 ${
+                            className={`relative col-span-2 flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-[0_4px_0_0_var(--tile-edge)] ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_0_var(--tile-edge)] active:translate-y-0.5 active:shadow-none dark:bg-white/5 dark:ring-white/10 ${
                               loadingExerciseId === ex.id ? "animate-pulse opacity-70" : ""
                             }`}
                           >
@@ -725,7 +735,7 @@ export function LessonsBoard({
                             <div className="mt-auto flex items-center gap-2">
                               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
                                 <div
-                                  className="h-full rounded-full bg-gold-500 transition-[width] duration-500"
+                                  className="h-full rounded-full bg-gradient-to-r from-gold-300 to-gold-500 transition-[width] duration-500"
                                   style={{ width: `${ex.score_pct}%` }}
                                 />
                               </div>
@@ -821,7 +831,7 @@ export function LessonsBoard({
                           onClick={() => startExercise(ex.id)}
                           aria-busy={loadingExerciseId === ex.id}
                           style={{ animationDelay: `${i * 50}ms` }}
-                          className={`relative flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-sm ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:bg-white/5 dark:shadow-none dark:ring-white/10 ${
+                          className={`relative flex min-w-0 animate-fade-up flex-col rounded-2xl bg-white px-3.5 pb-3.5 pt-9 text-left shadow-[0_4px_0_0_var(--tile-edge)] ring-1 ring-ink-950/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_0_0_var(--tile-edge)] active:translate-y-0.5 active:shadow-none dark:bg-white/5 dark:ring-white/10 ${
                             loadingExerciseId === ex.id ? "animate-pulse opacity-70" : ""
                           }`}
                         >
@@ -842,7 +852,7 @@ export function LessonsBoard({
                           <div className="mt-auto flex items-center gap-2">
                             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
                               <div
-                                className="h-full rounded-full bg-mint-500 transition-[width] duration-500"
+                                className="h-full rounded-full bg-gradient-to-r from-mint-400 to-mint-600 transition-[width] duration-500"
                                 style={{ width: `${ex.score_pct}%` }}
                               />
                             </div>
@@ -1065,7 +1075,7 @@ function LessonSection({
     <div
       style={{ animationDelay: `${delay}ms` }}
       className={`animate-fade-up rounded-3xl transition-colors duration-300 ${
-        open ? "bg-ink-50 dark:bg-white/5" : ""
+        open ? "bg-white/70 ring-1 ring-ink-950/5 backdrop-blur dark:bg-white/5 dark:ring-white/10" : ""
       }`}
     >
       <button
@@ -1076,7 +1086,7 @@ function LessonSection({
       >
         <span className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
         <span className="pointer-events-none absolute -bottom-8 right-16 h-20 w-20 rounded-full bg-black/10" />
-        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-gold-500 shadow-sm">
+        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/95 text-gold-500 shadow-lg shadow-black/15 ring-4 ring-white/20">
           {icon}
         </span>
         <span className="relative min-w-0 flex-1">

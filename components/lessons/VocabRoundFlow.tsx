@@ -27,6 +27,7 @@ import {
 import { formatTranscription } from "@/lib/transcription";
 import { localizeLabel, localizePos } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
+import { buzz, celebrate } from "@/lib/celebrate";
 
 // ---------- Yordamchi funksiyalar ----------
 
@@ -52,16 +53,26 @@ function StageNext({
 }) {
   const t = useT();
   const [sent, setSent] = useState(false);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  // Javob chiqishi bilan: to'g'ri bo'lsa — konfetti va qisqa tebranish.
+  useEffect(() => {
+    if (correct) {
+      const r = nextRef.current?.getBoundingClientRect();
+      celebrate({ origin: r ? { x: r.left + r.width / 2, y: r.top } : undefined, count: 16, spread: 0.7 });
+      buzz(12);
+    } else buzz([18, 60, 18]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="flex animate-fade-up flex-col gap-3">
       <div
-        className={`rounded-2xl px-4 py-3 text-center text-sm ${
+        className={`animate-pop-in rounded-2xl px-4 py-3.5 text-center text-sm ring-1 ${
           correct
-            ? "bg-mint-50 text-mint-900 dark:bg-mint-950/40 dark:text-mint-100"
-            : "bg-rose-50 text-rose-900 dark:bg-rose-950/40 dark:text-rose-100"
+            ? "bg-gradient-to-br from-mint-50 to-mint-100/70 text-mint-900 ring-mint-200 dark:from-mint-950/50 dark:to-mint-900/30 dark:text-mint-100 dark:ring-mint-800/50"
+            : "bg-gradient-to-br from-rose-50 to-rose-100/60 text-rose-900 ring-rose-200 dark:from-rose-950/50 dark:to-rose-900/20 dark:text-rose-100 dark:ring-rose-900/50"
         }`}
       >
-        <p className="font-bold">
+        <p className="font-display text-base font-bold">
           {correct ? (
             t("To'g'ri!", "Correct!")
           ) : (
@@ -72,13 +83,16 @@ function StageNext({
         </p>
       </div>
       <button
+        ref={nextRef}
         autoFocus
         onClick={() => {
           if (sent) return;
           setSent(true);
           onNext();
         }}
-        className="btn-press rounded-full bg-azure-600 py-3 text-sm font-bold text-white hover:bg-azure-500"
+        className={`btn-press rounded-full py-3.5 font-display text-base font-bold text-white ${
+          correct ? "bg-mint-600 hover:bg-mint-500" : "bg-azure-600 hover:bg-azure-500"
+        }`}
       >
         {t("Keyingisi", "Next")}
       </button>
@@ -485,7 +499,7 @@ function LearnCard({
   return (
     <div
       key={word.id}
-      className="flex w-full max-w-md animate-pop-in flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none"
+      className="flex w-full max-w-md animate-pop-in flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none"
     >
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("So'z", "Word")} {index + 1} / {total}
@@ -735,7 +749,7 @@ function SpellingStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
       <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
         {word.emoji}
       </div>
@@ -862,7 +876,7 @@ function DefinitionStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("Ta'rifga mos so'zni tanlang", "Choose the word for this meaning")}
       </p>
@@ -879,7 +893,7 @@ function DefinitionStage({
               key={opt}
               onClick={() => choose(opt)}
               disabled={checked !== null}
-              className={`rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-all duration-150 ${
+              className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-semibold transition-all duration-150 ${
                 showState && isCorrectOpt
                   ? "border-mint-500 bg-mint-50 text-mint-900 dark:bg-mint-950/40 dark:text-mint-100"
                   : showState && isSelected
@@ -1007,7 +1021,7 @@ function PronunciationStage({
     unsupported || (error !== null && error !== SPEECH_ERRORS["no-speech"] && error !== SPEECH_ERRORS_EN["no-speech"]);
 
   return (
-    <div className="flex animate-pop-in flex-col items-center gap-5 rounded-3xl bg-white p-6 text-center shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col items-center gap-5 rounded-3xl bg-white p-6 text-center shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
       <p className="text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("So'zni to'g'ri talaffuz qiling", "Say the word correctly")}
       </p>
@@ -1123,7 +1137,7 @@ function SentenceStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#161b26] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("Bo'sh joyga mos so'zni yozing", "Write the missing word")}
       </p>
