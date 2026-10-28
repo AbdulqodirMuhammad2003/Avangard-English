@@ -15,6 +15,7 @@ import { LESSON_CONTENT } from "../lib/seed-lessons";
 import { UNITS } from "../lib/seed-data";
 import { levelInfo } from "../lib/levels";
 import { formatTranscription } from "../lib/transcription";
+import { humoSvg } from "../lib/logo";
 
 const OUT_DIR = path.join(process.cwd(), "public", "handbooks");
 
@@ -153,7 +154,7 @@ ol.test p { margin: 0 0 1mm; }
 .answers { margin-top: 4mm; font-size: 9pt; color: #6b7487; border-top: 1px dashed #cdd3dd; padding-top: 2mm; }
 </style></head><body>
 <div class="cover">
-  <svg class="seal" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#1e2012" stroke="#cfa249" stroke-width="1.4"/><circle cx="20" cy="20" r="14" fill="none" stroke="#cfa249" stroke-opacity=".4" stroke-width=".6"/><path d="M20 10.5 L27.5 29.5 L23.8 29.5 L22.2 25.3 L17.8 25.3 L16.2 29.5 L12.5 29.5 Z M18.6 22.2 L21.4 22.2 L20 17.9 Z" fill="#dfbd6c"/><circle cx="20" cy="6.5" r="1.2" fill="#dfbd6c"/></svg>
+  ${humoSvg().replace("<svg ", "<svg class=\"seal\" ")}
   <h1>Avangard English — Ingliz tili maktabi</h1>
   <div class="lvl">${level}</div>
   <div class="sub">${esc(info?.uz ?? level)} · <span lang="en">${esc(info?.en ?? level)}</span>${info ? ` · IELTS ≈ ${esc(info.ielts)}` : ""}</div>

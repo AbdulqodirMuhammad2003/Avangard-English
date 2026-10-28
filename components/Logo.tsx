@@ -1,26 +1,22 @@
+import { HUMO_BG, HUMO_BIRD } from "@/lib/logo";
+
 /**
- * Avangard English logotipi — "Seal" (muhr-nishon) konsepti: doiraviy medal
- * shaklida, zaytun (olive) va oltin rang birikmasida "A" monogrammasi.
- * O'zi mustaqil ramka bo'lgani uchun tashqi konteynerga muhtoj emas —
- * to'g'ridan-to'g'ri istalgan fonda (och yoki to'q) ishlatiladi.
+ * Avangard English logotipi — «Humo» qushi (lib/logo.ts): to'q plitkada oltin
+ * qanotlar «A» harfini hosil qiladi. Plitka o'zi ramka bo'lgani uchun och va
+ * to'q fonda ham ko'rinadi.
  */
 export function LogoMark({ size = 40, className }: { size?: number; className?: string }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 100 100"
       className={className}
       role="img"
       aria-label="Avangard English logotipi"
     >
-      <circle cx="20" cy="20" r="18" fill="#1e2012" stroke="#cfa249" strokeWidth="1.4" />
-      <circle cx="20" cy="20" r="14" fill="none" stroke="#cfa24966" strokeWidth="0.6" />
-      <path
-        d="M20 10.5 L27.5 29.5 L23.8 29.5 L22.2 25.3 L17.8 25.3 L16.2 29.5 L12.5 29.5 Z M18.6 22.2 L21.4 22.2 L20 17.9 Z"
-        fill="#dfbd6c"
-      />
-      <circle cx="20" cy="6.5" r="1.2" fill="#dfbd6c" />
+      <rect width="100" height="100" rx="24" fill={HUMO_BG} />
+      <g transform="translate(5 5) scale(0.9)" dangerouslySetInnerHTML={{ __html: HUMO_BIRD }} />
     </svg>
   );
 }
