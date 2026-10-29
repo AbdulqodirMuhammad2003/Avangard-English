@@ -1,5 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
+import Link from "next/link";
 import { Avatar } from "@/components/Avatar";
 import { LevelSwitch } from "@/components/LevelSwitch";
 import { Award, BookOpenCheck, PlayCircle, Trophy } from "lucide-react";
@@ -130,10 +131,18 @@ function Legend({ t }: { t: Translate }) {
   );
 }
 
-export default async function MarksPage({ searchParams }: { searchParams: Promise<{ level?: string | string[] }> }) {
-  const { level: requested } = await searchParams;
+export default async function MarksPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ level?: string | string[]; teacher?: string | string[] }>;
+}) {
+  const { level: requested, teacher } = await searchParams;
   const session = await getSession();
-  const board = await getLevelBoard(session!.userId, typeof requested === "string" ? requested : undefined);
+  const board = await getLevelBoard(
+    session!.userId,
+    typeof requested === "string" ? requested : undefined,
+    typeof teacher === "string" ? Number(teacher) || undefined : undefined
+  );
   const lang: Lang = await getLang();
   const t = translator(lang);
   // Telefonda o'z kartangiz doim birinchi.
@@ -185,7 +194,19 @@ export default async function MarksPage({ searchParams }: { searchParams: Promis
         </div>
       )}
 
-      {board.isTeacher && <LevelSwitch levels={board.levels} current={board.level} path="/marks" />}
+      {board.viewingTeacher && (
+        <div className="flex animate-fade-up flex-wrap items-center justify-between gap-3 rounded-2xl bg-gold-50 px-4 py-3 text-sm text-gold-900 ring-1 ring-gold-200 dark:bg-gold-950/40 dark:text-gold-100 dark:ring-gold-800/40">
+          <span>
+            <b>{board.viewingTeacher.name}</b> o'quvchilarining natijalari — faqat ko'rish uchun.
+          </span>
+          <Link href="/teacher?view=teachers" className="font-semibold underline underline-offset-2">
+            O'qituvchilarga qaytish
+          </Link>
+        </div>
+      )}
+      {board.isTeacher && (
+        <LevelSwitch levels={board.levels} current={board.level} path="/marks" teacherId={board.viewingTeacher?.id} />
+      )}
       <div className="animate-fade-up">
         <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Baholar", "Marks")}</h1>
         <p className="text-sm text-ink-700/60 dark:text-ink-300/60">

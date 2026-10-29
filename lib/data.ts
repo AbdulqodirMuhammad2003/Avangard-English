@@ -575,6 +575,9 @@ export interface LevelBoard {
   /** O'qituvchi istalgan darajani ko'ra oladi — unga darajalar ro'yxati beriladi. */
   isTeacher: boolean;
   levels: string[];
+  /** Admin boshqa o'qituvchining jadvalini ko'rayotgan bo'lsa — o'sha
+   *  o'qituvchi (faqat ko'rish uchun); aks holda null. */
+  viewingTeacher: { id: number; name: string } | null;
   units: { id: number; title: string; subtitle: string }[];
   students: BoardStudent[];
 }
@@ -582,17 +585,29 @@ export interface LevelBoard {
 /** O'quvchi o'qiyotgan darajadagi barcha ro'yxatdan o'tgan o'quvchilarning
  *  har bir dars bo'yicha natijasi. Dars foizi «Darslar» sahifasidagi bilan
  *  bir xil hisoblanadi: lug'at va mashqlar foizining o'rtachasi. */
-export async function getLevelBoard(userId: number, requestedLevel?: string): Promise<LevelBoard> {
-  const [[me], levelRows] = await Promise.all([
-    sql<{ level: string; role: string }[]>`SELECT level, role FROM users WHERE id = ${userId}`,
-    // Mazmuni bor darajalar va har birida nechta o'quvchi borligi.
-    sql<{ code: string; students: number }[]>`
-      SELECT l.code, (SELECT count(*)::int FROM users s WHERE s.role = 'student' AND s.level = l.code) AS students
-      FROM levels l WHERE EXISTS (SELECT 1 FROM units u WHERE u.level_id = l.id)
-      ORDER BY l.order_index
-    `,
-  ]);
+/** Jadvalda kimlar bor: o'quvchi — o'z o'qituvchisining o'quvchilari
+ *  (sinfdoshlari); o'qituvchi — faqat o'z o'quvchilari; admin
+ *  `teacherId` bilan — boshqa o'qituvchining o'quvchilari (faqat ko'rish). */
+export async function getLevelBoard(userId: number, requestedLevel?: string, teacherId?: number): Promise<LevelBoard> {
+  const [me] = await sql<{ level: string; role: string; is_admin: boolean; teacher_id: number | null }[]>`
+    SELECT level, role, is_admin, teacher_id FROM users WHERE id = ${userId}
+  `;
   const isTeacher = me?.role === "teacher";
+  let viewingTeacher: LevelBoard["viewingTeacher"] = null;
+  if (isTeacher && me.is_admin && teacherId && teacherId !== userId) {
+    const [t] = await sql<{ id: number; name: string }[]>`
+      SELECT id, name FROM users WHERE id = ${teacherId} AND role = 'teacher'
+    `;
+    if (t) viewingTeacher = t;
+  }
+  const ownerId = isTeacher ? viewingTeacher?.id ?? userId : me?.teacher_id ?? null;
+  // Mazmuni bor darajalar va har birida shu guruhning nechta o'quvchisi borligi.
+  const levelRows = await sql<{ code: string; students: number }[]>`
+    SELECT l.code, (SELECT count(*)::int FROM users s
+                    WHERE s.role = 'student' AND s.level = l.code AND s.teacher_id IS NOT DISTINCT FROM ${ownerId}) AS students
+    FROM levels l WHERE EXISTS (SELECT 1 FROM units u WHERE u.level_id = l.id)
+    ORDER BY l.order_index
+  `;
   const levels = levelRows.map((r) => r.code);
   // O'quvchi — faqat o'z darajasi. O'qituvchi — so'ralgan daraja, aks holda
   // o'quvchilari eng ko'p bo'lgan daraja (o'zining hisobi darajasi emas).
@@ -607,7 +622,7 @@ export async function getLevelBoard(userId: number, requestedLevel?: string): Pr
   const [users, units] = await Promise.all([
     sql<{ id: number; name: string; avatar_url: string | null }[]>`
       SELECT id, name, CASE WHEN avatar_url LIKE 'data:%' THEN '/avatar/' || id || '?v=' || length(avatar_url) ELSE avatar_url END AS avatar_url
-      FROM users WHERE level = ${level} AND role = 'student' ORDER BY name
+      FROM users WHERE level = ${level} AND role = 'student' AND teacher_id IS NOT DISTINCT FROM ${ownerId} ORDER BY name
     `,
     sql<{ id: number; title: string; subtitle: string; words: number; exercises: number }[]>`
       SELECT u.id, u.title, u.subtitle,
@@ -620,7 +635,7 @@ export async function getLevelBoard(userId: number, requestedLevel?: string): Pr
     `,
   ]);
   const withContent = units.filter((u) => u.words > 0 || u.exercises > 0);
-  if (users.length === 0 || withContent.length === 0) return { level, isTeacher, levels, units: [], students: [] };
+  if (users.length === 0 || withContent.length === 0) return { level, isTeacher, levels, viewingTeacher, units: [], students: [] };
 
   const userIds = users.map((u) => u.id);
   const [learnedRows, exerciseRows, examRows] = await Promise.all([
@@ -680,6 +695,7 @@ export async function getLevelBoard(userId: number, requestedLevel?: string): Pr
     level,
     isTeacher,
     levels,
+    viewingTeacher,
     units: withContent.map(({ id, title, subtitle }) => ({ id, title, subtitle })),
     students,
   };

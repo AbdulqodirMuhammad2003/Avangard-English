@@ -301,6 +301,16 @@ function TeacherCard({ teacher, isMe }: { teacher: TeacherAccount; isMe: boolean
         >
           O'quvchilarini ko'rish <ChevronRight size={13} />
         </Link>
+        {/* Boshqa o'qituvchi o'quvchilarining dars bo'yicha natijalari —
+            admin uchun, faqat ko'rish (ma'lumot yig'ish) maqsadida. */}
+        {!isMe && (
+          <Link
+            href={`/marks?teacher=${teacher.id}`}
+            className="flex items-center gap-1 rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800 hover:bg-gold-200 dark:bg-gold-950/40 dark:text-gold-200"
+          >
+            O'quvchilar bahosi <ChevronRight size={13} />
+          </Link>
+        )}
         {!teacher.isAdmin &&
           actions.map((a) => {
             const Icon = a.icon;
