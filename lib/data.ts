@@ -572,6 +572,9 @@ export interface BoardStudent {
 
 export interface LevelBoard {
   level: string;
+  /** O'qituvchi istalgan darajani ko'ra oladi — unga darajalar ro'yxati beriladi. */
+  isTeacher: boolean;
+  levels: string[];
   units: { id: number; title: string; subtitle: string }[];
   students: BoardStudent[];
 }
@@ -579,9 +582,28 @@ export interface LevelBoard {
 /** O'quvchi o'qiyotgan darajadagi barcha ro'yxatdan o'tgan o'quvchilarning
  *  har bir dars bo'yicha natijasi. Dars foizi «Darslar» sahifasidagi bilan
  *  bir xil hisoblanadi: lug'at va mashqlar foizining o'rtachasi. */
-export async function getLevelBoard(userId: number): Promise<LevelBoard> {
-  const [me] = await sql<{ level: string }[]>`SELECT level FROM users WHERE id = ${userId}`;
-  const level = me?.level ?? "A1";
+export async function getLevelBoard(userId: number, requestedLevel?: string): Promise<LevelBoard> {
+  const [[me], levelRows] = await Promise.all([
+    sql<{ level: string; role: string }[]>`SELECT level, role FROM users WHERE id = ${userId}`,
+    // Mazmuni bor darajalar va har birida nechta o'quvchi borligi.
+    sql<{ code: string; students: number }[]>`
+      SELECT l.code, (SELECT count(*)::int FROM users s WHERE s.role = 'student' AND s.level = l.code) AS students
+      FROM levels l WHERE EXISTS (SELECT 1 FROM units u WHERE u.level_id = l.id)
+      ORDER BY l.order_index
+    `,
+  ]);
+  const isTeacher = me?.role === "teacher";
+  const levels = levelRows.map((r) => r.code);
+  // O'quvchi — faqat o'z darajasi. O'qituvchi — so'ralgan daraja, aks holda
+  // o'quvchilari eng ko'p bo'lgan daraja (o'zining hisobi darajasi emas).
+  const busiest = [...levelRows].sort((a, b) => b.students - a.students)[0];
+  const level = isTeacher
+    ? requestedLevel && levels.includes(requestedLevel)
+      ? requestedLevel
+      : busiest?.students
+      ? busiest.code
+      : me?.level ?? "A1"
+    : me?.level ?? "A1";
   const [users, units] = await Promise.all([
     sql<{ id: number; name: string; avatar_url: string | null }[]>`
       SELECT id, name, CASE WHEN avatar_url LIKE 'data:%' THEN '/avatar/' || id || '?v=' || length(avatar_url) ELSE avatar_url END AS avatar_url
@@ -598,7 +620,7 @@ export async function getLevelBoard(userId: number): Promise<LevelBoard> {
     `,
   ]);
   const withContent = units.filter((u) => u.words > 0 || u.exercises > 0);
-  if (users.length === 0 || withContent.length === 0) return { level, units: [], students: [] };
+  if (users.length === 0 || withContent.length === 0) return { level, isTeacher, levels, units: [], students: [] };
 
   const userIds = users.map((u) => u.id);
   const [learnedRows, exerciseRows, examRows] = await Promise.all([
@@ -647,7 +669,7 @@ export async function getLevelBoard(userId: number): Promise<LevelBoard> {
       exam: {
         attempted: exams.has(user.id),
         passed: !!exams.get(user.id)?.passed,
-        pct: user.id === userId ? exams.get(user.id)?.best ?? null : null,
+        pct: user.id === userId || isTeacher ? exams.get(user.id)?.best ?? null : null,
       },
       average: Math.round(points / withContent.length),
       points,
@@ -656,6 +678,8 @@ export async function getLevelBoard(userId: number): Promise<LevelBoard> {
 
   return {
     level,
+    isTeacher,
+    levels,
     units: withContent.map(({ id, title, subtitle }) => ({ id, title, subtitle })),
     students,
   };

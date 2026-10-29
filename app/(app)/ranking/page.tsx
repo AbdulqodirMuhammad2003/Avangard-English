@@ -2,6 +2,7 @@ import { Crown, Medal, Trophy } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";
+import { LevelSwitch } from "@/components/LevelSwitch";
 import { getT } from "@/lib/lang-server";
 
 type Row = Awaited<ReturnType<typeof getLevelBoard>>["students"][number];
@@ -40,9 +41,10 @@ function PodiumPlace({ row, place, you }: { row: Row; place: 1 | 2 | 3; you: str
   );
 }
 
-export default async function RankingPage() {
+export default async function RankingPage({ searchParams }: { searchParams: Promise<{ level?: string | string[] }> }) {
+  const { level: requested } = await searchParams;
   const session = await getSession();
-  const board = await getLevelBoard(session!.userId);
+  const board = await getLevelBoard(session!.userId, typeof requested === "string" ? requested : undefined);
   const t = await getT();
   // Reyting — darslar foizlari yig'indisi bo'yicha; teng ball bo'lsa, ism bo'yicha.
   const rows = [...board.students].sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
@@ -53,6 +55,7 @@ export default async function RankingPage() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
+      {board.isTeacher && <LevelSwitch levels={board.levels} current={board.level} path="/ranking" />}
       <div className="animate-fade-up">
         <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Reyting", "Ranking")}</h1>
         <p className="text-sm text-ink-500 dark:text-ink-400">

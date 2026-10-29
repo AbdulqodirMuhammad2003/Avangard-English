@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";
+import { LevelSwitch } from "@/components/LevelSwitch";
 import { Award, BookOpenCheck, PlayCircle, Trophy } from "lucide-react";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { StatCard } from "@/components/ui/StatCard";
@@ -129,9 +130,10 @@ function Legend({ t }: { t: Translate }) {
   );
 }
 
-export default async function MarksPage() {
+export default async function MarksPage({ searchParams }: { searchParams: Promise<{ level?: string | string[] }> }) {
+  const { level: requested } = await searchParams;
   const session = await getSession();
-  const board = await getLevelBoard(session!.userId);
+  const board = await getLevelBoard(session!.userId, typeof requested === "string" ? requested : undefined);
   const lang: Lang = await getLang();
   const t = translator(lang);
   // Telefonda o'z kartangiz doim birinchi.
@@ -183,6 +185,7 @@ export default async function MarksPage() {
         </div>
       )}
 
+      {board.isTeacher && <LevelSwitch levels={board.levels} current={board.level} path="/marks" />}
       <div className="animate-fade-up">
         <h1 className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">{t("Baholar", "Marks")}</h1>
         <p className="text-sm text-ink-700/60 dark:text-ink-300/60">
