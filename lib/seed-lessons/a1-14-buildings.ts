@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -310,5 +311,29 @@ export const A1_14_EXERCISES: SeedExercise[] = [
       "interesting",
       "architect",
     ]),
+  },
+  {
+    title: "Sevimli binolar",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Ikki kishi sevimli binosi haqida gapiradi. Tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/5.5.mp3")("Where is the Allianz Arena?", ["In Munich","In Prague","In Berlin","In Paris"]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("What do people do there?", ["They play football.","They work in offices.","They eat in a restaurant.","They watch films."]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("When is it white?", ["When the German national team plays","When Bayern Munich plays","At night","On Sundays"]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("When is the stadium open?", ["From 10 a.m. to 6 p.m.","From 12 midday to 10 p.m.","From 9 a.m. to 5 p.m.","Only at the weekend"]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("Where is the Dancing House?", ["In Prague","In Munich","In Vienna","In London"]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("What kind of building is it?", ["An office building","A hotel","A museum","A stadium"]),
+      hearing("media:navigate-a1/audio/5.5.mp3")("Where is the restaurant?", ["On the top floor","Next to the building","On the ground floor","There isn't a restaurant."]),
+    ],
+  },
+  {
+    title: "Bu bino nima?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Ikki kishi Londondagi bir bino haqida gaplashadi. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/5.21.mp3", [["The building is called the ___.","Gherkin","Shard","Dancing House"],["It's an ___ building.","office","apartment","hotel"],["The building ___ open to the public.","isn't","is","is often"],["But people visit the ___.","plaza","museum","restaurant"],["The plaza is open ___.","every day","at the weekend","in the morning"],["The speaker likes it because it's very ___.","different","old","tall"]]),
+    ],
   },
 ];

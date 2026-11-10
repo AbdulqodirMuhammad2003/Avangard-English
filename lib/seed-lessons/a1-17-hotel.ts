@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -334,5 +336,28 @@ export const A1_17_EXERCISES: SeedExercise[] = [
       "available",
       "reception",
     ]),
+  },
+  {
+    title: "Mehmonxonada",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Mehmonxonadagi ikki suhbatni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/6.4.mp3", [["The guest's name is ___.","Davis","David","Daniels"],["The room is for ___ nights.","two","three","four"],["The Wi-fi password is '___'.","guest","hotel","welcome"],["The gym is on level ___.","1","2","3"],["In the gym there aren't any ___.","towels","showers","people"]]),
+    ],
+  },
+  {
+    title: "Mehmonxona haqida ma'lumot",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Mehmon mehmonxonaga qo'ng'iroq qiladi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/6.11.mp3")("When does the flight arrive?", ["At 4.30 a.m. on Friday","At 4.30 p.m. on Friday","At 4.30 a.m. on Thursday","At 2 p.m. on Friday"]),
+      hearing("media:navigate-a1/audio/6.11.mp3")("What's the best way to get to the hotel?", ["By bus","By taxi","By train","On foot"]),
+      hearing("media:navigate-a1/audio/6.11.mp3")("How often does the number 99 go?", ["Every thirty minutes","Every fifteen minutes","Every hour","Every ten minutes"]),
+      hearing("media:navigate-a1/audio/6.11.mp3")("Where is the free Wi-fi?", ["In reception","In all the rooms","In the restaurant","There isn't any."]),
+      hearing("media:navigate-a1/audio/6.11.mp3")("When is breakfast?", ["From 7 to 10","From 6 to 9","From 8 to 11","From 7 to 11"]),
+      hearingTwo("media:navigate-a1/audio/6.11.mp3")("Which TWO are true?", ["Check-in is after 2 p.m.","Check-out is before 11 a.m."], ["Check-in is after 11 a.m.","Check-out is before 2 p.m."]),
+    ],
   },
 ];

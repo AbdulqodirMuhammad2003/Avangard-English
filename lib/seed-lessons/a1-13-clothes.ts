@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -340,5 +341,14 @@ export const A1_13_EXERCISES: SeedExercise[] = [
       "trousers",
       "usually",
     ]),
+  },
+  {
+    title: "Kim nima kiygan?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "To'rt juft odam tasvirlanadi (a–d). Tinglang va har bir gap uchun to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/5.2.mp3", [["a) The man's T-shirt is ___.","yellow","green","blue"],["a) The woman has got a grey top and a grey ___.","hat","skirt","dress"],["b) The man's jacket and trousers are ___.","blue","black","brown"],["b) The woman is in a red ___.","dress","top","skirt"],["c) The man's jumper is ___.","green","red","grey"],["d) The man's trousers are ___.","brown","black","blue"],["d) The woman's skirt is ___.","grey","red","black"]]),
+    ],
   },
 ];

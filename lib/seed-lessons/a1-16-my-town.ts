@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -318,5 +320,28 @@ export const A1_16_EXERCISES: SeedExercise[] = [
       "museum",
       "theatre",
     ]),
+  },
+  {
+    title: "Shaharda nimalar bor?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Bir shahar haqidagi sakkiz gapni tinglang. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/6.2.mp3", [["There are good ___.","facilities","hotels","parks"],["There's a great ___.","bakery","museum","park"],["There are ___ people.","4,000","400","40,000"],["There's a ___.","theatre","cinema","zoo"],["There are supermarkets and ___.","banks","hotels","museums"],["There ___ any hotels.","aren't","are","is"],["There's a ___ restaurant.","German","Italian","French"]]),
+    ],
+  },
+  {
+    title: "Tog'dagi shaharcha",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Avstriyadagi bir shaharcha va mehmonxona haqidagi suhbatni tinglang. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/6.21.mp3")("Where is the town?", ["In the mountains in Austria","By the sea in Austria","In the mountains in Italy","Near a big city"]),
+      hearing("media:navigate-a1/audio/6.21.mp3")("Is it a big town?", ["No, it isn't.","Yes, it is.","It's very big.","The speaker doesn't know."]),
+      hearingTwo("media:navigate-a1/audio/6.21.mp3")("Which TWO things are there for children?", ["A swimming pool","A park"], ["A zoo","A cinema"]),
+      hearing("media:navigate-a1/audio/6.21.mp3")("Where do people walk?", ["In the forest and the mountains","In the city centre","By the lake","In the park only"]),
+      hearingTwo("media:navigate-a1/audio/6.21.mp3")("Which TWO facilities has the hotel got?", ["A restaurant","A gym"], ["A swimming pool","A cinema"]),
+      hearing("media:navigate-a1/audio/6.21.mp3")("Is there Wi-fi?", ["Yes, in all the rooms.","Only in reception.","No, there isn't.","Only in the restaurant."]),
+    ],
   },
 ];

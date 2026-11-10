@@ -7,6 +7,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -337,5 +338,26 @@ export const A1_15_EXERCISES: SeedExercise[] = [
       "shoulder",
       "mouth",
     ]),
+  },
+  {
+    title: "An'anaviy uslub",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Yaponiyadagi Maiko ayollari haqidagi matnni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/5.15.mp3", [["Their style is very ___.","traditional","modern","strange"],["Their hair is ___.","black","white","red"],["Their faces are ___.","white","red","black"],["On their heads they put white and red ___.","flowers","hats","ribbons"],["Their traditional dress is called a ___.","kimono","sari","jumper"],["Their big shoes are made of ___.","wood","leather","plastic"]]),
+    ],
+  },
+  {
+    title: "Las Arenasga qanday boraman?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "To'rtta qisqa suhbatni tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/5.17.mp3")("Where do you buy a ticket?", ["On the bus","At the station","In a shop","Online"]),
+      hearing("media:navigate-a1/audio/5.17.mp3")("Which bus goes to Las Arenas?", ["Number 13","Number 30","Number 3","Number 31"]),
+      hearing("media:navigate-a1/audio/5.17.mp3")("What time is the next metro to Las Arenas?", ["9:35","9:53","5:35","9:25"]),
+      hearing("media:navigate-a1/audio/5.17.mp3")("How much is a single ticket?", ["€2.15","€2.50","€1.15","€21.50"]),
+    ],
   },
 ];

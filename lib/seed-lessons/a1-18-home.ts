@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -335,5 +337,28 @@ export const A1_18_EXERCISES: SeedExercise[] = [
       "furniture",
       "kitchen",
     ]),
+  },
+  {
+    title: "Ho Chi Minh shahridagi kvartiralar",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Ikki do'st sayohat uchun kvartira tanlaydi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/6.12.mp3")("How many nights are they in Ho Chi Minh City?", ["Three","Two","Four","Seven"]),
+      hearing("media:navigate-a1/audio/6.12.mp3")("How much is a flat?", ["£30 a night","£13 a night","£30 a week","£300 a night"]),
+      hearingTwo("media:navigate-a1/audio/6.12.mp3")("What is there in each kitchen?", ["A fridge","A microwave"], ["An oven","A dishwasher"]),
+      hearing("media:navigate-a1/audio/6.12.mp3")("Is there a living room?", ["Yes, one for all the flats.","Yes, in each flat.","No, there isn't.","Only in one flat."]),
+      hearing("media:navigate-a1/audio/6.12.mp3")("What has each bathroom got?", ["A shower and a toilet","A bath and a toilet","A bath and a shower","Only a toilet"]),
+      hearing("media:navigate-a1/audio/6.12.mp3")("Has each flat got a garden?", ["No, but each flat has got a balcony.","Yes, a big garden.","Yes, a small garden.","No, and there isn't a balcony."]),
+    ],
+  },
+  {
+    title: "Mehmonxonadagi muammolar",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Mehmonlar besh xil muammo haqida aytadi. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/6.17.mp3", [["My room is very ___. — There's air conditioning.","hot","cold","small"],["The switch is next to the ___.","door","window","bed"],["The code for the door is ___.","A5468","A5486","A4568"],["Try the cupboard near the ___.","window","door","bed"],["Our room is very ___.","noisy","dirty","small"],["The ___ in my room is broken.","shower","phone","TV"]]),
+    ],
   },
 ];
