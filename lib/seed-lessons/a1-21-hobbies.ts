@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -336,5 +338,27 @@ export const A1_21_EXERCISES: SeedExercise[] = [
       "photography",
       "exciting",
     ]),
+  },
+  {
+    title: "Sevimli mashg'ulotlar",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Anja va do'sti bo'sh vaqti haqida gaplashadi. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/7.12.mp3", [["Anja likes swimming and taking ___.","photos","exams","buses"],["She usually takes photos of ___.","people","animals","buildings"],["Her friend doesn't like going ___.","out","home","swimming"],["He likes reading and listening to ___ at home.","music","the radio","stories"]]),
+    ],
+  },
+  {
+    title: "Raqs, musiqa va sport",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Mark va do'sti nimani yaxshi ko'rishi haqida gaplashadi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/7.21.mp3")("Can Mark dance well?", ["No, he can't.","Yes, very well.","Yes, a little.","He doesn't like dancing."]),
+      hearing("media:navigate-a1/audio/7.21.mp3")("What music does Mark usually listen to?", ["Pop music","Rock music","Classical music","Jazz"]),
+      hearingTwo("media:navigate-a1/audio/7.21.mp3")("Which TWO hobbies does his friend like?", ["Playing sport","Swimming"], ["Watching football","Reading"]),
+      hearing("media:navigate-a1/audio/7.21.mp3")("What does Mark like watching on TV?", ["Football","Films","The news","Cooking shows"]),
+      hearing("media:navigate-a1/audio/7.21.mp3")("What does his friend think about football on TV?", ["It's really boring.","It's great.","It's OK.","It's exciting."]),
+    ],
   },
 ];

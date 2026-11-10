@@ -7,6 +7,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -319,5 +320,27 @@ export const A1_24_EXERCISES: SeedExercise[] = [
       "Happy New Year!",
       "Thanks a lot!",
     ]),
+  },
+  {
+    title: "Muhim lahzalar",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "To'rtta muhim lahzani tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/8.20.mp3", [["1. It's the first day at a new ___.","school","job","university"],["1. The child hasn't got any ___.","lunch","money","books"],["2. Nobody at ___ remembered the birthday.","work","school","home"],["3. The speaker has got a new ___.","job","car","flat"],["3. The new job starts next ___.","Monday","Friday","month"],["4. The grandmother is in ___.","hospital","the garden","another city"]]),
+    ],
+  },
+  {
+    title: "Aka-uka Grimmlar",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Mashhur ertakchilar — aka-uka Grimmlar haqidagi matnni tinglang. Savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/8.24.mp3")("Where were the brothers born?", ["In Hanau, Germany","In Marburg, Germany","In Vienna, Austria","In Berlin, Germany"]),
+      hearing("media:navigate-a1/audio/8.24.mp3")("How many children were in the family?", ["Nine","Two","Six","Eleven"]),
+      hearing("media:navigate-a1/audio/8.24.mp3")("Who helped them to go to school?", ["Their mother's sister","Their father","Their teacher","A rich friend"]),
+      hearing("media:navigate-a1/audio/8.24.mp3")("When was their first book?", ["In 1812","In 1805","In 1785","In 1821"]),
+      hearing("media:navigate-a1/audio/8.24.mp3")("How many stories were in it?", ["Eighty-six","Sixty-eight","Eighteen","Ninety-six"]),
+    ],
   },
 ];

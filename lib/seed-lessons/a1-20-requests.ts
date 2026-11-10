@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -325,5 +326,26 @@ export const A1_20_EXERCISES: SeedExercise[] = [
       "carefully",
       "certainly",
     ]),
+  },
+  {
+    title: "Yordam bera olasizmi?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Olti kishi yordam so'raydi. Tinglang va har bir gap uchun to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/7.17.mp3", [["I can't open this ___.","box","door","bag"],["Can you speak ___?","slowly","quickly","English"],["Can you tell me the way to the ___?","city centre","station","airport"],["I want to go to the ___. Can you call me a taxi?","airport","station","hotel"],["I'm really ___. Can I have some water?","thirsty","hungry","tired"],["Can I take this chair? — Sorry. It's ___.","taken","broken","mine"]]),
+    ],
+  },
+  {
+    title: "Ha yoki yo'q?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "To'rtta qisqa suhbatni tinglang. Har bir iltimosga javob «ha»mi yoki «yo'q»mi?",
+    questions: [
+      hearing("media:navigate-a1/audio/7.19.mp3")("Can the speaker use the pen?", ["Yes, of course.","No, sorry.","Only for a minute.","There's no answer."]),
+      hearing("media:navigate-a1/audio/7.19.mp3")("Does the other person know the way to the station?", ["No.","Yes, it's that way.","Yes, it's near.","There's no answer."]),
+      hearing("media:navigate-a1/audio/7.19.mp3")("Can the speaker have a bottle of water?", ["No, there isn't any water.","Yes, here you are.","Yes, but it's expensive.","Only a small one."]),
+      hearing("media:navigate-a1/audio/7.19.mp3")("Can the speaker take the chair?", ["Yes, go ahead.","No, it's taken.","No, it's broken.","Only later."]),
+    ],
   },
 ];

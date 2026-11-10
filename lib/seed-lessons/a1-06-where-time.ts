@@ -334,7 +334,7 @@ export const A1_06_EXERCISES: SeedExercise[] = [
     instructions: "Helen Lewisga telefon qiladi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
     questions: [
       hearing("media:navigate-a1/audio/2.18.mp3")("Where is Lewis?", ["In London","At home","In Paris","In Vancouver"]),
-      hearing("media:navigate-a1/audio/2.18.mp3")("Where is he exactly?", ["At a museum","At a hotel","At the station","At a café"]),
+      hearing("media:navigate-a1/audio/2.18.mp3")("Where is Lewis exactly?", ["At a museum","At a hotel","At the station","At a café"]),
       hearing("media:navigate-a1/audio/2.18.mp3")("The museum is on…", ["Cromwell Road","Baker Street","Robson Street","Abbey Road"]),
       hearingTwo("media:navigate-a1/audio/2.18.mp3")("Which TWO are true?", ["Max is with Lewis.","They're on holiday."], ["Lewis is at home.","They're on business."]),
     ],

@@ -317,7 +317,7 @@ export const A1_10_EXERCISES: SeedExercise[] = [
     kind: "listengap",
     instructions: "To'rt kishi ishga yoki o'qishga qanday borishini aytadi. Tinglang va to'g'ri so'zni tanlang.",
     questions: [
-      gaps("media:navigate-a1/audio/4.5.mp3", [["Christina lives in ___.","Copenhagen","São Paulo","Hanoi"],["She ___ to work.","cycles","drives","walks"],["Her house is ___ minutes from her work.","fifteen","fifty","five"],["Pedro and his brother go to work by ___.","car","bus","train"],["Tai goes to university by ___.","motorbike","car","bus"],["Candice ___ to work.","walks","drives","cycles"],["Her husband James goes to work by ___.","train","car","motorbike"]]),
+      gaps("media:navigate-a1/audio/4.5.mp3", [["Christina lives in ___.","Copenhagen","São Paulo","Hanoi"],["Christina ___ to work.","cycles","drives","walks"],["Christina's house is ___ minutes from work.","fifteen","fifty","five"],["Pedro and his brother go to work by ___.","car","bus","train"],["Tai goes to university by ___.","motorbike","car","bus"],["Candice ___ to work.","walks","drives","cycles"],["Candice's husband James goes to work by ___.","train","car","motorbike"]]),
     ],
   },
   {
@@ -327,9 +327,9 @@ export const A1_10_EXERCISES: SeedExercise[] = [
     instructions: "Ye-eun o'zi va akasi haqida gapiradi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
     questions: [
       hearing("media:navigate-a1/audio/4.8.mp3")("Where does Ye-eun live?", ["In South Korea","In Australia","In China","In Japan"]),
-      hearing("media:navigate-a1/audio/4.8.mp3")("Where does her brother live?", ["In Australia","In South Korea","In the UK","In the USA"]),
+      hearing("media:navigate-a1/audio/4.8.mp3")("Where does Ye-eun's brother live?", ["In Australia","In South Korea","In the UK","In the USA"]),
       hearing("media:navigate-a1/audio/4.8.mp3")("What's Bon-hwa's job?", ["He's a chef.","He's a student.","He's a waiter.","He's a driver."]),
-      hearingTwo("media:navigate-a1/audio/4.8.mp3")("Which TWO are true about Ye-eun?", ["She's a university student.","She goes to university by bus."], ["She's got a car.","She goes to the beach at the weekend."]),
+      hearingTwo("media:navigate-a1/audio/4.8.mp3")("Which TWO are true about Ye-eun?", ["Ye-eun is a university student.","Ye-eun goes to university by bus."], ["Ye-eun has got a car.","Ye-eun goes to the beach at the weekend."]),
     ],
   },
 ];

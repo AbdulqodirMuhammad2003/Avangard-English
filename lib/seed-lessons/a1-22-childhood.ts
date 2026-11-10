@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -333,5 +334,26 @@ export const A1_22_EXERCISES: SeedExercise[] = [
       "twelfth",
       "childhood",
     ]),
+  },
+  {
+    title: "Neil va Suzy",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Ikki kishining bolaligi va hozirgi hayoti haqida tinglang. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/8.1.mp3", [["Neil is from ___.","Liverpool","London","Manchester"],["As a child Neil was ___.","clever","rich","unhappy"],["His dream was to be an ___.","astronaut","actor","artist"],["Now Neil is a ___.","politician","teacher","doctor"],["Suzy's parents were very ___.","rich","poor","happy"],["Suzy ___ happy as a child.","wasn't","was","is"],["At twenty-eight Suzy was married with ___ children.","two","three","four"]]),
+    ],
+  },
+  {
+    title: "Qayerda tug'ilgansiz?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Suhbatni tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/8.6.mp3")("Where was the speaker born?", ["In Sweden","In Norway","In Denmark","In Finland"]),
+      hearing("media:navigate-a1/audio/8.6.mp3")("When was the speaker born?", ["In 1980","In 1964","In 1968","In 1990"]),
+      hearing("media:navigate-a1/audio/8.6.mp3")("How many children were in the family?", ["Six","Two","Four","Eight"]),
+      hearing("media:navigate-a1/audio/8.6.mp3")("What was the grandfather's job?", ["He was a shop assistant.","He was a doctor.","He was a teacher.","He was a farmer."]),
+    ],
   },
 ];

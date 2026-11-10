@@ -326,7 +326,7 @@ export const A1_09_EXERCISES: SeedExercise[] = [
     kind: "audiotext",
     instructions: "Suhbatni tinglang: odam ikki singlisi haqida gapiradi. Savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
     questions: [
-      hearing("media:navigate-a1/audio/3.17.mp3")("How many sisters has he got?", ["Two","One","Three","Four"]),
+      hearing("media:navigate-a1/audio/3.17.mp3")("How many sisters has the speaker got?", ["Two","One","Three","Four"]),
       hearing("media:navigate-a1/audio/3.17.mp3")("How old is Agneta?", ["26","21","16","62"]),
       hearing("media:navigate-a1/audio/3.17.mp3")("What's Inga's job?", ["She's a student.","She's a teacher.","She works in a bank.","She's an engineer."]),
       hearingTwo("media:navigate-a1/audio/3.17.mp3")("Which TWO are true?", ["Agneta has got a job in a bank.","Agneta's husband is an engineer."], ["Inga is married.","Agneta is a student."]),

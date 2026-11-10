@@ -7,7 +7,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -323,5 +325,26 @@ export const A1_19_EXERCISES: SeedExercise[] = [
       "competition",
       "climb",
     ]),
+  },
+  {
+    title: "Ishga suhbat",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Jack ishga suhbatda nimalarni qila olishini aytadi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/7.6.mp3")("Can Jack swim?", ["Yes, very well.","No, not at all.","Yes, but not very well.","The interview doesn't say."]),
+      hearing("media:navigate-a1/audio/7.6.mp3")("How does Jack type?", ["Quite slowly","Very fast","Very badly","He can't type."]),
+      hearing("media:navigate-a1/audio/7.6.mp3")("Can Jack drive?", ["No, but Jack can learn.","Yes, very well.","Yes, but slowly.","No, and Jack doesn't want to."]),
+      hearingTwo("media:navigate-a1/audio/7.6.mp3")("Which TWO are true about Jack?", ["He can use a camera.","He likes photography."], ["He types very fast.","He can drive."]),
+    ],
+  },
+  {
+    title: "Tarjimon xotinim",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Odam xotini Jane haqida gapiradi. Tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/7.20.mp3", [["Jane is a ___.","translator","teacher","journalist"],["She understands over ___ languages.","seven","three","five"],["She speaks German, French and ___ well.","Japanese","Chinese","Spanish"],["She can type very ___.","fast","slowly","badly"],["The speaker types very ___.","slowly","fast","well"],["The speaker speaks French ___.","badly","well","fast"]]),
+    ],
   },
 ];

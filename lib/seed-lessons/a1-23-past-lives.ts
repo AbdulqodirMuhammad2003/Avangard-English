@@ -7,6 +7,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -16,6 +17,7 @@ import {
   reading,
   say,
   sentences,
+  slots,
   w,
   written,
   type Rounds,
@@ -318,5 +320,23 @@ export const A1_23_EXERCISES: SeedExercise[] = [
       "wanted",
       "century",
     ]),
+  },
+  {
+    title: "Bill va Melinda Gates",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Bill va Melinda Gates haqidagi matnni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/8.16.mp3", [["Bill and Melinda Gates married in ___.","1994","1995","2000"],["Melinda worked for Microsoft as a product ___.","developer","manager","designer"],["In 1995 they travelled around the ___.","world","USA","country"],["They have got ___ children.","three","two","four"],["They live in a big house near ___.","Seattle","New York","Boston"],["In ___ they started the Gates Foundation.","2000","1995","2010"]]),
+    ],
+  },
+  {
+    title: "Mashhur odamlar",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "To'rtta mashhur odam haqida tinglang. Yillarni raqamlar bilan yozing (masalan: 1907).",
+    questions: [
+      slots("media:navigate-a1/audio/8.10.mp3", [["1. Frida Kahlo was born in","1907"],["2. Frida Kahlo died in","1954"],["3. Marie Curie was born in","1867"],["4. Leo Tolstoy died in","1910"],["5. Martin Luther King was born in","1929"]]),
+    ],
   },
 ];
