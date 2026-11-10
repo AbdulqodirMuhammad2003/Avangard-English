@@ -319,7 +319,7 @@ export const A1_06_EXERCISES: SeedExercise[] = [
     ]),
   },
   {
-    title: "Soat necha?",
+    title: "Vaqtni eshitib yozing",
     skill: "Tinglash",
     kind: "listenmatch",
     instructions: "Sakkiz kishi vaqtni aytadi. Vaqtni raqamlar bilan yozing (masalan: 3:10).",
