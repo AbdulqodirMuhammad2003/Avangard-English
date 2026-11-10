@@ -5,6 +5,7 @@
  * javoblar (Yes, I am. / No, I'm not.). Matn va mashqlar o'zimizniki.
  */
 import type { SeedExercise, SeedQuestion } from "../seed-exercises";
+import { gaps } from "./helpers";
 import type { VocabSeed } from "./types";
 
 const w = (
@@ -390,5 +391,14 @@ export const A1_01_EXERCISES: SeedExercise[] = [
       "No, I'm not.",
       "Excuse me!",
     ].map((phrase) => ({ prompt: phrase, answer: phrase })),
+  },
+  {
+    title: "Uchta tanishuv",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Uchta qisqa suhbatni tinglang. Har bir gap uchun to'g'ri so'zni tanlang. Kerak bo'lsa, to'xtatib, orqaga qaytaring.",
+    questions: [
+      gaps("media:navigate-a1/audio/1.4.mp3", [["Havva is here on ___.","holiday","business","study"],["Paul is here on ___.","business","holiday","study"],["Alisa is here on ___, too.","business","holiday","study"],["Sunil is here to ___.","study","work","shop"],["Julie is here on ___.","holiday","business","study"]]),
+    ],
   },
 ];

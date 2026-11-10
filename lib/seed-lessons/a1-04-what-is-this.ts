@@ -14,6 +14,7 @@ import {
   pick,
   say,
   sentences,
+  slots,
   stress,
   trueFalse,
   w,
@@ -334,5 +335,14 @@ export const A1_04_EXERCISES: SeedExercise[] = [
       "Is this your phone?",
       "They're my glasses.",
     ]),
+  },
+  {
+    title: "Nechta?",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Narsalar va ularning sonini tinglang. Har bir qatorga sonni raqam bilan yozing (masalan: 18).",
+    questions: [
+      slots("media:navigate-a1/audio/2.11.mp3", [["1. ___ laptops","18;eighteen"],["2. ___ pens","35;thirty-five;thirty five"],["3. ___ umbrellas","2;two"],["4. ___ apples","40;forty"],["6. ___ bags","9;nine"]]),
+    ],
   },
 ];

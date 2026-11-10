@@ -14,6 +14,7 @@ import {
   reading,
   say,
   sentences,
+  slots,
   w,
   written,
   type Rounds,
@@ -315,5 +316,14 @@ export const A1_03_EXERCISES: SeedExercise[] = [
       "Have a nice day!",
       "Welcome to our school!",
     ]),
+  },
+  {
+    title: "Konferensiyada ro'yxatga olish",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Ikki kishi konferensiyada ro'yxatdan o'tmoqda. Ular familiyasini harflab aytadi — eshitganingizni yozing.",
+    questions: [
+      slots("media:navigate-a1/audio/1.25.mp3", [["1. Havva's last name","Yilmaz"],["2. Havva is from…","Turkey"],["3. Josue's last name","Santos"],["4. Josue is from…","Brazil"]]),
+    ],
   },
 ];

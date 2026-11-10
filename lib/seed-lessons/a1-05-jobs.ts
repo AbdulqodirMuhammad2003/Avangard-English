@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -335,5 +337,26 @@ export const A1_05_EXERCISES: SeedExercise[] = [
       "journalist",
       "My father is a farmer.",
     ]),
+  },
+  {
+    title: "Kim nima ish qiladi?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Sakkiz kishining kasbini tinglang. Har biri uchun to'g'ri kasbni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/2.13.mp3", [["Erik is ___.","an engineer","a doctor","a teacher"],["Hassan is ___.","a student","a waiter","a nurse"],["Thierry is ___.","a waiter","a taxi driver","an engineer"],["Asya is ___.","a nurse","a doctor","a shop assistant"],["Sonja is ___.","a doctor","a nurse","a teacher"],["Kumiko is ___.","a shop assistant","a student","a waiter"],["Daisy is ___.","a teacher","a doctor","a nurse"],["Yanni is ___.","a taxi driver","an engineer","a student"]]),
+    ],
+  },
+  {
+    title: "Do'stlarim",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Suhbatni tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/2.15.mp3")("What's Fernando's job?", ["He's a teacher.","He's a student.","He's a doctor.","He's a nurse."]),
+      hearing("media:navigate-a1/audio/2.15.mp3")("Where is his school?", ["In Mexico","In London","In Spain","In Brazil"]),
+      hearing("media:navigate-a1/audio/2.15.mp3")("What kind of school is it?", ["A language school","A university","A music school","A hospital school"]),
+      hearingTwo("media:navigate-a1/audio/2.15.mp3")("Which TWO are true about Jack and Katie?", ["They're nurses.","They work in London."], ["They're doctors.","They're students."]),
+    ],
   },
 ];

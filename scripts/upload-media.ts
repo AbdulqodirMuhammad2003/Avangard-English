@@ -38,6 +38,12 @@ const headers = { Authorization: `Bearer ${key}`, apikey: key };
 
 const shortName = (file: string) =>
   file
+    // Navigate A1: Track_01_05.mp3 → 1.5.mp3, Track_GR_02_01A.mp3 → gr-2.1a.mp3,
+    // nav_a1_report_unit3_olb.mp4 → report-03.mp4, nav_a1_voxpops_unit1_2_olb.mp4 → voxpops-1-2.mp4.
+    .replace(/^Track_GR_(\d+)_(\d+)([A-Za-z]?)\./, (_, u, t, s) => `gr-${+u}.${+t}${s.toLowerCase()}.`)
+    .replace(/^Track_(\d+)_(\d+)([A-Za-z]?)\./, (_, u, t, s) => `${+u}.${+t}${s.toLowerCase()}.`)
+    .replace(/^nav_a1_report_unit(\d+)_olb/, (_, u) => `report-${String(u).padStart(2, "0")}`)
+    .replace(/^nav_a1_voxpops_unit([\d_]+)_olb/, (_, u) => `voxpops-${u}`)
     .replace(/^Track_GR_/, "gr-")
     .replace(/^Track_/, "")
     .replace(/^report_u(\d+)_olb/, "report-$1")

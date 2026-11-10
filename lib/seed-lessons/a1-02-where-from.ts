@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -316,5 +317,14 @@ export const A1_02_EXERCISES: SeedExercise[] = [
       "three",
       "Tashkent is the capital of Uzbekistan.",
     ]),
+  },
+  {
+    title: "Qayerdan?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Ikki suhbatni tinglang: odamlar qayerdan ekanini aytishadi. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/1.15.mp3", [["Alisa is from ___.","Russia","Australia","the UK"],["She's from ___.","Moscow","Perth","Sydney"],["Paul is from Aberdeen in ___.","the USA","the UK","Australia"],["Julie and Frank are from ___.","Australia","Russia","the USA"],["They aren't from Sydney. They're from ___.","Perth","Moscow","London"]]),
+    ],
   },
 ];

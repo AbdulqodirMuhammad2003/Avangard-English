@@ -10,7 +10,7 @@
  *  - turi yoki savollar soni o'zgargan — savollar qayta yoziladi, lekin faqat
  *    shu mashq bo'yicha hech kimning natijasi bo'lmasa;
  *  - kodda yangi mashq bo'lsa — oxiriga qo'shiladi.
- * Darsning nomi (subtitle) ham yangilanadi. Lug'atga tegmaydi. --apply siz
+ * Darsning nomi (subtitle) va videosi (clip) ham yangilanadi. Lug'atga tegmaydi. --apply siz
  * faqat nima o'zgarishi ko'rsatiladi.
  */
 import { loadEnvConfig } from "@next/env";
@@ -46,7 +46,16 @@ async function main() {
     if (!unit) throw new Error(`${code}: bazada yo'q`);
     // Darsning nomi (subtitle) ham koddagidek bo'ladi.
     const unitSeed = UNITS.find((u) => u.code === code);
-    if (unitSeed && apply) await sql`UPDATE units SET subtitle = ${unitSeed.subtitle} WHERE id = ${unit.id}`;
+    // Darsning videosi (clip) ham — kodda null bo'lsa, bazadagisiga tegilmaydi.
+    if (unitSeed && apply) {
+      const c = unitSeed.clip;
+      await sql`
+        UPDATE units SET subtitle = ${unitSeed.subtitle}
+          ${c ? sql`, clip_url = ${c.url}, clip_title = ${c.title}, clip_kind = ${c.kind}, clip_start = ${c.start}, clip_end = ${c.end}` : sql``}
+        WHERE id = ${unit.id}
+      `;
+    }
+    if (unitSeed?.clip) console.log(`${code} video: ${unitSeed.clip.title} (${unitSeed.clip.url})`);
     const dbExercises = await sql<{ id: number; kind: string; title: string; order_index: number; questions: number; progress: number }[]>`
       SELECT e.id, e.kind, e.title, e.order_index,
         (SELECT count(*)::int FROM exercise_questions q WHERE q.exercise_id = e.id) AS questions,

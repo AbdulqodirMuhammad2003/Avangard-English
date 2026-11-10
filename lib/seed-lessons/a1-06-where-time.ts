@@ -8,6 +8,7 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   hearing,
+  hearingTwo,
   listen,
   mistake,
   numbers,
@@ -17,6 +18,7 @@ import {
   reading,
   say,
   sentences,
+  slots,
   w,
   written,
   type Rounds,
@@ -315,5 +317,26 @@ export const A1_06_EXERCISES: SeedExercise[] = [
       "Wait a minute, please.",
       "See you at seven o'clock!",
     ]),
+  },
+  {
+    title: "Soat necha?",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Sakkiz kishi vaqtni aytadi. Vaqtni raqamlar bilan yozing (masalan: 3:10).",
+    questions: [
+      slots("media:navigate-a1/audio/2.20.mp3", [["1.","1:00;1;one o'clock"],["2.","2:05"],["3.","3:10"],["4.","4:15"],["5.","6:25"],["6.","7:30"],["7.","9:40"],["8.","12:55"]]),
+    ],
+  },
+  {
+    title: "Londonda",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Helen Lewisga telefon qiladi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/2.18.mp3")("Where is Lewis?", ["In London","At home","In Paris","In Vancouver"]),
+      hearing("media:navigate-a1/audio/2.18.mp3")("Where is he exactly?", ["At a museum","At a hotel","At the station","At a café"]),
+      hearing("media:navigate-a1/audio/2.18.mp3")("The museum is on…", ["Cromwell Road","Baker Street","Robson Street","Abbey Road"]),
+      hearingTwo("media:navigate-a1/audio/2.18.mp3")("Which TWO are true?", ["Max is with Lewis.","They're on holiday."], ["Lewis is at home.","They're on business."]),
+    ],
   },
 ];
