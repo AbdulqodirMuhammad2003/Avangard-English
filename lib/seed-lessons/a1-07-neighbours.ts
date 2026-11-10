@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -14,6 +15,7 @@ import {
   pick,
   say,
   sentences,
+  slots,
   trueFalse,
   w,
   written,
@@ -332,5 +334,23 @@ export const A1_07_EXERCISES: SeedExercise[] = [
       "It's a quiet street.",
       "He's got a motorbike.",
     ]),
+  },
+  {
+    title: "Qo'shnilarimiz",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Odam o'z ko'chasidagi qo'shnilari haqida gapiradi. Tinglang va har bir gap uchun to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/3.26.mp3", [["Our house is at number ___ Judson Street.","36","34","38"],["Charlie is ___.","a waiter","a nurse","a student"],["Linda is ___, but she's at home now.","a nurse","a teacher","a doctor"],["Linda and Charlie have got ___ young children.","two","three","four"],["Their dog is called ___.","Benji","Junior","Max"],["The neighbours at number 38 are ___.","students","nurses","teachers"],["___ people live in that house.","Six","Two","Nine"],["They haven't got any ___.","pets","children","friends"]]),
+    ],
+  },
+  {
+    title: "Dunyoda nechta foiz?",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Dunyodagi odamlarning necha foizida bu narsalar bor? Eshitgan sonni yozing (masalan: 70%).",
+    questions: [
+      slots("media:navigate-a1/audio/3.4.mp3", [["1. a mobile phone","70%;70"],["2. a car","9%;9"],["3. a TV","20%;20"],["4. a bank account","30%;30"],["5. a pet","2%;2"],["6. a bicycle","40%;40"]]),
+    ],
   },
 ];

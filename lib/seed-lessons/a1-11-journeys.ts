@@ -5,6 +5,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -14,6 +15,7 @@ import {
   reading,
   say,
   sentences,
+  slots,
   w,
   written,
   type Rounds,
@@ -317,5 +319,23 @@ export const A1_11_EXERCISES: SeedExercise[] = [
       "walk",
       "work",
     ]),
+  },
+  {
+    title: "Dunyo ishga qanday boradi",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Turli shaharlarda odamlar ishga qanday borishi haqidagi faktlarni tinglang. Har bir qatorga sonni yozing.",
+    questions: [
+      slots("media:navigate-a1/audio/4.4.mp3", [["1. London: people who drive to work (%)","35%;35"],["3. The USA: people who walk to work or school (million)","4;4 million"],["4. Copenhagen: people who cycle (%)","36%;36"],["5. Sydney: people on public transport (%)","17%;17"],["6. Hanoi: motorbikes (million)","3;3 million"],["7. São Paulo: people on buses every day (million)","6;6 million"]]),
+    ],
+  },
+  {
+    title: "Akam Vankuver yaqinida",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Olti gapni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/4.7.mp3", [["My brother's got a house near ___.","Vancouver","London","Sydney"],["His house isn't in the ___.","city","country","street"],["He's a ___ and he loves it.","taxi driver","teacher","chef"],["He hasn't got a ___.","car","house","job"],["His children don't ___.","drive","work","study"],["They've got ___.","motorbikes","bicycles","cars"]]),
+    ],
   },
 ];

@@ -7,6 +7,7 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -14,6 +15,7 @@ import {
   pick,
   say,
   sentences,
+  slots,
   trueFalse,
   w,
   written,
@@ -317,5 +319,25 @@ export const A1_12_EXERCISES: SeedExercise[] = [
       "I go to bed at eleven.",
       "Have a nice day!",
     ]),
+  },
+  {
+    title: "Helenaning kuni",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "Helena kun tartibi haqida gapiradi. Vaqtlarni raqamlar bilan yozing (masalan: 7:30).",
+    questions: [
+      slots("media:navigate-a1/audio/4.11.mp3", [["1. She gets up at","5:00;5"],["2. Her children get up at about","6:30"],["3. She leaves the house at","7:30"],["4. She starts work at","8:00;8"],["5. She gets home at about","6:30"],["6. She goes to bed at","10:00;10"]]),
+    ],
+  },
+  {
+    title: "Helena va oilasi",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Suhbatni yana tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/4.11.mp3")("How does Helena go to work?", ["By train","By car","By bus","On foot"]),
+      hearing("media:navigate-a1/audio/4.11.mp3")("How many children has she got?", ["Nine","Seven","Two","Twenty-one"]),
+      hearingTwo("media:navigate-a1/audio/4.11.mp3")("Which TWO are true?", ["Seven of the children live at home.","On Saturday evenings they watch a film."], ["Her husband works in an office.","She doesn't work at the weekend."]),
+    ],
   },
 ];

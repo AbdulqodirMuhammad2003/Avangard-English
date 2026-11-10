@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -317,5 +319,26 @@ export const A1_09_EXERCISES: SeedExercise[] = [
       "daughter",
       "cousin",
     ]),
+  },
+  {
+    title: "Opa-singillar",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Suhbatni tinglang: odam ikki singlisi haqida gapiradi. Savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/3.17.mp3")("How many sisters has he got?", ["Two","One","Three","Four"]),
+      hearing("media:navigate-a1/audio/3.17.mp3")("How old is Agneta?", ["26","21","16","62"]),
+      hearing("media:navigate-a1/audio/3.17.mp3")("What's Inga's job?", ["She's a student.","She's a teacher.","She works in a bank.","She's an engineer."]),
+      hearingTwo("media:navigate-a1/audio/3.17.mp3")("Which TWO are true?", ["Agneta has got a job in a bank.","Agneta's husband is an engineer."], ["Inga is married.","Agneta is a student."]),
+    ],
+  },
+  {
+    title: "Qo'shnimiz Nicole",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Qo'shni oila haqidagi matnni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/3.20.mp3", [["Nicole has got ___ young children.","two","three","four"],["The girl's name is ___.","Ivy","Nicole","Junior"],["Robert has got a pet ___.","dog","cat","bird"],["Tony is Nicole's ___.","husband","brother","son"],["Tony has got a job in the ___ next to the building.","school","hospital","bank"]]),
+    ],
   },
 ];

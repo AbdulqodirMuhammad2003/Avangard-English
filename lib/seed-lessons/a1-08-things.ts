@@ -6,7 +6,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -339,5 +341,26 @@ export const A1_08_EXERCISES: SeedExercise[] = [
       "The bottle is empty.",
       "I'm very happy today!",
     ]),
+  },
+  {
+    title: "Sizda … bormi?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Uchta qisqa suhbatni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/3.10.mp3", [["The laptop isn't new. It's ___ years old.","three","two","five"],["The bicycle is ___.","expensive","old","cheap"],["The cat isn't old. It's only ___.","two","three","one"]]),
+    ],
+  },
+  {
+    title: "Uy hayvonlari va transport",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Ikki suhbatni tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/3.25.mp3")("Have the speaker and Fred got pets?", ["No, they haven't.","Yes, a cat.","Yes, a dog.","Yes, nine cats."]),
+      hearing("media:navigate-a1/audio/3.25.mp3")("How many cats has the speaker's mother got?", ["Nine","Five","Two","Nineteen"]),
+      hearing("media:navigate-a1/audio/3.25.mp3")("What is her house like?", ["It's small, but it's got a garden.","It's big and it's got a garden.","It's big, but it hasn't got a garden.","It's small and it hasn't got a garden."]),
+      hearingTwo("media:navigate-a1/audio/3.25.mp3")("Which TWO are true about the family in the second conversation?", ["They haven't got a car.","They've got bicycles."], ["They've got two cars.","They go by bus."]),
+    ],
   },
 ];
