@@ -121,8 +121,8 @@ always (100 %) → usually → often → sometimes → rarely → **hardly ever*
       q("Qaysi gap to'g'ri?", ["I'm usually tired.", "I usually am tired.", "Usually I tired.", "I'm tired usually always."]),
       q("Deyarli hech qachon — …", ["hardly ever", "hardly never", "rarely never", "ever hardly"]),
       q("Kuniga ikki marta — …", ["twice a day", "two a day", "twice in day", "two times in a day"]),
-      q("«plays» oxiri qanday o'qiladi?", ["/z/", "/s/", "/ɪz/"]),
-      q("«teaches» oxiri qanday o'qiladi?", ["/ɪz/", "/s/", "/z/"]),
+      q("He ___ alone. (relax)", ["relaxes", "relaxs", "relaxies", "relax"]),
+      q("Qaysi gap to'g'ri?", ["She sometimes plays tennis.", "She plays sometimes tennis.", "Sometimes she play tennis.", "She sometimes play tennis."]),
       q("She ___ to bed late.", ["goes", "gos", "go", "going"]),
     ]
   ),
@@ -439,7 +439,7 @@ baker's (non) · butcher's (go'sht) · newsagent's (gazeta) · greengrocer's (me
       q("Could people buy things online in 1994? — Yes, they ___.", ["could", "can", "did", "were"]),
       q("Qaysi gap to'g'ri?", ["You can't use euros in Norway.", "You don't can use euros in Norway.", "You can't to use euros in Norway.", "You not can use euros in Norway."]),
       q("Go'sht qayerdan olinadi?", ["butcher's", "baker's", "newsagent's", "greengrocer's"]),
-      q("«Yes, you can» — bu yerda can qanday o'qiladi?", ["/kæn/ — kuchli", "/kən/ — kuchsiz", "/kɑːnt/", "o'qilmaydi"]),
+      q("Can you swim? — Yes, I ___.", ["can", "do", "am", "can swim"]),
     ]
   ),
   "A2-13": rule(
@@ -587,8 +587,8 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("study → ?", ["studied", "studyed", "studed", "studies"]),
       q("play → ?", ["played", "plaied", "plaid", "playd"]),
       q("live → ?", ["lived", "liveed", "livd", "lifed"]),
-      q("«started» da -ed qanday o'qiladi?", ["/ɪd/", "/t/", "/d/", "o'qilmaydi"]),
-      q("«looked» da -ed qanday o'qiladi?", ["/t/", "/d/", "/ɪd/", "/ed/"]),
+      q("try → ?", ["tried", "tryed", "trid", "tries"]),
+      q("plan → ?", ["planned", "planed", "pland", "plannied"]),
       q("When was the last time you ___ a taxi?", ["called", "call", "calls", "calling"]),
       q("The film was ___ boring. (sal, biroz)", ["a bit", "extremely", "really", "very very"]),
       q("I lost my phone. — ___", ["Oh no! Poor you!", "That's brilliant!", "Well done!", "That's great!"]),
@@ -625,7 +625,7 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("buy → ?", ["bought", "buyed", "brought", "boughted"]),
       q("We ___ eight hours last night.", ["slept", "sleeped", "sleep", "slep"]),
       q("Qaysi fe'l to'g'ri (regular)?", ["wanted", "chose", "gave", "wrote"]),
-      q("«said» qanday o'qiladi?", ["/sed/", "/seɪd/", "/saɪd/", "/sɪd/"]),
+      q("say → ?", ["said", "sayed", "saied", "sayd"]),
       q("___ an hour of exercise each day.", ["Do", "Make", "Play", "Go"]),
       q("Qaysi gap to'g'ri?", ["He drove to work yesterday.", "He drived to work yesterday.", "He drive to work yesterday.", "He drives to work yesterday."]),
     ]
@@ -702,7 +702,7 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("How ___ did you stay?", ["long", "much", "many", "time"]),
       q("___ the hotel expensive?", ["Was", "Did", "Were", "Does"]),
       q("Qaysi savol to'g'ri?", ["What did you do?", "What you did?", "What did you did?", "What do you did?"]),
-      q("«Did you…» tez nutqda qanday eshitiladi?", ["/dɪdʒə/", "/daɪ juː/", "/dɪd jə/ har doim aniq", "/duː juː/"]),
+      q("___ you enjoy the trip?", ["Did", "Do", "Were", "Was"]),
       q("I always get ___ in big cities.", ["lost", "lose", "losing", "loss"]),
       q("We lie ___ the beach all day.", ["on", "in", "at", "by"]),
     ]
@@ -874,7 +874,7 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("It's one of the easiest ___ to climb.", ["mountains", "mountain", "mountain's", "of mountain"]),
       q("Lake Baikal is in ___ of Siberia.", ["the south", "south", "the southern", "a south"]),
       q("I'd prefer ___ in a hotel.", ["to stay", "stay", "staying", "stayed"]),
-      q("«the biggest» da «the» qanday o'qiladi?", ["/ðə/", "/ðiː/", "/ðeɪ/", "o'qilmaydi"]),
+      q("hot → ?", ["the hottest", "the hotest", "the most hot", "the hotter"]),
       q("Qaysi gap to'g'ri?", ["Which river is the longest in the world?", "Which river is the longer in the world?", "Which river is the most long in the world?", "Which river is longest than the world?"]),
     ]
   ),
@@ -913,7 +913,7 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("Is he going to come? — Yes, he ___.", ["is", "does", "will", "going"]),
       q("What ___ they going to do?", ["are", "is", "do", "does"]),
       q("Look at those clouds! It's ___ rain.", ["going to", "go to", "going", "goes to"]),
-      q("«going to» dagi «to» qanday o'qiladi?", ["/tə/", "/tuː/", "/təʊ/", "o'qilmaydi"]),
+      q("I'm going ___ my grandparents this weekend.", ["to visit", "visit", "visiting", "to visiting"]),
       q("___ some flowers", ["plant", "make", "do", "teach"]),
       q("Qaysi gap to'g'ri?", ["We aren't going to use the car.", "We not going to use the car.", "We don't going to use the car.", "We aren't going use the car."]),
     ]

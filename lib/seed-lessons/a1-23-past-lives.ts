@@ -71,8 +71,6 @@ export const A1_23_ROUNDS: Rounds = [
   },
 ];
 
-const ED = ["/t/", "/d/", "/ɪd/"];
-
 const ULUGH = `ULUGH BEG — A KING AND A SCIENTIST
 Ulugh Beg was born in 1394. He was the grandson of Amir Temur. In 1409 he started to rule Samarkand — he was only fifteen! But Ulugh Beg wasn't only a king. He loved science, and he studied mathematics and the stars.
 In the 1420s he opened a madrasah on the Registan, and many scientists worked and studied there. Then he built an observatory near Samarkand. With other astronomers, he watched the sky for many years and created a famous catalogue of more than a thousand stars.
@@ -127,22 +125,22 @@ export const A1_23_EXERCISES: SeedExercise[] = [
     ]),
   },
   {
-    title: "-ed qanday o'qiladi?",
-    skill: "Talaffuz",
+    title: "-ed ni to'g'ri yozing",
+    skill: "Imlo",
     kind: "choice",
     instructions:
-      "-ed uch xil o'qiladi: /t/ — worked, finished; /d/ — lived, played; /ɪd/ — wanted, started (faqat t va d dan keyin!). O'zingiz ovoz chiqarib ayting va tanlang.",
+      "O'tgan zamon -ed qo'shimchasining imlosi: ko'p fe'lga -ed (worked); -e bilan tugasa faqat -d (lived); undosh + y → -ied (studied); qisqa so'z undosh-unli-undosh bilan tugasa, oxirgi harf ikkilanadi (stop → stopped).",
     questions: [
-      pick("worked", ED, 0),
-      pick("lived", ED, 1),
-      pick("wanted", ED, 2),
-      pick("finished", ED, 0),
-      pick("played", ED, 1),
-      pick("started", ED, 2),
-      pick("watched", ED, 0),
-      pick("moved", ED, 1),
-      pick("visited", ED, 2),
-      pick("stopped", ED, 0),
+      pick("work → ?", ["worked", "workd", "workied", "workked"], 0),
+      pick("live → ?", ["liveed", "lived", "livd", "livied"], 1),
+      pick("want → ?", ["wantd", "wantted", "wanted", "wantied"], 2),
+      pick("finish → ?", ["finished", "finishd", "finishied", "finishhed"], 0),
+      pick("play → ?", ["plaied", "played", "playd", "playyed"], 1),
+      pick("study → ?", ["studyed", "studed", "studied", "studdied"], 2),
+      pick("stop → ?", ["stopped", "stoped", "stopd", "stopied"], 0),
+      pick("move → ?", ["moveed", "moved", "movd", "movied"], 1),
+      pick("visit → ?", ["visitd", "visitted", "visited", "visitied"], 2),
+      pick("love → ?", ["loved", "loveed", "lovd", "lovved"], 0),
     ],
   },
   {
