@@ -120,12 +120,12 @@ export const A1_02_EXERCISES: SeedExercise[] = [
     title: "Xaritadagi mamlakatlar",
     skill: "Tinglash",
     kind: "listenmatch",
-    instructions: "Xaritadagi 1–10 raqamlari qaysi mamlakat? Tinglang va har bir raqamga mamlakatni tanlang.",
+    instructions: "Xaritadagi 1–10 raqamlari qaysi mamlakat? Tinglang va har bir raqam yoniga mamlakat nomini inglizcha yozing.",
     questions: [
       slots(track("1.10"), [
-        ["1", "the USA"],
+        ["1", "the USA;USA"],
         ["2", "Brazil"],
-        ["3", "the UK"],
+        ["3", "the UK;UK"],
         ["4", "Spain"],
         ["5", "Russia"],
         ["6", "Turkey"],

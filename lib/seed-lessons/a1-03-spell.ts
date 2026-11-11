@@ -92,18 +92,18 @@ export const A1_03_EXERCISES: SeedExercise[] = [
   {
     title: "Harflarning tovushi",
     skill: "Tinglash",
-    kind: "listenmatch",
+    kind: "listengap",
     instructions:
-      "Ingliz alifbosining har bir harfi yettita tovushdan birida aytiladi: /eɪ/ eight, /iː/ three, /e/ ten, /aɪ/ five, /əʊ/ no, /juː/ you, /ɑː/ are. Tinglang va har bir guruhga harflarni tanlang.",
+      "Ingliz alifbosining har bir harfi yettita tovushdan birida aytiladi: /eɪ/ eight, /iː/ three, /e/ ten, /aɪ/ five, /əʊ/ no, /juː/ you, /ɑː/ are. Harflar guruh-guruh aytiladi. Tinglang va har bir guruhga qaysi harf kirishini tanlang.",
     questions: [
-      slots(track("1.20"), [
-        ["/eɪ/ — eight", "A H J K"],
-        ["/iː/ — three", "B C D E G P T V"],
-        ["/e/ — ten", "F L M N S X Z"],
-        ["/aɪ/ — five", "I Y"],
-        ["/əʊ/ — no", "O"],
-        ["/juː/ — you", "Q U W"],
-        ["/ɑː/ — are", "R"],
+      gaps(track("1.20"), [
+        ["/eɪ/ (eight): A, H, J, ___", "K", "E", "G"],
+        ["/iː/ (three): B, C, D, E, ___, P, T, V", "G", "J", "F"],
+        ["/e/ (ten): F, L, M, N, S, X, ___", "Z", "C", "R"],
+        ["/aɪ/ (five): I, ___", "Y", "E", "A"],
+        ["/əʊ/ (no): ___", "O", "U", "W"],
+        ["/juː/ (you): Q, U, ___", "W", "O", "V"],
+        ["/ɑː/ (are): ___", "R", "A", "H"],
       ]),
     ],
   },
