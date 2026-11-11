@@ -209,6 +209,12 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-22", level: "A2", title: "22-dars", subtitle: "In the kitchen: much / many / a lot of", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-09.mp4", title: "Making a pizza", kind: "hujjatli", start: null, end: null } },
   { code: "A2-23", level: "A2", title: "23-dars", subtitle: "The weather: comparatives", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-10.mp4", title: "The Grand Canyon", kind: "hujjatli", start: null, end: null } },
   { code: "A2-24", level: "A2", title: "24-dars", subtitle: "Natural wonders: superlatives", color: "green", icon: "chart", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-10.mp4", title: "Vox pops 10: natural wonders", kind: "intervyu", start: null, end: null } },
+  { code: "A2-25", level: "A2", title: "25-dars", subtitle: "Community spirit: going to", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-11-1.mp4", title: "Vox pops 11: helping others", kind: "intervyu", start: null, end: null } },
+  { code: "A2-26", level: "A2", title: "26-dars", subtitle: "New challenges: to + verb (purpose)", color: "orange", icon: "headphones", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-11.mp4", title: "Silicon Fen", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-27", level: "A2", title: "27-dars", subtitle: "Technology: strong adjectives and offers", color: "purple", icon: "book", locked: 1, date: "", clip: { url: "media:navigate-a2/video/voxpops-11-2.mp4", title: "Vox pops 11: technology", kind: "intervyu", start: null, end: null } },
+  { code: "A2-28", level: "A2", title: "28-dars", subtitle: "Artistic talent: present perfect, ever / never", color: "green", icon: "chart", locked: 1, date: "", clip: null },
+  { code: "A2-29", level: "A2", title: "29-dars", subtitle: "At the movies: present perfect or past simple", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-12.mp4", title: "Park Theatre", kind: "hujjatli", start: null, end: null } },
+  { code: "A2-30", level: "A2", title: "30-dars", subtitle: "Bollywood and phone calls", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

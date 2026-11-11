@@ -878,4 +878,216 @@ To'g'ri (regular) fe'llarga **-ed** qo'shiladi. Shakl barcha shaxslar uchun bir 
       q("Qaysi gap to'g'ri?", ["Which river is the longest in the world?", "Which river is the longer in the world?", "Which river is the most long in the world?", "Which river is longest than the world?"]),
     ]
   ),
+  "A2-25": rule(
+    "going to — rejalar va niyatlar",
+    `Kelajakdagi **reja va niyatlar** haqida gapirganda **be going to + fe'l** ishlatiladi: We**'re going to organize** a party.
+
+## Darak gap
+• I **am** (I'm) going to **help** my neighbour.
+• He / She / It **is** ('s) going to **cook**.
+• You / We / They **are** ('re) going to **visit** Grandma.
+
+## Inkor gap
+• I**'m not** going to use the car.
+• She **isn't** going to come. · We **aren't** going to use any electricity.
+
+## So'roq va qisqa javob
+• **Are** you going to cycle to work? — Yes, I **am**. / No, I**'m not**.
+• **Is** he going to help? — Yes, he **is**. / No, he **isn't**.
+• **What are** you going to do on Saturday?
+
+## Diqqat
+• going to dan keyin fe'lning **asosiy shakli**: going to **give** (giving emas).
+• Ko'rinib turgan voqea: Look at the clouds! It**'s going to rain**.
+
+## Talaffuz
+• going to dagi **to** qisqa o'qiladi: /tə/ — We're going /tə/ organize a party.
+
+## Iboralar (fe'l + ot)
+• organize a party · give a present · repair a bike · plant flowers · look after children · pick up rubbish · raise money`,
+    [
+      q("I ___ going to visit my aunt.", ["'m", "is", "are", "be"]),
+      q("She ___ going to cook tonight. (inkor)", ["isn't", "aren't", "doesn't", "not"]),
+      q("___ you going to help us?", ["Are", "Do", "Is", "Will"]),
+      q("We're going ___ a cake.", ["to make", "make", "making", "to making"]),
+      q("Is he going to come? — Yes, he ___.", ["is", "does", "will", "going"]),
+      q("What ___ they going to do?", ["are", "is", "do", "does"]),
+      q("Look at those clouds! It's ___ rain.", ["going to", "go to", "going", "goes to"]),
+      q("«going to» dagi «to» qanday o'qiladi?", ["/tə/", "/tuː/", "/təʊ/", "o'qilmaydi"]),
+      q("___ some flowers", ["plant", "make", "do", "teach"]),
+      q("Qaysi gap to'g'ri?", ["We aren't going to use the car.", "We not going to use the car.", "We don't going to use the car.", "We aren't going use the car."]),
+    ]
+  ),
+  "A2-26": rule(
+    "Maqsad infinitivi: to + fe'l",
+    `Biror ishni **nima uchun** qilganimizni aytganda **to + fe'l** ishlatiladi: I go geocaching **to keep** fit.
+
+## Tuzilishi
+• fe'l … + **to + fe'lning asosiy shakli**: She went to the bank **to pay** a bill.
+• Har qanday zamonda bir xil: I go / I went / I'm going to go … **to see** different places.
+
+## Why? savoliga javob
+• Why did you go to the post office? — **To post** a parcel.
+
+## Diqqat
+• **for + fe'l** emas! ✗ I go to the gym **for keep** fit. ✓ … **to keep** fit.
+• to dan keyin **-s, -ed, -ing qo'shilmaydi**: to **buy** (to buys / to bought emas).
+
+## Talaffuz
+• to qisqa: /tə/ — I do it /tə/ meet new people.
+
+## Yangi yil va'dalari (resolutions)
+• spend more time with … · join a gym · move abroad · take up (yangi mashg'ulot boshlash) · cut down on (kamaytirish) · take time off (ishdan ruxsat olish)
+• **instead** — «o'rniga», gap oxirida: We're going to save money for a trip **instead**.`,
+    [
+      q("I go to the gym ___ fit.", ["to keep", "for keep", "for keeping", "keep"]),
+      q("She went to the bank ___ a bill.", ["to pay", "for pay", "paying", "to paid"]),
+      q("Why did you go to the shop? — ___ buy some bread.", ["To", "For", "Because", "So"]),
+      q("He's learning English ___ abroad.", ["to work", "for work", "working", "to working"]),
+      q("Maqsad infinitivi qaysi?", ["to + fe'l", "for + fe'l", "fe'l + -ing", "will + fe'l"]),
+      q("I want to ___ down on sugar.", ["cut", "take", "join", "move"]),
+      q("This year I'm going to ___ up the guitar.", ["take", "cut", "make", "do"]),
+      q("We're going to save money ___.", ["instead", "instead of", "for instead", "in stead of"]),
+      q("I use my phone ___ in touch with friends.", ["to keep", "for keep", "keeping", "keep"]),
+      q("Qaysi gap to'g'ri?", ["I went to the post office to post a parcel.", "I went to the post office for post a parcel.", "I went to the post office to posted a parcel.", "I went to the post office for posting a parcel."]),
+    ]
+  ),
+  "A2-27": rule(
+    "Kuchli sifatlar va yordam taklif qilish",
+    `## Kuchli sifatlar
+Ba'zi sifatlarning o'zida «juda» ma'nosi bor:
+• very small → **tiny** · very big → **enormous** · very tired → **exhausted** · very hungry → **starving**
+• very angry → **furious** · very dirty → **filthy** · very good → **excellent** · very happy → **delighted** · very interesting → **fascinating** · very bad → **awful**
+
+Kuchli sifat oldidan **very** emas, **really** ishlatiladi: My car is **really tiny**! (✗ very tiny)
+
+## Yordam taklif qilish
+• **Shall I** + fe'l? — Shall I write that down? (Yozib olaymi?)
+• **I'll** + fe'l. — I'll take notes. (Men yozib boraman.)
+• **Let me** + fe'l. — Let me help you with that.
+• **Would you like me to** + fe'l? — Would you like me to ask them? (eng xushmuomala)
+• **Why don't I** + fe'l? — Why don't I give him the list?
+
+## Javoblar
+• Yes, please. / Thank you. That's very helpful. / No, it's OK, thanks.
+
+## Texnologiya
+• download / upload · website · email address · search engine · wireless · touchscreen · earphones`,
+    [
+      q("very small = ?", ["tiny", "enormous", "filthy", "furious"]),
+      q("very tired = ?", ["exhausted", "delighted", "starving", "thrilled"]),
+      q("very hungry = ?", ["starving", "furious", "exhausted", "tiny"]),
+      q("My car is ___ tiny!", ["really", "very", "a bit", "more"]),
+      q("___ I write that down?", ["Shall", "Will", "Do", "Would"]),
+      q("Let ___ help you.", ["me", "I", "my", "mine"]),
+      q("Would you like me ___ them?", ["to ask", "ask", "asking", "asked"]),
+      q("It's heavy! — ___ carry it for you.", ["I'll", "I", "Shall", "I'm"]),
+      q("I often ___ apps for my phone.", ["download", "upload", "search", "type"]),
+      q("Qaysi gap to'g'ri?", ["I was really delighted!", "I was very delighted!", "I was really delight!", "I was delighted very!"]),
+    ]
+  ),
+  "A2-28": rule(
+    "Present perfect: tajriba, ever / never",
+    `Hayotdagi **tajriba** haqida (qachonligi muhim emas) **present perfect** ishlatiladi: He**'s given** concerts all over the world.
+
+## Tuzilishi: have / has + V3 (past participle)
+• I / You / We / They **have** ('ve) **played** · He / She / It **has** ('s) **won**
+• Inkor: I **haven't** seen · She **hasn't** opened
+• So'roq: **Have** you **ever** been to the opera? — Yes, I **have**. / No, I **haven't**.
+
+## V3 shakllari
+• To'g'ri fe'llar: **-ed** — play → played, watch → watched, dance → danced
+• Noto'g'ri fe'llar: be → **been**, see → **seen**, write → **written**, win → **won**, give → **given**, sing → **sung**, have → **had**, go → **gone/been**
+
+## ever / never
+• **ever** — so'roqda: Have you **ever** played in a band?
+• **never** — «hech qachon», gap inkor bo'ladi: I've **never** been to a jazz concert.
+
+## Qancha marta
+• **once** (bir marta) · **twice** (ikki marta) · **three times** · **several times**
+
+## Talaffuz
+• Darak gapda V3 urg'uli: He's **GIV**en concerts. Inkorda — haven't / hasn't: He **HAS**n't seen the music.`,
+    [
+      q("I ___ been to a rock concert.", ["'ve", "'s", "am", "did"]),
+      q("She ___ won many prizes.", ["has", "have", "is", "did"]),
+      q("___ you ever seen a musical?", ["Have", "Has", "Did", "Are"]),
+      q("see → V3?", ["seen", "saw", "seed", "seeing"]),
+      q("write → V3?", ["written", "wrote", "writed", "writing"]),
+      q("be → V3?", ["been", "was", "be", "being"]),
+      q("Has she ever had dance lessons? — No, she ___.", ["hasn't", "doesn't", "didn't", "haven't"]),
+      q("I've ___ been to the opera.", ["never", "ever", "yet", "already"]),
+      q("two times = ?", ["twice", "once", "double", "second"]),
+      q("Qaysi gap to'g'ri?", ["He has written music for films.", "He has wrote music for films.", "He have written music for films.", "He has write music for films."]),
+    ]
+  ),
+  "A2-29": rule(
+    "Present perfect yoki past simple?",
+    `## Present perfect — tajriba, vaqt aytilmaydi
+• **Have** you **ever** left the cinema early? · I**'ve seen** that film. · She**'s run** a marathon.
+• Hali tugamagan vaqt: **this** month, **this** year, **today** — I**'ve watched** Star Wars twice **this month**.
+
+## Past simple — aniq, tugagan vaqt
+• **yesterday, last week, last summer, in 2010, a few months ago**: I **walked out** once — it was **last summer**.
+• **When…?** savoli doim past simple: **When did** you **meet** him? (✗ When have you met…)
+
+## Odatiy suhbat
+Tajriba haqida so'raymiz (present perfect), keyin tafsilot beramiz (past simple):
+• A: **Have** you **ever** **left** the cinema early?
+• B: Yes, I **have**. I **walked out** once — it **was** last summer.
+
+## Taqqoslang
+• I**'ve opened** the door. (natija hozir) — I **opened** the door. (o'tgan voqea)
+• We**'ve met** him. — We **met** him yesterday.
+
+## Film turlari
+• horror film · romantic film · comedy · drama · action film · science fiction · animation · documentary · musical · thriller`,
+    [
+      q("I ___ that film last week.", ["saw", "'ve seen", "have saw", "see"]),
+      q("___ you ever been to a film festival?", ["Have", "Did", "Were", "Do"]),
+      q("When ___ you meet him?", ["did", "have", "has", "were"]),
+      q("I've watched Star Wars twice ___.", ["this month", "last month", "in 2010", "yesterday"]),
+      q("A few months ago I ___ to see a terrible film.", ["went", "'ve been", "have gone", "go"]),
+      q("Aniq o'tgan vaqt (yesterday, last week) bilan qaysi zamon?", ["past simple", "present perfect", "present simple", "going to"]),
+      q("Have you seen it? — Yes, I ___ it yesterday.", ["saw", "'ve seen", "seen", "see"]),
+      q("Funny films are ___.", ["comedies", "dramas", "thrillers", "documentaries"]),
+      q("Films with facts about real life are ___.", ["documentaries", "animations", "comedies", "musicals"]),
+      q("Qaysi gap to'g'ri?", ["I walked out once last summer.", "I have walked out once last summer.", "I've walk out once last summer.", "I walk out once last summer."]),
+    ]
+  ),
+  "A2-30": rule(
+    "Telefonda gaplashish va present perfect takrori",
+    `## Qo'ng'iroq qilganda
+• Hello. **Could I speak to** Ms Martinez, please?
+• Hi, it's Marcus. **Is** Caitlin **there**?
+• **Can you tell her to call me back**, please? / **Could you ask him to call me back**, please?
+• No, that's fine. **I'll call back later**.
+
+## Javob berganda
+• **Hang on** a minute. I'll just get her. (Biroz kuting.)
+• **She's not here** at the moment. / **I'm afraid** he's **not available** at the moment.
+• I'm afraid she's **out of the office**.
+• **Would you like to leave a message?** · **Can I take a message?**
+• **Could I have your number**, please?
+
+## leave yoki take?
+• Qo'ng'iroq qiluvchi xabar **qoldiradi** — **leave** a message.
+• Javob beruvchi xabarni **yozib oladi** — **take** a message.
+
+## Present perfect takrori
+• She **has recorded** songs for over sixty films. · Many famous singers **have performed** there.
+• Aniq vaqt bo'lsa — past simple: In 1117 there **was** a big earthquake.`,
+    [
+      q("Could I ___ to Ms Martinez, please?", ["speak", "talk", "say", "tell"]),
+      q("___ on a minute. I'll just get her.", ["Hang", "Stay", "Wait on", "Hold up"]),
+      q("I'm afraid she's ___ of the office.", ["out", "off", "away", "outside"]),
+      q("Would you like to ___ a message? (qo'ng'iroq qiluvchiga)", ["leave", "take", "make", "do"]),
+      q("Can I ___ a message? (javob beruvchi)", ["take", "leave", "make", "give"]),
+      q("Can you tell her to call me ___?", ["back", "again", "up", "later on"]),
+      q("Could I ___ your number, please?", ["have", "take", "know", "get to"]),
+      q("She ___ recorded songs for over sixty films.", ["has", "have", "is", "did"]),
+      q("In 1117 there ___ a big earthquake.", ["was", "has been", "have been", "is"]),
+      q("Qaysi gap to'g'ri?", ["I'm afraid he's not available at the moment.", "I'm afraid he's not available in the moment.", "I'm afraid he not available at the moment.", "I afraid he's not available at the moment."]),
+    ]
+  ),
 };
