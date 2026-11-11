@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Check, Delete, Eye, X, GraduationCap, Info, MapPin, Mic, PlayCircle, Snail, Trophy, Volume2 } from "lucide-react";
+import { BookOpen, Check, Delete, Eye, X, GraduationCap, Info, Lightbulb, MapPin, Mic, PlayCircle, RotateCcw, Snail, Trophy, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
@@ -1241,21 +1241,15 @@ export function ExerciseRun({
 
         {checked !== null && (
           <div
-            className={`flex animate-pop-in gap-3 rounded-2xl px-4 py-3.5 text-sm ring-1 ${
-              checked
-                ? "bg-gradient-to-br from-mint-50 to-mint-100/70 text-mint-900 ring-mint-200 dark:from-mint-950/50 dark:to-mint-900/30 dark:text-mint-100 dark:ring-mint-800/50"
-                : "bg-gradient-to-br from-rose-50 to-rose-100/60 text-rose-900 ring-rose-200 dark:from-rose-950/50 dark:to-rose-900/20 dark:text-rose-100 dark:ring-rose-900/50"
-            }`}
+            role="status"
+            data-tone={checked ? "right" : "wrong"}
+            className="ae-feedback flex animate-pop-in gap-3.5 text-sm"
           >
-            <span
-              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-md ${
-                checked ? "bg-mint-500 shadow-mint-700/30" : "bg-rose-500 shadow-rose-700/30"
-              }`}
-            >
-              {checked ? <Check size={20} strokeWidth={3} /> : <X size={20} strokeWidth={3} />}
+            <span className="ae-feedback-badge">
+              {checked ? <Check size={22} strokeWidth={3.2} /> : <X size={22} strokeWidth={3.2} />}
             </span>
             <div className="min-w-0 flex-1">
-            <p className="font-display text-base font-bold">
+            <p className="font-display text-lg font-bold leading-snug">
               {checked
                 ? pageMode
                   ? t("Hammasi to'g'ri! Barakalla!", "All correct! Brilliant!")
@@ -1270,7 +1264,10 @@ export function ExerciseRun({
                 : t("Noto'g'ri.", "Not quite.")}
             </p>
             {!pageMode && question.explanation && (checked || showAnswer) && (
-              <p className="mt-1 opacity-90">{question.explanation}</p>
+              <p className="ae-feedback-note mt-2 flex gap-2">
+                <Lightbulb size={16} className="mt-0.5 shrink-0 opacity-80" />
+                <span>{question.explanation}</span>
+              </p>
             )}
             {!checked && !showAnswer && (
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -1287,8 +1284,9 @@ export function ExerciseRun({
                   <button
                     onClick={() => setAskReveal("all")}
                     disabled={revealing}
-                    className="btn-press rounded-full bg-white px-4 py-1.5 text-xs font-bold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-100 disabled:opacity-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15"
+                    className="btn-press inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-rose-700 shadow-sm ring-1 ring-rose-200 hover:bg-rose-100 disabled:opacity-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15"
                   >
+                    <Eye size={14} />
                     {t(`Javobni ko'rish (${revealsLeft} ta qoldi)`, `Show the answer (${revealsLeft} left)`)}
                   </button>
                 ) : (
@@ -1296,7 +1294,8 @@ export function ExerciseRun({
                     {t("Bu darsda javobni ko'rish imkoniyatlari tugadi.", "You've used all your answer reveals for this lesson.")}
                   </span>
                 )}
-                <span className="text-xs opacity-80">
+                <span className="inline-flex items-center gap-1 text-xs opacity-80">
+                  <RotateCcw size={12} className="shrink-0" />
                   {t("Xato savollar keyin qayta beriladi.", "You'll get the questions you missed again later.")}
                 </span>
               </div>
