@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Apple, ArrowRight, BookOpen, Check, Delete, Eye, X, GraduationCap, Info, Lightbulb, MapPin, Mic, RotateCcw, Snail, Volume2 } from "lucide-react";
+import { ArrowCounterclockwise, ArrowRight, BookFill, Checkmark, DeleteLeftFill, EyeFill, InfoCircleFill, LightbulbFill, LocationFill, MicFill, Rosette, Speaker2Fill, StarFill, TortoiseFill, Xmark } from "../ui/IosIcons";
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
@@ -59,33 +59,32 @@ function RichLine({ text }: { text: string }) {
  *  (alohida ajratilgan qator), qolgani — oddiy xatboshi. */
 function RuleText({ text }: { text: string }) {
   return (
-    <div className="flex flex-col gap-2 text-[15px] leading-relaxed text-ink-800 dark:text-ink-200">
+    <div className="ae-rule-text flex flex-col gap-2.5 text-[15px] leading-relaxed text-ink-800 dark:text-ink-200">
       {text.split("\n").map((raw, i) => {
         const line = raw.trim();
         if (!line) return <div key={i} className="h-1" />;
         if (line.startsWith("## "))
           return (
-            <p key={i} className="font-display mt-2 text-base font-bold text-azure-700 dark:text-azure-300">
+            <p key={i} className="ae-rule-heading font-display mt-3 first:mt-0 text-base font-bold">
               {line.slice(3)}
             </p>
           );
         if (line.startsWith("• "))
           return (
-            <p key={i} className="flex gap-2 pl-1">
-              <span className="text-azure-500">•</span>
-              <span>
+            <p key={i} className="flex gap-2.5 pl-0.5">
+              <span className="ae-rule-dot" aria-hidden="true" />
+              <span className="min-w-0">
                 <RichLine text={line.slice(2)} />
               </span>
             </p>
           );
         if (line.startsWith("→ "))
           return (
-            <p
-              key={i}
-              lang="en"
-              className="rounded-xl bg-mint-50 px-3 py-1.5 font-medium text-mint-900 dark:bg-mint-950/40 dark:text-mint-100"
-            >
-              <RichLine text={line.slice(2)} />
+            <p key={i} lang="en" className="ae-rule-example">
+              <ArrowRight size={14} className="mt-[0.3em] shrink-0 opacity-70" />
+              <span className="min-w-0">
+                <RichLine text={line.slice(2)} />
+              </span>
             </p>
           );
         return (
@@ -218,7 +217,7 @@ export function ExerciseRun({
         <div className="ae-result-halo">
           <ProgressRing value={result} size={148} stroke={12} tone={tone}>
             <span className="ae-result-icon">
-              <Apple size={18} />
+              {great ? <Rosette size={18} /> : <StarFill size={16} />}
             </span>
             <span className="font-display text-4xl font-bold leading-none text-ink-950 dark:text-ink-50">
               {result}
@@ -226,13 +225,13 @@ export function ExerciseRun({
             </span>
           </ProgressRing>
         </div>
-        <div className="flex items-center gap-1.5" aria-label={t(`${stars} ta olma`, `${stars} apples`)}>
+        <div className="flex items-center gap-1.5" aria-label={t(`${stars} ta yulduz`, `${stars} stars`)}>
           {[0, 1, 2].map((i) => (
-            <Apple
+            <StarFill
               key={i}
               size={i === 1 ? 30 : 24}
-              strokeWidth={1.8}
-              className={`ae-result-apple ${i < stars ? "is-on" : ""} ${i === 1 ? "-mt-2" : ""}`}
+             
+              className={`ae-result-star ${i < stars ? "is-on" : ""} ${i === 1 ? "-mt-2" : ""}`}
               style={{ animationDelay: `${0.35 + i * 0.15}s` }}
             />
           ))}
@@ -249,12 +248,12 @@ export function ExerciseRun({
         </div>
         <div className="grid w-full max-w-xs grid-cols-2 gap-2">
           <div className="ae-result-stat" data-kind="right">
-            <Check size={16} strokeWidth={3} />
+            <Checkmark size={16} />
             <span className="font-display text-xl font-bold">{rightAll}</span>
             <span className="text-xs opacity-80">{t("to'g'ri", "correct")}</span>
           </div>
           <div className="ae-result-stat" data-kind="wrong">
-            <X size={16} strokeWidth={3} />
+            <Xmark size={16} />
             <span className="font-display text-xl font-bold">{totalAll - rightAll}</span>
             <span className="text-xs opacity-80">{t("xato", "wrong")}</span>
           </div>
@@ -280,7 +279,7 @@ export function ExerciseRun({
             onClick={onRetry}
             className="btn-press flex items-center justify-center gap-1.5 rounded-full bg-ink-100 py-3 text-sm font-bold text-ink-800 hover:bg-ink-200 dark:bg-white/10 dark:text-ink-100 dark:hover:bg-white/15"
           >
-            <RotateCcw size={16} /> {t("Qayta ishlash", "Try again")}
+            <ArrowCounterclockwise size={16} /> {t("Qayta ishlash", "Try again")}
           </button>
           <button
             onClick={() => onDone(result)}
@@ -298,29 +297,38 @@ export function ExerciseRun({
   if (kind === "rule" && showRule) {
     return (
       <div className="flex animate-fade-up flex-col gap-4">
-        <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-md shadow-gold-700/20">
-            <GraduationCap size={22} />
+        <div className="ae-rule-hero">
+          <span className="ae-rule-hero-icon">
+            <LightbulbFill size={26} />
           </span>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">{t("Qoida", "Rule")}</p>
-            <p className="font-display text-lg font-bold leading-tight text-ink-950 dark:text-ink-50">
+          <div className="min-w-0">
+            <span className="ae-rule-eyebrow">{t("Qoida", "Rule")}</span>
+            <p className="font-display mt-1 text-xl font-bold leading-tight text-ink-950 dark:text-ink-50">
               {exercise.title.replace(/^Qoida:\s*/, "")}
             </p>
           </div>
         </div>
-        <div className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 dark:bg-white/5 dark:ring-white/10">
+        <div className="ae-rule-card">
           <RuleText text={exercise.instructions ?? ""} />
         </div>
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold text-ink-500 dark:text-ink-400">
+          <InfoCircleFill size={14} />
+          {t(
+            `Keyin ${total} ta savollik test — o'tish uchun ${RULE_PASS_PCT}% kerak.`,
+            `Then a ${total}-question test — you need ${RULE_PASS_PCT}% to pass.`
+          )}
+        </p>
         <button
           onClick={() => setShowRule(false)}
-          className="btn-press self-center rounded-full bg-azure-600 px-7 py-3 text-sm font-bold text-white shadow-md hover:bg-azure-500"
+          className="btn-press flex items-center justify-center gap-2 rounded-full bg-azure-600 py-3.5 font-display text-base font-bold text-white hover:bg-azure-500"
         >
-          {qIndex > 0 ? t("Testga qaytish", "Back to the test") : t(`Testni boshlash (${total} savol)`, `Start the test (${total} questions)`)}
+          {qIndex > 0 ? t("Testga qaytish", "Back to the test") : t("Testni boshlash", "Start the test")}
+          <ArrowRight size={18} />
         </button>
       </div>
     );
   }
+
 
   const letters = kind === "anagram" ? question.prompt.split("") : [];
   const orderTiles =
@@ -433,7 +441,7 @@ export function ExerciseRun({
       }}
       className="btn-press ml-2 inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-2.5 py-1 align-middle text-xs font-bold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15 dark:hover:bg-white/15"
     >
-      <Eye size={13} /> {t("Javob", "Answer")}
+      <EyeFill size={13} /> {t("Javob", "Answer")}
     </button>
   );
 
@@ -621,12 +629,12 @@ export function ExerciseRun({
           onClick={() => setShowRule(true)}
           className="flex items-center gap-2 self-start rounded-full bg-gold-50 px-4 py-2 text-sm font-semibold text-gold-800 hover:bg-gold-100 dark:bg-gold-950/40 dark:text-gold-200"
         >
-          <GraduationCap size={16} /> {t("Qoidani ko'rish", "See the rule")}
+          <BookFill size={16} /> {t("Qoidani ko'rish", "See the rule")}
         </button>
       )}
       {exercise.instructions && kind !== "rule" && (
         <div className="flex gap-2.5 rounded-2xl bg-azure-50 px-4 py-3 text-sm leading-relaxed text-azure-900 dark:bg-azure-950/40 dark:text-azure-100">
-          <Info size={18} className="mt-0.5 shrink-0" />
+          <InfoCircleFill size={18} className="mt-0.5 shrink-0" />
           <p>
             <span className="font-bold">{t("Shart:", "Task:")} </span>
             {exercise.instructions}
@@ -669,7 +677,7 @@ export function ExerciseRun({
               className="btn-press mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
               aria-label={t("Eshitish", "Listen")}
             >
-              <Volume2 size={34} />
+              <Speaker2Fill size={34} />
             </button>
             {optionGrid()}
           </>
@@ -762,7 +770,7 @@ export function ExerciseRun({
               disabled={picked.length === 0 || checked !== null}
               className="mx-auto flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink-500 hover:bg-ink-100 disabled:opacity-40 dark:text-ink-400 dark:hover:bg-white/10"
             >
-              <Delete size={14} /> {t("Oxirgi harfni o'chirish", "Delete the last letter")}
+              <DeleteLeftFill size={14} /> {t("Oxirgi harfni o'chirish", "Delete the last letter")}
             </button>
           </>
         )}
@@ -785,7 +793,7 @@ export function ExerciseRun({
                   className="btn-press flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
                   aria-label={t("Matnni eshitish", "Listen to the text")}
                 >
-                  <Volume2 size={26} />
+                  <Speaker2Fill size={26} />
                 </button>
                 <button
                   onClick={() => question.audio_text && speakEn(question.audio_text, 0.6)}
@@ -793,7 +801,7 @@ export function ExerciseRun({
                   aria-label={t("Sekinroq eshitish", "Listen more slowly")}
                   title={t("Sekinroq", "Slower")}
                 >
-                  <Snail size={20} />
+                  <TortoiseFill size={20} />
                 </button>
                 <p className="text-sm text-gold-900 dark:text-gold-100">
                   {t(
@@ -806,7 +814,7 @@ export function ExerciseRun({
             {kind !== "audiotext" && (
               <div className="rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base leading-relaxed text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
                 <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
-                  <BookOpen size={14} /> {t("Matn", "Text")}
+                  <BookFill size={14} /> {t("Matn", "Text")}
                 </p>
                 <p lang="en" className="whitespace-pre-line"><Blanked text={question.prompt.split("||")[0]} /></p>
               </div>
@@ -866,7 +874,7 @@ export function ExerciseRun({
         {kind === "situation" && (
           <>
             <div className="flex gap-2.5 rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
-              <MapPin size={18} className="mt-0.5 shrink-0 text-gold-500" />
+              <LocationFill size={18} className="mt-0.5 shrink-0 text-gold-500" />
               <p><Blanked text={question.prompt} /></p>
             </div>
             {optionGrid()}
@@ -880,7 +888,7 @@ export function ExerciseRun({
               className="btn-press flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-white shadow-lg shadow-gold-700/30 hover:bg-gold-400"
               aria-label={t("Eshitish", "Listen")}
             >
-              <Volume2 size={28} />
+              <Speaker2Fill size={28} />
             </button>
             {kind === "dictation" && (
               <button
@@ -889,7 +897,7 @@ export function ExerciseRun({
                 aria-label={t("Sekinroq eshitish", "Listen more slowly")}
                 title={t("Sekinroq", "Slower")}
               >
-                <Snail size={22} />
+                <TortoiseFill size={22} />
               </button>
             )}
           </div>
@@ -1161,7 +1169,7 @@ export function ExerciseRun({
               disabled={picked.length === 0 || checked !== null}
               className="mx-auto flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink-500 hover:bg-ink-100 disabled:opacity-40 dark:text-ink-400 dark:hover:bg-white/10"
             >
-              <Delete size={14} /> {t("Oxirgi so'zni o'chirish", "Delete the last word")}
+              <DeleteLeftFill size={14} /> {t("Oxirgi so'zni o'chirish", "Delete the last word")}
             </button>
           </>
         )}
@@ -1207,7 +1215,7 @@ export function ExerciseRun({
               onClick={() => speakEn(question.prompt)}
               className="flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-gold-500"
             >
-              <Volume2 size={16} /> {t("Namunani eshitish", "Listen to the example")}
+              <Speaker2Fill size={16} /> {t("Namunani eshitish", "Listen to the example")}
             </button>
             <button
               onClick={listen}
@@ -1219,7 +1227,7 @@ export function ExerciseRun({
                   : "bg-gradient-to-b from-azure-600 to-azure-800 hover:from-azure-500 hover:to-azure-700"
               }`}
             >
-              <Mic size={30} />
+              <MicFill size={30} />
             </button>
             <p className="min-h-5 text-center text-sm text-ink-500 dark:text-ink-400">
               {listening
@@ -1284,7 +1292,7 @@ export function ExerciseRun({
             className="ae-feedback flex animate-pop-in gap-3.5 text-sm"
           >
             <span className="ae-feedback-badge">
-              {checked ? <Check size={22} strokeWidth={3.2} /> : <X size={22} strokeWidth={3.2} />}
+              {checked ? <Checkmark size={22} /> : <Xmark size={22} />}
             </span>
             <div className="min-w-0 flex-1">
             <p className="font-display text-lg font-bold leading-snug">
@@ -1303,7 +1311,7 @@ export function ExerciseRun({
             </p>
             {!pageMode && question.explanation && (checked || showAnswer) && (
               <p className="ae-feedback-note mt-2 flex gap-2">
-                <Lightbulb size={16} className="mt-0.5 shrink-0 opacity-80" />
+                <LightbulbFill size={16} className="mt-0.5 shrink-0 opacity-80" />
                 <span>{question.explanation}</span>
               </p>
             )}
@@ -1324,7 +1332,7 @@ export function ExerciseRun({
                     disabled={revealing}
                     className="btn-press inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-rose-700 shadow-sm ring-1 ring-rose-200 hover:bg-rose-100 disabled:opacity-50 dark:bg-white/10 dark:text-rose-100 dark:ring-white/15"
                   >
-                    <Eye size={14} />
+                    <EyeFill size={14} />
                     {t(`Javobni ko'rish (${revealsLeft} ta qoldi)`, `Show the answer (${revealsLeft} left)`)}
                   </button>
                 ) : (
@@ -1333,7 +1341,7 @@ export function ExerciseRun({
                   </span>
                 )}
                 <span className="inline-flex items-center gap-1 text-xs opacity-80">
-                  <RotateCcw size={12} className="shrink-0" />
+                  <ArrowCounterclockwise size={12} className="shrink-0" />
                   {t("Xato savollar keyin qayta beriladi.", "You'll get the questions you missed again later.")}
                 </span>
               </div>
@@ -1374,7 +1382,7 @@ export function ExerciseRun({
             className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10"
           >
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-lg shadow-gold-700/30">
-              <Eye size={26} />
+              <EyeFill size={26} />
             </span>
             <p id="reveal-title" className="mt-3 font-display text-lg font-bold text-ink-950 dark:text-ink-50">
               {revealsLeft > 0 ? t("Javobni ochasizmi?", "Show this answer?") : t("Imkoniyatlar tugadi", "No reveals left")}
