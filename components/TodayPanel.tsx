@@ -176,7 +176,7 @@ export function TodayPanel({
         className={`group relative flex min-w-0 animate-fade-up flex-col justify-between overflow-hidden rounded-[2rem] p-6 ring-1 transition-transform duration-300 hover:-translate-y-1 ${
           review.due > 0
             ? "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 text-white shadow-xl shadow-gold-700/25 ring-white/10"
-            : "bg-white text-ink-950 ring-ink-950/5 dark:bg-[#151a28] dark:text-ink-50 dark:ring-white/10"
+            : "bg-white text-ink-950 ring-ink-950/5 dark:bg-[#201b17] dark:text-ink-50 dark:ring-white/10"
         }`}
       >
         <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-white/15 blur-2xl" />

@@ -301,7 +301,7 @@ export function VocabRoundFlow({
   if (round.words.length === 0) return null;
 
   const content = (
-    <div className="fixed inset-0 z-[200] flex animate-fade-in flex-col bg-gradient-to-br from-[#f5f7fb] to-[#e9edf6] dark:from-[#0d1017] dark:to-[#121620]">
+    <div className="fixed inset-0 z-[200] flex animate-fade-in flex-col bg-gradient-to-br from-[#f5f7fb] to-[#e9edf6] dark:from-[#16120f] dark:to-[#1b1714]">
       {/* Tepa panel */}
       <div className="flex items-center justify-between border-b border-ink-900/10 px-5 py-4 dark:border-white/10 sm:px-8">
         <div>
@@ -499,7 +499,7 @@ function LearnCard({
   return (
     <div
       key={word.id}
-      className="flex w-full max-w-md animate-pop-in flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none"
+      className="flex w-full max-w-md animate-pop-in flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none"
     >
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("So'z", "Word")} {index + 1} / {total}
@@ -749,7 +749,7 @@ function SpellingStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
       <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
         {word.emoji}
       </div>
@@ -876,7 +876,7 @@ function DefinitionStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("Ta'rifga mos so'zni tanlang", "Choose the word for this meaning")}
       </p>
@@ -1021,7 +1021,7 @@ function PronunciationStage({
     unsupported || (error !== null && error !== SPEECH_ERRORS["no-speech"] && error !== SPEECH_ERRORS_EN["no-speech"]);
 
   return (
-    <div className="flex animate-pop-in flex-col items-center gap-5 rounded-3xl bg-white p-6 text-center shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col items-center gap-5 rounded-3xl bg-white p-6 text-center shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
       <p className="text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("So'zni to'g'ri talaffuz qiling", "Say the word correctly")}
       </p>
@@ -1137,7 +1137,7 @@ function SentenceStage({
   }
 
   return (
-    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#151a28] dark:shadow-none">
+    <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("Bo'sh joyga mos so'zni yozing", "Write the missing word")}
       </p>

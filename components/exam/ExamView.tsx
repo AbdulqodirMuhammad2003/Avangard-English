@@ -11,7 +11,7 @@ import { ProgressRing } from "../ui/ProgressRing";
 import { celebrate } from "@/lib/celebrate";
 
 const CARD =
-  "rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-7 dark:bg-[#151a28] dark:shadow-none dark:ring-white/10";
+  "rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-7 dark:bg-[#201b17] dark:shadow-none dark:ring-white/10";
 
 function formatDateTime(iso: string, lang: string) {
   return new Date(iso).toLocaleString(lang === "en" ? "en-GB" : "uz-UZ", { day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit" });

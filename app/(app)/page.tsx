@@ -90,7 +90,7 @@ export default async function HomePage() {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.7fr_1fr]">
         {/* Faollik xaritasi */}
-        <section className="min-w-0 animate-fade-up rounded-[2rem] bg-white p-5 ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#151a28] dark:ring-white/10">
+        <section className="min-w-0 animate-fade-up rounded-[2rem] bg-white p-5 ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#201b17] dark:ring-white/10">
           <div className="mb-4 flex items-end justify-between gap-3">
             <div>
               <h2 className="font-display text-lg font-bold text-ink-950 dark:text-ink-50">{t("Faolligingiz", "Your activity")}</h2>
@@ -103,7 +103,7 @@ export default async function HomePage() {
         </section>
 
         {/* Lug'at halqasi */}
-        <section className="relative flex animate-fade-up flex-col items-center justify-center gap-4 overflow-hidden rounded-[2rem] bg-white p-6 text-center ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
+        <section className="relative flex animate-fade-up flex-col items-center justify-center gap-4 overflow-hidden rounded-[2rem] bg-white p-6 text-center ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10">
           <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-mint-400/15 blur-2xl" />
           <ProgressRing value={wordsPct} size={150} stroke={14} tone="mint">
             <span className="font-display text-4xl font-extrabold leading-none text-ink-950 dark:text-ink-50">{wordsPct}%</span>
@@ -159,7 +159,7 @@ export default async function HomePage() {
                 key={c.label}
                 href={c.href}
                 style={{ animationDelay: `${i * 70}ms` }}
-                className="group flex animate-fade-up flex-col justify-between gap-6 rounded-[2rem] bg-white p-5 ring-1 ring-ink-950/5 transition-transform duration-300 hover:-translate-y-1 dark:bg-[#151a28] dark:ring-white/10"
+                className="group flex animate-fade-up flex-col justify-between gap-6 rounded-[2rem] bg-white p-5 ring-1 ring-ink-950/5 transition-transform duration-300 hover:-translate-y-1 dark:bg-[#201b17] dark:ring-white/10"
               >
                 <span
                   className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 ${c.tint}`}

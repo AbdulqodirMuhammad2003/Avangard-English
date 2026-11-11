@@ -85,7 +85,7 @@ export function EditableAvatar({
       onClick={() => setOpen(false)}
     >
       <div
-        className="relative my-auto max-h-[85vh] w-full max-w-sm animate-pop-in overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
+        className="relative my-auto max-h-[85vh] w-full max-w-sm animate-pop-in overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Muqova: gradient va nuqtali naqsh, avatar uning chetida turadi. */}
@@ -112,7 +112,7 @@ export function EditableAvatar({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="group relative overflow-hidden rounded-full ring-4 ring-white shadow-xl dark:ring-[#151a28]"
+              className="group relative overflow-hidden rounded-full ring-4 ring-white shadow-xl dark:ring-[#201b17]"
               aria-label={t("Rasm tanlash", "Choose a photo")}
             >
               <Avatar name={name} size={88} photoUrl={preview || avatarUrl} />

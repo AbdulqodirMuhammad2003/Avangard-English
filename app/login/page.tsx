@@ -29,7 +29,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   }
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[#0b0d16] via-[#16143a] to-[#2a1640] px-4">
+    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[#13100e] via-[#16143a] to-[#2a1640] px-4">
       {/* Premium fon bezaklari */}
       <div className="pointer-events-none absolute -left-24 top-[-10%] h-80 w-80 animate-float-slow rounded-full bg-azure-500/30 blur-3xl" />
       <div

@@ -57,7 +57,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
   if (items.length === 0) {
     const when = formatNextDue(nextDueAt, t);
     return (
-      <div className="flex animate-fade-up flex-col items-center gap-3 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
+      <div className="flex animate-fade-up flex-col items-center gap-3 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10">
         <CalendarClock size={40} className="text-mint-500" />
         <p className="font-display text-xl font-bold text-ink-950 dark:text-ink-50">{t("Hozircha takrorlash yo'q", "Nothing to review yet")}</p>
         <p className="max-w-sm text-sm text-ink-500 dark:text-ink-400">
@@ -81,7 +81,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
   if (done) {
     const pct = Math.round((firstTryCorrect / items.length) * 100);
     return (
-      <div className="flex animate-pop-in flex-col items-center gap-3 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
+      <div className="flex animate-pop-in flex-col items-center gap-3 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10">
         <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-mint-400 to-mint-700 text-white shadow-lg shadow-mint-700/30">
           <Trophy size={36} />
         </div>
@@ -152,7 +152,7 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
 
       <div
         key={pos}
-        className="flex animate-fade-up flex-col gap-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#151a28] dark:ring-white/10"
+        className="flex animate-fade-up flex-col gap-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-6 dark:bg-[#201b17] dark:ring-white/10"
       >
         <p className="text-center text-xs font-semibold uppercase tracking-wider text-ink-400 dark:text-ink-500">
           {t(...MODE_LABELS[item.mode])}

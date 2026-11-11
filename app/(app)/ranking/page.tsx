@@ -67,7 +67,7 @@ export default async function RankingPage({ searchParams }: { searchParams: Prom
       </div>
 
       {podium.length > 0 && (
-        <section className="relative animate-fade-up overflow-hidden rounded-[2rem] bg-white px-4 pt-6 ring-1 ring-ink-950/5 sm:px-8 dark:bg-[#151a28] dark:ring-white/10">
+        <section className="relative animate-fade-up overflow-hidden rounded-[2rem] bg-white px-4 pt-6 ring-1 ring-ink-950/5 sm:px-8 dark:bg-[#201b17] dark:ring-white/10">
           <div className="pointer-events-none absolute -top-24 left-1/2 h-56 w-72 -translate-x-1/2 rounded-full bg-gold-400/20 blur-3xl" />
           <div className="relative flex items-end gap-2 sm:gap-4">
             {podium.map((row, i) => (
@@ -87,8 +87,8 @@ export default async function RankingPage({ searchParams }: { searchParams: Prom
                 style={{ animationDelay: `${i * 40}ms` }}
                 className={`flex animate-fade-up items-center gap-3 rounded-2xl p-3 ring-1 transition-transform duration-200 hover:-translate-y-0.5 ${
                   row.is_current_user
-                    ? "bg-gradient-to-r from-azure-50 to-white ring-azure-300 dark:from-azure-950/60 dark:to-[#151a28] dark:ring-azure-700/50"
-                    : "bg-white ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
+                    ? "bg-gradient-to-r from-azure-50 to-white ring-azure-300 dark:from-azure-950/60 dark:to-[#201b17] dark:ring-azure-700/50"
+                    : "bg-white ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10"
                 }`}
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-ink-50 text-sm font-bold text-ink-500 dark:bg-white/5 dark:text-ink-400">
@@ -125,7 +125,7 @@ export default async function RankingPage({ searchParams }: { searchParams: Prom
       )}
 
       {rows.length === 0 && (
-        <p className="rounded-[2rem] bg-white px-3 py-10 text-center text-sm text-ink-400 dark:bg-[#151a28] dark:text-ink-600">
+        <p className="rounded-[2rem] bg-white px-3 py-10 text-center text-sm text-ink-400 dark:bg-[#201b17] dark:text-ink-600">
           {t("Hozircha o'quvchilar yo'q.", "No students yet.")}
         </p>
       )}

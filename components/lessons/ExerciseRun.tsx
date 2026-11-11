@@ -5,6 +5,7 @@ import { BookOpen, Check, Delete, Eye, X, GraduationCap, Info, MapPin, Mic, Play
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
+import { Blanked, type BlankTone } from "./Blanked";
 import { buzz, celebrate } from "@/lib/celebrate";
 import { localizeOption } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
@@ -548,8 +549,6 @@ export function ExerciseRun({
     </div>
   );
 
-  const resultTone =
-    checked === null ? "text-azure-600 dark:text-azure-300" : checked ? "text-mint-600" : "text-rose-500";
   const correctAnswerText = kind === "stress"
     ? question.options.map((o, i) => (i === question.correct_index ? o.toUpperCase() : o)).join("-")
     : kind === "match" || kind === "listenmatch"
@@ -561,6 +560,13 @@ export function ExerciseRun({
     : isWritten
     ? question.answer_text!.split("|")[0]
     : localizeOption(lang, question.options[question.correct_index]);
+
+  // Bo'sh joyli savolda tanlangan variant shu bo'sh joy ichida ko'rinadi.
+  const fillIndex = checked === false && showAnswer ? question.correct_index : selected;
+  const fillText = fillIndex !== null && fillIndex !== undefined ? question.options[fillIndex] : null;
+  const choiceFill = fillText && fillText.length <= 24 ? fillText : null;
+  const choiceTone: BlankTone =
+    checked === null ? "selected" : checked || (showAnswer && fillIndex === question.correct_index) ? "right" : "wrong";
 
   return (
     <div className="flex flex-col gap-4">
@@ -599,14 +605,21 @@ export function ExerciseRun({
       <div key={qIndex} className="flex animate-fade-up flex-col gap-4">
         {!pageMode && (
         <div className="flex items-center gap-3">
-          <div className="h-2 flex-1 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
+          <div
+            className="ae-progress flex-1"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-valuenow={qIndex}
+          >
             <div
-              className="h-full rounded-full bg-mint-500 transition-[width] duration-500"
-              style={{ width: `${(qIndex / total) * 100}%` }}
+              className="ae-progress-fill"
+              style={{ width: `${Math.max(qIndex / total, 0.04) * 100}%` }}
             />
           </div>
-          <span className="text-xs font-semibold text-ink-500 dark:text-ink-400">
-            {qIndex + 1} / {total}
+          <span className="ae-progress-count">
+            {qIndex + 1}
+            <span className="opacity-60"> / {total}</span>
           </span>
         </div>
         )}
@@ -631,7 +644,7 @@ export function ExerciseRun({
                 question.prompt.length <= 24 ? "font-display py-2 text-3xl" : "text-lg"
               }`}
             >
-              {question.prompt}
+              <Blanked text={question.prompt} fill={choiceFill} tone={choiceTone} />
             </p>
             {optionGrid()}
           </>
@@ -658,7 +671,7 @@ export function ExerciseRun({
           <>
             <div className="flex flex-col gap-2">
               <p className="max-w-[80%] self-start rounded-2xl rounded-bl-md bg-ink-100 px-4 py-2.5 text-base text-ink-900 dark:bg-white/10 dark:text-ink-50">
-                — {question.prompt}
+                — <Blanked text={question.prompt} />
               </p>
               <p
                 className={`max-w-[80%] self-end rounded-2xl rounded-br-md px-4 py-2.5 text-base transition-colors ${
@@ -757,7 +770,7 @@ export function ExerciseRun({
                 <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-ink-400">
                   <BookOpen size={14} /> {t("Matn", "Text")}
                 </p>
-                <p lang="en" className="whitespace-pre-line">{question.prompt.split("||")[0]}</p>
+                <p lang="en" className="whitespace-pre-line"><Blanked text={question.prompt.split("||")[0]} /></p>
               </div>
             )}
             <p className="text-center text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400">
@@ -775,7 +788,7 @@ export function ExerciseRun({
                         {k + 1}
                       </span>
                       <span className="min-w-0 pt-0.5">
-                        {stem}
+                        <Blanked text={stem ?? ""} />
                         {multi && (
                           <span className="ml-2 inline-block rounded-full bg-gold-100 px-2.5 py-0.5 align-middle text-xs font-bold text-gold-800 dark:bg-gold-900/50 dark:text-gold-200">
                             {t("IKKITA to'g'ri javobni tanlang", "Choose TWO correct answers")}
@@ -816,7 +829,7 @@ export function ExerciseRun({
           <>
             <div className="flex gap-2.5 rounded-2xl border border-ink-100 bg-white px-4 py-3 text-base text-ink-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-50">
               <MapPin size={18} className="mt-0.5 shrink-0 text-gold-500" />
-              <p>{question.prompt}</p>
+              <p><Blanked text={question.prompt} /></p>
             </div>
             {optionGrid()}
           </>
@@ -982,7 +995,7 @@ export function ExerciseRun({
                         });
                       }}
                       aria-label={t(`${i + 1}-bo'sh joy`, `Gap ${i + 1}`)}
-                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#151a28] dark:text-ink-50"
+                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#201b17] dark:text-ink-50"
                     >
                       <option value="">…</option>
                       {gapChoices[i].map((choice) => (
@@ -1046,7 +1059,7 @@ export function ExerciseRun({
                     autoCapitalize="off"
                     spellCheck={false}
                     enterKeyHint={i + 1 < matchPairs.length ? "next" : "done"}
-                    className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#151a28] dark:text-ink-50"
+                    className="w-full min-w-0 flex-1 rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900 outline-none focus:border-azure-500 dark:border-white/15 dark:bg-[#201b17] dark:text-ink-50"
                   />
                   {checked !== null &&
                     !slotRight(i) &&
@@ -1072,7 +1085,7 @@ export function ExerciseRun({
                 lang="en"
                 className="rounded-2xl bg-ink-50 px-4 py-3 text-center text-lg font-semibold leading-relaxed text-ink-900 dark:bg-white/5 dark:text-ink-50"
               >
-                {question.prompt}
+                <Blanked text={question.prompt} />
               </p>
             )}
             <div
@@ -1118,11 +1131,11 @@ export function ExerciseRun({
         {kind === "fill" && (
           <div className="flex flex-col gap-3">
             <p className="text-center text-2xl font-semibold leading-relaxed text-ink-950 dark:text-ink-50">
-              {question.prompt.split("___")[0]}
-              <span className={`inline-block min-w-16 border-b-2 border-current px-1 ${resultTone}`}>
-                {typed || "\u00a0"}
-              </span>
-              {question.prompt.split("___")[1]}
+              <Blanked
+                text={question.prompt.includes("___") ? question.prompt : `${question.prompt} ___`}
+                fill={typed.trim() || null}
+                tone={checked === null ? "selected" : checked ? "right" : "wrong"}
+              />
             </p>
             <input
               value={typed}
@@ -1201,7 +1214,7 @@ export function ExerciseRun({
         {kind === "type" && (
           <div className="flex flex-col gap-3">
             <p className="font-display text-center text-3xl font-bold text-ink-950 dark:text-ink-50">
-              {question.prompt} <span className="text-ink-300 dark:text-ink-600">→ ?</span>
+              <Blanked text={question.prompt} /> <span className="text-ink-300 dark:text-ink-600">→ ?</span>
             </p>
             <input
               value={typed}
@@ -1321,7 +1334,7 @@ export function ExerciseRun({
             aria-modal="true"
             aria-labelledby="reveal-title"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10"
+            className="w-full max-w-sm animate-pop-in rounded-3xl bg-white p-6 text-center shadow-2xl ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10"
           >
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 text-white shadow-lg shadow-gold-700/30">
               <Eye size={26} />

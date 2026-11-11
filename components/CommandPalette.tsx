@@ -101,7 +101,7 @@ export function CommandPalette() {
               onClick={() => setOpen(false)}
             >
               <div
-                className="animate-pop-in w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-[#151a28]"
+                className="animate-pop-in w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-[#201b17]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center gap-3 border-b border-ink-100 px-4 py-3 dark:border-white/10">

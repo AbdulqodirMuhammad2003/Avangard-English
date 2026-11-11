@@ -13,7 +13,7 @@ export function MobileNav({ isTeacher = false }: { isTeacher?: boolean }) {
   const items = isTeacher ? [...NAV_ITEMS, TEACHER_NAV_ITEM] : NAV_ITEMS;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden dark:border-white/10 dark:bg-[#0b0d16]/90">
+    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden dark:border-white/10 dark:bg-[#13100e]/90">
       <div className="mx-auto flex max-w-md items-stretch justify-around">
         {items.map((item) => {
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);

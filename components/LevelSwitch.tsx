@@ -16,7 +16,7 @@ export function LevelSwitch({
 }) {
   if (levels.length < 2) return null;
   return (
-    <div role="tablist" aria-label="Daraja" className="flex w-fit flex-wrap gap-1 rounded-full bg-white p-1 ring-1 ring-ink-950/5 dark:bg-[#151a28] dark:ring-white/10">
+    <div role="tablist" aria-label="Daraja" className="flex w-fit flex-wrap gap-1 rounded-full bg-white p-1 ring-1 ring-ink-950/5 dark:bg-[#201b17] dark:ring-white/10">
       {levels.map((code) => {
         const active = code === current;
         return (

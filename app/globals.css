@@ -19,16 +19,32 @@
   --tile-edge: rgba(20, 24, 39, 0.09);
 }
 
+/* Tungi rejim — sovuq ko'k-kulrang emas, iliq «kofe/shokolad» tusli qora:
+   ko'zga yumshoq, zafaron va indigo aksentlar bilan uyg'un. */
 :root.dark {
-  --background: #0b0d16;
-  --foreground: #e9ecf6;
-  --card: #151a28;
-  --card-muted: rgba(255, 255, 255, 0.045);
-  --line: rgba(255, 255, 255, 0.08);
-  --dot: rgba(165, 169, 252, 0.08);
-  --glow-a: rgba(101, 99, 241, 0.2);
-  --glow-b: rgba(249, 147, 7, 0.06);
-  --tile-edge: rgba(0, 0, 0, 0.45);
+  --background: #13100e;
+  --foreground: #f4ece4;
+  --card: #201b17;
+  --card-muted: rgba(255, 236, 214, 0.05);
+  --line: rgba(255, 236, 214, 0.09);
+  --dot: rgba(255, 202, 140, 0.07);
+  --glow-a: rgba(124, 92, 246, 0.16);
+  --glow-b: rgba(249, 147, 7, 0.12);
+  --tile-edge: rgba(0, 0, 0, 0.55);
+
+  /* ink (neytral) shkalasi tunda iliq «tosh» tusiga o'tadi — matn, chegaralar
+     va kulrang yuzalar sovuq ko'kimtir ko'rinmaydi. */
+  --color-ink-50: #faf5ef;
+  --color-ink-100: #f1e9e0;
+  --color-ink-200: #e2d6c9;
+  --color-ink-300: #c8b9a9;
+  --color-ink-400: #a69584;
+  --color-ink-500: #857565;
+  --color-ink-600: #66594d;
+  --color-ink-700: #4b4139;
+  --color-ink-800: #342d27;
+  --color-ink-900: #241f1b;
+  --color-ink-950: #171310;
 }
 
 @theme inline {
@@ -310,6 +326,33 @@ h3,
     0 10px 24px -10px rgba(2, 151, 110, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
+/* Tunda asosiy tugma: indigo → orxideya → marjon — sovuq binafsha emas,
+   iliq, «yoqimli» gradient. */
+.dark .btn-press:is(.bg-azure-600, .bg-azure-500) {
+  background-image:
+    linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%),
+    linear-gradient(135deg, #6d5ef2 0%, #9a4fd2 52%, #d6536c 100%);
+  box-shadow:
+    0 12px 28px -12px rgba(232, 101, 122, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* O'chirilgan (hali bosib bo'lmaydigan) rangli tugma: xira gradient emas,
+   aniq «kutib turgan» neytral holat. */
+.btn-press:is(.bg-azure-600, .bg-azure-500, .bg-gold-500, .bg-gold-400, .bg-mint-600, .bg-mint-500):disabled {
+  background-image: none;
+  background-color: var(--color-ink-100);
+  color: var(--color-ink-400);
+  box-shadow: inset 0 -3px 0 rgba(20, 24, 39, 0.06);
+  opacity: 1;
+  cursor: not-allowed;
+}
+.dark .btn-press:is(.bg-azure-600, .bg-azure-500, .bg-gold-500, .bg-gold-400, .bg-mint-600, .bg-mint-500):disabled {
+  background-color: rgba(255, 236, 214, 0.07);
+  color: var(--color-ink-500);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+}
+
 @media (hover: hover) {
   .btn-press:is(.bg-azure-600, .bg-azure-500, .bg-gold-500, .bg-gold-400, .bg-mint-600, .bg-mint-500):hover:not(:disabled) {
     background-position: -60% 0, 0 0;
@@ -356,6 +399,124 @@ button.rounded-xl.border-2.border-rose-400 {
 }
 .dark button.rounded-xl.border-2:is(.border-azure-500, .border-mint-500, .border-rose-400) {
   --tile-edge: rgba(0, 0, 0, 0.5);
+}
+/* Tunda variant plitkalari: kulrang-ko'k chegara o'rniga iliq yuza. */
+.dark button.rounded-xl.border-2.dark\:border-white\/10 {
+  background-color: rgba(255, 236, 214, 0.055);
+  border-color: rgba(255, 236, 214, 0.1);
+  color: var(--color-ink-100);
+}
+@media (hover: hover) {
+  .dark button.rounded-xl.border-2.dark\:border-white\/10:hover:not(:disabled) {
+    background-color: rgba(255, 236, 214, 0.09);
+    border-color: rgba(255, 202, 74, 0.35);
+  }
+}
+.dark button.rounded-xl.border-2.border-azure-500 {
+  border-color: var(--color-azure-400);
+  background-color: rgba(129, 131, 248, 0.16);
+  color: #eef0ff;
+}
+
+/* ---------- Savoldagi bo'sh joy («___») ----------
+   components/lessons/Blanked.tsx: uchta chiziqcha o'rniga bitta toza bo'sh
+   joy; tanlangan / to'g'ri / xato so'z shu yerda ko'rinadi. */
+.ae-blank {
+  display: inline-block;
+  min-width: 2.8em;
+  margin: 0 0.12em;
+  padding: 0.04em 0.35em 0;
+  line-height: 1.05;
+  text-align: center;
+  vertical-align: baseline;
+  border-bottom: 0.14em solid var(--color-azure-400);
+  border-radius: 0.4em 0.4em 0.12em 0.12em;
+  background: rgba(101, 99, 241, 0.09);
+  color: var(--color-azure-700);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.ae-blank-in {
+  min-width: 1.15em;
+  margin: 0 0.04em;
+  padding: 0 0.12em;
+}
+.ae-blank[data-tone="right"] {
+  border-color: var(--color-mint-500);
+  background: rgba(13, 186, 135, 0.13);
+  color: var(--color-mint-700);
+}
+.ae-blank[data-tone="wrong"] {
+  border-color: #fb7185;
+  background: rgba(244, 63, 94, 0.1);
+  color: #be123c;
+}
+.dark .ae-blank {
+  border-color: var(--color-gold-400);
+  background: rgba(255, 181, 32, 0.12);
+  color: var(--color-gold-200);
+}
+.dark .ae-blank[data-tone="right"] {
+  border-color: var(--color-mint-400);
+  background: rgba(49, 211, 159, 0.14);
+  color: var(--color-mint-200);
+}
+.dark .ae-blank[data-tone="wrong"] {
+  border-color: #fb7185;
+  background: rgba(244, 63, 94, 0.14);
+  color: #fecdd3;
+}
+
+/* ---------- Mashq progress chizig'i ---------- */
+.ae-progress {
+  position: relative;
+  height: 0.75rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--color-ink-100);
+  box-shadow: inset 0 1px 2px rgba(20, 24, 39, 0.08);
+}
+.dark .ae-progress {
+  background: rgba(255, 236, 214, 0.08);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.ae-progress-fill {
+  position: relative;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-mint-400), var(--color-mint-500) 60%, var(--color-mint-600));
+  box-shadow: 0 2px 8px -2px rgba(2, 151, 110, 0.55);
+  transition: width 0.6s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+/* Yuqori qismida yumshoq yaltiroq chiziq — «shisha» hissi. */
+.ae-progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+.ae-progress-count {
+  min-width: 3.25rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-mint-700);
+  background: var(--color-mint-50);
+  box-shadow: inset 0 0 0 1px var(--color-mint-200);
+}
+.dark .ae-progress-count {
+  color: var(--color-mint-200);
+  background: rgba(49, 211, 159, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(49, 211, 159, 0.25);
 }
 
 /* Kartalar: oq karta + ingichka halqa — biroz chuqurroq, yumshoq soya. */

@@ -26,7 +26,7 @@ export function StatCard({
   return (
     <div
       style={{ animationDelay: `${delay}ms` }}
-      className="group relative flex min-w-0 animate-fade-up flex-col gap-3 overflow-hidden rounded-3xl bg-white p-4 ring-1 ring-ink-950/5 transition-transform duration-300 hover:-translate-y-1 sm:p-5 dark:bg-[#151a28] dark:ring-white/10"
+      className="group relative flex min-w-0 animate-fade-up flex-col gap-3 overflow-hidden rounded-3xl bg-white p-4 ring-1 ring-ink-950/5 transition-transform duration-300 hover:-translate-y-1 sm:p-5 dark:bg-[#201b17] dark:ring-white/10"
     >
       <div
         className={`pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br opacity-[0.12] blur-xl transition-opacity duration-300 group-hover:opacity-25 ${ACCENTS[accent]}`}

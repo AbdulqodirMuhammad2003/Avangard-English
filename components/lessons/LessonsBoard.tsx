@@ -484,7 +484,7 @@ export function LessonsBoard({
       )}
 
       {visibleUnits.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#151a28] dark:shadow-none">
+        <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#201b17] dark:shadow-none">
           <Lock size={28} className="text-ink-200 dark:text-ink-700" />
           <p className="font-semibold text-ink-700 dark:text-ink-200">{t("Hozircha ochiq darslar yo'q", "No open lessons yet")}</p>
         </div>
@@ -587,7 +587,7 @@ export function LessonsBoard({
             <button
               onClick={() => scrollToCard(activeCard - 1)}
               disabled={activeCard === 0}
-              className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#151a28]/90 dark:text-ink-100"
+              className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#201b17]/90 dark:text-ink-100"
               aria-label={t("Chapga aylantirish", "Scroll left")}
             >
               <ChevronLeft size={20} />
@@ -595,7 +595,7 @@ export function LessonsBoard({
             <button
               onClick={() => scrollToCard(activeCard + 1)}
               disabled={activeCard === items.length - 1}
-              className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#151a28]/90 dark:text-ink-100"
+              className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 lg:hidden items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition-all hover:scale-105 disabled:opacity-0 dark:bg-[#201b17]/90 dark:text-ink-100"
               aria-label={t("O’ngga aylantirish", "Scroll right")}
             >
               <ChevronRight size={20} />
@@ -625,7 +625,7 @@ export function LessonsBoard({
 
       {/* Dars yon paneli (mashq bajarilayotganda butun ekranga kengayadi) */}
       <div
-        className={`fixed right-0 top-0 z-50 flex h-full flex-col bg-white shadow-2xl transition-all duration-300 dark:bg-[#0f1220] ${
+        className={`fixed right-0 top-0 z-50 flex h-full flex-col bg-white shadow-2xl transition-all duration-300 dark:bg-[#181411] ${
           openUnit ? "translate-x-0" : "translate-x-full"
         } ${view === "exercise-run" ? "w-full" : "w-full max-w-md"}`}
       >
