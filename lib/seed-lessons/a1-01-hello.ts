@@ -1,142 +1,90 @@
 /**
- * A1, 1-dars — «Hello! Tanishuv». Salomlashish va xayrlashish (kun
- * vaqtiga qarab), o'zini tanishtirish, «How are you?». Grammatika: to be —
- * I am / you are, qisqa shakllar (I'm, you're), so'roq (Are you…?) va qisqa
- * javoblar (Yes, I am. / No, I'm not.). Matn va mashqlar o'zimizniki.
+ * A1, 1-dars — «Hello! Tanishuv». Navigate A1, 1.1 «On business or on
+ * holiday?» va 1.4 «hello and goodbye» asosida: o'zini tanishtirish,
+ * on business / on holiday / to study, salomlashish va xayrlashish.
+ * Grammatika: to be — I am / you are, inkor, so'roq va qisqa javoblar;
+ * darak gap va so'roq gapni farqlash. Tinglash mashqlarida kitob treklari
+ * (yopiq ombordan), savollar va matnlar o'zimizniki.
  */
-import type { SeedExercise, SeedQuestion } from "../seed-exercises";
-import { gaps } from "./helpers";
-import type { VocabSeed } from "./types";
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  hearing,
+  hearingTwo,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  pick,
+  say,
+  sentences,
+  trueFalse,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
 
-const w = (
-  emoji: string,
-  word: string,
-  transcription: string,
-  pos: string,
-  uz: string,
-  def: string,
-  ex: string,
-  exUz: string
-): VocabSeed => ({ emoji, word, transcription, pos, uz, def, ex, exUz });
+const track = (n: string) => `media:navigate-a1/audio/${n}.mp3`;
 
-export const A1_01_ROUNDS: { title: string; words: VocabSeed[] }[] = [
+export const A1_01_ROUNDS: Rounds = [
   {
     title: "1-bosqich",
     words: [
-      w("👋", "hello", "həˈləʊ|halou", "undov", "Salom; assalomu alaykum", "A word you say when you meet someone.", "Hello! I'm Aziz.", "Salom! Men Azizman."),
-      w("🙋", "hi", "haɪ|hay", "undov", "Salom (do'stlarga)", "An informal «hello».", "Hi, Anna! How are you?", "Salom, Anna! Qalaysan?"),
-      w("🚪", "goodbye", "ˌɡʊdˈbaɪ|gudbay", "undov", "Xayr", "A word you say when you leave.", "Goodbye, Ms Brown! See you tomorrow.", "Xayr, Braun xonim! Ertaga ko'rishamiz."),
-      w("✋", "bye", "baɪ|bay", "undov", "Xayr (do'stlarga)", "An informal «goodbye».", "Bye, Malika!", "Xayr, Malika!"),
-      w("🌅", "good morning", "ɡʊd ˈmɔːnɪŋ|gud mooning", "ibora", "Xayrli tong", "Hello in the morning (before 12 o'clock).", "Good morning, everyone!", "Hammaga xayrli tong!"),
-      w("🌤️", "good afternoon", "ɡʊd ˌɑːftəˈnuːn|gud aaftanuun", "ibora", "Xayrli kun (tushdan keyin)", "Hello after 12 o'clock.", "Good afternoon, Mr Karimov.", "Xayrli kun, Karimov janoblari."),
-      w("🌆", "good evening", "ɡʊd ˈiːvnɪŋ|gud iivning", "ibora", "Xayrli kech", "Hello in the evening.", "Good evening! Welcome to the hotel.", "Xayrli kech! Mehmonxonaga xush kelibsiz."),
-      w("🌙", "good night", "ɡʊd ˈnaɪt|gud nayt", "ibora", "Xayrli tun", "You say it when you go to bed or leave late.", "Good night, Mum!", "Xayrli tun, oyijon!"),
-      w("🙏", "thank you", "ˈθæŋk juː|senk yu", "ibora", "Rahmat", "You say it when someone helps you.", "Thank you very much!", "Katta rahmat!"),
-      w("😊", "please", "pliːz|pliiz", "ibora", "Iltimos", "A polite word when you ask for something.", "A cup of tea, please.", "Bir piyola choy, iltimos."),
+      w("👋", "hello", "həˈləʊ|halou", "undov", "Salom; assalomu alaykum", "A word you say when you meet someone.", "Hello, I'm Alisa.", "Salom, men Alisaman."),
+      w("🙋", "hi", "haɪ|hay", "undov", "Salom (oddiy)", "An informal «hello».", "Hi, I'm Paul.", "Salom, men Polman."),
+      w("🏷️", "name", "neɪm|neym", "ot", "Ism", "What people call you: Paul, Alisa, Aziz…", "My name is Sunil.", "Mening ismim Sunil."),
+      w("🤝", "nice to meet you", "ˌnaɪs tə ˈmiːt juː|nays tu miit yu", "ibora", "Tanishganimdan xursandman", "You say it when you meet a new person.", "Nice to meet you, Julie.", "Tanishganimdan xursandman, Juli."),
+      w("↩️", "and you", "ənd ˈjuː|end yu", "ibora", "Sizni ham; o'zingiz-chi?", "You say it to give the same words back, or to ask the same question.", "I'm fine, thanks. And you?", "Yaxshi, rahmat. O'zingiz-chi?"),
+      w("🙋‍♀️", "introduce", "ˌɪntrəˈdjuːs|intradyuus", "fe'l", "Tanishtirmoq", "Tell a new person your name.", "Introduce yourself to a partner.", "Sherigingizga o'zingizni tanishtiring."),
+      w("👎", "no", "nəʊ|nou", "ravish", "Yo'q", "The answer when something is not true.", "No, I'm not.", "Yo'q, unday emasman."),
+      w("📍", "here", "hɪə|hia", "ravish", "Bu yerda", "In this place.", "Are you here on business?", "Bu yerga ish bilan keldingizmi?"),
+      w("🏖️", "on holiday", "ɒn ˈhɒlədeɪ|on holadey", "ibora", "Ta'tilda, dam olishda", "Not at work; travelling for fun.", "I'm here on holiday.", "Men bu yerga dam olishga kelganman."),
+      w("💼", "on business", "ɒn ˈbɪznəs|on biznas", "ibora", "Ish bilan (xizmat safarida)", "Travelling for your work.", "Paul is here on business.", "Pol bu yerga ish bilan kelgan."),
     ],
   },
   {
     title: "2-bosqich",
     words: [
-      w("🏷️", "name", "neɪm|neym", "ot", "Ism", "What people call you: Aziz, Anna, Tom…", "What's your name?", "Ismingiz nima?"),
-      w("☝️", "my", "maɪ|may", "olmosh", "Mening", "It is for me: my book, my name.", "My name is Malika.", "Mening ismim Malika."),
-      w("👉", "your", "jɔː|yoo", "olmosh", "Sening; sizning", "It is for you: your book, your name.", "Is this your bag?", "Bu sizning sumkangizmi?"),
-      w("🙋‍♂️", "I", "aɪ|ay", "olmosh", "Men", "The word for yourself. Always a capital letter!", "I am a student.", "Men talabaman."),
-      w("🫵", "you", "juː|yuu", "olmosh", "Sen; siz", "The person you talk to.", "Are you a teacher?", "Siz o'qituvchimisiz?"),
-      w("🤝", "nice to meet you", "naɪs tə ˈmiːt juː|nays tu miit yu", "ibora", "Tanishganimdan xursandman", "You say it when you meet a new person.", "Hi, Tom. Nice to meet you!", "Salom, Tom. Tanishganimdan xursandman!"),
-      w("🙋‍♀️", "excuse me", "ɪkˈskjuːz miː|ikskyuuz mii", "ibora", "Kechirasiz (murojaat)", "You say it to start talking to a stranger.", "Excuse me, are you Mr Green?", "Kechirasiz, siz janob Grinmisiz?"),
-      w("😔", "sorry", "ˈsɒri|sori", "ibora", "Kechirasiz, uzr", "You say it when you make a mistake.", "Sorry, I'm late!", "Uzr, kechikdim!"),
-      w("👎", "no", "nəʊ|nou", "ibora", "Yo'q", "The opposite of «yes».", "No, I'm not a teacher.", "Yo'q, men o'qituvchi emasman."),
-      w("🚫", "not", "nɒt|not", "yuklama", "Emas (inkor)", "It makes a sentence negative.", "I'm not tired.", "Men charchamaganman."),
+      w("📚", "study", "ˈstʌdi|stadi", "fe'l", "O'qimoq, tahsil olmoq", "Learn at a school or university.", "I'm here to study.", "Men bu yerga o'qishga kelganman."),
+      w("👂", "listen", "ˈlɪsn|lisn", "fe'l", "Tinglamoq", "Hear something and pay attention to it.", "Listen and repeat.", "Tinglang va takrorlang."),
+      w("🔁", "repeat", "rɪˈpiːt|ripiit", "fe'l", "Takrorlamoq", "Say something again.", "Listen again and repeat the words.", "Yana tinglang va so'zlarni takrorlang."),
+      w("📖", "read", "riːd|riid", "fe'l", "O'qimoq (matnni)", "Look at words and understand them.", "Listen and read the conversation.", "Suhbatni tinglang va o'qing."),
+      w("🗣️", "practise", "ˈpræktɪs|praktis", "fe'l", "Mashq qilmoq", "Do something again and again to be better.", "Practise the conversation with a partner.", "Suhbatni sherigingiz bilan mashq qiling."),
+      w("👫", "partner", "ˈpɑːtnə|paatna", "ot", "Sherik (darsdagi)", "The person you work with in class.", "Work with a partner.", "Sherigingiz bilan ishlang."),
+      w("💬", "conversation", "ˌkɒnvəˈseɪʃn|konvaseyshn", "ot", "Suhbat", "A talk between two or more people.", "Practise the conversation with a partner.", "Suhbatni sherigingiz bilan mashq qiling."),
+      w("❓", "question", "ˈkwestʃən|kuesschan", "ot", "Savol", "Something you ask.", "«Are you on holiday?» is a question.", "«Are you on holiday?» — bu savol."),
+      w("💡", "answer", "ˈɑːnsə|aansa", "ot, fe'l", "Javob; javob bermoq", "What you say when someone asks you something.", "Ask a question and give an answer.", "Savol bering va javob qaytaring."),
+      w("✅", "check", "tʃek|chek", "fe'l", "Tekshirmoq", "Look again to see if something is right.", "Listen and check your answers.", "Tinglang va javoblaringizni tekshiring."),
     ],
   },
   {
     title: "3-bosqich",
     words: [
-      w("❓", "how are you", "ˌhaʊ ə ˈjuː|hau aa yu", "ibora", "Qalaysiz? Ishlaringiz qalay?", "A question about how a person feels.", "Hi, Dilnoza! How are you?", "Salom, Dilnoza! Qalaysan?"),
-      w("🙂", "fine", "faɪn|fayn", "sifat", "Yaxshi, joyida", "OK, well.", "I'm fine, thanks.", "Yaxshi, rahmat."),
-      w("🤩", "great", "ɡreɪt|greyt", "sifat", "Ajoyib, zo'r", "Very, very good.", "I'm great, thank you!", "Zo'rman, rahmat!"),
-      w("😐", "not bad", "ˌnɒt ˈbæd|not bed", "ibora", "Yomon emas", "OK. Not very good, not bad.", "Not bad, thanks. And you?", "Yomon emas, rahmat. O'zingiz-chi?"),
-      w("🧑‍🎓", "student", "ˈstjuːdnt|styudent", "ot", "Talaba, o'quvchi", "A person who studies at a school or university.", "I'm a student in Tashkent.", "Men Toshkentda talabaman."),
-      w("👩‍🏫", "teacher", "ˈtiːtʃə|tiicha", "ot", "O'qituvchi", "A person who teaches.", "Ms Brown is my teacher.", "Braun xonim — mening o'qituvchim."),
-      w("🧑‍🤝‍🧑", "friend", "frend|frend", "ot", "Do'st", "A person you like and know well.", "Bekzod is my friend.", "Bekzod — mening do'stim."),
-      w("👨‍💼", "Mr", "ˈmɪstə|mista", "ot", "Janob (erkak familiyasidan oldin)", "A title for a man: Mr Karimov.", "Good morning, Mr Karimov!", "Xayrli tong, Karimov janoblari!"),
-      w("👩‍💼", "Ms", "mɪz|miz", "ot", "Xonim (ayol familiyasidan oldin)", "A title for a woman: Ms Brown.", "This is Ms Brown.", "Bu — Braun xonim."),
-      w("➕", "too", "tuː|tuu", "ravish", "Ham", "Also.", "I'm a student too.", "Men ham talabaman."),
+      w("🌅", "good morning", "ɡʊd ˈmɔːnɪŋ|gud mooning", "ibora", "Xayrli tong", "Hello in the morning (before 12 o'clock).", "Good morning, Patrick.", "Xayrli tong, Patrik."),
+      w("🙂", "how are you", "ˌhaʊ ə ˈjuː|hau aa yu", "ibora", "Qalaysiz? Ishlaringiz yaxshimi?", "A question about how a person feels.", "Hi. How are you?", "Salom. Qalaysiz?"),
+      w("😊", "fine", "faɪn|fayn", "sifat", "Yaxshi, joyida", "OK, well.", "Fine, thanks. And you?", "Yaxshi, rahmat. O'zingiz-chi?"),
+      w("🤩", "great", "ɡreɪt|greyt", "sifat", "Ajoyib, zo'r", "Very good.", "Great, thanks!", "Zo'r, rahmat!"),
+      w("🙏", "thanks", "θæŋks|senks", "undov", "Rahmat", "A short way to say «thank you».", "Thanks. You, too.", "Rahmat. Sizga ham."),
+      w("☀️", "have a nice day", "ˌhæv ə ˌnaɪs ˈdeɪ|hev a nays dey", "ibora", "Kuningiz yaxshi o'tsin", "You say it when you leave someone in the day.", "Have a nice day, Sally!", "Kuningiz yaxshi o'tsin, Salli!"),
+      w("➕", "too", "tuː|tuu", "ravish", "Ham", "Also.", "I'm here on business, too.", "Men ham bu yerga ish bilan kelganman."),
+      w("🚪", "goodbye", "ˌɡʊdˈbaɪ|gudbay", "undov", "Xayr", "A word you say when you leave.", "Goodbye, Mr Karimov.", "Xayr, Karimov janoblari."),
+      w("✋", "bye", "baɪ|bay", "undov", "Xayr (oddiy)", "An informal «goodbye».", "Bye, Malika!", "Xayr, Malika!"),
+      w("🔜", "see you later", "ˌsiː juː ˈleɪtə|sii yu leyta", "ibora", "Keyinroq ko'rishamiz", "Goodbye — we meet again soon.", "Bye. See you later!", "Xayr. Keyinroq ko'rishamiz!"),
     ],
   },
 ];
 
-const pick = (prompt: string, options: string[], correct: number, explanation?: string): SeedQuestion => ({
-  prompt,
-  options,
-  correct,
-  explanation,
-});
-/** To'g'ri javob birinchi yoziladi (seed paytida aralashtiriladi). */
-const say = (prompt: string, options: string[], explanation?: string): SeedQuestion => ({
-  prompt,
-  options,
-  correct: 0,
-  explanation,
-});
-const listen = (audio: string, options: string[], explanation?: string): SeedQuestion => ({
-  prompt: "Eshitgan iborangizni toping",
-  audio,
-  options,
-  correct: options.indexOf(audio),
-  explanation,
-});
-/** «Xatoni toping»: gapdagi so'zlar ro'yxati, xato so'z `*` bilan belgilanadi. */
-const mistake = (sentence: string, explanation: string): SeedQuestion => {
-  const tokens = sentence.split(" ");
-  const correct = tokens.findIndex((t) => t.startsWith("*"));
-  return {
-    prompt: "Xato so'zni bosing",
-    options: tokens.map((t) => t.replace(/^\*/, "")),
-    correct,
-    explanation,
-  };
-};
+const MEETING = `Dilnoza: Hello, I'm Dilnoza.
+Tom: Hi, I'm Tom. Nice to meet you, Dilnoza.
+Dilnoza: And you. Are you here on holiday, Tom?
+Tom: No, I'm not. I'm here on business. And you? Are you here on business, too?
+Dilnoza: No, I'm not. I'm here to study. I'm a student.
+Tom: Great! Have a nice day, Dilnoza.
+Dilnoza: Thanks. You, too. Bye!`;
+const tf = trueFalse(MEETING);
 
-const AM_ARE = ["am", "are"];
-const SHORT = ["Yes, I am.", "No, I'm not.", "Yes, you are.", "No, you aren't."];
-
-const CLASS_TEXT = `Ms Brown: Good morning! I'm Ms Brown. I'm your teacher.
-Aziz: Good morning, Ms Brown. My name is Aziz.
-Ms Brown: Nice to meet you, Aziz. Are you a new student?
-Aziz: Yes, I am.
-Ms Brown: And you? What's your name?
-Malika: I'm Malika. I'm not a new student.
-Ms Brown: Thank you, Malika.
-Malika: Hi, Aziz! How are you?
-Aziz: I'm fine, thanks. And you?
-Malika: I'm great!`;
-
-const TF = ["To'g'ri", "Noto'g'ri"];
-const tf = (statement: string, isTrue: boolean, explanation?: string): SeedQuestion => ({
-  prompt: `${CLASS_TEXT}||${statement}`,
-  options: TF,
-  correct: isTrue ? 0 : 1,
-  explanation,
-});
-
-const HOTEL_AUDIO = `Good evening! Welcome to Hotel Registan.
-Good evening. My name is Tom Green.
-Are you Mr Tom Green from England?
-Yes, I am.
-Here is your key, Mr Green.
-Thank you very much.
-You're welcome. Good night!
-Good night!`;
-
-const hear = (question: string, options: string[], explanation?: string): SeedQuestion => ({
-  prompt: question,
-  audio: HOTEL_AUDIO,
-  options,
-  correct: 0,
-  explanation,
-});
+const STATEMENT = "Darak gap (.)";
+const QUESTION = "So'roq gap (?)";
 
 export const A1_01_EXERCISES: SeedExercise[] = [
   {
@@ -145,108 +93,194 @@ export const A1_01_EXERCISES: SeedExercise[] = [
     kind: "listen",
     instructions: "Ibora ovoz chiqarib o'qiladi. Eshitganingizni toping. Qayta eshitish uchun tugmani bosing.",
     questions: [
-      listen("hello", ["hello", "hi", "bye", "please"]),
-      listen("good morning", ["good night", "good morning", "good evening", "goodbye"]),
-      listen("good evening", ["good afternoon", "good morning", "good evening", "good night"]),
-      listen("thank you", ["thank you", "excuse me", "how are you", "nice to meet you"]),
-      listen("nice to meet you", ["how are you", "excuse me", "thank you", "nice to meet you"]),
-      listen("excuse me", ["sorry", "excuse me", "please", "goodbye"]),
-      listen("how are you", ["how are you", "who are you", "are you", "thank you"]),
-      listen("I'm fine", ["I'm fine", "I'm fine too", "not bad", "great"]),
-      listen("goodbye", ["good night", "good evening", "goodbye", "bye"]),
-      listen("not bad", ["not bad", "not fine", "not great", "no"]),
+      listen("Hi, I'm Paul.", ["Hi, I'm Paul.", "Hi, I'm Paula.", "Hello, I'm Paul.", "Hi, I'm Alisa."]),
+      listen("Nice to meet you.", ["Nice to meet you.", "Nice to see you.", "Nice day to you.", "Nice to meet you, too."]),
+      listen("Are you here on business?", ["Are you here on business?", "Are you here on holiday?", "You're here on business.", "Are you here to study?"]),
+      listen("I'm here on holiday.", ["I'm here on holiday.", "I'm not here on holiday.", "Are you here on holiday?", "I'm here on business."]),
+      listen("No, I'm not.", ["No, I'm not.", "No, I am.", "Yes, I am.", "No, you aren't."]),
+      listen("I'm here to study.", ["I'm here to study.", "I'm here on business.", "I'm here on holiday.", "You're here to study."]),
+      listen("How are you?", ["How are you?", "Who are you?", "Are you?", "And you?"]),
+      listen("Have a nice day.", ["Have a nice day.", "Have a good day.", "Have a nice evening.", "Nice to meet you."]),
+      listen("See you later.", ["See you later.", "See you.", "Thank you later.", "Bye. See you."]),
+      listen("Fine, thanks. And you?", ["Fine, thanks. And you?", "Fine, thanks.", "Great, thanks. And you?", "Fine. And you?"]),
     ],
   },
   {
-    title: "Nima deysiz?",
-    skill: "Vaziyat",
-    kind: "situation",
-    instructions: "Vaziyatni o'qing va unga mos inglizcha iborani tanlang.",
+    title: "Hi, I'm Paul",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Ikki kishi tanishmoqda. Tinglang va har bir gap uchun eshitgan so'zingizni tanlang.",
     questions: [
-      pick("Soat 8:00. Darsga kirdingiz va o'qituvchi bilan salomlashasiz.", ["Good morning!", "Good night!", "Good evening!", "Bye!"], 0, "Ertalab (soat 12 gacha) — Good morning."),
-      pick("Soat 15:00. Ofisda direktorni ko'rdingiz.", ["Good morning!", "Good afternoon!", "Good night!", "Hi, bro!"], 1, "Tushdan keyin — Good afternoon."),
-      pick("Soat 19:00. Mehmonxonaga keldingiz.", ["Good afternoon!", "Good night!", "Good evening!", "Goodbye!"], 2),
-      pick("Soat 23:00. Uxlashga ketyapsiz.", ["Good evening!", "Good morning!", "Hello!", "Good night!"], 3, "Good night — salomlashish emas, xayrlashish: uxlashdan oldin yoki kech ketayotganda."),
-      pick("Do'stingiz bilan salomlashasiz.", ["Hi!", "Good afternoon, sir!", "Goodbye!", "Sorry!"], 0),
-      pick("Sizga choy berishdi.", ["Please!", "Thank you!", "Sorry!", "Excuse me!"], 1),
-      pick("Ko'chada notanish odamga murojaat qilmoqchisiz.", ["Sorry!", "Thank you!", "Excuse me!", "Good night!"], 2, "Gap boshlash uchun — Excuse me; xato qilganda — Sorry."),
-      pick("Darsga kechikdingiz.", ["Excuse me!", "Thank you!", "Hello!", "Sorry, I'm late!"], 3),
-      pick("Yangi odam bilan tanishdingiz.", ["Nice to meet you!", "Good night!", "How are you?", "Sorry!"], 0),
-      pick("Do'stingizning ahvolini so'ramoqchisiz.", ["What's your name?", "How are you?", "Are you a teacher?", "Excuse me?"], 1),
+      gaps(track("1.1"), [
+        ["Paul: «Hi, I'm ___.»", "Paul", "Peter", "Paula"],
+        ["Alisa: «___. I'm Alisa.»", "Hello", "Hi", "Morning"],
+        ["Alisa: «Nice to ___ you, Paul.»", "meet", "see", "know"],
+        ["Paul: «And ___.»", "you", "me", "too"],
+      ]),
     ],
   },
   {
-    title: "Rasmga mos ibora",
-    skill: "Rasm",
-    kind: "picture",
-    instructions: "Rasmga qarang va mos inglizcha so'z yoki iborani toping.",
+    title: "Ish, dam olish yoki o'qish?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Uchta suhbatni tinglang. Kim ish bilan (on business), kim dam olishga (on holiday), kim o'qishga (to study) kelgan? Ba'zi savollarda IKKITA to'g'ri javob bor.",
     questions: [
-      pick("🌅", ["good morning", "good night", "good evening", "goodbye"], 0),
-      pick("🌙", ["good morning", "good afternoon", "good night", "hello"], 2),
-      pick("👩‍🏫", ["student", "teacher", "friend", "name"], 1),
-      pick("🧑‍🎓", ["teacher", "Mr", "student", "friend"], 2),
-      pick("🙏", ["sorry", "please", "thank you", "excuse me"], 2),
-      pick("🤝", ["nice to meet you", "good night", "not bad", "goodbye"], 0),
-      pick("😔", ["great", "sorry", "fine", "hello"], 1),
-      pick("🤩", ["not bad", "great", "sorry", "no"], 1),
-      pick("🧑‍🤝‍🧑", ["teacher", "friend", "student", "Ms"], 1),
-      pick("👋", ["hello", "sorry", "please", "no"], 0),
+      hearing(track("1.4"))("Conversation 1: Why is Paul here?", ["On business", "On holiday", "To study", "He doesn't say."]),
+      hearing(track("1.4"))("Conversation 1: Why is Havva here?", ["On holiday", "On business", "To study", "She doesn't say."]),
+      hearingTwo(track("1.4"))("Conversation 2: Which TWO people are talking?", ["Alisa", "Josue"], ["Julie", "Sunil"]),
+      hearing(track("1.4"))("Conversation 2: Is Josue here on business?", ["Yes, he is.", "No, he isn't. He's on holiday.", "No, he isn't. He's here to study.", "He doesn't say."]),
+      hearing(track("1.4"))("Conversation 2: What does Alisa say?", ["I'm here on business, too.", "I'm here on holiday, too.", "I'm here to study, too.", "I'm not here on business."]),
+      hearing(track("1.4"))("Conversation 3: Why is Sunil here?", ["To study", "On business", "On holiday", "He doesn't say."]),
+      hearingTwo(track("1.4"))("Which TWO people are here on holiday?", ["Havva", "Julie"], ["Sunil", "Josue"]),
     ],
   },
   {
-    title: "am yoki are?",
+    title: "am, 'm yoki are?",
     skill: "Grammatika",
     kind: "choice",
-    instructions: "I bilan — am, you bilan — are. To'g'ri shaklni tanlang.",
+    instructions: "I bilan — am ('m), you bilan — are ('re). To'g'ri shaklni tanlang.",
     questions: [
-      pick("I ___ a student.", AM_ARE, 0),
-      pick("You ___ my teacher.", AM_ARE, 1),
-      pick("___ you OK?", AM_ARE, 1, "So'roqda are oldinga chiqadi: Are you OK?"),
-      pick("I ___ fine, thanks.", AM_ARE, 0),
-      pick("You ___ my friend.", AM_ARE, 1),
-      pick("I ___ not a teacher.", AM_ARE, 0),
-      pick("___ you Mr Green?", AM_ARE, 1),
-      pick("Yes, I ___.", AM_ARE, 0, "Qisqa javob: Yes, I am. (I'm deb qisqartirilmaydi!)"),
-      pick("You ___ not late.", AM_ARE, 1),
-      pick("I ___ Malika. Nice to meet you!", AM_ARE, 0),
+      say("Hello, I ___ Sunil.", ["'m", "'re", "are", "is"]),
+      say("___ you here on holiday?", ["Are", "Am", "Is", "Do"], "So'roqda are oldinga chiqadi: Are you…?"),
+      say("No, I ___ not. I'm here to study.", ["'m", "are", "'re", "is"]),
+      say("You ___ here on business.", ["'re", "'m", "am", "is"]),
+      say("Are you Alisa? — Yes, I ___.", ["am", "'m", "are", "is"], "Ijobiy qisqa javobda qisqartirilmaydi: Yes, I am."),
+      say("You ___ here to study.", ["aren't", "amn't", "isn't", "not"], "you are not → you aren't (yoki you're not)."),
+      say("I ___ here on holiday. I'm here on business.", ["'m not", "aren't", "not", "no"]),
+      say("___ you on business, Paul?", ["Are", "Am", "Is", "You"]),
+      say("Are you here on business? — No, I ___.", ["'m not", "am", "aren't", "not"]),
+      say("And you? Are you on holiday? — Yes, I ___.", ["am", "are", "'m", "is"]),
     ],
   },
   {
-    title: "Qisqa shakl",
-    skill: "Grammatika",
-    kind: "type",
-    instructions:
-      "Og'zaki nutqda qisqa shakl ishlatiladi: I am → I'm, you are → you're. Apostrofni (') unutmang. Qisqa shaklini yozing.",
+    title: "Havva va Paul",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Havva va Paulni yana tinglang. Savol va qisqa javoblarni to'ldiring.",
     questions: [
-      ["I am", "I'm"],
-      ["you are", "you're"],
-      ["I am not", "I'm not"],
-      ["you are not", "you aren't|you're not", "Ikkalasi ham to'g'ri: you aren't yoki you're not."],
-      ["I am Aziz.", "I'm Aziz."],
-      ["You are late.", "You're late."],
-      ["I am a student.", "I'm a student."],
-      ["You are my friend.", "You're my friend."],
-      ["I am not a teacher.", "I'm not a teacher."],
-      ["You are not a student.", "You aren't a student.|You're not a student."],
-    ].map(([prompt, answer, explanation]) => ({ prompt, answer, explanation })),
+      gaps(track("1.5"), [
+        ["Havva: «Are you here on ___?»", "business", "holiday", "study"],
+        ["Paul: «___, I am.»", "Yes", "No", "And"],
+        ["Paul: «And ___? Are you here on business?»", "you", "me", "Havva"],
+        ["Havva: «___, I'm not.»", "No", "Yes", "And"],
+        ["Havva: «I'm here on ___.»", "holiday", "business", "study"],
+      ]),
+    ],
   },
   {
-    title: "Ha yoki yo'q?",
+    title: "Sunil va Julie",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Sunil va Julie suhbatini tinglang va har bir gap uchun to'g'ri so'zni tanlang.",
+    questions: [
+      gaps(track("1.7"), [
+        ["Sunil: «Hello, I'm ___.»", "Sunil", "Paul", "Josue"],
+        ["Sunil: «Nice to meet you, ___.»", "Julie", "Julia", "Alisa"],
+        ["Julie: «And you. Are you here on ___?»", "holiday", "business", "study"],
+        ["Sunil: «No, I'm ___.»", "not", "no", "am"],
+        ["Sunil: «I'm here to ___.»", "study", "work", "meet"],
+        ["Julie: «Yes, I ___.»", "am", "are", "'m"],
+      ]),
+    ],
+  },
+  {
+    title: "Darak gapmi yoki savol?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions:
+      "Inglizchada so'z tartibi gapning turini ko'rsatadi: You are on holiday. (darak gap) — Are you on holiday? (savol). Beshta gapni tinglang. Har biri darak gapmi yoki savolmi?",
+    questions: [
+      hearing(track("1.8"))("Sentence 1", [STATEMENT, QUESTION], "I'm here to study. — darak gap."),
+      hearing(track("1.8"))("Sentence 2", [STATEMENT, QUESTION], "You're here on holiday. — darak gap (you oldin, are keyin)."),
+      hearing(track("1.8"))("Sentence 3", [QUESTION, STATEMENT], "Are you Francesca? — savol (are oldin)."),
+      hearing(track("1.8"))("Sentence 4", [STATEMENT, QUESTION], "I'm Peter. Nice to meet you. — darak gap."),
+      hearing(track("1.8"))("Sentence 5", [QUESTION, STATEMENT], "Are you on business? — savol."),
+    ],
+  },
+  {
+    title: "Nuqta yoki so'roq belgisi?",
     skill: "Grammatika",
     kind: "choice",
-    instructions:
-      "Qisqa javob savoldagi fe'l bilan beriladi: Are you…? — Yes, I am. / No, I'm not. Belgiga (✓ ha, ✗ yo'q) qarab javobni tanlang.",
+    instructions: "Gap oxiriga qaysi belgi kerak: nuqta (.) yoki so'roq belgisi (?)? So'z tartibiga qarang.",
     questions: [
-      pick("Are you a student? (✓)", SHORT, 0),
-      pick("Are you a teacher? (✗)", SHORT, 1),
-      pick("Am I late? (✓)", SHORT, 2, "Am I…? — savol o'zi haqida, javob «siz» haqida: Yes, you are."),
-      pick("Am I right? (✗)", SHORT, 3),
-      pick("Are you OK? (✓)", SHORT, 0),
-      pick("Are you Aziz? (✗)", SHORT, 1),
-      pick("Am I your friend? (✓)", SHORT, 2),
-      pick("Are you tired? (✗)", SHORT, 1),
-      pick("Am I in room 5? (✗)", SHORT, 3),
-      pick("Are you Ms Brown? (✓)", SHORT, 0),
+      pick("Are you Angela", [".", "?"], 1, "Are you… — savol."),
+      pick("You're here on business", [".", "?"], 0),
+      pick("Are you here to study", [".", "?"], 1),
+      pick("I am here on business", [".", "?"], 0),
+      pick("Are you on holiday", [".", "?"], 1),
+      pick("I'm not here on holiday", [".", "?"], 0),
+      pick("Nice to meet you", [".", "?"], 0),
+      pick("Are you Paul", [".", "?"], 1),
+      pick("You aren't here to study", [".", "?"], 0),
+      pick("How are you", [".", "?"], 1, "How… — savol so'zi bilan boshlangan savol."),
+    ],
+  },
+  {
+    title: "Salom va xayr",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "To'rtta qisqa suhbatni tinglang: odamlar salomlashyaptimi yoki xayrlashyaptimi? Har bir gap uchun eshitgan so'zingizni tanlang.",
+    questions: [
+      gaps(track("1.27"), [
+        ["1. A: «Hi. How are you?» B: «___, thanks. And you?»", "Fine", "Great", "Good"],
+        ["1. A: «___, thanks.»", "Great", "Fine", "Good"],
+        ["2. A: «Morning, Patrick.» B: «Good ___.»", "morning", "evening", "afternoon"],
+        ["3. A: «Have a nice ___.»", "day", "time", "evening"],
+        ["3. B: «Thanks. You, ___.»", "too", "two", "also"],
+        ["4. A: «Bye. See you ___.»", "later", "soon", "tomorrow"],
+        ["4. B: «___.»", "Goodbye", "Hello", "Thanks"],
+      ]),
+    ],
+  },
+  {
+    title: "Tez javob bering",
+    skill: "Dialog",
+    kind: "dialog",
+    instructions: "Qisqa javoblarni yodlab oling — ular tez javob berishga yordam beradi. Suhbatdoshingizga mos javobni tanlang.",
+    questions: [
+      say("Hello!", ["Hi!", "Bye!", "You, too.", "Yes, I am."]),
+      say("Good morning.", ["Morning.", "Good night.", "Goodbye.", "Thanks."]),
+      say("How are you?", ["Fine, thanks. And you?", "I'm Paul.", "Yes, I am.", "Nice to meet you."]),
+      say("Have a nice day.", ["Thanks. You, too.", "Fine, thanks.", "Hello.", "And you?"]),
+      say("See you later.", ["Bye.", "Hello.", "How are you?", "Morning."]),
+      say("Nice to meet you.", ["And you.", "See you later.", "Fine, thanks.", "Good morning."]),
+      say("Are you here on holiday?", ["No, I'm not. I'm here on business.", "No, I amn't.", "Yes, I'm.", "Yes, you are."]),
+      say("Are you Josue?", ["Yes, I am.", "Yes, I'm.", "Yes, you're.", "Yes, I are."]),
+      say("Hi, I'm Sally.", ["Hi, Sally. I'm Gary.", "Bye, Sally.", "Yes, I am.", "You, too."]),
+      say("Goodbye.", ["Bye. See you later.", "Hello.", "Nice to meet you.", "Fine, thanks."]),
+    ],
+  },
+  {
+    title: "Suhbatni tartiblang",
+    skill: "Gap tuzish",
+    kind: "order",
+    instructions: "So'zlarni to'g'ri tartibda bosib, suhbatdagi gapni tuzing.",
+    questions: sentences([
+      "Hello, I'm Gary.",
+      "Hi, I'm Sally.",
+      "Nice to meet you, Sally.",
+      "Are you here on holiday?",
+      "No, I'm not.",
+      "I'm here on business.",
+      "And you?",
+      "I'm here to study.",
+      "Are you on business, too?",
+      "Fine, thanks. And you?",
+    ]),
+  },
+  {
+    title: "Gary va Sally",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Tuzgan gaplaringizni tekshiring: Gary va Sally suhbatini tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps(track("1.30"), [
+        ["Gary: «Hello, I'm ___.»", "Gary", "Gareth", "Barry"],
+        ["Sally: «Hi, I'm ___.»", "Sally", "Sarah", "Sunil"],
+        ["Sally: «You, too. Are you here on ___?»", "holiday", "business", "study"],
+        ["Gary: «No, I'm not. I'm here on ___.»", "business", "holiday", "study"],
+        ["Sally: «I'm here to ___.»", "study", "work", "meet"],
+      ]),
     ],
   },
   {
@@ -255,150 +289,83 @@ export const A1_01_EXERCISES: SeedExercise[] = [
     kind: "mistake",
     instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
     questions: [
-      mistake("I *are a student.", "I bilan — am: I am a student."),
-      mistake("You *am my teacher.", "You bilan — are: You are my teacher."),
-      mistake("*Am you a student?", "You bilan so'roq — Are you…?"),
-      mistake("Yes, *I'm.", "Qisqa javobda qisqartirilmaydi: Yes, I am."),
-      mistake("*i am Aziz.", "I — doim bosh harf bilan yoziladi."),
-      mistake("I *no a teacher.", "Inkor — not: I'm not a teacher."),
-      mistake("Good *night! Welcome to the hotel.", "Mehmonga kelganda — Good evening. Good night — xayrlashish."),
-      mistake("Nice to *meeting you!", "Ibora o'zgarmaydi: Nice to meet you!"),
-      mistake("How *is you?", "How are you?"),
-      mistake("My name *are Malika.", "My name is Malika. (name = it → is)"),
+      mistake("You *is here on holiday.", "you bilan — are: You are (You're) here on holiday."),
+      mistake("*Am you here on business?", "you bilan so'roq — Are you…?"),
+      mistake("Yes, *I'm.", "Ijobiy qisqa javobda qisqartirilmaydi: Yes, I am."),
+      mistake("No, I *amn't.", "Inkor: No, I'm not. («amn't» degan shakl yo'q)."),
+      mistake("I'm here *in holiday.", "on holiday — «on» bilan."),
+      mistake("I'm here *for study.", "Maqsad: I'm here to study."),
+      mistake("Nice to meet you. — And *me.", "Javob: And you."),
+      mistake("*i am Sunil.", "I — har doim bosh harf bilan yoziladi."),
+      mistake("Have a nice day. — Thanks. You, *two.", "too — «ham»; two — «ikki»."),
+      mistake("Hi. How *is you?", "How are you?"),
     ],
   },
   {
-    title: "Suhbatni davom ettiring",
-    skill: "Dialog",
-    kind: "dialog",
-    instructions: "Suhbatdoshingiz gapirdi. Unga mos javobni tanlang.",
+    title: "Tanishuv",
+    skill: "O'qish",
+    kind: "truefalse",
+    instructions: "Suhbatni o'qing va har bir gap to'g'ri yoki noto'g'ri ekanini belgilang.",
     questions: [
-      say("Hello! I'm Tom.", ["Hi, Tom! I'm Aziz.", "Goodbye, Tom!", "Yes, I am.", "I'm fine."]),
-      say("What's your name?", ["My name is Dilnoza.", "I'm fine, thanks.", "Nice to meet you.", "Yes, you are."]),
-      say("Nice to meet you!", ["Nice to meet you too!", "Good night!", "I'm a student.", "Sorry!"]),
-      say("How are you?", ["Fine, thanks. And you?", "I'm Malika.", "Yes, I am.", "Goodbye!"]),
-      say("Are you a student?", ["Yes, I am.", "Yes, I'm.", "Yes, you am.", "Yes, I are."], "Qisqa javob: Yes, I am."),
-      say("Are you Ms Brown?", ["No, I'm not. I'm Ms Smith.", "No, I amn't.", "Yes, you are.", "Good afternoon!"]),
-      say("Thank you!", ["You're welcome!", "Thank you!", "Sorry!", "Excuse me!"]),
-      say("Sorry, I'm late!", ["That's OK. Come in.", "Nice to meet you.", "Good morning, I'm late.", "Yes, I am."]),
-      say("Excuse me, are you Mr Green?", ["Yes, I am.", "Yes, you are.", "No, thank you.", "Good night."]),
-      say("Goodbye!", ["Bye! See you!", "Hello!", "How are you?", "Nice to meet you!"]),
+      tf("Tom is here on holiday.", false, "Tom: No, I'm not. I'm here on business."),
+      tf("Tom is here on business.", true),
+      tf("Dilnoza is here on business, too.", false, "Dilnoza: No, I'm not. I'm here to study."),
+      tf("Dilnoza is a student.", true),
+      tf("Tom says «Nice to meet you».", true),
+      tf("Dilnoza says «Have a nice day».", false, "«Have a nice day» ni Tom aytadi."),
+      tf("Dilnoza answers «Thanks. You, too».", true),
+      tf("Tom is here to study.", false),
+      tf("Dilnoza asks a question: «Are you here on holiday?»", true),
+      tf("They say goodbye at the end.", true, "Dilnoza: Bye!"),
     ],
-  },
-  {
-    title: "Juftini toping",
-    skill: "Juftlik",
-    kind: "match",
-    instructions: "Chapdagi inglizcha ibora va o'ngdagi tarjimasini ulang.",
-    questions: [
-      ["hello|salom", "goodbye|xayr", "please|iltimos", "thank you|rahmat"],
-      ["good morning|xayrli tong", "good evening|xayrli kech", "good night|xayrli tun", "good afternoon|xayrli kun"],
-      ["I|men", "you|siz", "my|mening", "your|sizning"],
-      ["student|talaba", "teacher|o'qituvchi", "friend|do'st", "name|ism"],
-      ["fine|yaxshi", "great|zo'r", "not bad|yomon emas", "too|ham"],
-      ["I am|I'm", "you are|you're", "I am not|I'm not", "you are not|you aren't"],
-      ["sorry|uzr", "excuse me|kechirasiz (murojaat)", "yes|ha", "no|yo'q"],
-      ["How are you?|Fine, thanks.", "What's your name?|I'm Aziz.", "Are you a student?|Yes, I am.", "Thank you!|You're welcome!"],
-    ].map((options) => ({ prompt: "Juftlarni ulang", options })),
-  },
-  {
-    title: "Gap tuzing",
-    skill: "Gap tuzish",
-    kind: "order",
-    instructions: "So'zlarni to'g'ri tartibda bosib, gap tuzing.",
-    questions: [
-      "My name is Aziz.",
-      "I'm a student.",
-      "Are you a teacher?",
-      "I'm not a teacher.",
-      "Nice to meet you!",
-      "How are you?",
-      "I'm fine, thank you.",
-      "Are you Mr Green?",
-      "You're my friend.",
-      "I'm a student too.",
-    ].map((answer) => ({ prompt: "Gap tuzing", answer })),
   },
   {
     title: "Bo'sh joyni to'ldiring",
     skill: "Yozish",
     kind: "fill",
     instructions: "Gapda bitta so'z tushib qolgan. Uni inglizcha yozing.",
-    questions: [
-      ["Hello! My ___ is Malika.", "name"],
-      ["Nice to ___ you!", "meet"],
-      ["How ___ you?", "are"],
-      ["I'm ___, thanks.", "fine|great|OK|good"],
-      ["— Are you a student? — Yes, I ___.", "am"],
-      ["— Are you a teacher? — No, I'm ___.", "not"],
-      ["Thank ___ very much!", "you"],
-      ["Good ___! It's 7 a.m.", "morning", "Ertalab — Good morning."],
-      ["___ me, are you Ms Brown?", "Excuse", "Murojaat — Excuse me."],
-      ["I'm a student ___.", "too"],
-    ].map(([prompt, answer, explanation]) => ({ prompt, answer, explanation })),
+    questions: written([
+      ["Hello, I'm Julie. Nice to ___ you.", "meet"],
+      ["— Are you here on business? — Yes, I ___.", "am"],
+      ["— Are you here on holiday? — No, I'm ___.", "not"],
+      ["I'm here ___ study.", "to"],
+      ["I'm here ___ holiday.", "on"],
+      ["Hi. How ___ you?", "are"],
+      ["Fine, ___. And you?", "thanks"],
+      ["Have a nice ___.", "day"],
+      ["Thanks. You, ___.", "too"],
+      ["Bye. See you ___.", "later"],
+    ]),
   },
   {
-    title: "Birinchi dars",
-    skill: "O'qish",
-    kind: "truefalse",
-    instructions: "Suhbatni o'qing va gap to'g'ri yoki noto'g'ri ekanini belgilang.",
-    questions: [
-      tf("Ms Brown is a teacher.", true),
-      tf("It is evening.", false, "Ular «Good morning» deyishadi — bu ertalab."),
-      tf("Aziz is a new student.", true),
-      tf("Malika is a new student.", false, "Malika: I'm not a new student."),
-      tf("The teacher's name is Ms Smith.", false, "Uning ismi — Ms Brown."),
-      tf("Aziz is fine.", true),
-      tf("Malika is not OK.", false, "Malika: I'm great!"),
-      tf("Malika says «How are you?».", true),
-      tf("Ms Brown says «Good night».", false, "U «Good morning» deydi."),
-      tf("Aziz says «My name is Aziz».", true),
-    ],
-  },
-  {
-    title: "Mehmonxonada",
-    skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions:
-      "Mehmonxonadagi suhbatni tinglang (kerak bo'lsa, qayta yoki sekinroq) va savollarga javob bering. Matn ekranda ko'rsatilmaydi.",
-    questions: [
-      hear("Suhbat qachon bo'lyapti?", ["Kechqurun", "Ertalab", "Tushdan keyin", "Kechasi"], "Good evening — xayrli kech."),
-      hear("Mehmonxona nomi nima?", ["Registan", "Samarkand", "Tashkent", "Green"]),
-      hear("Mehmonning ismi nima?", ["Tom Green", "Tom Brown", "Aziz Green", "Tom Grey"]),
-      hear("Mehmon qayerdan?", ["Angliyadan", "Toshkentdan", "Amerikadan", "Samarqanddan"], "from England — Angliyadan."),
-      hear("Mehmonga nima berishdi?", ["Kalit", "Choy", "Kitob", "Sumka"], "Here is your key — mana kalitingiz."),
-      hear("«Are you Mr Tom Green?» savoliga u nima deb javob berdi?", ["Yes, I am.", "No, I'm not.", "Yes, you are.", "Thank you."]),
-      hear("Kalitni olgach, mehmon nima dedi?", ["Thank you very much.", "Sorry.", "Excuse me.", "Hello."]),
-      hear("«You're welcome» qaysi gapga javob?", ["Thank you", "Good evening", "Here is your key", "Good night"], "Thank you → You're welcome (arzimaydi)."),
-      hear("Suhbat qanday tugaydi?", ["Good night!", "Goodbye!", "Nice to meet you!", "See you!"]),
-      hear("Tom Green kim?", ["Mehmon", "Mehmonxona xodimi", "O'qituvchi", "Talaba"]),
-    ],
+    title: "Juftini toping",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Chapdagi gapga o'ngdagi javobni ulang.",
+    questions: pairs([
+      ["Nice to meet you.|And you.", "How are you?|Fine, thanks. And you?", "Have a nice day.|Thanks. You, too.", "Goodbye.|Bye. See you later."],
+      ["Are you Paul?|Yes, I am.", "Are you on holiday?|No, I'm not.", "Hello, I'm Sunil.|Hi, I'm Julie.", "Good morning.|Morning."],
+      ["on holiday|ta'tilda", "on business|ish bilan", "to study|o'qishga", "here|bu yerda"],
+      ["I am|I'm", "you are|you're", "I am not|I'm not", "you are not|you aren't"],
+      ["listen|tinglamoq", "repeat|takrorlamoq", "practise|mashq qilmoq", "check|tekshirmoq"],
+    ]),
   },
   {
     title: "Ayting",
     skill: "Talaffuz",
     kind: "speak",
-    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
-    questions: [
-      "Hello! My name is Aziz.",
-      "Nice to meet you!",
-      "How are you?",
-      "I'm fine, thank you.",
-      "Good morning!",
-      "Good evening!",
-      "Are you a student?",
+    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting. Urg'uli so'zlarni kuchliroq ayting: Hi, I'm PAUL. NICE to MEET you.",
+    questions: phrases([
+      "Hi, I'm Paul.",
+      "Hello. I'm Alisa. Nice to meet you, Paul.",
+      "And you.",
+      "Are you here on business?",
       "Yes, I am.",
-      "No, I'm not.",
-      "Excuse me!",
-    ].map((phrase) => ({ prompt: phrase, answer: phrase })),
-  },
-  {
-    title: "Uchta tanishuv",
-    skill: "Tinglash",
-    kind: "listengap",
-    instructions: "Uchta qisqa suhbatni tinglang. Har bir gap uchun to'g'ri so'zni tanlang. Kerak bo'lsa, to'xtatib, orqaga qaytaring.",
-    questions: [
-      gaps("media:navigate-a1/audio/1.4.mp3", [["Havva is here on ___.","holiday","business","study"],["Paul is here on ___.","business","holiday","study"],["Alisa is here on ___, too.","business","holiday","study"],["Sunil is here to ___.","study","work","shop"],["Julie is here on ___.","holiday","business","study"]]),
-    ],
+      "No, I'm not. I'm here on holiday.",
+      "I'm here to study.",
+      "How are you?",
+      "Fine, thanks. And you?",
+      "Bye. See you later.",
+    ]),
   },
 ];

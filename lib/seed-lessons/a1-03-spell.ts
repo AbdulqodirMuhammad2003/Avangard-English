@@ -1,16 +1,19 @@
 /**
- * A1, 3-dars — «Ismingiz qanday yoziladi?». So'roq so'zlari (what, who,
- * where, how, how old) to be bilan, ismni harflab aytish, anketa to'ldirish
- * (ism, familiya, manzil, telefon, email), sinfda kerakli iboralar va
- * xayrlashish. Matn va mashqlar o'zimizniki.
+ * A1, 3-dars — «Ismingiz qanday yoziladi?». Navigate A1, 1.3 «How do you
+ * spell that?», 1.4 «filling in a form» va 1.5 «At the hotel» asosida:
+ * alifbo va harflar tovushi, ismni harflab aytish, telefon raqami,
+ * mehmonxona ro'yxatdan o'tish varaqasi, bosh harflar.
+ * Grammatika: so'roq so'zlari — What? Where? How? Tinglash mashqlarida kitob
+ * treklari (yopiq ombordan), savollar va matnlar o'zimizniki.
  */
-import type { SeedExercise, SeedQuestion } from "../seed-exercises";
+import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   mistake,
   pairs,
   phrases,
-  pick,
   reading,
   say,
   sentences,
@@ -20,284 +23,323 @@ import {
   type Rounds,
 } from "./helpers";
 
+const track = (n: string) => `media:navigate-a1/audio/${n}.mp3`;
+
 export const A1_03_ROUNDS: Rounds = [
   {
     title: "1-bosqich",
     words: [
-      w("❔", "what", "wɒt|uot", "so'roq so'z", "Nima; qanday", "A question word about a thing.", "What is your surname?", "Familiyangiz nima?"),
-      w("🧑", "who", "huː|xuu", "so'roq so'z", "Kim", "A question word about a person.", "Who is your teacher?", "O'qituvchingiz kim?"),
-      w("🤔", "how", "haʊ|xau", "so'roq so'z", "Qanday; qanaqa", "A question word about the way.", "How do you spell it?", "U qanday yoziladi?"),
-      w("🎂", "how old", "ˌhaʊ ˈəʊld|xau ould", "ibora", "Necha yoshda", "A question about age.", "How old are you?", "Necha yoshdasiz?"),
-      w("🪪", "first name", "ˈfɜːst neɪm|fyost neym", "ibora", "Ism", "Your name, not your family name: Dilnoza, Aziz.", "My first name is Dilnoza.", "Mening ismim Dilnoza."),
-      w("👨‍👩‍👧", "surname", "ˈsɜːneɪm|syoneym", "ot", "Familiya", "Your family name: Karimov, Rakhimova.", "My surname is Karimov.", "Familiyam — Karimov."),
-      w("🏠", "address", "əˈdres|adres", "ot", "Manzil", "The street and number of your home.", "My address is 5 Navoi Street.", "Manzilim — Navoiy ko'chasi, 5."),
-      w("📞", "phone number", "ˈfəʊn ˌnʌmbə|foun namba", "ibora", "Telefon raqami", "Numbers you call to talk to a person.", "My phone number is 90 123 45 67.", "Telefon raqamim 90 123 45 67."),
-      w("📧", "email", "ˈiːmeɪl|iimeyl", "ot", "Elektron pochta", "A message on the internet, or its address.", "Write your email here, please.", "Elektron pochtangizni shu yerga yozing, iltimos."),
-      w("🔢", "age", "eɪdʒ|eyj", "ot", "Yosh", "How old a person is.", "Write your name and age.", "Ismingiz va yoshingizni yozing."),
+      w("🔤", "alphabet", "ˈælfəbet|elfabet", "ot", "Alifbo", "All the letters of a language: A, B, C…", "Listen and repeat the letters of the alphabet.", "Alifbo harflarini tinglang va takrorlang."),
+      w("🅰️", "letter", "ˈletə|leta", "ot", "Harf", "A, B, C… are letters.", "Write the first letter of your name.", "Ismingizning birinchi harfini yozing."),
+      w("✍️", "spell", "spel|spel", "fe'l", "Harflab aytmoq / yozmoq", "Say or write the letters of a word.", "How do you spell that?", "Bu qanday yoziladi?"),
+      w("🔠", "capital", "ˈkæpɪtl|kepitl", "sifat", "Bosh (harf)", "A big letter: A, B, C (not a, b, c).", "Names have a capital letter.", "Ismlar bosh harf bilan yoziladi."),
+      w("✌️", "double", "ˈdʌbl|dabl", "sifat", "Qo'sh, ikkita", "Two of the same: «ll» is double L.", "Bill — B-I-double L.", "Bill — B-I-qo'sh L."),
+      w("❔", "what", "wɒt|uot", "so'roq so'zi", "Nima; qanday", "A question word about things and information.", "What is your name?", "Ismingiz nima?"),
+      w("🛠️", "how", "haʊ|hau", "so'roq so'zi", "Qanday, qanaqa", "A question word about the way you do something.", "How do you spell that?", "Bu qanday yoziladi?"),
+      w("📱", "phone number", "ˈfəʊn ˌnʌmbə|foun namba", "ot", "Telefon raqami", "The number you call to talk to someone.", "What's your phone number?", "Telefon raqamingiz qanday?"),
+      w("🪪", "first name", "ˈfɜːst neɪm|fyorst neym", "ot", "Ism", "Your own name, e.g. Havva in Havva Yilmaz.", "Write your first name here.", "Ismingizni shu yerga yozing."),
+      w("👪", "last name", "ˈlɑːst neɪm|laast neym", "ot", "Familiya", "Your family name, e.g. Yilmaz in Havva Yilmaz.", "What's your last name?", "Familiyangiz nima?"),
     ],
   },
   {
     title: "2-bosqich",
     words: [
-      w("🔤", "spell", "spel|spel", "fe'l", "Harflab aytmoq (yozmoq)", "To say or write the letters of a word.", "How do you spell your name?", "Ismingiz qanday harflanadi?"),
-      w("🅰️", "letter", "ˈletə|leta", "ot", "Harf", "A, B, C… are letters.", "A is the first letter of the alphabet.", "A — alifboning birinchi harfi."),
-      w("💬", "word", "wɜːd|uyod", "ot", "So'z", "«Apple» is a word. It has five letters.", "What is this word?", "Bu qanday so'z?"),
-      w("🙋", "question", "ˈkwestʃən|kueschen", "ot", "Savol", "You ask it. It ends with «?».", "Sorry, one question!", "Kechirasiz, bitta savol!"),
-      w("✅", "answer", "ˈɑːnsə|aansa", "ot", "Javob", "What you say after a question.", "The answer is ten.", "Javob — o'n."),
-      w("🔁", "repeat", "rɪˈpiːt|ripiit", "fe'l", "Takrorlamoq", "To say something one more time.", "Can you repeat that, please?", "Buni takrorlay olasizmi, iltimos?"),
-      w("↩️", "again", "əˈɡen|agen", "ravish", "Yana, qaytadan", "One more time.", "Say it again, please.", "Yana bir bor ayting, iltimos."),
-      w("🐢", "slowly", "ˈsləʊli|slouli", "ravish", "Sekin", "Not fast.", "Please speak slowly.", "Iltimos, sekinroq gapiring."),
-      w("💡", "understand", "ˌʌndəˈstænd|andastend", "fe'l", "Tushunmoq", "To know what something means.", "Sorry, I don't understand.", "Kechirasiz, tushunmadim."),
-      w("🤷", "I don't know", "aɪ dəʊnt ˈnəʊ|ay dount nou", "ibora", "Bilmayman", "You say it when you have no answer.", "Sorry, I don't know.", "Kechirasiz, bilmayman."),
+      w("🏨", "hotel", "həʊˈtel|houtel", "ot", "Mehmonxona", "A building where you pay to sleep and eat.", "The hotel is in London.", "Mehmonxona Londonda."),
+      w("🛎️", "receptionist", "rɪˈsepʃənɪst|risepshanist", "ot", "Qabulxona xodimi (resepshn)", "The person at the front desk of a hotel.", "The receptionist says «Welcome!».", "Resepshn xodimi «Xush kelibsiz!» deydi."),
+      w("🧳", "guest", "ɡest|gest", "ot", "Mehmon", "A person who stays in a hotel.", "The guest is from France.", "Mehmon Fransiyadan."),
+      w("🔑", "room key", "ˈruːm kiː|ruum kii", "ot", "Xona kaliti", "The key (or card) that opens your hotel room.", "Here's your room key.", "Mana xonangiz kaliti."),
+      w("🍳", "breakfast", "ˈbrekfəst|brekfast", "ot", "Nonushta", "The first meal of the day.", "Breakfast is in the restaurant.", "Nonushta restoranda."),
+      w("🍽️", "restaurant", "ˈrestrɒnt|restront", "ot", "Restoran", "A place where you buy and eat meals.", "The restaurant is over there.", "Restoran ana u yerda."),
+      w("💳", "credit card", "ˈkredɪt kɑːd|kredit kaad", "ot", "Kredit karta", "A plastic card you pay with.", "Here's my credit card.", "Mana kredit kartam."),
+      w("📋", "form", "fɔːm|foom", "ot", "Anketa, varaqa", "A paper with spaces for your name, address and other information.", "Complete the form.", "Anketani to'ldiring."),
+      w("🏠", "address", "əˈdres|adres", "ot", "Manzil", "The number, street and city where you live.", "What's your address?", "Manzilingiz qanday?"),
+      w("🖊️", "sign", "saɪn|sayn", "fe'l", "Imzo qo'ymoq", "Write your name in your own way at the end of a form.", "Sign here, please.", "Shu yerga imzo qo'ying, iltimos."),
     ],
   },
   {
     title: "3-bosqich",
     words: [
-      w("👋", "see you later", "ˌsiː juː ˈleɪtə|sii yu leyta", "ibora", "Keyinroq ko'rishamiz", "Goodbye for a short time.", "Bye! See you later!", "Xayr! Keyinroq ko'rishamiz!"),
-      w("📅", "see you tomorrow", "ˌsiː juː təˈmɒrəʊ|sii yu tamorou", "ibora", "Ertaga ko'rishamiz", "Goodbye until the next day.", "Good night! See you tomorrow!", "Xayrli tun! Ertaga ko'rishamiz!"),
-      w("🌞", "have a nice day", "hæv ə ˌnaɪs ˈdeɪ|hev a nays dey", "ibora", "Kuningiz yaxshi o'tsin", "A friendly goodbye in the day.", "Thank you! Have a nice day!", "Rahmat! Kuningiz yaxshi o'tsin!"),
-      w("🤗", "welcome", "ˈwelkəm|uelkam", "undov", "Xush kelibsiz", "You say it to a new guest or student.", "Welcome to our school!", "Maktabimizga xush kelibsiz!"),
-      w("👩", "Mrs", "ˈmɪsɪz|misiz", "ot", "Xonim (turmushga chiqqan ayol)", "A title for a married woman: Mrs Karimova.", "This is Mrs Karimova, my teacher.", "Bu — Karimova xonim, mening o'qituvchim."),
-      w("👱‍♀️", "Miss", "mɪs|mis", "ot", "Qiz, xonim (turmushga chiqmagan)", "A title for a young woman who is not married.", "Excuse me, Miss!", "Kechirasiz, qizim (xonim)!"),
-      w("💍", "married", "ˈmærid|merid", "sifat", "Uylangan, turmush qurgan", "With a husband or a wife.", "Are you married?", "Turmush qurganmisiz?"),
-      w("🧍", "single", "ˈsɪŋɡl|singl", "sifat", "Bo'ydoq, turmush qurmagan", "Not married.", "No, I'm single.", "Yo'q, men turmush qurmaganman."),
-      w("📝", "form", "fɔːm|foom", "ot", "Anketa, blanka", "A paper with questions: name, age, address…", "Please fill in this form.", "Iltimos, bu anketani to'ldiring."),
-      w("🌐", "nationality", "ˌnæʃəˈnæləti|neshanaliti", "ot", "Millat; fuqarolik", "Uzbek, English, Japanese…", "My nationality is Uzbek.", "Millatim — o'zbek."),
+      w("✔️", "that's right", "ˌðæts ˈraɪt|zets rayt", "ibora", "To'g'ri, xuddi shunday", "You say it when something is correct.", "R-O-G-E-R? — Yes, that's right.", "R-O-G-E-R? — Ha, to'g'ri."),
+      w("🎤", "conference", "ˈkɒnfərəns|konfarans", "ot", "Konferensiya, anjuman", "A big meeting of people for work.", "Are you here for the conference?", "Konferensiyaga keldingizmi?"),
+      w("🛣️", "road", "rəʊd|roud", "ot", "Yo'l, ko'cha", "A way for cars in a town; part of an address.", "My address is 8 Park Road.", "Manzilim — Park ko'chasi, 8."),
+      w("🏘️", "street", "striːt|striit", "ot", "Ko'cha", "A road in a town with houses on it.", "I live on Navoi Street.", "Men Navoiy ko'chasida yashayman."),
+      w("0️⃣", "oh", "əʊ|ou", "son", "Nol (raqamlarda)", "We often say «oh» for 0 in phone numbers.", "My number is double oh, four, four.", "Raqamim — ikki nol, to'rt, to'rt."),
+      w("🌙", "night", "naɪt|nayt", "ot", "Tun, kecha", "The time when it is dark; a night in a hotel.", "One night in this hotel is $90.", "Bu mehmonxonada bir kecha — 90 dollar."),
+      w("🤗", "welcome", "ˈwelkəm|uelkam", "undov", "Xush kelibsiz", "A word you say to a new guest.", "Welcome to the hotel!", "Mehmonxonaga xush kelibsiz!"),
+      w("📝", "check-in", "ˈtʃek ɪn|chek in", "ot", "Ro'yxatdan o'tish (mehmonxonada)", "The place or time when you arrive and give your name at a hotel.", "Excuse me, is check-in here?", "Kechirasiz, ro'yxatdan o'tish shu yerdami?"),
+      w("👉", "over there", "ˌəʊvə ˈðeə|ouva zea", "ibora", "Ana u yerda", "In that place (not near).", "The restaurant is over there.", "Restoran ana u yerda."),
+      w("🤔", "reason", "ˈriːzn|riizn", "ot", "Sabab", "Why you do something.", "Reason for visit: business.", "Tashrif sababi: ish."),
     ],
   },
 ];
 
-/** Harflab aytilgan ism: `audio` — harflar vergul bilan (ovoz harf nomini o'qiydi). */
-const spelled = (name: string, options: string[]): SeedQuestion => ({
-  prompt: "Qaysi ism harflab aytildi?",
-  audio: name.toUpperCase().split("").join(", "),
-  options,
-  correct: options.indexOf(name),
-});
+const CARD = `Hi, I'm Dilshod Rahimov from Uzbekistan. I'm here in London on business. I'm at a conference for three nights. My address is 15 Navoi Street, Tashkent, and my phone number is 00 998 90 123 4567.
 
-const QW = ["What", "Who", "Where", "How"];
+HOTEL REGISTRATION CARD
+First name: Dilshod
+Last name: Rahimov
+Country: Uzbekistan
+Home address: 15 Navoi Street, Tashkent
+Reason for visit: business
+Number of nights: 3
+Signature: D. Rahimov`;
+const read = reading(CARD);
 
-const FORM = `STUDENT FORM — AVANGARD ENGLISH
-First name: Dilnoza
-Surname: Rakhimova
-Age: 19
-Nationality: Uzbek
-Address: 12 Amir Temur Street, Tashkent
-Phone number: 90 123 45 67
-Email: dilnoza.r@mail.uz
-Married / Single: Single`;
-const read = reading(FORM);
-
-const CALL = `Hello, Avangard English school. How can I help you?
-Hi! I'm a new student.
-Welcome! What's your name?
-My name is Ali Sharipov.
-How do you spell your surname?
-S, H, A, R, I, P, O, V.
-Thank you. How old are you, Ali?
-I'm eighteen.
-And what's your phone number?
-It's 93 555 12 34.
-Great. Your first lesson is tomorrow at nine. See you tomorrow!
-Thank you. Goodbye!`;
-const hear = hearing(CALL);
+const RECEPTIONIST = "Resepshn xodimi";
+const GUEST = "Mehmon";
 
 export const A1_03_EXERCISES: SeedExercise[] = [
   {
-    title: "Harflab aytilgan ism",
+    title: "Harflarning tovushi",
     skill: "Tinglash",
-    kind: "listen",
-    instructions: "Ism harfma-harf aytiladi. Qaysi ism ekanini toping. G — «ji», J — «jey», E — «ii», I — «ay» ekanini eslang.",
+    kind: "listenmatch",
+    instructions:
+      "Ingliz alifbosining har bir harfi yettita tovushdan birida aytiladi: /eɪ/ eight, /iː/ three, /e/ ten, /aɪ/ five, /əʊ/ no, /juː/ you, /ɑː/ are. Tinglang va har bir guruhga harflarni tanlang.",
     questions: [
-      spelled("Aziz", ["Aziz", "Azim", "Eziz", "Iziz"]),
-      spelled("Jasur", ["Gasur", "Jasur", "Yasur", "Jahur"]),
-      spelled("Gulnora", ["Julnora", "Gulnora", "Gulnara", "Kulnora"]),
-      spelled("Erkin", ["Irkin", "Arkin", "Erkin", "Erkan"]),
-      spelled("Kamola", ["Kamola", "Camola", "Kamila", "Komola"]),
-      spelled("Yusuf", ["Usuf", "Yusif", "Iusuf", "Yusuf"]),
-      spelled("Ravshan", ["Ravshan", "Rafshan", "Rawshan", "Ravhan"]),
-      spelled("Hilola", ["Xilola", "Hilola", "Hilala", "Holola"]),
-      spelled("Sardor", ["Sardar", "Serdor", "Sardor", "Sordor"]),
-      spelled("Iroda", ["Iroda", "Eroda", "Aroda", "Iruda"]),
+      slots(track("1.20"), [
+        ["/eɪ/ — eight", "A H J K"],
+        ["/iː/ — three", "B C D E G P T V"],
+        ["/e/ — ten", "F L M N S X Z"],
+        ["/aɪ/ — five", "I Y"],
+        ["/əʊ/ — no", "O"],
+        ["/juː/ — you", "Q U W"],
+        ["/ɑː/ — are", "R"],
+      ]),
     ],
   },
   {
-    title: "Qaysi so'roq so'z?",
-    skill: "Grammatika",
-    kind: "choice",
-    instructions: "What — nima, Who — kim, Where — qayerda/qayerdan, How — qanday. Mos so'roq so'zni tanlang.",
+    title: "Qaysi harf?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Har bir raqamda bitta harf aytiladi. Tinglang va eshitgan harfingizni tanlang. G va J, E va I, A va R ni adashtirmang!",
     questions: [
-      pick("___ is your name?", QW, 0),
-      pick("___ is your teacher? — Mrs Karimova.", QW, 1),
-      pick("___ are you from? — Japan.", QW, 2),
-      pick("___ are you? — Fine, thanks.", QW, 3),
-      pick("___ old are you? — I'm 20.", QW, 3, "Yosh haqida — How old…?"),
-      pick("___ is your phone number?", QW, 0),
-      pick("___ is that man? — He's my father.", QW, 1),
-      pick("___ is Samarkand? — In Uzbekistan.", QW, 2),
-      pick("___ do you spell it? — K-E-Y.", QW, 3),
-      pick("___ is your address?", QW, 0, "Manzil haqida — What is your address? (Where emas!)"),
+      gaps(track("1.21"), [
+        ["1. ___", "G", "J"],
+        ["2. ___", "E", "I"],
+        ["3. ___", "F", "V"],
+        ["4. ___", "C", "S"],
+        ["5. ___", "R", "A"],
+        ["6. ___", "Y", "J"],
+        ["7. ___", "I", "Y"],
+        ["8. ___", "Q", "K"],
+        ["9. ___", "H", "A"],
+        ["10. ___", "O", "U"],
+      ]),
     ],
   },
   {
-    title: "Anketa so'zlari",
-    skill: "Rasm",
-    kind: "picture",
-    instructions: "Rasmga qarang va mos inglizcha so'zni toping.",
+    title: "Qaysi ism?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Ismlar harflab aytiladi. Tinglang va to'g'ri yozilgan ismni tanlang.",
     questions: [
-      pick("📞", ["phone number", "address", "email", "age"], 0),
-      pick("📧", ["form", "email", "letter", "word"], 1),
-      pick("🏠", ["age", "surname", "address", "single"], 2),
-      pick("🎂", ["nationality", "form", "email", "how old"], 3),
-      pick("📝", ["form", "word", "map", "flag"], 0),
-      pick("💍", ["single", "married", "Miss", "welcome"], 1),
-      pick("🐢", ["again", "repeat", "slowly", "answer"], 2),
-      pick("🔁", ["question", "spell", "understand", "repeat"], 3),
-      pick("🤷", ["I don't know", "I understand", "welcome", "see you later"], 0),
-      pick("🙋", ["answer", "question", "letter", "who"], 1),
+      gaps(track("1.22"), [
+        ["1. ___", "Elinor", "Elena"],
+        ["2. ___", "Jacqui", "Jackie"],
+        ["3. ___", "Jorge", "George"],
+        ["4. ___", "Paula", "Paola"],
+        ["5. ___", "Joan", "John"],
+      ]),
     ],
   },
   {
-    title: "Savol va javob",
-    skill: "Juftlik",
-    kind: "match",
-    instructions: "Savolni unga mos javob bilan ulang.",
-    questions: pairs([
-      ["What's your name?|Kamola.", "How old are you?|I'm 21.", "Where are you from?|Bukhara.", "How are you?|Fine, thanks."],
-      ["Who is your teacher?|Mrs Brown.", "What's your surname?|Karimov.", "Are you married?|No, I'm single.", "What's your nationality?|Uzbek."],
-      ["How do you spell it?|K-E-Y.", "What's your phone number?|90 111 22 33.", "What's your email?|aziz@mail.uz", "Where is Tokyo?|In Japan."],
-      ["what|nima", "who|kim", "where|qayerda", "how|qanday"],
-      ["surname|familiya", "first name|ism", "address|manzil", "age|yosh"],
-      ["see you later|keyinroq ko'rishamiz", "see you tomorrow|ertaga ko'rishamiz", "have a nice day|kuningiz yaxshi o'tsin", "welcome|xush kelibsiz"],
-      ["repeat|takrorlamoq", "spell|harflamoq", "understand|tushunmoq", "slowly|sekin"],
+    title: "To'rtta ism",
+    skill: "Tinglash",
+    kind: "listenmatch",
+    instructions: "To'rtta suhbatni tinglang. Har bir suhbatdagi ismni tanlang.",
+    questions: [
+      slots(track("1.23"), [
+        ["Conversation 1", "Bill"],
+        ["Conversation 2", "Aylin"],
+        ["Conversation 3", "Stephanie"],
+        ["Conversation 4", "Roger"],
+      ]),
+    ],
+  },
+  {
+    title: "Harflardan so'z",
+    skill: "Yozish",
+    kind: "type",
+    instructions: "So'z harflab berilgan. Uni to'liq yozing (ism va joy nomlari bosh harf bilan).",
+    questions: written([
+      ["B-I-double L (ism)", "Bill"],
+      ["R-O-G-E-R (ism)", "Roger"],
+      ["Y-I-L-M-A-Z (familiya)", "Yilmaz"],
+      ["S-A-N-T-O-S (familiya)", "Santos"],
+      ["L-Y-N-D-A (ism)", "Lynda"],
+      ["F-R-E-N-C-H (familiya)", "French"],
+      ["T-A-S-H-K-E-N-T (shahar)", "Tashkent"],
+      ["H-O-T-E-L", "hotel"],
+      ["A-double D-R-E-double S", "address"],
+      ["S-T-R-E-E-T", "street", "street — qo'sh E: S-T-R-E-E-T."],
     ]),
   },
   {
-    title: "Sinfda",
-    skill: "Vaziyat",
-    kind: "situation",
-    instructions: "Vaziyatni o'qing va unga mos inglizcha iborani tanlang.",
-    questions: [
-      say("O'qituvchi juda tez gapiryapti.", ["Please speak slowly.", "Have a nice day.", "See you tomorrow.", "I'm single."]),
-      say("O'qituvchining gapini eshitmay qoldingiz.", ["Can you repeat that, please?", "How old are you?", "Welcome!", "I'm married."]),
-      say("Yangi so'zning yozilishini bilmoqchisiz.", ["How do you spell it?", "Where are you from?", "Who are you?", "See you later!"]),
-      say("Savolga javobni bilmaysiz.", ["Sorry, I don't know.", "Yes, I am.", "Have a nice day!", "Again, please."]),
-      say("Gapni tushunmadingiz.", ["Sorry, I don't understand.", "I don't know my name.", "Nice to meet you!", "Good morning!"]),
-      say("Do'stingiz bilan bir soatdan keyin yana ko'rishasiz.", ["See you later!", "See you tomorrow!", "Good night!", "Welcome!"]),
-      say("Dars tugadi, ertaga yana dars bor.", ["See you tomorrow!", "See you later, in five minutes!", "Have a nice holiday!", "Welcome!"]),
-      say("Do'kondan chiqyapsiz, sotuvchi «Thank you!» dedi.", ["Thank you! Have a nice day!", "Good night! See you tomorrow!", "Welcome!", "How old are you?"]),
-      say("Maktabga yangi o'quvchi keldi.", ["Welcome to our school!", "See you later!", "I don't know.", "Speak slowly."]),
-      say("Darsda savol bermoqchisiz.", ["Excuse me, one question!", "Sorry, I'm married.", "Have a nice day!", "Welcome!"]),
-    ],
-  },
-  {
-    title: "Suhbatni davom ettiring",
-    skill: "Dialog",
-    kind: "dialog",
-    instructions: "Suhbatdoshingiz gapirdi. Unga mos javobni tanlang.",
-    questions: [
-      say("What's your surname?", ["It's Karimov.", "I'm fine.", "It's 19.", "From Tashkent."]),
-      say("How do you spell it?", ["K, A, R, I, M, O, V.", "Yes, I do.", "It's my name.", "Slowly, please."]),
-      say("How old are you?", ["I'm nineteen.", "I'm fine.", "I'm old.", "I'm nineteen old."], "Yosh: I'm 19. («years old» qo'shish mumkin: I'm 19 years old.)"),
-      say("What's your nationality?", ["I'm Uzbek.", "I'm Uzbekistan.", "I'm from Uzbek.", "My Uzbek."]),
-      say("Are you married?", ["No, I'm single.", "No, I'm not single.", "Yes, I'm.", "Married, no."]),
-      say("What's your email?", ["It's aziz@mail.uz.", "It's 90 123 45 67.", "It's Navoi Street.", "It's Aziz."]),
-      say("Who is that?", ["That's Mrs Karimova, our teacher.", "That's 19.", "That's Uzbek.", "That's Navoi Street."]),
-      say("Can you repeat that, please?", ["Sure. My name is Dilnoza.", "I don't know.", "See you later.", "Welcome."]),
-      say("Bye! See you tomorrow!", ["Bye! Have a nice day!", "Welcome!", "How old are you?", "Nice to meet you!"]),
-      say("Please fill in this form.", ["OK. Have you got a pen?", "I'm fine, thanks.", "No, I'm single.", "Good night!"]),
-    ],
-  },
-  {
-    title: "Xatoni toping",
+    title: "What, where yoki how?",
     skill: "Grammatika",
-    kind: "mistake",
-    instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
+    kind: "choice",
+    instructions: "Savol so'zini tanlang: What — nima (ism, raqam), Where — qayerda/qayerdan (joy), How — qanday.",
     questions: [
-      mistake("What *are your name?", "Name — bitta narsa: What is (What's) your name?"),
-      mistake("Where *you are from?", "So'roq: Where are you from?"),
-      mistake("How *many are you? — I'm 20.", "Yosh haqida: How old are you?"),
-      mistake("*Where is your teacher? — Mrs Brown.", "Odam haqida — Who: Who is your teacher?"),
-      mistake("I'm 20 *year old.", "years old — ko'plikda: I'm 20 years old."),
-      mistake("What is your *surname? — Aziz.", "Aziz — bu ism: What is your first name? — Aziz."),
-      mistake("Sorry, I don't *understanding.", "Sorry, I don't understand."),
-      mistake("How do you *spelling it?", "How do you spell it?"),
-      mistake("I'm *Uzbekistan.", "Millat — Uzbek: I'm Uzbek. (I'm from Uzbekistan.)"),
-      mistake("See you *tomorrow later!", "Bitta ibora tanlanadi: See you later! yoki See you tomorrow!"),
+      say("___'s your name?", ["What", "Where", "How", "Who are"]),
+      say("___ do you spell that?", ["How", "What", "Where", "Who"]),
+      say("___ are you from?", ["Where", "What", "How", "Who"]),
+      say("___ in Spain? — Barcelona.", ["Where", "What", "How", "When"]),
+      say("___'s your phone number?", ["What", "Where", "How", "Who"]),
+      say("___ are you? — Fine, thanks.", ["How", "What", "Where", "Who"]),
+      say("___'s your address?", ["What", "Where", "How", "Who"]),
+      say("___'s breakfast? — In the restaurant.", ["Where", "What", "How", "Who"]),
+      say("___'s your last name? — Aguilar.", ["What", "How", "Where", "Who"]),
+      say("___ is check-in? — Over there.", ["Where", "What", "How", "Who"]),
     ],
+  },
+  {
+    title: "Savolni tuzing",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Savolning boshini oxiri bilan ulang.",
+    questions: pairs([
+      ["What's|your name?", "Where are|you from?", "Where in|Italy?", "How do|you spell that?"],
+      ["What's your name?|Osvaldo Aguilar.", "How do you spell that?|A-G-U-I-L-A-R.", "Where are you from?|Spain.", "What's your phone number?|00 34 735 994 6810."],
+      ["first name|ism", "last name|familiya", "address|manzil", "phone number|telefon raqami"],
+      ["receptionist|resepshn xodimi", "guest|mehmon", "room key|xona kaliti", "breakfast|nonushta"],
+      ["0|oh", "88|double eight", "ll|double L", "A|capital A"],
+    ]),
+  },
+  {
+    title: "GHQ konferensiyasi",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Jane konferensiyaga kelgan ikki kishini ro'yxatga oladi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing(track("1.25"))("What is Havva's last name?", ["Yilmaz", "Santos", "Yildiz", "Havva"]),
+      hearing(track("1.25"))("Where is Havva from?", ["Turkey", "Brazil", "Spain", "Russia"]),
+      hearing(track("1.25"))("How does Havva's phone number start?", ["00 90", "00 55", "00 34", "00 44"], "Turkiya kodi — 90."),
+      hearing(track("1.25"))("What is Josue's last name?", ["Santos", "Yilmaz", "Sanders", "Josue"]),
+      hearing(track("1.25"))("Where is Josue from?", ["Brazil", "Turkey", "Spain", "the USA"]),
+      hearingTwo(track("1.25"))("Which TWO questions does Jane ask both people?", ["How do you spell that?", "What's your phone number?"], ["How are you?", "Are you on holiday?"]),
+      hearing(track("1.25"))("Why are Havva and Josue here?", ["For the GHQ conference", "On holiday", "To study", "To see Jane"]),
+    ],
+  },
+  {
+    title: "Ro'yxatga olish",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Birinchi suhbatni yana tinglang va gaplarni to'ldiring.",
+    questions: [
+      gaps(track("1.26"), [
+        ["Jane: «Hello. Are you here for the GHQ ___?»", "conference", "hotel", "holiday"],
+        ["Havva: «Yes, I ___.»", "am", "'m", "are"],
+        ["Jane: «What's your ___?»", "name", "number", "country"],
+        ["Jane: «How do you ___ that?»", "spell", "say", "write"],
+        ["Jane: «Where are you ___, Havva?»", "from", "in", "to"],
+        ["Jane: «And what's your phone ___?»", "number", "name", "address"],
+        ["Jane: «Thanks. Have a good ___.»", "day", "night", "time"],
+      ]),
+    ],
+  },
+  {
+    title: "Ro'yxatdan o'tish varaqasi",
+    skill: "O'qish",
+    kind: "reading",
+    instructions: "Dilshod haqidagi ma'lumotni va mehmonxona varaqasini o'qing. Savollarga javob bering.",
+    questions: [
+      read("What is Dilshod's last name?", ["Rahimov", "Dilshod", "Navoi", "Tashkent"]),
+      read("What country is he from?", ["Uzbekistan", "the UK", "Turkey", "The text doesn't say."]),
+      read("Where is he now?", ["In London", "In Tashkent", "In Navoi", "At home"]),
+      read("What is the reason for his visit?", ["Business", "Holiday", "Study", "Family"]),
+      read("Why is he in London?", ["He's at a conference.", "He's on holiday.", "He's a student.", "He's a receptionist."]),
+      read("How many nights is he at the hotel?", ["Three", "Two", "Fifteen", "Ten"]),
+      read("What's his home address?", ["15 Navoi Street, Tashkent", "15 London Road", "Navoi, Uzbekistan", "The text doesn't say."]),
+      read("What is «D. Rahimov» on the card?", ["His signature", "His first name", "His address", "His phone number"]),
+      read("Which country code is in his phone number?", ["998", "90", "44", "15"]),
+      read("Which line of the card has a number?", ["Number of nights", "First name", "Country", "Reason for visit"]),
+    ],
+  },
+  {
+    title: "Bosh harflarni toping",
+    skill: "Yozish",
+    kind: "mistake",
+    instructions:
+      "Bosh harf bilan yoziladi: ism, shahar, mamlakat, I (men), gapning birinchi so'zi, ko'cha nomi. Har bir gapda bosh harf bilan yozilishi kerak bo'lgan bitta so'zni bosing.",
+    questions: [
+      mistake("My name is *kabelo.", "Ism — Kabelo."),
+      mistake("I'm from *johannesburg.", "Shahar — Johannesburg."),
+      mistake("Johannesburg is in South *africa.", "Mamlakat — South Africa."),
+      mistake("Danisa and *i are on holiday.", "I (men) — doim bosh harf bilan."),
+      mistake("*we are in a hotel in London.", "Gapning birinchi so'zi — We."),
+      mistake("We are on holiday in *england.", "Mamlakat — England."),
+      mistake("My address is 8 Park *road.", "Ko'cha nomi — Park Road."),
+      mistake("Josie is from Austin in *texas.", "Shtat nomi — Texas."),
+      mistake("*her name is Havva.", "Gapning birinchi so'zi — Her."),
+      mistake("I live on Navoi *street.", "Ko'cha nomi — Navoi Street."),
+    ],
+  },
+  {
+    title: "Mehmonxonada: kim aytadi?",
+    skill: "Vaziyat",
+    kind: "choice",
+    instructions: "Bu gapni kim aytadi: mehmonxona resepshn xodimimi yoki mehmonmi?",
+    questions: [
+      say("Excuse me, is check-in here?", [GUEST, RECEPTIONIST]),
+      say("Are you here on business?", [RECEPTIONIST, GUEST]),
+      say("I'm here on holiday.", [GUEST, RECEPTIONIST]),
+      say("What's your address?", [RECEPTIONIST, GUEST]),
+      say("Here's my credit card.", [GUEST, RECEPTIONIST]),
+      say("Where's breakfast?", [GUEST, RECEPTIONIST]),
+      say("Here's your room key.", [RECEPTIONIST, GUEST]),
+      say("The restaurant is over there.", [RECEPTIONIST, GUEST]),
+      say("How do you spell that?", [RECEPTIONIST, GUEST]),
+      say("Sign here, please.", [RECEPTIONIST, GUEST]),
+    ],
+  },
+  {
+    title: "Ism, familiya, shahar",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Tinglang va eshitgan ism yoki joy nomini tanlang. Harflarga diqqat qiling!",
+    questions: [
+      gaps(track("1.31"), [
+        ["1. My name's ___.", "Lynda", "Linda", "Lindy"],
+        ["2. My last name is ___.", "French", "Frank", "Franch"],
+        ["3. We are from ___ in Russia.", "Yaroslavl", "Moscow", "St Petersburg"],
+      ]),
+    ],
+  },
+  {
+    title: "Bo'sh joyni to'ldiring",
+    skill: "Yozish",
+    kind: "fill",
+    instructions: "Gapda bitta so'z tushib qolgan. Uni inglizcha yozing.",
+    questions: written([
+      ["What's your ___? — My name's Roger.", "name"],
+      ["How do you ___ that? — R-O-G-E-R.", "spell"],
+      ["R-O-G-E-R? — Yes, that's ___.", "right"],
+      ["___ are you from? — I'm from Turkey.", "Where"],
+      ["What's your phone ___?", "number"],
+      ["Are you here for the ___? — Yes, I am.", "conference"],
+      ["Here's your room ___.", "key"],
+      ["Breakfast is in the ___.", "restaurant"],
+      ["___ here, please.", "Sign"],
+      ["___ to the hotel!", "Welcome"],
+    ]),
   },
   {
     title: "Gap tuzing",
     skill: "Gap tuzish",
     kind: "order",
-    instructions: "So'zlarni to'g'ri tartibda bosib, gap tuzing.",
+    instructions: "So'zlarni to'g'ri tartibda bosib, savol yoki gap tuzing.",
     questions: sentences([
-      "What is your surname?",
-      "How do you spell it?",
-      "How old are you?",
-      "Who is your teacher?",
-      "My first name is Dilnoza.",
-      "Please fill in this form.",
-      "Can you repeat that, please?",
-      "Please speak slowly.",
-      "Sorry, I don't understand.",
-      "See you tomorrow!",
+      "What's your name?",
+      "How do you spell that?",
+      "Where are you from?",
+      "What's your phone number?",
+      "Yes, that's right.",
+      "Are you here for the conference?",
+      "Here's my credit card.",
+      "Where's breakfast?",
+      "The restaurant is over there.",
+      "Have a good day.",
     ]),
-  },
-  {
-    title: "Anketani to'ldiring",
-    skill: "Yozish",
-    kind: "fill",
-    instructions: "Gapda bitta so'z tushib qolgan. Uni inglizcha yozing.",
-    questions: written([
-      ["What's your ___? — Rakhimova.", "surname"],
-      ["How ___ are you? — I'm 19.", "old"],
-      ["___ is your teacher? — Mr Brown.", "Who"],
-      ["What's your phone ___?", "number"],
-      ["How do you ___ your name?", "spell"],
-      ["Sorry, I don't ___.", "understand|know"],
-      ["Can you ___ that, please?", "repeat"],
-      ["Please speak ___.", "slowly"],
-      ["___ to our school!", "Welcome"],
-      ["Are you married? — No, I'm ___.", "single"],
-    ]),
-  },
-  {
-    title: "Talaba anketasi",
-    skill: "Matn bilan ishlash",
-    kind: "reading",
-    instructions: "Anketani diqqat bilan o'qing va har bir savolga javob bering.",
-    questions: [
-      read("Talabaning ismi nima?", ["Dilnoza", "Rakhimova", "Amir", "Temur"]),
-      read("Uning familiyasi qanday?", ["Rakhimova", "Dilnoza", "Karimova", "Tashkent"]),
-      read("U necha yoshda?", ["19", "12", "90", "45"]),
-      read("Uning millati?", ["O'zbek", "Ingliz", "Rus", "Aytilmagan"]),
-      read("U qaysi shaharda yashaydi?", ["Toshkentda", "Samarqandda", "Buxoroda", "Aytilmagan"]),
-      read("Ko'cha nomi qanday?", ["Amir Temur", "Navoi", "Avangard", "Tashkent"]),
-      read("Uy raqami nechchi?", ["12", "19", "90", "45"]),
-      read("Uning elektron pochtasi qaysi?", ["dilnoza.r@mail.uz", "rakhimova@mail.uz", "dilnoza@gmail.com", "90 123 45 67"]),
-      read("U turmush qurganmi?", ["Yo'q, single", "Ha, married", "Aytilmagan", "Ha, Mrs"]),
-      read("Bu anketa qayerniki?", ["Avangard English maktabiniki", "Mehmonxonaniki", "Aeroportniki", "Bankniki"]),
-    ],
-  },
-  {
-    title: "Telefon qo'ng'irog'i",
-    skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions: "Telefondagi suhbatni tinglang (kerak bo'lsa, qayta yoki sekinroq) va savollarga javob bering. Matn ekranda ko'rsatilmaydi.",
-    questions: [
-      hear("Kim qo'ng'iroq qildi?", ["Yangi talaba", "O'qituvchi", "Mehmonxona xodimi", "Ota-ona"]),
-      hear("Talabaning ismi nima?", ["Ali", "Aziz", "Avangard", "Sharif"]),
-      hear("Uning familiyasi qanday yoziladi?", ["Sharipov", "Sharifov", "Sharapov", "Sheripov"]),
-      hear("Ali necha yoshda?", ["18", "8", "80", "19"], "eighteen — 18."),
-      hear("Uning telefon raqami qaysi?", ["93 555 12 34", "90 555 12 34", "93 515 12 34", "93 555 21 43"]),
-      hear("Birinchi dars qachon?", ["Ertaga soat 9 da", "Bugun soat 9 da", "Ertaga soat 10 da", "Kechqurun"]),
-      hear("Maktab nomi nima?", ["Avangard English", "Tashkent English", "Avangard School", "English Centre"]),
-      hear("Xodim «Welcome!» deganda nima demoqchi?", ["Xush kelibsiz!", "Xayr!", "Rahmat!", "Kechirasiz!"]),
-      hear("Suhbat qanday tugaydi?", ["Thank you. Goodbye!", "Good night!", "See you later!", "Have a nice day!"]),
-      hear("Xodim nima haqida SO'RAMADI?", ["Manzili", "Familiyasi", "Yoshi", "Telefon raqami"]),
-    ],
   },
   {
     title: "Ayting",
@@ -306,24 +348,15 @@ export const A1_03_EXERCISES: SeedExercise[] = [
     instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
     questions: phrases([
       "What's your name?",
-      "How do you spell it?",
-      "How old are you?",
-      "Who is your teacher?",
-      "Can you repeat that, please?",
-      "Sorry, I don't understand.",
-      "Please speak slowly.",
-      "See you tomorrow!",
-      "Have a nice day!",
-      "Welcome to our school!",
+      "My name's Roger.",
+      "How do you spell that?",
+      "Yes, that's right.",
+      "Where are you from?",
+      "What's your phone number?",
+      "Here's your room key.",
+      "Sign here, please.",
+      "Welcome to the hotel!",
+      "Have a good day.",
     ]),
-  },
-  {
-    title: "Konferensiyada ro'yxatga olish",
-    skill: "Tinglash",
-    kind: "listenmatch",
-    instructions: "Ikki kishi konferensiyada ro'yxatdan o'tmoqda. Ular familiyasini harflab aytadi — eshitganingizni yozing.",
-    questions: [
-      slots("media:navigate-a1/audio/1.25.mp3", [["1. Havva's last name","Yilmaz"],["2. Havva is from…","Turkey"],["3. Josue's last name","Santos"],["4. Josue is from…","Brazil"]]),
-    ],
   },
 ];
