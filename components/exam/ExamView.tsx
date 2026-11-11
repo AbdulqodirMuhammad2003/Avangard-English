@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, GraduationCap, RotateCcw, Trophy, XCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Clock, GraduationCap, RotateCcw, Trophy, XCircle } from "@/components/ui/IosIcons";
 import type { ExamAnswer, ExamResult, ExamStatus } from "@/lib/exam";
 import { saveExamAnswersAction, startExamAction, submitExamAction } from "@/app/actions";
 import { useLang, useT } from "../LangProvider";

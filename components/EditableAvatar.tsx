@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useActionState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { Award, Camera, Download, X, Loader2 } from "lucide-react";
+import { Award, Camera, Download, X, Loader2 } from "@/components/ui/IosIcons";
 import { Avatar } from "./Avatar";
 import { updateProfileAction, type ProfileState } from "@/app/actions";
 import type { Certificate } from "@/lib/exam";

@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "@/components/ui/IosIcons";
 
 const ACCENTS = {
   azure: "from-azure-500 to-[#7c3aed] shadow-azure-700/30",

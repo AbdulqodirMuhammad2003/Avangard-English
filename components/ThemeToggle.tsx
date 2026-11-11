@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "@/components/ui/IosIcons";
 import { useT } from "./LangProvider";
 
 const THEME_KEY = "avangard-theme";

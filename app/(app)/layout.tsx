@@ -10,7 +10,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { InstallAppBanner } from "@/components/InstallAppBanner";
 import { LogoMark } from "@/components/Logo";
 import { logoutAction } from "@/app/actions";
-import { LogOut } from "lucide-react";
+import { LogOut } from "@/components/ui/IosIcons";
 import { LangProvider } from "@/components/LangProvider";
 import { langForLevel, translator } from "@/lib/i18n";
 

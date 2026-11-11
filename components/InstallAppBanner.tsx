@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download, Share, X } from "lucide-react";
+import { Download, Share, X } from "@/components/ui/IosIcons";
 import { useT } from "./LangProvider";
 
 /** Ilova o'rnatilgan — taklif boshqa ko'rsatilmaydi. */

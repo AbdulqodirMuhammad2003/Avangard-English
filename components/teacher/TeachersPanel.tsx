@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { Check, ChevronRight, Copy, Eye, EyeOff, KeyRound, ShieldCheck, UserMinus, UserPlus, Users, X } from "lucide-react";
+import { Check, ChevronRight, Copy, Eye, EyeOff, KeyRound, ShieldCheck, UserMinus, UserPlus, Users, X } from "@/components/ui/IosIcons";
 import type { TeacherAccount } from "@/lib/teacher";
 import {
   createTeacherAction,

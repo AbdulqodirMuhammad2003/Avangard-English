@@ -10,7 +10,7 @@ import {
   ListChecks,
   Trophy,
   CornerDownLeft,
-} from "lucide-react";
+} from "@/components/ui/IosIcons";
 import { useT } from "./LangProvider";
 
 const COMMANDS = [

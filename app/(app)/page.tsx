@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, BookMarked, BookOpen, CalendarCheck, Flame, GraduationCap, PartyPopper, Target } from "lucide-react";
+import { ArrowUpRight, BookMarked, BookOpen, CalendarCheck, Flame, GraduationCap, PartyPopper, Target } from "@/components/ui/IosIcons";
 import { getSession } from "@/lib/auth";
 import { getUserStats, getAllUnitsDetailed, withoutQuestions, getActivityOverview, getReviewSummary } from "@/lib/data";
 import { TodayPanel } from "@/components/TodayPanel";

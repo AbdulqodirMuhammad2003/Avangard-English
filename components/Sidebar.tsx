@@ -9,7 +9,7 @@ import {
   Trophy,
   LogOut,
   Presentation,
-} from "lucide-react";
+} from "@/components/ui/IosIcons";
 import { logoutAction } from "@/app/actions";
 import { LogoMark } from "./Logo";
 import { useT } from "./LangProvider";

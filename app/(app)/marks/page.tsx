@@ -3,7 +3,7 @@ import { getLevelBoard } from "@/lib/data";
 import Link from "next/link";
 import { Avatar } from "@/components/Avatar";
 import { LevelSwitch } from "@/components/LevelSwitch";
-import { Award, BookOpenCheck, PlayCircle, Trophy } from "lucide-react";
+import { Award, BookOpenCheck, PlayCircle, Trophy } from "@/components/ui/IosIcons";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { StatCard } from "@/components/ui/StatCard";
 import { getLang } from "@/lib/lang-server";

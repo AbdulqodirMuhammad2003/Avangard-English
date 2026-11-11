@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, ChevronRight, Flame, PartyPopper, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Flame, PartyPopper, RefreshCw, Sparkles } from "@/components/ui/IosIcons";
 import {
   DAILY_GOAL,
   type ActivityOverview,

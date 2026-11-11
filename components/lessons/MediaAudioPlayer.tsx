@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Headphones, Pause, Play, RotateCcw } from "lucide-react";
+import { Headphones, Pause, Play, RotateCcw } from "@/components/ui/IosIcons";
 import { useT } from "../LangProvider";
 
 const fmt = (s: number) => {

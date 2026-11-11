@@ -36,7 +36,7 @@ import {
   Trophy,
   Download,
   type LucideIcon,
-} from "lucide-react";
+} from "@/components/ui/IosIcons";
 import type {
   ClipKind,
   ExerciseKind,

@@ -15,7 +15,7 @@ import {
   UserPlus,
   Users,
   X,
-} from "lucide-react";
+} from "@/components/ui/IosIcons";
 import type { PlacementLevel, TeacherStudent } from "@/lib/teacher";
 import {
   createStudentAction,

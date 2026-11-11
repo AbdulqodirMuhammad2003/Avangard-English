@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { CalendarClock, Clock, User, CheckCircle2 } from "lucide-react";
+import { CalendarClock, Clock, User, CheckCircle2 } from "@/components/ui/IosIcons";
 import type { ExtraLessonRecord } from "@/lib/data";
 import { bookExtraLesson } from "@/app/actions";
 

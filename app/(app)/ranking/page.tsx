@@ -1,4 +1,4 @@
-import { Crown, Medal, Trophy } from "lucide-react";
+import { Crown, Medal, Trophy } from "@/components/ui/IosIcons";
 import { getSession } from "@/lib/auth";
 import { getLevelBoard } from "@/lib/data";
 import { Avatar } from "@/components/Avatar";

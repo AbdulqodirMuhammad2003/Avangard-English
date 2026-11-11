@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
-import { CalendarClock, CheckCircle2, Trophy, Volume2 } from "lucide-react";
+import { CalendarClock, CheckCircle2, Trophy, Volume2 } from "@/components/ui/IosIcons";
 import type { ReviewWord } from "@/lib/data";
 import { submitReviewAnswer } from "@/app/actions";
 import { speak } from "@/lib/english-speech";

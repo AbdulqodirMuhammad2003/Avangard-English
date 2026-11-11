@@ -12,7 +12,7 @@ import {
   Trophy,
   ArrowRight,
   Delete,
-} from "lucide-react";
+} from "@/components/ui/IosIcons";
 import type { VocabRoundWithWords, VocabWord } from "@/lib/data";
 import { setWordStagePassed, type VocabStage } from "@/app/actions";
 import {
