@@ -364,13 +364,20 @@ h3,
 
 /* ---------- Variant tugmalari («plitkalar») ----------
    Mashq, lug'at va takrorlashdagi barcha variantlar (rounded-xl border-2
-   tugmalar) — pastki qirrali «3D» plitka: bosilganda haqiqiy tugmadek botadi,
-   to'g'ri javob «sakraydi», xatosi silkinadi. */
+   tugmalar) — yumshoq gradientli, pastki qirrali «3D» plitka: bosilganda
+   haqiqiy tugmadek botadi, tanlangani yorug' halqa bilan ajraladi, to'g'ri
+   javob «sakraydi», xatosi silkinadi. */
 button.rounded-xl.border-2 {
-  box-shadow: 0 4px 0 0 var(--tile-edge);
+  --tile-glow: transparent;
+  border-radius: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  box-shadow:
+    0 4px 0 0 var(--tile-edge),
+    0 0 0 4px var(--tile-glow);
   transition:
-    transform 0.12s ease,
-    box-shadow 0.12s ease,
+    transform 0.14s ease,
+    box-shadow 0.18s ease,
     background-color 0.15s ease,
     border-color 0.15s ease,
     color 0.15s ease;
@@ -378,44 +385,85 @@ button.rounded-xl.border-2 {
 }
 @media (hover: hover) {
   button.rounded-xl.border-2:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 0 0 var(--tile-edge);
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 0 0 var(--tile-edge),
+      0 0 0 4px var(--tile-glow);
   }
 }
 button.rounded-xl.border-2:active:not(:disabled) {
   transform: translateY(3px);
-  box-shadow: 0 1px 0 0 var(--tile-edge);
+  box-shadow:
+    0 1px 0 0 var(--tile-edge),
+    0 0 0 4px var(--tile-glow);
+}
+
+/* Kunduzi: oq-sadafrang yuza, ustiga kelganda indigo tus. */
+button.rounded-xl.border-2.border-ink-100 {
+  background-image: linear-gradient(180deg, #ffffff 0%, #f8f8fd 100%);
+  border-color: #e6e8f3;
+  color: var(--color-ink-800);
+  --tile-edge: #dfe2ef;
+}
+@media (hover: hover) {
+  button.rounded-xl.border-2.border-ink-100:hover:not(:disabled) {
+    border-color: var(--color-azure-200);
+    background-image: linear-gradient(180deg, #ffffff 0%, var(--color-azure-50) 100%);
+    --tile-edge: var(--color-azure-200);
+  }
 }
 button.rounded-xl.border-2.border-azure-500 {
-  --tile-edge: var(--color-azure-300);
+  background-image: linear-gradient(180deg, var(--color-azure-50) 0%, var(--color-azure-100) 100%);
+  --tile-edge: var(--color-azure-400);
+  --tile-glow: rgba(101, 99, 241, 0.14);
 }
 button.rounded-xl.border-2.border-mint-500 {
-  --tile-edge: var(--color-mint-400);
+  background-image: linear-gradient(180deg, var(--color-mint-50) 0%, var(--color-mint-100) 100%);
+  --tile-edge: var(--color-mint-500);
+  --tile-glow: rgba(13, 186, 135, 0.14);
   animation: tile-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 button.rounded-xl.border-2.border-rose-400 {
-  --tile-edge: #fda4af;
+  background-image: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+  --tile-edge: #fb7185;
+  --tile-glow: rgba(244, 63, 94, 0.12);
   animation: tile-shake 0.4s ease;
 }
-.dark button.rounded-xl.border-2:is(.border-azure-500, .border-mint-500, .border-rose-400) {
-  --tile-edge: rgba(0, 0, 0, 0.5);
-}
-/* Tunda variant plitkalari: kulrang-ko'k chegara o'rniga iliq yuza. */
+
+/* Tunda: iliq yuza; tanlangani zafaron, to'g'risi yashil, xatosi qizil. */
 .dark button.rounded-xl.border-2.dark\:border-white\/10 {
-  background-color: rgba(255, 236, 214, 0.055);
-  border-color: rgba(255, 236, 214, 0.1);
+  background-image: linear-gradient(180deg, rgba(255, 236, 214, 0.075) 0%, rgba(255, 236, 214, 0.04) 100%);
+  background-color: transparent;
+  border-color: rgba(255, 236, 214, 0.11);
   color: var(--color-ink-100);
+  --tile-edge: rgba(0, 0, 0, 0.55);
 }
 @media (hover: hover) {
   .dark button.rounded-xl.border-2.dark\:border-white\/10:hover:not(:disabled) {
-    background-color: rgba(255, 236, 214, 0.09);
-    border-color: rgba(255, 202, 74, 0.35);
+    background-image: linear-gradient(180deg, rgba(255, 202, 74, 0.12) 0%, rgba(255, 236, 214, 0.05) 100%);
+    border-color: rgba(255, 202, 74, 0.4);
+    --tile-edge: rgba(0, 0, 0, 0.55);
   }
 }
 .dark button.rounded-xl.border-2.border-azure-500 {
-  border-color: var(--color-azure-400);
-  background-color: rgba(129, 131, 248, 0.16);
-  color: #eef0ff;
+  border-color: var(--color-gold-400);
+  background-image: linear-gradient(180deg, rgba(255, 181, 32, 0.2) 0%, rgba(255, 181, 32, 0.1) 100%);
+  color: var(--color-gold-100);
+  --tile-edge: rgba(183, 75, 6, 0.75);
+  --tile-glow: rgba(255, 181, 32, 0.12);
+}
+.dark button.rounded-xl.border-2.border-mint-500 {
+  border-color: var(--color-mint-400);
+  background-image: linear-gradient(180deg, rgba(49, 211, 159, 0.2) 0%, rgba(49, 211, 159, 0.08) 100%);
+  color: var(--color-mint-100);
+  --tile-edge: rgba(3, 121, 91, 0.85);
+  --tile-glow: rgba(49, 211, 159, 0.12);
+}
+.dark button.rounded-xl.border-2.border-rose-400 {
+  background-image: linear-gradient(180deg, rgba(244, 63, 94, 0.2) 0%, rgba(244, 63, 94, 0.08) 100%);
+  color: #ffe4e6;
+  --tile-edge: rgba(159, 18, 57, 0.85);
+  --tile-glow: rgba(244, 63, 94, 0.12);
 }
 
 /* ---------- Savoldagi bo'sh joy («___») ----------
