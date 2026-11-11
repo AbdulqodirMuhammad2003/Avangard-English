@@ -111,7 +111,7 @@ export const A1_01_EXERCISES: SeedExercise[] = [
     kind: "listengap",
     instructions: "Ikki kishi tanishmoqda. Tinglang va har bir gap uchun eshitgan so'zingizni tanlang.",
     questions: [
-      gaps(track("1.1"), [
+      gaps(track("1.2"), [
         ["Paul: «Hi, I'm ___.»", "Paul", "Peter", "Paula"],
         ["Alisa: «___. I'm Alisa.»", "Hello", "Hi", "Morning"],
         ["Alisa: «Nice to ___ you, Paul.»", "meet", "see", "know"],

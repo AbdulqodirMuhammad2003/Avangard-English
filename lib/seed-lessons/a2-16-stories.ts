@@ -203,13 +203,13 @@ export const A2_16_EXERCISES: SeedExercise[] = [
     instructions: "Two people talk about their visit to Inhotim. Listen and answer the questions.",
     questions: [
       hearing(track("6.16"))("When did the first speaker visit Inhotim?", ["Last week", "Last month", "Last year", "Yesterday"]),
-      hearing(track("6.16"))("What was his main reason for going?", ["The art", "The gardens", "The food", "His friends"]),
-      hearing(track("6.16"))("What did he think of the gardens?", ["Quite nice", "Really beautiful", "A bit boring", "Extremely big"]),
+      hearing(track("6.16"))("What was the first speaker's main reason for going?", ["The art", "The gardens", "The food", "Friends"]),
+      hearing(track("6.16"))("What did the first speaker think of the gardens?", ["Quite nice", "Really beautiful", "A bit boring", "Extremely big"]),
       hearing(track("6.16"))("What was really expensive?", ["The restaurants", "The tickets", "The journey", "The hotel"]),
       hearing(track("6.16"))("When did the second speaker go?", ["A couple of months ago", "Last week", "Last summer", "Two years ago"]),
-      hearing(track("6.16"))("What did she think of the sculptures?", ["A bit boring", "Very interesting", "Really beautiful", "Extremely expensive"]),
-      hearing(track("6.16"))("What did she say about the food?", ["It was quite good.", "It was awful.", "It was really expensive.", "She didn't eat."]),
-      hearing(track("6.16"))("How did she feel when she arrived?", ["Very tired", "Very happy", "A bit bored", "Hungry"]),
+      hearing(track("6.16"))("What did the second speaker think of the sculptures?", ["A bit boring", "Very interesting", "Really beautiful", "Extremely expensive"]),
+      hearing(track("6.16"))("What did the second speaker say about the food?", ["It was quite good.", "It was awful.", "It was really expensive.", "The speaker didn't eat."]),
+      hearing(track("6.16"))("How did the second speaker feel on arrival?", ["Very tired", "Very happy", "A bit bored", "Hungry"]),
     ],
   },
   {

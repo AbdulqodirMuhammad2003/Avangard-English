@@ -142,7 +142,7 @@ export const A2_27_EXERCISES: SeedExercise[] = [
       hearing(track("11.10"))("2. What was the weather like on holiday?", ["Really lovely", "Really awful", "Very cold", "Very rainy"]),
       hearing(track("11.10"))("3. Why is she really excellent at tennis?", ["She always wins.", "She plays every day.", "She has a good teacher.", "She's very tall."]),
       hearing(track("11.10"))("4. What happened to the speaker?", ["They failed their driving test.", "They lost their job.", "They broke their phone.", "They missed the bus."]),
-      hearing(track("11.10"))("5. Why are they going to use the other person's car?", ["The speaker's car is really tiny.", "The speaker's car is filthy.", "The speaker's car is broken.", "The speaker hasn't got a car."]),
+      hearing(track("11.10"))("5. Why are they going to use A's car?", ["B's car is really tiny.", "B's car is filthy.", "B's car is broken.", "B hasn't got a car."]),
     ],
   },
   {

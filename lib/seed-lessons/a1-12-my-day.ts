@@ -134,7 +134,7 @@ export const A1_12_EXERCISES: SeedExercise[] = [
         ["We have dinner at about ___ p.m.", "7.30", "8.30", "6.30"],
         ["After dinner I ___.", "work again", "go to bed", "watch TV"],
         ["I ___ at the weekend.", "work", "don't work", "go abroad"],
-        ["On Saturday evenings we watch a film or ___ with friends.", "go out", "have dinner", "play tennis"],
+        ["On Saturday evenings I watch a film with my family. And we sometimes ___ with friends.", "go out", "have dinner", "play tennis"],
       ]),
     ],
   },

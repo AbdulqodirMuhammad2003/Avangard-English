@@ -179,7 +179,7 @@ export const A2_10_EXERCISES: SeedExercise[] = [
         ["It's also near ___ East River.", "the", "a", "–"],
         ["… and ___ small park.", "a", "the", "–"],
         ["There isn't ___ lift.", "a", "the", "an"],
-        ["I'm not near ___ underground station.", "an", "a", "the"],
+        ["I'm not near ___ underground station.", "the", "an", "a"],
         ["But there's ___ bus stop opposite my building.", "a", "an", "the"],
       ]),
     ],

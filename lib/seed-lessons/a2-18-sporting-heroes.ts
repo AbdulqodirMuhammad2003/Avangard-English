@@ -195,7 +195,7 @@ export const A2_18_EXERCISES: SeedExercise[] = [
     kind: "audiotext",
     instructions: "Two parents talk on a radio programme about video games in gym class. Answer the questions. Some have TWO correct answers.",
     questions: [
-      hearing(track("7.11"))("What does Jan think of the idea?", ["It's great.", "It's terrible.", "She doesn't know.", "It's expensive."]),
+      hearing(track("7.11"))("What does Jan think of the idea?", ["It's great.", "It's terrible.", "Jan isn't sure.", "It's expensive."]),
       hearing(track("7.11"))("Why does Sarah think some video games aren't OK for children?", ["They're very violent.", "They're too long.", "They're boring.", "They're expensive."]),
       hearingTwo(track("7.11"))("Which TWO games do the speakers name?", ["Just Dance", "FIFA"], ["Mario", "Tetris"]),
       hearingTwo(track("7.11"))("What does Sarah's son do?", ["He plays FIFA for hours.", "He plays football in the park with his friends."], ["He does judo.", "He never goes out."]),

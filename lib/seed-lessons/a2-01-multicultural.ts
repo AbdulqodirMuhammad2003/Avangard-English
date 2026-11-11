@@ -228,7 +228,7 @@ export const A2_01_EXERCISES: SeedExercise[] = [
       hearing(track("1.18"))("What nationality is B's wife?", ["Canadian", "Scottish", "Australian", "English"]),
       hearing(track("1.18"))("Where does A's sister study?", ["At university in Montreal", "In Vancouver", "In Edinburgh", "In London"]),
       hearing(track("1.18"))("Which city is B's wife from?", ["Vancouver", "Montreal", "Toronto", "Wellington"]),
-      hearing(track("1.18"))("Is speaker A Australian?", ["No, he's from New Zealand.", "Yes, he is.", "No, he's English.", "No, he's Canadian."]),
+      hearing(track("1.18"))("Is speaker A Australian?", ["No — A is from New Zealand.", "Yes, A is Australian.", "No — A is English.", "No — A is Canadian."]),
     ],
   },
   {
