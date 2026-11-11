@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Check, Delete, Eye, X, GraduationCap, Info, Lightbulb, MapPin, Mic, PlayCircle, RotateCcw, Snail, Trophy, Volume2 } from "lucide-react";
+import { Apple, ArrowRight, BookOpen, Check, Delete, Eye, X, GraduationCap, Info, Lightbulb, MapPin, Mic, RotateCcw, Snail, Volume2 } from "lucide-react";
 import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
 import { Blanked, type BlankTone } from "./Blanked";
+import { ProgressRing } from "../ui/ProgressRing";
 import { buzz, celebrate } from "@/lib/celebrate";
 import { localizeOption } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
@@ -206,29 +207,64 @@ export function ExerciseRun({
 
   if (result !== null) {
     const great = result >= 80;
+    const good = result >= 50;
     const rulePassed = result >= RULE_PASS_PCT;
+    const totalAll = exercise.questions.length;
+    const rightAll = alreadyCorrect + correctCount;
+    const stars = result >= 90 ? 3 : result >= 70 ? 2 : result >= 40 ? 1 : 0;
+    const tone = great ? "mint" : good ? "gold" : "azure";
     return (
-      <div className="flex animate-pop-in flex-col items-center gap-4 py-10 text-center">
-        <div
-          className={`flex h-24 w-24 items-center justify-center rounded-full text-white shadow-lg ${
-            great
-              ? "bg-gradient-to-br from-mint-400 to-mint-700 shadow-mint-700/30"
-              : "bg-gradient-to-br from-gold-400 to-gold-600 shadow-gold-700/30"
-          }`}
-        >
-          {great ? <Trophy size={40} /> : <PlayCircle size={40} />}
+      <div data-tone={tone} className="ae-result flex animate-pop-in flex-col items-center gap-4 text-center">
+        <div className="ae-result-halo">
+          <ProgressRing value={result} size={148} stroke={12} tone={tone}>
+            <span className="ae-result-icon">
+              <Apple size={18} />
+            </span>
+            <span className="font-display text-4xl font-bold leading-none text-ink-950 dark:text-ink-50">
+              {result}
+              <span className="text-xl opacity-60">%</span>
+            </span>
+          </ProgressRing>
         </div>
-        <p className="font-display text-4xl font-bold text-ink-950 dark:text-ink-50">{result}%</p>
-        <p className="text-sm text-ink-600 dark:text-ink-300">
-          {great ? t("Ajoyib natija!", "Great result!") : t("Xato qilingan savollarni yana bir marta ishlab ko'ring.", "Try the questions you got wrong once more.")}{" "}
-          {t("To'g'ri javoblar:", "Correct answers:")} {alreadyCorrect + correctCount} / {exercise.questions.length}
-        </p>
+        <div className="flex items-center gap-1.5" aria-label={t(`${stars} ta olma`, `${stars} apples`)}>
+          {[0, 1, 2].map((i) => (
+            <Apple
+              key={i}
+              size={i === 1 ? 30 : 24}
+              strokeWidth={1.8}
+              className={`ae-result-apple ${i < stars ? "is-on" : ""} ${i === 1 ? "-mt-2" : ""}`}
+              style={{ animationDelay: `${0.35 + i * 0.15}s` }}
+            />
+          ))}
+        </div>
+        <div>
+          <p className="font-display text-2xl font-bold text-ink-950 dark:text-ink-50">
+            {great ? t("Ajoyib natija!", "Great result!") : good ? t("Yaxshi, davom eting!", "Good, keep going!") : t("Yana bir urinib ko'ring!", "Give it another go!")}
+          </p>
+          <p className="mt-1 text-sm text-ink-600 dark:text-ink-300">
+            {great
+              ? t("Bu mavzuni yaxshi o'zlashtirdingiz.", "You've got a good grip on this topic.")
+              : t("Xato qilingan savollarni yana bir marta ishlab ko'ring.", "Try the questions you got wrong once more.")}
+          </p>
+        </div>
+        <div className="grid w-full max-w-xs grid-cols-2 gap-2">
+          <div className="ae-result-stat" data-kind="right">
+            <Check size={16} strokeWidth={3} />
+            <span className="font-display text-xl font-bold">{rightAll}</span>
+            <span className="text-xs opacity-80">{t("to'g'ri", "correct")}</span>
+          </div>
+          <div className="ae-result-stat" data-kind="wrong">
+            <X size={16} strokeWidth={3} />
+            <span className="font-display text-xl font-bold">{totalAll - rightAll}</span>
+            <span className="text-xs opacity-80">{t("xato", "wrong")}</span>
+          </div>
+        </div>
         {kind === "rule" && (
           <p
-            className={`rounded-xl px-3 py-2 text-sm font-semibold ${
+            className={`w-full max-w-sm rounded-2xl px-4 py-2.5 text-sm font-semibold ring-1 ${
               rulePassed
-                ? "bg-mint-50 text-mint-700 dark:bg-mint-950/40 dark:text-mint-300"
-                : "bg-gold-50 text-gold-700 dark:bg-gold-950/40 dark:text-gold-300"
+                ? "bg-mint-50 text-mint-700 ring-mint-200 dark:bg-mint-950/40 dark:text-mint-300 dark:ring-mint-800/50"
+                : "bg-gold-50 text-gold-800 ring-gold-200 dark:bg-gold-950/40 dark:text-gold-200 dark:ring-gold-800/50"
             }`}
           >
             {rulePassed
@@ -239,18 +275,20 @@ export function ExerciseRun({
                 )}
           </p>
         )}
-        <div className="mt-2 flex gap-2">
+        <div className="mt-1 grid w-full max-w-sm grid-cols-2 gap-2">
           <button
             onClick={onRetry}
-            className="btn-press rounded-full bg-ink-100 px-5 py-2.5 text-sm font-bold text-ink-800 hover:bg-ink-200 dark:bg-white/10 dark:text-ink-100"
+            className="btn-press flex items-center justify-center gap-1.5 rounded-full bg-ink-100 py-3 text-sm font-bold text-ink-800 hover:bg-ink-200 dark:bg-white/10 dark:text-ink-100 dark:hover:bg-white/15"
           >
-            {t("Qayta ishlash", "Try again")}
+            <RotateCcw size={16} /> {t("Qayta ishlash", "Try again")}
           </button>
           <button
             onClick={() => onDone(result)}
-            className="btn-press rounded-full bg-azure-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-azure-500"
+            className={`btn-press flex items-center justify-center gap-1.5 rounded-full py-3 text-sm font-bold text-white ${
+              great ? "bg-mint-600 hover:bg-mint-500" : "bg-azure-600 hover:bg-azure-500"
+            }`}
           >
-            {t("Tayyor", "Done")}
+            {t("Tayyor", "Done")} <ArrowRight size={16} />
           </button>
         </div>
       </div>

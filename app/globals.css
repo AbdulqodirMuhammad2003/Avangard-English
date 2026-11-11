@@ -717,3 +717,109 @@ button.rounded-xl.border-2.border-rose-400 {
   --fb-accent: #fb7185;
   --fb-accent-2: #e11d48;
 }
+
+/* ---------- Mashq natijasi oynasi (ExerciseRun) ----------
+   Karta, orqasida rangli nur, doiraviy progress, 3 ta «olma» reyting
+   (qizil = olingan) va to'g'ri/xato statistikasi. */
+.ae-result {
+  --res-accent: var(--color-mint-500);
+  --res-soft: rgba(13, 186, 135, 0.14);
+  position: relative;
+  overflow: hidden;
+  margin: 0.5rem 0;
+  border-radius: 1.75rem;
+  padding: 2rem 1.25rem 1.5rem;
+  background:
+    radial-gradient(18rem 12rem at 50% 0%, var(--res-soft), transparent 70%),
+    var(--card);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 24px 48px -28px rgba(49, 46, 129, 0.35);
+}
+.ae-result[data-tone="gold"] {
+  --res-accent: var(--color-gold-500);
+  --res-soft: rgba(249, 147, 7, 0.16);
+}
+.ae-result[data-tone="azure"] {
+  --res-accent: var(--color-azure-500);
+  --res-soft: rgba(101, 99, 241, 0.14);
+}
+.dark .ae-result {
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 24px 48px -28px rgba(0, 0, 0, 0.7);
+}
+.ae-result-halo {
+  border-radius: 999px;
+  padding: 0.5rem;
+  background: radial-gradient(closest-side, var(--res-soft), transparent);
+}
+.ae-result-icon {
+  display: flex;
+  height: 1.9rem;
+  width: 1.9rem;
+  margin-bottom: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(145deg, #fb7185, #dc2626);
+  box-shadow: 0 4px 10px -4px rgba(220, 38, 38, 0.7);
+}
+@keyframes apple-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.6) rotate(-12deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+.ae-result-apple {
+  color: var(--color-ink-300);
+  fill: transparent;
+  animation: apple-drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.ae-result-apple.is-on {
+  color: #b91c1c;
+  fill: #ef4444;
+  filter: drop-shadow(0 3px 4px rgba(220, 38, 38, 0.35));
+}
+.dark .ae-result-apple {
+  color: var(--color-ink-600);
+}
+.dark .ae-result-apple.is-on {
+  color: #fecaca;
+  fill: #ef4444;
+}
+.ae-result-stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 1rem;
+  padding: 0.55rem 0.75rem;
+  color: var(--color-mint-700);
+  background: var(--color-mint-50);
+  box-shadow: inset 0 0 0 1px var(--color-mint-200);
+}
+.ae-result-stat[data-kind="wrong"] {
+  color: #be123c;
+  background: #fff1f2;
+  box-shadow: inset 0 0 0 1px #fecdd3;
+}
+.dark .ae-result-stat {
+  color: var(--color-mint-200);
+  background: rgba(49, 211, 159, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(49, 211, 159, 0.25);
+}
+.dark .ae-result-stat[data-kind="wrong"] {
+  color: #fecdd3;
+  background: rgba(244, 63, 94, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(251, 113, 133, 0.28);
+}
