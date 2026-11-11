@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { sql } from "@/lib/db";
 import { getT } from "@/lib/lang-server";
 import {
+  canStudy,
   getExerciseQuestions,
   getUnitWords,
   getUserByLogin,
@@ -75,6 +76,14 @@ export async function logoutAction() {
   redirect("/login");
 }
 
+/** O'quvchi faqat joriy darajasidagi darsda ishlay oladi (lib/data.ts
+ *  getLevelAccess): boshqa darajaga oid so'rov rad etiladi. */
+async function requireStudy(target: Parameters<typeof canStudy>[1]): Promise<number> {
+  const userId = await requireUserId();
+  if (!(await canStudy(userId, target))) throw new Error("Bu dars sizning darajangizga tegishli emas.");
+  return userId;
+}
+
 async function requireUserId(): Promise<number> {
   const session = await getSession();
   if (!session) {
@@ -84,7 +93,7 @@ async function requireUserId(): Promise<number> {
 }
 
 export async function markWordLearned(wordId: number, learned: boolean) {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ wordId });
   await sql`
     INSERT INTO user_word_progress (user_id, word_id, learned, updated_at)
     VALUES (${userId}, ${wordId}, ${learned ? 1 : 0}, now())
@@ -112,7 +121,7 @@ export async function submitExerciseResult(
   exerciseId: number,
   answers: { questionId: number; correct: boolean }[]
 ): Promise<number> {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ exerciseId });
 
   if (answers.length > 0) {
     await sql`
@@ -169,7 +178,7 @@ export async function submitExerciseResult(
 /** Xato javobdan keyin to'g'ri javobni ko'rish — darsdagi imkoniyatlardan
  *  bittasini sarflaydi. Qolgan imkoniyatlar sonini, tugagan bo'lsa null qaytaradi. */
 export async function revealAnswerAction(exerciseId: number): Promise<number | null> {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ exerciseId });
   const rows = await sql<{ used: number }[]>`
     INSERT INTO user_answer_reveals (user_id, unit_id, used)
     SELECT ${userId}, unit_id, 1 FROM exercises WHERE id = ${exerciseId}
@@ -206,7 +215,7 @@ export async function setWordStagePassed(
   stage: VocabStage,
   passed: boolean
 ) {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ wordId });
 
   await sql`
     INSERT INTO user_word_stage_progress (user_id, word_id, stage, passed, updated_at)
@@ -327,13 +336,13 @@ export async function submitExamAction(attemptId: number, answers: ExamAnswer[])
 
 /** Mashq ochilganda uning savollarini yuklaydi (sahifa savollarsiz keladi). */
 export async function loadExerciseQuestions(exerciseId: number): Promise<ExerciseQuestion[]> {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ exerciseId });
   return getExerciseQuestions(userId, exerciseId);
 }
 
 /** Darsning lug'at so'zlari — sahifa bilan kelmaydi (hajmi katta), lug'at
  *  bosqichi ochilganda yuklanadi. */
 export async function loadUnitWords(unitId: number): Promise<VocabRoundWithWords[]> {
-  const userId = await requireUserId();
+  const userId = await requireStudy({ unitId });
   return getUnitWords(userId, unitId);
 }

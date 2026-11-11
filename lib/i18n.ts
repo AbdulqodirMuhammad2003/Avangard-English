@@ -26,9 +26,13 @@ export function localizeLabel(lang: Lang, label: string): string {
 }
 
 /** Dars nega yopiqligi (lib/data.ts): «Tez orada», «3-darsni 80% ga yetkazing». */
+/** O'tilgan darajaning darslari shu sabab bilan yopiladi (foizi ko'rinadi). */
+export const LEVEL_DONE_REASON = "Daraja yakunlangan";
+
 export function localizeLockReason(lang: Lang, reason: string): string {
   if (lang === "uz") return reason;
   if (reason === "Tez orada") return "Coming soon";
+  if (reason === LEVEL_DONE_REASON) return "Level completed";
   const m = reason.match(/^(.+?)ni (\d+)% ga yetkazing$/);
   return m ? `Get ${localizeLabel(lang, m[1])} to ${m[2]}%` : reason;
 }

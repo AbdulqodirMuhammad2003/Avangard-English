@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { sql } from "./db";
+import { LEVEL_DONE_REASON } from "./i18n";
 import type { ExerciseKind } from "./seed-exercises";
 
 export type { ExerciseKind };
@@ -34,7 +35,11 @@ export interface LevelRecord {
   title: string;
   description: string;
   order_index: number;
+  /** 1 — o'quvchiga ko'rinmaydi (keyingi darajalar va o'qimagan oldingilari). */
   locked: number;
+  /** 1 — o'quvchi o'tib bo'lgan daraja: darslar foizi ko'rinadi, lekin
+   *  darslarni ochib bo'lmaydi. */
+  completed: number;
 }
 
 export type ClipKind = "film" | "multfilm" | "hujjatli" | "intervyu";
@@ -317,21 +322,93 @@ export async function getWordPool(): Promise<{ id: number; word: string; transla
 
 // ---------- Darajalar (A1, A2, B1, B2) ----------
 
-/** Darajalar o'quvchi uchun: uning joriy darajasi va undan oldingilari
- *  ochiq, keyingilari yopiq. Keyingi daraja yakuniy imtihondan o'tganda
- *  ochiladi (lib/exam.ts o'quvchining darajasini ko'taradi).
- *  O'qituvchiga (mazmunni tekshirish uchun) va PREVIEW_ALL_LEVELS_EMAILS
- *  dagi hisoblarga hamma darajalar ochiq. */
+/**
+ * O'quvchining darajalarga ruxsati:
+ *  - joriy daraja (`users.level`) — o'qiladi, darslar ochiladi;
+ *  - oldingi daraja, agar o'quvchi uni shu saytda o'qigan bo'lsa (biror
+ *    darsida natijasi bor yoki imtihonidan o'tgan) — «yakunlangan»: darslar
+ *    foizi ko'rinadi, lekin darslar ochilmaydi;
+ *  - keyingi darajalar va o'qilmagan oldingilari — umuman ko'rinmaydi.
+ * Daraja yakuniy imtihondan o'tganda (lib/exam.ts) yoki o'qituvchi
+ * o'quvchini keyingi darajaga o'tkazganda almashadi.
+ * O'qituvchi/admin va PREVIEW_ALL_LEVELS_EMAILS — hammasi ochiq (`staff`).
+ */
+export interface LevelAccess {
+  staff: boolean;
+  current: string;
+  /** Ko'rinadigan darajalar: joriy + yakunlanganlar (staff uchun — hammasi). */
+  visible: Set<string>;
+  completed: Set<string>;
+}
+
+export const getLevelAccess = cache(async (userId: number): Promise<LevelAccess> => {
+  const [[me], levels, studied] = await Promise.all([
+    sql<{ level: string | null; role: string; email: string | null }[]>`
+      SELECT level, role, email FROM users WHERE id = ${userId}
+    `,
+    sql<{ code: string; order_index: number }[]>`SELECT code, order_index FROM levels ORDER BY order_index`,
+    sql<{ code: string }[]>`
+      SELECT l.code FROM levels l
+      WHERE EXISTS (SELECT 1 FROM units un JOIN user_unit_progress p ON p.unit_id = un.id
+                    WHERE un.level_id = l.id AND p.user_id = ${userId})
+         OR EXISTS (SELECT 1 FROM units un JOIN exercises e ON e.unit_id = un.id
+                    JOIN user_exercise_progress p ON p.exercise_id = e.id
+                    WHERE un.level_id = l.id AND p.user_id = ${userId})
+         OR EXISTS (SELECT 1 FROM units un JOIN vocabulary_rounds r ON r.unit_id = un.id
+                    JOIN vocabulary_words w ON w.round_id = r.id
+                    JOIN user_word_progress p ON p.word_id = w.id
+                    WHERE un.level_id = l.id AND p.user_id = ${userId})
+         OR EXISTS (SELECT 1 FROM exam_attempts a WHERE a.user_id = ${userId} AND a.level_code = l.code AND a.passed = 1)
+    `,
+  ]);
+  const current = me?.level ?? "A1";
+  const staff = me?.role === "teacher" || (!!me?.email && PREVIEW_ALL_LEVELS_EMAILS.includes(me.email));
+  if (staff) return { staff, current, visible: new Set(levels.map((l) => l.code)), completed: new Set() };
+  const currentOrder = levels.find((l) => l.code === current)?.order_index ?? 0;
+  const studiedSet = new Set(studied.map((s) => s.code));
+  const completed = new Set(
+    levels.filter((l) => l.order_index < currentOrder && studiedSet.has(l.code)).map((l) => l.code)
+  );
+  return { staff, current, visible: new Set([current, ...completed]), completed };
+});
+
+/** Server tomonida tekshiruv: o'quvchi faqat joriy darajasidagi darsni
+ *  ochishi va unda ishlashi mumkin (o'tilgan daraja — faqat ko'rish uchun).
+ *  Dars, mashq yoki so'z id si bo'yicha. */
+export async function canStudy(
+  userId: number,
+  target: { unitId: number } | { exerciseId: number } | { wordId: number }
+): Promise<boolean> {
+  const access = await getLevelAccess(userId);
+  if (access.staff) return true;
+  const rows =
+    "unitId" in target
+      ? await sql<{ code: string }[]>`
+          SELECT l.code FROM units u JOIN levels l ON l.id = u.level_id WHERE u.id = ${target.unitId}`
+      : "exerciseId" in target
+      ? await sql<{ code: string }[]>`
+          SELECT l.code FROM exercises e JOIN units u ON u.id = e.unit_id JOIN levels l ON l.id = u.level_id
+          WHERE e.id = ${target.exerciseId}`
+      : await sql<{ code: string }[]>`
+          SELECT l.code FROM vocabulary_words w JOIN vocabulary_rounds r ON r.id = w.round_id
+          JOIN units u ON u.id = r.unit_id JOIN levels l ON l.id = u.level_id
+          WHERE w.id = ${target.wordId}`;
+  return rows.length > 0 && rows[0].code === access.current;
+}
+
+/** Darajalar ro'yxati o'quvchi ruxsati bilan (getLevelAccess). */
 export async function getLevels(userId: number): Promise<LevelRecord[]> {
-  return sql<LevelRecord[]>`
-    SELECT l.id, l.code, l.title, l.description, l.order_index,
-           (l.order_index > COALESCE(
-              (SELECT CASE WHEN u.role = 'teacher' OR u.email IN ${sql(PREVIEW_ALL_LEVELS_EMAILS.length ? PREVIEW_ALL_LEVELS_EMAILS : [""])}
-                           THEN 999 ELSE lv.order_index END
-               FROM users u JOIN levels lv ON lv.code = u.level WHERE u.id = ${userId}), 1
-           ))::int AS locked
-    FROM levels l ORDER BY l.order_index ASC
-  `;
+  const [rows, access] = await Promise.all([
+    sql<Omit<LevelRecord, "locked" | "completed">[]>`
+      SELECT id, code, title, description, order_index FROM levels ORDER BY order_index ASC
+    `,
+    getLevelAccess(userId),
+  ]);
+  return rows.map((l) => ({
+    ...l,
+    locked: access.visible.has(l.code) ? 0 : 1,
+    completed: access.completed.has(l.code) ? 1 : 0,
+  }));
 }
 
 // ---------- Darslar (Units) ----------
@@ -356,7 +433,7 @@ export async function getUnitsForUser(userId: number): Promise<UnitRecord[]> {
  *  natijalar shu yerda yig'iladi (avval har bir bosqich/mashq uchun alohida
  *  so'rov ketardi — ~50 ta ketma-ket so'rov). */
 export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]> {
-  const [units, rounds, wordCounts, exerciseRows, questionCounts, levelRows, placementRows] = await Promise.all([
+  const [units, rounds, wordCounts, exerciseRows, questionCounts, levelRows, placementRows, access] = await Promise.all([
     getUnitsForUser(userId),
     sql<{ id: number; unit_id: number; title: string; order_index: number }[]>`
       SELECT id, unit_id, title, order_index FROM vocabulary_rounds ORDER BY order_index ASC
@@ -404,6 +481,7 @@ export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]>
       LEFT JOIN units su ON su.id = u.start_unit_id AND su.level_id = lv.id
       WHERE u.id = ${userId}
     `,
+    getLevelAccess(userId),
   ]);
   const levelOrder = new Map(levelRows.map((l) => [l.code, l.order_index]));
   const placement = placementRows[0];
@@ -474,10 +552,13 @@ export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]>
     if (parts.length === 0) unit.lock_reason = "Tez orada";
     else if (UNLOCK_RULE_ENABLED && previous && previous.percent < UNLOCK_THRESHOLD && !placedOpen(unit))
       unit.lock_reason = `${previous.title}ni ${UNLOCK_THRESHOLD}% ga yetkazing`;
+    // O'tilgan daraja: foiz ko'rinadi, dars ochilmaydi.
+    if (access.completed.has(unit.level_code) && parts.length > 0) unit.lock_reason = LEVEL_DONE_REASON;
     unit.locked = unit.lock_reason ? 1 : 0;
     previous = unit;
   }
-  return detailed;
+  // Boshqa (keyingi yoki o'qilmagan) darajalar darslari o'quvchiga yuborilmaydi.
+  return access.staff ? detailed : detailed.filter((u) => access.visible.has(u.level_code));
 }
 
 /** Sahifaga yuboriladigan darslar ro'yxatidan mashq savollarini olib

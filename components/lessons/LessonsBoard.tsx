@@ -45,13 +45,15 @@ import type {
   UnitDetail,
   VocabRoundWithWords,
 } from "@/lib/data";
+import type { Certificate } from "@/lib/exam";
+import { downloadCertificate } from "@/lib/certificate";
 import { loadExerciseQuestions, loadUnitWords, revealAnswerAction, submitExerciseResult } from "@/app/actions";
 import { ANSWER_REVEALS_PER_UNIT } from "@/lib/reveals";
 import { VocabRoundFlow } from "./VocabRoundFlow";
 import { ExerciseRun, RULE_PASS_PCT } from "./ExerciseRun";
 import { levelInfo } from "@/lib/levels";
 import { isMediaRef, LEVEL_BOOKS, mediaUrl } from "@/lib/media";
-import { localizeLabel, localizeLockReason } from "@/lib/i18n";
+import { LEVEL_DONE_REASON, localizeLabel, localizeLockReason } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
 
 type View = "main" | "exercise-run" | "clip";
@@ -147,10 +149,16 @@ export function LessonsBoard({
   levels,
   exam,
   previewAll = false,
+  certificates = [],
+  studentName = "",
 }: {
   units: UnitDetail[];
   levels: LevelRecord[];
   exam: BoardExam;
+  /** O'quvchi imtihonidan o'tgan darajalar sertifikatlari (o'tilgan
+   *  daraja sahifasida yuklab olish uchun). */
+  certificates?: Certificate[];
+  studentName?: string;
   /** O'qituvchi: dars ichidagi bosqichlar (qoida, mashqlar) ham ochiq. */
   previewAll?: boolean;
 }) {
@@ -200,6 +208,19 @@ export function LessonsBoard({
   const [openSection, setOpenSection] = useState<Section | null>("vocab");
 
   const visibleUnits = units.filter((u) => u.level_code === shownLevel?.code);
+  // O'tilgan daraja: darslar faqat foizi bilan ko'rinadi, ochilmaydi.
+  const shownCompleted = !!shownLevel?.completed;
+  const certificateOf = (level: string) => certificates.find((c) => c.level === level) ?? null;
+  const [downloading, setDownloading] = useState(false);
+  async function getCertificate(cert: Certificate) {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      await downloadCertificate(cert, studentName);
+    } finally {
+      setDownloading(false);
+    }
+  }
   // Darajaning oxirgi darsidan keyin — o'sha darajaning imtihon kartasi.
   const items: CarouselItem[] = visibleUnits.flatMap((unit, i): CarouselItem[] => {
     const next = visibleUnits[i + 1];
@@ -483,6 +504,30 @@ export function LessonsBoard({
         </div>
       )}
 
+      {shownLevel && shownCompleted && (
+        <div className="mb-2 mt-2 flex flex-col gap-3 rounded-3xl bg-mint-50 p-4 ring-1 ring-mint-600/15 sm:flex-row sm:items-center dark:bg-mint-950/30 dark:ring-mint-300/15">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-mint-600 text-white">
+            <Check size={20} strokeWidth={3} />
+          </span>
+          <p className="flex-1 text-sm text-ink-800 dark:text-ink-100">
+            {t(
+              `${shownLevel.code} darajasi yakunlangan. Darslar endi yopiq, lekin har bir darsdagi natijangiz saqlanib qoladi.`,
+              `You have completed ${shownLevel.code}. Its lessons are closed now, but your result in every lesson is kept.`
+            )}
+          </p>
+          {certificateOf(shownLevel.code) && (
+            <button
+              onClick={() => getCertificate(certificateOf(shownLevel.code)!)}
+              disabled={downloading}
+              className="btn-press flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-ink-900 shadow-sm ring-1 ring-ink-950/5 transition-colors hover:bg-ink-50 disabled:opacity-60 dark:bg-white/10 dark:text-ink-50 dark:ring-white/10 dark:hover:bg-white/15"
+            >
+              <Download size={16} className="text-gold-600 dark:text-gold-300" />
+              {downloading ? t("Tayyorlanmoqda…", "Preparing…") : t("Sertifikatni yuklab olish", "Download certificate")}
+            </button>
+          )}
+        </div>
+      )}
+
       {visibleUnits.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 rounded-3xl bg-white p-12 text-center shadow-sm dark:bg-[#201b17] dark:shadow-none">
           <Lock size={28} className="text-ink-200 dark:text-ink-700" />
@@ -503,12 +548,15 @@ export function LessonsBoard({
                       key={`exam-${item.level}`}
                       level={item.level}
                       exam={exam}
+                      certificate={certificateOf(item.level)}
                       active={i === activeCard}
                       delay={Math.min(i, 8) * 60}
                       onClick={() => {
                         const open = item.level === exam.level && exam.open;
+                        const cert = item.level !== exam.level ? certificateOf(item.level) : null;
                         if (i !== activeCard && !isWide()) scrollToCard(i);
                         else if (open) router.push("/exam");
+                        else if (cert) getCertificate(cert);
                       }}
                     />
                   );
@@ -516,6 +564,7 @@ export function LessonsBoard({
                 const unit = item.unit;
                 const gradient = unitGradient(unit);
                 const active = i === activeCard;
+                const levelDone = unit.lock_reason === LEVEL_DONE_REASON;
                 return (
                   <button
                     key={unit.id}
@@ -538,7 +587,7 @@ export function LessonsBoard({
                       className="pointer-events-none absolute inset-0 opacity-[0.12]"
                       style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1.2px)", backgroundSize: "16px 16px" }}
                     />
-                    {!unit.locked && unit.percent >= DONE_PCT && (
+                    {(!unit.locked || levelDone) && unit.percent >= DONE_PCT && (
                       <span className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-mint-600 shadow-lg">
                         <Check size={18} strokeWidth={3} />
                       </span>
@@ -555,7 +604,7 @@ export function LessonsBoard({
                     </p>
 
                     <div className="relative mt-auto flex w-full flex-col items-center gap-2">
-                      {unit.locked ? (
+                      {unit.locked && !levelDone ? (
                         <span className="flex h-12 items-center gap-2 rounded-full bg-black/25 px-6 text-base font-bold text-white/90 ring-1 ring-inset ring-white/25 backdrop-blur-sm">
                           <LockKeyhole size={20} strokeWidth={2.4} />{" "}
                           {unit.lock_reason === "Tez orada" ? t("Tez orada", "Coming soon") : t("Yopiq", "Locked")}
@@ -571,7 +620,8 @@ export function LessonsBoard({
                           </span>
                         </div>
                       )}
-                      <span className="min-h-5 text-center text-xs font-semibold leading-tight text-white/85">
+                      <span className="flex min-h-5 items-center justify-center gap-1 text-center text-xs font-semibold leading-tight text-white/85">
+                        {levelDone && <LockKeyhole size={12} strokeWidth={2.6} />}
                         {unit.locked
                           ? unit.lock_reason === "Tez orada"
                             ? ""
@@ -996,12 +1046,14 @@ export function LessonsBoard({
 function ExamCarouselCard({
   level,
   exam,
+  certificate,
   active,
   delay,
   onClick,
 }: {
   level: string;
   exam: BoardExam;
+  certificate: Certificate | null;
   active: boolean;
   delay: number;
   onClick: () => void;
@@ -1014,12 +1066,12 @@ function ExamCarouselCard({
     <button
       data-card
       onClick={onClick}
-      aria-disabled={!open}
+      aria-disabled={!open && !certificate}
       style={{ animationDelay: `${delay}ms` }}
       className={`group relative flex h-72 w-60 shrink-0 snap-center animate-fade-up flex-col items-center overflow-hidden rounded-[2rem] bg-gradient-to-br px-5 pb-6 pt-7 text-center text-white ring-1 ring-inset ring-white/10 transition-all duration-500 ease-out lg:h-64 lg:w-auto lg:scale-100 lg:opacity-100 lg:shadow-md lg:hover:-translate-y-1 ${
         "from-gold-400 to-gold-700"
       } ${active ? "z-10 scale-110 shadow-2xl shadow-black/30" : "scale-95 opacity-60 shadow-md hover:opacity-90"} ${
-        active && !open ? "cursor-default" : ""
+        active && !open && !certificate ? "cursor-default" : ""
       }`}
     >
       <span className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/10 blur-2xl" />
@@ -1052,7 +1104,9 @@ function ExamCarouselCard({
         )}
         <span className="min-h-5 text-center text-xs font-semibold leading-tight text-white/85">
           {passed
-            ? t("Keyingi daraja ochilgan", "The next level is open")
+            ? certificate && !current
+              ? t("Bosing — sertifikatni yuklab oling", "Tap to download your certificate")
+              : t("Keyingi daraja ochilgan", "The next level is open")
             : open
             ? exam.note
             : t("Barcha darslarni 80% ga yetkazing", "Get all lessons to 80%")}

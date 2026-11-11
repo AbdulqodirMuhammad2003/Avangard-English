@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { getAllUnitsDetailed, withoutQuestions, getLevels, getUserStats } from "@/lib/data";
 import { LessonsBoard } from "@/components/lessons/LessonsBoard";
-import { getExamStatus } from "@/lib/exam";
+import { getCertificates, getExamStatus } from "@/lib/exam";
 import { langForLevel, translator } from "@/lib/i18n";
 
 /** «Darslar» — faqat darajalar va darslar. Kunlik panel (salomlashish,
@@ -13,10 +13,11 @@ export default async function LessonsPage() {
   const user = await getUserStats(userId);
   const lang = langForLevel(user?.level);
   const t = translator(lang);
-  const [units, levels, exam] = await Promise.all([
+  const [units, levels, exam, certificates] = await Promise.all([
     getAllUnitsDetailed(userId).then(withoutQuestions),
     getLevels(userId),
     getExamStatus(userId, lang),
+    getCertificates(userId),
   ]);
   // O'qituvchi saytni tekshirishi uchun unga hamma narsa ochiq.
   const isTeacher = user?.role === "teacher";
@@ -28,6 +29,8 @@ export default async function LessonsPage() {
         units={units}
         levels={levels}
         previewAll={isTeacher}
+        certificates={certificates}
+        studentName={user?.name ?? ""}
         exam={{
           level: exam.level,
           // Imtihon daraja tugagach (barcha darslar 80 %) ochiladi; boshlangan
