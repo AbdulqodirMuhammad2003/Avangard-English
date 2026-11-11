@@ -6,6 +6,7 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
   listen,
   mistake,
@@ -316,5 +317,26 @@ export const A1_27_EXERCISES: SeedExercise[] = [
       "autumn",
       "temperature",
     ]),
+  },
+  {
+    title: "Ob-havo qanday?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Uchta qisqa suhbatni tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/9.17.mp3", [["1. It's a little ___, but it's warm.","cloudy","rainy","snowy"],["1. Where the other person is, it's ___.","rainy","sunny","stormy"],["2. The first week of the holiday was the ___ season.","rainy","hot","cold"],["2. After that it was sunny and very ___.","hot","cold","windy"],["3. In winter New York is very cold and often ___.","snowy","rainy","stormy"]]),
+    ],
+  },
+  {
+    title: "Oklenddagi ob-havo",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Yangi Zelandiyadagi Oklend shahrining ob-havosi haqida tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/9.23.mp3")("What's the weather like in Auckland?", ["It's never very hot and never very cold.","It's very hot in summer.","It's very cold in winter.","It's always sunny."]),
+      hearing("media:navigate-a1/audio/9.23.mp3")("Is it ever snowy?", ["No, never.","Yes, in winter.","Yes, every year.","Sometimes in spring."]),
+      hearing("media:navigate-a1/audio/9.23.mp3")("What's the temperature in summer?", ["20–24°C","12–16°C","Around 18°C","30–34°C"]),
+      hearing("media:navigate-a1/audio/9.23.mp3")("What's winter like?", ["Cloudy and often rainy","Sunny and warm","Cold and snowy","Very hot"]),
+    ],
   },
 ];

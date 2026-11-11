@@ -322,4 +322,18 @@ export const A1_29_EXERCISES: SeedExercise[] = [
       "scholarship",
     ]),
   },
+  {
+    title: "Maldiv orollaridagi yangi hayot",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Tom va Victoria do'stiga katta yangilik aytadi. Tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/10.5.mp3")("What's the news?", ["Victoria has got a new job.","Tom has got a new job.","They're going to have a baby.","They bought a house."]),
+      hearing("media:navigate-a1/audio/10.5.mp3")("Where are they going to move?", ["To the Maldives","To Mexico","To Spain","To Australia"]),
+      hearing("media:navigate-a1/audio/10.5.mp3")("What is Victoria going to do there?", ["Teach English to people who work in hotels","Work in a hotel restaurant","Study English","Open a shop"]),
+      hearing("media:navigate-a1/audio/10.5.mp3")("Where are they going to live?", ["In a small house on another island","In a big hotel","In a flat in the city","With Victoria's family"]),
+      hearing("media:navigate-a1/audio/10.5.mp3")("When does the job start?", ["In June","In May","In July","Next year"]),
+      hearing("media:navigate-a1/audio/10.5.mp3")("How long is the job?", ["A year","Four weeks","Two years","Six months"]),
+    ],
+  },
 ];

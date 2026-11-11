@@ -8,7 +8,9 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   dictation,
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -325,5 +327,26 @@ export const A1_30_EXERCISES: SeedExercise[] = [
       "receipt",
       "vegetarian",
     ]),
+  },
+  {
+    title: "Vena kafesida",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Ikki do'st kafeda buyurtma beradi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/10.10.mp3")("How many people need a table?", ["Two","One","Three","Four"]),
+      hearing("media:navigate-a1/audio/10.10.mp3")("What is Sachertorte?", ["A kind of chocolate cake","A kind of coffee","A kind of sandwich","A kind of tea"]),
+      hearingTwo("media:navigate-a1/audio/10.10.mp3")("What do they order?", ["A coffee and a cup of tea","A piece of Sachertorte"], ["Two coffees","A sandwich"]),
+      hearing("media:navigate-a1/audio/10.10.mp3")("What do they talk about at the end?", ["Going to another museum or back to the hotel","Paying the bill","Ordering more cake","Calling a taxi"]),
+    ],
+  },
+  {
+    title: "Buyurtma",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Kafe va tez ovqatlanish joyidagi uchta suhbatni tinglang. To'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/10.15.mp3", [["1. A burger and ___, please.","chips","salad","rice"],["1. Small or large? — ___, please.","Large","Small","Medium"],["2. A large ___, please.","hotdog","coffee","burger"],["2. How much is that? — Two pounds ___.","fifty","fifteen","five"],["3. Can we have the ___, please?","bill","menu","table"]]),
+    ],
   },
 ];

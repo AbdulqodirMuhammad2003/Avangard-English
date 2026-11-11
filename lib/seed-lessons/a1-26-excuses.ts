@@ -7,6 +7,7 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   dictation,
+  gaps,
   hearing,
   listen,
   mistake,
@@ -339,5 +340,26 @@ export const A1_26_EXERCISES: SeedExercise[] = [
       "Please tell me the truth.",
       "headache",
     ]),
+  },
+  {
+    title: "Nathan nega kelmadi?",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Nathan kecha nega ishga kelmaganini tushuntiradi. Tinglang va savollarga javob bering.",
+    questions: [
+      hearing("media:navigate-a1/audio/9.3.mp3")("Why did Nathan have a bad night?", ["He watched a horror film.","He was ill.","He worked late.","His neighbours were noisy."]),
+      hearing("media:navigate-a1/audio/9.3.mp3")("Did he phone the office in the morning?", ["No, he didn't.","Yes, at nine o'clock.","Yes, at twelve o'clock.","He doesn't remember."]),
+      hearing("media:navigate-a1/audio/9.3.mp3")("When did he get up?", ["At twelve o'clock","At ten o'clock","At eight o'clock","In the evening"]),
+      hearing("media:navigate-a1/audio/9.3.mp3")("When did he phone?", ["In the afternoon","In the morning","In the evening","He didn't phone."]),
+    ],
+  },
+  {
+    title: "Yomon kun",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Odam kechagi yomon kuni haqida gapiradi. Tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/9.7.mp3", [["The speaker got to the office ___ hours late.","two","three","four"],["The boss ___ very happy.","wasn't","was","is"],["The speaker missed the first half of a ___.","meeting","film","class"],["After lunch there was a phone call from the ___.","school","doctor","boss"],["On the way out they met an old friend, ___.","Cathy","Helen","Kate"],["They got home at ___ o'clock in the evening.","eight","six","ten"]]),
+    ],
   },
 ];

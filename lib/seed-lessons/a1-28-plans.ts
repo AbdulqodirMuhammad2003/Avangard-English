@@ -7,7 +7,9 @@
 import type { SeedExercise } from "../seed-exercises";
 import {
   dictation,
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -316,5 +318,26 @@ export const A1_28_EXERCISES: SeedExercise[] = [
       "abroad",
       "sightseeing",
     ]),
+  },
+  {
+    title: "Gvatemalada ko'ngilli",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Talaba kelgusi yozgi rejasi haqida gapiradi. Tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/10.1.mp3", [["The speaker studies international ___.","relations","business","languages"],["Next summer the speaker is going to be a volunteer in ___.","Guatemala","Mexico","Peru"],["The group is going to work with local people in the ___.","mountains","city","forest"],["They're going to be there for ___ weeks.","three","two","four"],["They aren't going to take mobile phones or ___.","computers","money","cameras"],["They need $___ for the project.","2,000","20,000","200"]]),
+    ],
+  },
+  {
+    title: "Chikagoga ko'chish",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Ikki kishi do'stlarining rejalari haqida gaplashadi. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/10.19.mp3")("Where are Michael and Sara going to move?", ["To Chicago","To New York","To London","To Boston"]),
+      hearing("media:navigate-a1/audio/10.19.mp3")("When are they going to move?", ["In May","In March","In June","Next year"]),
+      hearing("media:navigate-a1/audio/10.19.mp3")("What is Sara going to do first?", ["Finish university","Change jobs","Buy a car","Learn a language"]),
+      hearingTwo("media:navigate-a1/audio/10.19.mp3")("Which TWO are true?", ["Michael is going to work from home.","They're going to buy a house."], ["Michael is going to change jobs.","They're going to rent a flat."]),
+    ],
   },
 ];

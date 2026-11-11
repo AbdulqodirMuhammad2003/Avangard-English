@@ -7,7 +7,9 @@
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
+  gaps,
   hearing,
+  hearingTwo,
   listen,
   mistake,
   pairs,
@@ -315,5 +317,27 @@ export const A1_25_EXERCISES: SeedExercise[] = [
       "wrote",
       "delicious",
     ]),
+  },
+  {
+    title: "Qanday tanishdik",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Odam turmush o'rtog'i John bilan qanday tanishgani haqida gapiradi. Tinglang va to'g'ri so'zni tanlang.",
+    questions: [
+      gaps("media:navigate-a1/audio/9.2.mp3", [["The speaker first met John at the age of ___.","five","fifteen","ten"],["They knew each other from ___.","school","work","a shop"],["In 2010 the speaker saw John again in a ___ shop.","clothes","shoe","book"],["John sold a ___ to the speaker's friend.","jacket","dress","hat"],["His text message said: «Do you want to go out for a ___?»","meal","walk","film"],["They got married in ___.","2011","2010","2012"]]),
+    ],
+  },
+  {
+    title: "Vokzaldagi voqea",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Nyu-Yorkdagi g'aroyib voqea haqida tinglang. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    questions: [
+      hearing("media:navigate-a1/audio/9.14.mp3")("Where was Julio Diaz?", ["At a train station in New York","At a bus station in New York","In a restaurant","In a park"]),
+      hearing("media:navigate-a1/audio/9.14.mp3")("What did the boy want?", ["His money","His phone","His bag","Some food"]),
+      hearingTwo("media:navigate-a1/audio/9.14.mp3")("Which TWO things did Diaz give the boy at first?", ["His wallet","His jacket"], ["His phone","His watch"]),
+      hearing("media:navigate-a1/audio/9.14.mp3")("Where did they go together?", ["To a restaurant","To the police","To a shop","To Diaz's home"]),
+      hearing("media:navigate-a1/audio/9.14.mp3")("How much money did Diaz give the boy at the end?", ["$20","$2","$200","$12"]),
+    ],
   },
 ];
