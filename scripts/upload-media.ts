@@ -5,6 +5,8 @@
  *
  *   npm run media:upload -- <papka> <bucket ichidagi papka> [--apply]
  *   npm run media:upload -- "C:/…/Navigate A2 Audio" navigate-a2/audio --apply
+ *   npm run media:upload -- "C:/…/Navigate B2 CB Audio" navigate-b2/audio --apply
+ *   npm run media:upload -- "C:/…/Navigate B2 WB Audio" navigate-b2/workbook-audio --apply
  *
  * Papkadagi .mp3/.mp4 fayllar (ichki papkalar ham) qisqa nomlar bilan
  * yuklanadi: Track_1.2.mp3 → 1.2.mp3, GR/Track_GR_1.1a.mp3 → gr-1.1a.mp3,
@@ -40,7 +42,10 @@ const shortName = (file: string) =>
   file
     // Navigate A1: Track_01_05.mp3 → 1.5.mp3, Track_GR_02_01A.mp3 → gr-2.1a.mp3,
     // nav_a1_report_unit3_olb.mp4 → report-03.mp4, nav_a1_voxpops_unit1_2_olb.mp4 → voxpops-1-2.mp4.
-    .replace(/^Track_GR_(\d+)_(\d+)([A-Za-z]?)\./, (_, u, t, s) => `gr-${+u}.${+t}${s.toLowerCase()}.`)
+    // Navigate B2: t_1_1.mp3 → 1.1.mp3, gr_1_1.mp3 → gr-1.1.mp3 (workbook: Track_1_1.mp3 → 1.1.mp3).
+    .replace(/^t_(\d+)_(\d+)\./, "$1.$2.")
+    .replace(/^gr_(\d+)_(\d+)\./, "gr-$1.$2.")
+    .replace(/^Track_GR_(\d+)_(\d+)([A-Za-z]?)\./,(_, u, t, s) => `gr-${+u}.${+t}${s.toLowerCase()}.`)
     .replace(/^Track_(\d+)_(\d+)([A-Za-z]?)\./, (_, u, t, s) => `${+u}.${+t}${s.toLowerCase()}.`)
     .replace(/^nav_a1_report_unit(\d+)_olb/, (_, u) => `report-${String(u).padStart(2, "0")}`)
     .replace(/^nav_a1_voxpops_unit([\d_]+)_olb/, (_, u) => `voxpops-${u}`)

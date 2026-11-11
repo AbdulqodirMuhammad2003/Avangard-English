@@ -25,4 +25,8 @@ export const LEVEL_BOOKS: Record<string, { title: string; parts: string[] }> = {
     title: "Navigate A2 Elementary",
     parts: ["media:books/navigate-a2-1.pdf", "media:books/navigate-a2-2.pdf", "media:books/navigate-a2-3.pdf"],
   },
+  B2: {
+    title: "Navigate B2 Upper-intermediate",
+    parts: ["media:books/navigate-b2-1.pdf", "media:books/navigate-b2-2.pdf", "media:books/navigate-b2-3.pdf"],
+  },
 };
