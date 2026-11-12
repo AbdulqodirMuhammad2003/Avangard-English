@@ -209,10 +209,10 @@ export const B2_01_EXERCISES: SeedExercise[] = [
     instructions: "You will hear four questions. Listen and choose the missing words in each one.",
     questions: [
       gaps(track("gr-1.1"), [
-        ["1. How long ___ at the university?", "has Anton been working", "has been Anton working", "Anton has been working"],
-        ["2. Who ___ to Italy before?", "has been", "has he been", "did go"],
-        ["3. I was just wondering if ___ on time.", "we'll arrive", "will we arrive", "we arrive"],
-        ["4. Do you know where he ___?", "comes from", "does come from", "from comes"],
+        ["How long ___ at the university?", "has Anton been working", "has been Anton working", "Anton has been working"],
+        ["Who ___ to Italy before?", "has been", "has he been", "did go"],
+        ["I was just wondering if ___ on time.", "we'll arrive", "will we arrive", "we arrive"],
+        ["Do you know where he ___?", "comes from", "does come from", "from comes"],
       ]),
     ],
   },
