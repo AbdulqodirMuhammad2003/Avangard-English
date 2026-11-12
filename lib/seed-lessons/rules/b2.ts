@@ -168,4 +168,45 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("___ she had learnt the skills, she set off alone.", ["After", "While", "During", "By"]),
     ]
   ),
+  "B2-05": rule(
+    "Past perfect simple and continuous",
+    `We use the **past perfect** when we are already talking about the past and want to go back to an **earlier past time**.
+
+## Form
+• **Simple:** had + past participle → The play **had started** when he got to the theatre. · They **hadn't met** before.
+• **Continuous:** had + been + -ing → It **had been raining** for hours. · I **hadn't been feeling** well.
+• In speech we often say **'d**: We**'d** met before. · It**'d** been raining for days.
+
+## Past perfect simple — completed actions
+• An action that was **finished before** the moment we are talking about.
+→ He**'d asked** for her master's permission **before** they got married.
+→ By the time we got to the station, the train **had already left**.
+• **already** = it happened earlier; **just** = a very short time before: Samir **had just left** when we arrived.
+
+## Past perfect continuous — a longer activity
+• An action that **continued for a period of time** up to the past moment (often we can see the result).
+→ His body hurt because he **had been sitting** in the same position for hours.
+→ When I woke up, I saw that it **had been raining**.
+
+## State verbs — simple only
+• be, have, know, like → past perfect **simple**.
+→ They **hadn't been** together long before his wife was sold. · We**'d known** each other for five years.
+
+## Adjectives of feeling
+• happy → **delighted, relieved, satisfied** · sad → **miserable, down, hurt**
+• angry → **furious, bitter** · frightened → **petrified, terrified**
+• nervous → **anxious, tense** · confused → **puzzled, disorientated**`,
+    [
+      q("They ___ each other for a year before they got married.", ["had known", "had been knowing", "have known", "knew been"]),
+      q("He was exhausted because he ___ all night.", ["had been driving", "has been driving", "had drove", "drives"]),
+      q("By the time we got there, the train ___ left.", ["had already", "has already", "already was", "had been"]),
+      q("My eyes hurt because I ___ at the screen all day.", ["had been staring", "had stared been", "have stared", "stare"]),
+      q("I ___ the alarm, so I got to work late.", ["hadn't set", "haven't set", "hadn't been setting", "don't set"]),
+      q("Past perfect continuous form:", ["had + been + -ing", "had + -ing", "have + been + -ing", "was + -ing"]),
+      q("Very happy:", ["delighted", "miserable", "bitter", "tense"]),
+      q("Very frightened:", ["petrified", "relieved", "satisfied", "puzzled"]),
+      q("Happy because a worry has gone:", ["relieved", "furious", "down", "anxious"]),
+      q("Confused about where you are:", ["disorientated", "delighted", "bitter", "satisfied"]),
+    ]
+  ),
 };

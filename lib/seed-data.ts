@@ -220,6 +220,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-02", level: "B2", title: "2-dars", subtitle: "Letters and emails: present perfect simple and continuous", color: "orange", icon: "book", locked: 1, date: "", clip: null },
   { code: "B2-03", level: "B2", title: "3-dars", subtitle: "Whistles, phones and emails: verbs + prepositions", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "B2-04", level: "B2", title: "4-dars", subtitle: "Out of your comfort zone: narrative tenses", color: "green", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-05", level: "B2", title: "5-dars", subtitle: "An extraordinary escape: past perfect, feelings", color: "blue", icon: "headphones", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
