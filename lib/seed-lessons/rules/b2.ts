@@ -45,4 +45,46 @@ But there are three types of question where the word order is different.
       q("Which is a subject question?", ["What happened?", "What did you do?", "Where did they go?", "Who did you see?"]),
     ]
   ),
+  "B2-02": rule(
+    "Present perfect simple and continuous",
+    `We use the present perfect to **connect the past and the present**.
+
+## Form
+• **Simple:** have / has + past participle → I've **written** three letters.
+• **Continuous:** have / has + **been** + -ing → It's **been raining** since 10 o'clock.
+
+## 1. Both are possible (for / since)
+• For an action that **started in the past and is still going on**, we can often use either form with **for** or **since**.
+→ He **has worked / has been working** at the post office **since** 1987.
+• **for** + a period (for six months) · **since** + a point in time (since 1987, since university).
+
+## 2. Continuous: «how long», activity, short time
+• Focus on the **activity** and **how long**: I've **been working** hard since the start of term.
+• Short-term or temporary: He's only **been working** here for a few weeks.
+• With **all day, all morning, recently, lately**: You've **been working** on that letter all morning!
+
+## 3. Simple: «how many», results, states
+• **How many / how much** → simple: I've **written** three assignments since the start of term.
+• **State verbs** (be, have, know, seem) → simple only: We've **known** each other since university. (NOT have been knowing)
+
+## 4. Simple: news and unspecified time
+• Something happened at an **unspecified time** and it matters **now**: Researchers **have found** that texting can improve spelling.
+• Giving news: **Have you heard?** Tom**'s lost** his job. · I**'ve finished** at last!
+• With **just, already, yet, so far**: I haven't finished the report **yet**.
+
+## Pronunciation
+• have and been are weak: I've /bɪn/ working very hard lately.`,
+    [
+      q("I ___ hard since the start of term — I'm exhausted.", ["'ve been working", "'ve worked", "work", "was working"]),
+      q("I ___ three assignments since the start of term.", ["'ve written", "'ve been writing", "write", "was writing"]),
+      q("We ___ each other since university.", ["'ve known", "'ve been knowing", "know", "are knowing"]),
+      q("She has been living here ___ six months.", ["for", "since", "from", "during"]),
+      q("He has worked here ___ 1987.", ["since", "for", "from", "ago"]),
+      q("Have you heard? Tom ___ his job.", ["'s lost", "'s been losing", "loses", "is losing"]),
+      q("___ long? — No, just a few minutes.", ["Have you been waiting", "Have you waited", "Are you waiting", "Do you wait"]),
+      q("I haven't finished the report ___.", ["yet", "already", "just", "since"]),
+      q("Present perfect continuous form:", ["have + been + -ing", "have + -ing", "have + past participle", "be + past participle"]),
+      q("Which verb is NOT normally used in the continuous?", ["know", "work", "write", "wait"]),
+    ]
+  ),
 };

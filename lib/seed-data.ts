@@ -217,6 +217,7 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-30", level: "A2", title: "30-dars", subtitle: "Bollywood and phone calls", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
   // ---------- B2 — Upper-intermediate (Navigate B2: har unitdan 3 dars — x.1, x.2, x.3–5) ----------
   { code: "B2-01", level: "B2", title: "1-dars", subtitle: "The rules of conversation: question types", color: "blue", icon: "chat", locked: 0, date: "", clip: null },
+  { code: "B2-02", level: "B2", title: "2-dars", subtitle: "Letters and emails: present perfect simple and continuous", color: "orange", icon: "book", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

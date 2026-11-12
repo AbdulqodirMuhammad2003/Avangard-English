@@ -1,0 +1,340 @@
+/**
+ * B2, 2-dars — «The letter is dead, long live the letter!». Yozma muloqot:
+ * qo'lda yozilgan xat, email, SMS, ish stoli buyumlari.
+ * Grammatika: present perfect simple va present perfect continuous.
+ * Navigate B2, 1.2 asosida: tinglash mashqlarida kitob treklari (yopiq
+ * ombordan), lug'at misollari kitobning Wordlist'idan yoki unga yaqin;
+ * mashq matnlari o'zimizniki. Mashqlar inglizcha.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  listen,
+  mistake,
+  pairs,
+  phrases,
+  reading,
+  say,
+  sentences,
+  slots,
+  w,
+  written,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+
+export const B2_02_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🔒", "confidential", "ˌkɒnfɪˈdenʃl|konfidenshl", "sifat", "Maxfiy", "Secret; not for other people to see.", "If an email is confidential, you shouldn't share it with anyone.", "Agar email maxfiy bo'lsa, uni hech kim bilan bo'lishmasligingiz kerak."),
+      w("📧", "cc", "ˌsiː ˈsiː|sii sii", "fe'l", "Nusxasini yubormoq (cc)", "Send a copy of an email to another person.", "Can you cc somebody into a handwritten letter?", "Qo'lda yozilgan xatga birovni «cc» qilib qo'sha olasizmi?"),
+      w("✏️", "cross out", "ˌkrɒs ˈaʊt|kros aut", "ibora", "Chizib tashlamoq", "Draw a line through a word because it is wrong.", "If you make a mistake in a letter, just cross out the word.", "Xatda xato qilsangiz, so'zni chizib tashlang."),
+      w("🗑️", "delete", "dɪˈliːt|diliit", "fe'l", "O'chirmoq", "Remove a text, email or file from a computer or phone.", "My inbox is too full – I need to delete some emails.", "Pochta qutim to'lib ketdi — ba'zi emaillarni o'chirishim kerak."),
+      w("😊", "emoticon", "ɪˈməʊtɪkɒn|imoutikon", "ot", "Smaylik", "A small picture like :) that shows a feeling.", "Which emoticon do you use most often?", "Qaysi smaylikni eng ko'p ishlatasiz?"),
+      w("🖋️", "handwriting", "ˈhændraɪtɪŋ|hendrayting", "ot", "Dastxat, yozuv", "The way a person writes with a pen.", "I've always had terrible handwriting.", "Mening dastxatim doim yomon bo'lgan."),
+      w("✉️", "handwritten", "ˌhændˈrɪtn|hendritn", "sifat", "Qo'lda yozilgan", "Written with a pen, not typed.", "The handwritten letter is in serious decline.", "Qo'lda yozilgan xat jiddiy tanazzulda."),
+      w("📥", "inbox", "ˈɪnbɒks|inboks", "ot", "Kiruvchi xatlar qutisi", "The place where new emails arrive.", "How often do you check your inbox?", "Pochta qutingizni qanchalik tez-tez tekshirasiz?"),
+      w("⚡", "instant", "ˈɪnstənt|instant", "sifat", "Bir zumda, darhol", "Happening immediately.", "Texts and emails allow instant communication but are quickly deleted.", "SMS va emaillar bir zumda muloqot qilish imkonini beradi, lekin tez o'chiriladi."),
+      w("🗂️", "in tray", "ˈɪn treɪ|in trey", "ot", "Kiruvchi hujjatlar lagani", "A box on a desk for letters and papers to deal with.", "Please put the letter in my in tray.", "Iltimos, xatni kiruvchi hujjatlar laganimga qo'ying."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("📱", "texting", "ˈtekstɪŋ|teksting", "ot", "SMS yozish", "Sending short written messages by phone.", "Which do you do more, texting or emailing?", "Qaysi birini ko'proq qilasiz: SMS yozishnimi yoki email yuborishnimi?"),
+      w("📮", "postage stamp", "ˈpəʊstɪdʒ stæmp|poustij stemp", "ot", "Pochta markasi", "A small paper you stick on a letter to pay for sending it.", "Do you know the cost of a postage stamp?", "Pochta markasining narxini bilasizmi?"),
+      w("❗", "punctuation", "ˌpʌŋktʃuˈeɪʃn|pankchueyshn", "ot", "Tinish belgilari", "Marks like . , ? ! in writing.", "Punctuation is important in written communication.", "Yozma muloqotda tinish belgilari muhim."),
+      w("📎", "stationery", "ˈsteɪʃənri|steyshanri", "ot", "Kantselyariya mollari", "Paper, envelopes, pens and other things for writing.", "Newspapers have reported a rise in stationery sales.", "Gazetalar kantselyariya mollari savdosi oshganini xabar qildi."),
+      w("📨", "correspondence", "ˌkɒrəˈspɒndəns|korispondans", "ot", "Yozishmalar", "Letters and emails people send to each other.", "What correspondence will we leave behind for future generations?", "Kelajak avlodlarga qanday yozishmalar qoldiramiz?"),
+      w("🙏", "appreciate", "əˈpriːʃieɪt|apriishiyeyt", "fe'l", "Qadrlamoq", "Understand how good or valuable something is.", "There is so much to appreciate when you receive a handwritten letter.", "Qo'lda yozilgan xat olganingizda qadrlaydigan narsa ko'p."),
+      w("📉", "decline", "dɪˈklaɪn|diklayn", "ot", "Kamayish, tanazzul", "A fall in the number or quality of something.", "Mobile phones contributed to the decline of letter-writing.", "Mobil telefonlar xat yozishning kamayishiga sabab bo'ldi."),
+      w("💻", "digital media", "ˌdɪdʒɪtl ˈmiːdiə|dijitl miidia", "ot", "Raqamli vositalar", "Emails, websites, social media, etc.", "With digital media, we write more than ever before.", "Raqamli vositalar tufayli avvalgidan ham ko'p yozamiz."),
+      w("🦕", "die out", "ˌdaɪ ˈaʊt|day aut", "ibora", "Yo'qolib ketmoq", "Stop existing completely.", "Many people are afraid that letter-writing will die out.", "Ko'pchilik xat yozish yo'qolib ketishidan qo'rqadi."),
+      w("✍️", "blogger", "ˈblɒɡə|bloga", "ot", "Bloger", "A person who writes a blog on the internet.", "Shaun Usher is a blogger who posts letters on his website.", "Shon Asher — o'z saytida xatlarni joylaydigan bloger."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("💌", "take the trouble", "ˌteɪk ðə ˈtrʌbl|teyk za trabl", "ibora", "Qiynalib (atayin) qilmoq", "Make a special effort to do something.", "Few people take the trouble to write letters these days.", "Hozir kamdan-kam odam atayin xat yozishga vaqt ajratadi."),
+      w("🗃️", "keep a record", "ˌkiːp ə ˈrekɔːd|kiip a rekood", "ibora", "Yozib (saqlab) bormoq", "Keep information about something so you remember it.", "Letters allow us to keep a record of our past.", "Xatlar o'tmishimizni saqlab qolish imkonini beradi."),
+      w("🌱", "spring up", "ˌsprɪŋ ˈʌp|spring ap", "ibora", "Paydo bo'lmoq (birdan)", "Appear suddenly.", "New campaigns to save letter-writing continue to spring up online.", "Xat yozishni saqlash uchun internetda yangi kampaniyalar paydo bo'lmoqda."),
+      w("📈", "rise", "raɪz|rayz", "ot", "O'sish, ko'payish", "An increase in the number or amount of something.", "There has been a rise in the number of people writing letters.", "Xat yozadigan odamlar soni ko'paydi."),
+      w("🙋", "participant", "pɑːˈtɪsɪpənt|paatisipant", "ot", "Ishtirokchi", "A person who takes part in something.", "Every participant writes one letter a day for a month.", "Har bir ishtirokchi bir oy davomida kuniga bitta xat yozadi."),
+      w("👍", "positive impact", "ˌpɒzətɪv ˈɪmpækt|pozativ impekt", "ibora", "Ijobiy ta'sir", "A good effect on something.", "Surely this has had a positive impact on our writing skills?", "Bu yozish ko'nikmalarimizga ijobiy ta'sir qilgani aniq-ku?"),
+      w("⏱️", "lately", "ˈleɪtli|leytli", "ravish", "Yaqinda, so'nggi paytlarda", "Recently; in the last few days or weeks.", "I've been working very hard lately.", "So'nggi paytlarda juda ko'p ishlayapman."),
+      w("📜", "generation", "ˌdʒenəˈreɪʃn|jenareyshn", "ot", "Avlod", "All the people born at about the same time.", "What will our generation leave behind for the future?", "Bizning avlod kelajakka nima qoldiradi?"),
+      w("📩", "envelope", "ˈenvələʊp|envaloup", "ot", "Konvert", "A paper cover for a letter.", "Do you put a postage stamp inside an envelope?", "Pochta markasini konvertning ichiga qo'yasizmi?"),
+      w("📲", "app", "æp|ep", "ot", "Ilova", "A program on a phone or tablet.", "I've downloaded a Spanish vocabulary app for extra practice.", "Qo'shimcha mashq uchun ispan tili lug'at ilovasini yuklab oldim."),
+    ],
+  },
+];
+
+const TEXT = `IS THE LETTER COMING BACK?
+For over two thousand years people sent each other letters. Then came email, texting and instant messages, and the handwritten letter went into decline.
+But something interesting has been happening lately. Stationery shops have reported a rise in sales of paper and envelopes, and several online campaigns have sprung up to save letter-writing.
+Why? People say a letter shows that someone has taken the trouble to write to you. You notice the paper, the handwriting, even the postage stamp. And while emails are quickly deleted, letters stay in a drawer for years and keep a record of our lives.
+Not everyone agrees. «I've only written two letters in my life,» says Luke, 24. «I've always had terrible handwriting. Without email I'd never write to anybody!»`;
+const read = reading(TEXT);
+
+export const B2_02_EXERCISES: SeedExercise[] = [
+  {
+    title: "What do you hear?",
+    skill: "Listening",
+    kind: "listen",
+    instructions: "Listen to the sentence. Choose what you hear.",
+    questions: [
+      listen("I've been working very hard lately.", ["I've been working very hard lately.", "I've worked very hard lately.", "I was working very hard lately.", "I've been walking very far lately."]),
+      listen("Have you been waiting long?", ["Have you been waiting long?", "Have you waited long?", "Were you waiting long?", "Have you been waiting along?"]),
+      listen("How long have you been here?", ["How long have you been here?", "How long are you here?", "How long were you here?", "How long have you lived here?"]),
+      listen("She's been living here for six months.", ["She's been living here for six months.", "She's lived here for six months.", "She was living here for six months.", "She's been living here since six months."]),
+      listen("I haven't finished the report yet.", ["I haven't finished the report yet.", "I hadn't finished the report yet.", "I haven't finished the report today.", "I've just finished the report."]),
+      listen("We've known each other since university.", ["We've known each other since university.", "We've been knowing each other since university.", "We knew each other at university.", "We've known each other for years."]),
+      listen("Have you heard? Tom's lost his job.", ["Have you heard? Tom's lost his job.", "Have you heard? Tom lost his job.", "Did you hear? Tom's lost his job.", "Have you heard? Tom's left his job."]),
+      listen("stationery", ["stationery", "stationary", "station", "stations"]),
+      listen("correspondence", ["correspondence", "correspondent", "corresponding", "respondents"]),
+      listen("punctuation", ["punctuation", "punctual", "pronunciation", "punctuated"]),
+    ],
+  },
+  {
+    title: "Paper, electronic or both?",
+    skill: "Vocabulary",
+    kind: "choice",
+    instructions: "Is it about electronic communication, paper communication or both?",
+    questions: [
+      say("inbox", ["electronic", "paper", "both"]),
+      say("in tray", ["paper", "electronic", "both"]),
+      say("emoticon", ["electronic", "paper", "both"]),
+      say("postage stamp", ["paper", "electronic", "both"]),
+      say("handwriting", ["paper", "electronic", "both"]),
+      say("delete", ["electronic", "paper", "both"]),
+      say("punctuation", ["both", "paper", "electronic"]),
+      say("confidential", ["both", "paper", "electronic"]),
+      say("texting", ["electronic", "paper", "both"]),
+      say("stationery", ["paper", "electronic", "both"]),
+    ],
+  },
+  {
+    title: "Written communication",
+    skill: "Vocabulary",
+    kind: "choice",
+    instructions: "Choose the word that completes the sentence.",
+    questions: [
+      say("When did you last send or receive a ___ letter?", ["handwritten", "handwriting", "instant", "digital"]),
+      say("Have you ever accidentally sent a ___ email to the wrong person?", ["confidential", "postage", "punctuation", "stationery"]),
+      say("Do you know the cost of a ___?", ["postage stamp", "postage stationery", "post inbox", "stamp tray"]),
+      say("Which ___ do you use most often? 😊", ["emoticon", "emotion", "punctuation", "in tray"]),
+      say("How neat is your ___?", ["handwriting", "handwritten", "texting", "inbox"]),
+      say("Which do you do more, ___ messaging or email?", ["instant", "handwritten", "confidential", "postage"]),
+      say("I made a mistake, so I ___ the word.", ["crossed out", "deleted out", "crossed off", "died out"]),
+      say("Please ___ me into the email to the manager.", ["cc", "cross", "delete", "post"]),
+      say("Newspapers have reported a rise in ___ sales — paper, pens and envelopes.", ["stationery", "stationary", "station", "statement"]),
+      say("With digital ___, we write more than ever before.", ["media", "medias", "mediums", "message"]),
+    ],
+  },
+  {
+    title: "Yes or no?",
+    skill: "Listening",
+    kind: "listenmatch",
+    instructions: "Listen to eight questions about written communication. Choose Yes or No for the questions below.",
+    questions: [
+      slots(track("1.7"), [
+        ["1. If an email is confidential, should it be shared?", "No"],
+        ["2. Do you cross out a word with a rubber?", "No"],
+        ["3. Do stationery shops sell envelopes?", "Yes"],
+        ["5. Does an emoticon show your feelings?", "Yes"],
+        ["7. Can you keep an inbox on your desk?", "No"],
+        ["8. Do you put a postage stamp inside an envelope?", "No"],
+      ]),
+    ],
+  },
+  {
+    title: "Is the letter coming back?",
+    skill: "Reading",
+    kind: "reading",
+    instructions: "Read the text. Choose the correct answer.",
+    questions: [
+      read("How long have people been sending letters?", ["For over 2,000 years", "Since the 1950s", "For about 200 years", "Since email was invented"]),
+      read("What has happened to stationery sales?", ["They have risen.", "They have fallen.", "They have stayed the same.", "Shops have stopped selling stationery."]),
+      read("What has sprung up online?", ["Campaigns to save letter-writing", "New email apps", "Shops that sell stamps", "Handwriting courses"]),
+      read("According to the text, what does a letter show?", ["That someone has taken the trouble to write", "That someone has no email", "That someone has good handwriting", "That someone is old"]),
+      read("Why do letters keep a record of our lives?", ["They stay in a drawer for years.", "They are quickly deleted.", "They have stamps.", "They are confidential."]),
+      read("What does Luke think?", ["He prefers email because of his handwriting.", "He writes letters every week.", "He loves stationery shops.", "He has never sent an email."]),
+    ],
+  },
+  {
+    title: "Simple or continuous?",
+    skill: "Grammar",
+    kind: "choice",
+    instructions: "Choose the correct option.",
+    questions: [
+      say("Are you ready for your exam? — I hope so. I ___ for it all week.", ["'ve been revising", "'ve revised", "revise", "'m revising"]),
+      say("Do you want some lunch? — No thanks, I ___ already.", ["'ve eaten", "'ve been eating", "eat", "'m eating"]),
+      say("___ long? — No, just a few minutes.", ["Have you been waiting", "Have you waited", "Did you wait", "Are you waiting"]),
+      say("Good news! Alex ___ the computer — it works now.", ["'s fixed", "'s been fixing", "fixes", "'s fixing"]),
+      say("We ___ each other since university.", ["'ve known", "'ve been knowing", "know", "are knowing"]),
+      say("You're late! What ___ for the last hour?", ["have you been doing", "have you done", "did you do", "do you do"]),
+      say("I ___ three assignments since the start of term.", ["'ve written", "'ve been writing", "write", "'m writing"]),
+      say("I ___ hard since the start of term — I'm exhausted.", ["'ve been working", "'ve worked", "work", "worked"]),
+      say("She ___ that laptop for over ten years!", ["'s had", "'s been having", "has", "is having"]),
+      say("He's only ___ here for a few weeks.", ["been working", "worked", "work", "working"]),
+    ],
+  },
+  {
+    title: "Letters of Note",
+    skill: "Grammar",
+    kind: "fill",
+    instructions: "Complete the sentence with the present perfect simple or continuous of the verb in brackets. Sometimes both are possible.",
+    questions: written([
+      ["Since 2009, Shaun Usher ___ letters written by famous people. (collect)", "has been collecting|has collected|'s been collecting|'s collected"],
+      ["His website ___ extremely popular around the world. (become)", "has become|'s become"],
+      ["So far, he ___ together a total of 900 letters. (get)", "has got|'s got|has gotten"],
+      ["He ___ the letters in a book. (just / release)", "has just released|'s just released"],
+      ["Recently he ___ lists written by famous people. (gather)", "has been gathering|'s been gathering"],
+      ["So far he ___ 125 lists. (obtain)", "has obtained|'s obtained"],
+      ["People ___ by letter for at least 2,000 years. (communicate)", "have been communicating|have communicated|'ve been communicating"],
+      ["Newspapers ___ a rise in stationery sales. (report)", "have reported|'ve reported"],
+    ]),
+  },
+  {
+    title: "Grammar sentences",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen and complete each sentence.",
+    questions: [
+      gaps(track("gr-1.2"), [
+        ["1. Do you know if Peter ___?", "has called", "has been calling", "called"],
+        ["2. My manager won't be pleased because I ___ the report yet.", "haven't finished", "haven't been finishing", "didn't finish"],
+        ["3. ___ you sent that email yet?", "Haven't", "Didn't", "Hasn't"],
+        ["4. She ___ here for six months.", "has been living", "has lived", "is living"],
+        ["5. We're exhausted. We've ___ all night.", "been driving", "driven", "been drinking"],
+        ["6. How long have you been ___?", "waiting", "working", "writing"],
+      ]),
+    ],
+  },
+  {
+    title: "Questions about you",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to five questions and complete them.",
+    questions: [
+      gaps(track("1.3"), [
+        ["1. Have you been ___ your English much this week?", "practising", "practised", "speaking"],
+        ["2. Have you been having a good ___?", "day", "time", "week"],
+        ["3. Have you been watching any good TV programmes ___?", "recently", "lately", "today"],
+        ["4. Have you been spending much time outdoors ___?", "lately", "recently", "today"],
+        ["5. Have you been going out much in the ___?", "evenings", "mornings", "week"],
+      ]),
+    ],
+  },
+  {
+    title: "for, since, just, yet, so far",
+    skill: "Grammar",
+    kind: "fill",
+    instructions: "Complete the sentence with for, since, just, yet, already or so far.",
+    questions: written([
+      ["He has worked at the post office ___ 1987.", "since"],
+      ["People have been writing letters ___ at least 2,000 years.", "for"],
+      ["Haven't you sent that email ___?", "yet"],
+      ["I've ___ finished the report — two minutes ago.", "just"],
+      ["___ he has collected 900 letters, and he's still collecting.", "So far|so far"],
+      ["She's been living here ___ six months.", "for"],
+      ["I don't want lunch. I've ___ eaten.", "already"],
+      ["Writing has been much easier ___ spellcheckers were invented.", "since"],
+    ]),
+  },
+  {
+    title: "Which tense?",
+    skill: "Grammar",
+    kind: "situation",
+    instructions: "Read the situation. Choose the best sentence.",
+    questions: [
+      say("You want to say how many emails you wrote this morning.", ["I've written twenty emails this morning.", "I've been writing twenty emails this morning.", "I'm writing twenty emails this morning.", "I write twenty emails this morning."]),
+      say("You are tired because you were typing for three hours.", ["I've been typing for three hours.", "I've typed for three hours.", "I typed three hours ago.", "I type for three hours."]),
+      say("You want to give news: your friend found a new job.", ["Have you heard? Jo's found a new job.", "Have you heard? Jo's been finding a new job.", "Have you heard? Jo finds a new job.", "Have you heard? Jo was finding a new job."]),
+      say("You talk about a state (know) that started at school.", ["We've known each other since school.", "We've been knowing each other since school.", "We know each other since school.", "We're knowing each other since school."]),
+      say("Your friend's hands are covered in paint.", ["Have you been painting?", "Have you painted?", "Did you paint?", "Are you painted?"]),
+      say("A short, temporary situation: a new job, started two weeks ago.", ["He's only been working here for two weeks.", "He's only worked here since two weeks.", "He only works here for two weeks.", "He worked here for two weeks."]),
+    ],
+  },
+  {
+    title: "Find the mistake",
+    skill: "Grammar",
+    kind: "mistake",
+    instructions: "Each sentence has one wrong word. Tap it.",
+    questions: [
+      mistake("We've *been knowing each other since university.", "know is a state verb: We've known each other."),
+      mistake("I've been writing *three letters this morning.", "How many → present perfect simple: I've written three letters."),
+      mistake("She has been living here *since six months.", "for six months (a period)."),
+      mistake("He has worked here *for 1987.", "since 1987 (a point in time)."),
+      mistake("Have you *sended the email yet?", "sent (past participle of send)."),
+      mistake("I have *finish the report at last!", "I have finished."),
+      mistake("How long *are you waiting?", "How long have you been waiting?"),
+      mistake("I need to *cross some emails from my inbox.", "delete some emails."),
+      mistake("Please put the letter in my *out box tray.", "in tray."),
+      mistake("Do you know the cost of a *post stamp?", "postage stamp."),
+    ],
+  },
+  {
+    title: "Make a sentence",
+    skill: "Word order",
+    kind: "order",
+    instructions: "Tap the words in the correct order.",
+    questions: sentences([
+      "I've been working very hard lately.",
+      "How long have you been here?",
+      "Have you been waiting long?",
+      "She has had that laptop for over ten years.",
+      "I've only written two or three letters in my life.",
+      "People have been writing more letters recently.",
+      "Have you heard the news?",
+      "I've just finished the assignment.",
+    ]),
+  },
+  {
+    title: "Find the pairs",
+    skill: "Matching",
+    kind: "match",
+    instructions: "Match the words.",
+    questions: pairs([
+      ["postage|stamp", "digital|media", "in|tray", "positive|impact"],
+      ["cross|out", "die|out", "spring|up", "keep|a record"],
+      ["inbox|where new emails arrive", "emoticon|a small face like :)", "stationery|paper, envelopes, pens", "correspondence|letters people send"],
+      ["confidential|secret", "instant|immediate", "lately|recently", "so far|until now"],
+    ]),
+  },
+  {
+    title: "Answer naturally",
+    skill: "Speaking",
+    kind: "dialog",
+    instructions: "Choose the best answer.",
+    questions: [
+      say("You're late! What have you been doing?", ["Sorry, I've been looking for my wallet.", "Sorry, I've looked for my wallet for an hour.", "Sorry, I look for my wallet.", "Sorry, I've been lose my wallet."]),
+      say("How long have you been learning English?", ["For about five years.", "Since five years.", "Five years ago.", "In five years."]),
+      say("Have you ever been to the UK?", ["Yes, I've been there a couple of times.", "Yes, I've been going there a couple of times.", "Yes, I go there a couple of times.", "Yes, I'm there a couple of times."]),
+      say("Do you want some lunch?", ["No thanks, I've already eaten.", "No thanks, I've been eating already.", "No thanks, I eat already.", "No thanks, I've already eat."]),
+      say("Have you sent that email yet?", ["Not yet — I'm still writing it.", "Not yet — I've sent it.", "Yes, I've been sending it.", "Yes, I send it yet."]),
+      say("Why are your eyes so red?", ["I've been working at the computer all day.", "I've worked at the computer all day yesterday.", "I work at the computer all day.", "I've been worked at the computer."]),
+    ],
+  },
+  {
+    title: "Say it",
+    skill: "Pronunciation",
+    kind: "speak",
+    instructions: "Listen, then say it yourself. «have» and «been» are short and weak: /əv/, /bɪn/.",
+    questions: phrases([
+      "I've been working very hard lately.",
+      "Have you been waiting long?",
+      "How long have you been here?",
+      "Have you been practising your English much this week?",
+      "She's been living here for six months.",
+      "We've known each other since university.",
+      "I've always had terrible handwriting.",
+      "Have you heard? Tom's lost his job.",
+      "correspondence",
+      "stationery",
+    ]),
+  },
+];
