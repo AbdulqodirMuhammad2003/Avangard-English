@@ -28,16 +28,16 @@ export const A1_EXAM_BANK: Record<string, ExamGrammarItem[]> = {
   ],
   "A1-03": [
     g("___ is your name? — Aziz.", ["What", "Who", "Where", "How"], "Ism so'raladi: What is your name?"),
-    g("___ old are you? — I'm twenty.", ["How", "What", "Who", "Where"], "Yosh so'raladi: How old…?"),
-    g("Qaysi gap to'g'ri?", ["I'm twenty years old.", "I have twenty years.", "I twenty years old.", "I am twenty year old."], "Yosh to be bilan aytiladi: I'm twenty (years old)."),
-    g("___ is that man? — He's my teacher.", ["Who", "What", "Where", "How"], "Odam haqida so'raladi: Who…?"),
+    g("___ are you from? — Turkey.", ["Where", "What", "How", "Who"], "Joy so'raladi: Where are you from?"),
+    g("___'s your phone number?", ["What", "Where", "How", "Who"], "Raqam so'raladi: What's your phone number?"),
+    g("Qaysi gap to'g'ri?", ["My name's Roger. R-O-G-E-R.", "My name Roger.", "Me name is Roger.", "My name are Roger."], "My name's = My name is."),
     g("How do you ___ your name?", ["spell", "spelling", "spells", "spelled"], "do dan keyin fe'lning oddiy shakli: How do you spell…?"),
   ],
   "A1-04": [
     g("Qo'limdagi kalitlar: «___ are my keys.»", ["These", "This", "That", "Those"], "Yaqindagi ko'p narsa — these."),
     g("Uzoqdagi bitta mashina: «Is ___ your car?»", ["that", "those", "these", "this"], "Uzoqdagi bitta narsa — that."),
     g("It's ___ umbrella.", ["an", "a", "—", "two"], "umbrella unli tovush bilan boshlanadi — an."),
-    g("These are my ___.", ["watches", "watch", "watchs", "watchies"], "-ch bilan tugagan otga -es qo'shiladi: watches."),
+    g("What are those in English? — ___ pens.", ["They're", "It's", "This is", "Those is"], "Ko'plik — They're."),
     g("45 — ___", ["forty-five", "fourty-five", "fifty-four", "four-five"], "40 — forty (u harfisiz), 45 — forty-five."),
   ],
   "A1-05": [
@@ -50,8 +50,8 @@ export const A1_EXAM_BANK: Record<string, ExamGrammarItem[]> = {
   "A1-06": [
     g("The cat is ___ the box. (qutining ichida)", ["in", "on", "under", "at"], "Ichida — in."),
     g("The phone is ___ the table. (stol ustida)", ["on", "in", "under", "from"], "Ustida — on."),
-    g("7:30 — It's ___ seven.", ["half past", "half to", "past half", "thirty to"], "Yarim soat o'tdi — half past."),
-    g("8:45 — It's ___.", ["a quarter to nine", "a quarter past eight", "a quarter past nine", "a quarter to eight"], "To'qqizga chorak qoldi — a quarter to nine."),
+    g("7:30 — It's seven ___.", ["thirty", "thirteen", "three", "half"], "Soat va daqiqa: seven thirty."),
+    g("What time's the film? — It's ___ eight o'clock.", ["at", "on", "in", "—"], "Biror narsa qaysi vaqtda bo'lishi — at."),
     g("___ are my keys? — They're on the desk.", ["Where", "What", "Who", "How"], "Joy so'raladi: Where…?"),
   ],
   "A1-07": [
@@ -146,16 +146,16 @@ export const A1_EXAM_BANK: Record<string, ExamGrammarItem[]> = {
     g("Qaysi gap to'g'ri?", ["My grandma can speak three languages.", "My grandma cans speak three languages.", "My grandma can speaks three languages.", "My grandma can to speak three languages."], "can + fe'lning oddiy shakli."),
   ],
   "A1-20": [
-    g("___ you open the window, please?", ["Could", "Do", "Are", "Did"], "Odobli iltimos — Could you…?"),
-    g("Could you help me? — ___", ["Sure, no problem.", "Yes, I could.", "Yes, I help.", "Yes, I do."], "Iltimosga javob: Sure / Of course."),
-    g("He drives very ___.", ["carefully", "careful", "care", "carefuly"], "Fe'lni ravish tasvirlaydi: careful → carefully."),
+    g("___ you open the window, please?", ["Can", "Do", "Are", "Did"], "Iltimos — Can you…?"),
+    g("Can you help me? — ___", ["Sure, no problem.", "Yes, I help.", "Yes, you can.", "Yes, I do."], "Iltimosga javob: Sure / Of course."),
+    g("Please speak ___. I can't understand you.", ["slowly", "slow", "slowy", "slower"], "Fe'lni ravish tasvirlaydi: slow → slowly."),
     g("She speaks English ___.", ["well", "good", "goodly", "nice"], "good ning ravishi — well."),
-    g("Kitobingni berib tura olasanmi? — Can you ___ me your book?", ["lend", "borrow", "borrows", "lending"], "Berib turmoq — lend; olib turmoq — borrow."),
+    g("I'm thirsty. Can I ___ some water, please?", ["have", "having", "to have", "has"], "Can I + fe'l: Can I have…?"),
   ],
   "A1-21": [
     g("I love ___ in the sea.", ["swimming", "swiming", "swim", "swims"], "love + -ing; swim → swimming (m ikkilanadi)."),
     g("She hates ___ up early.", ["getting", "geting", "get", "gets"], "hate + -ing; get → getting."),
-    g("He's good at ___.", ["dancing", "dance", "dances", "to dance"], "Predlogdan keyin -ing: good at dancing."),
+    g("I don't like ___ out.", ["going", "go", "goes", "to going"], "like + -ing: going out."),
     g("The film was boring. I was ___.", ["bored", "boring", "bore", "bores"], "Odamning holati — -ed: bored."),
     g("Do you like ___ photos?", ["taking", "takeing", "take", "took"], "like + -ing; e tushib qoladi: taking."),
   ],
@@ -192,7 +192,7 @@ export const A1_EXAM_BANK: Record<string, ExamGrammarItem[]> = {
     g("She didn't ___ the bus.", ["catch", "caught", "catches", "catching"], "didn't dan keyin fe'lning oddiy shakli."),
     g("___ you see the match last night?", ["Did", "Do", "Were", "Was"], "O'tgan zamon so'rog'i — Did + ega + fe'l."),
     g("Did they win? — No, they ___.", ["didn't", "don't", "weren't", "wasn't"], "Qisqa javob: No, they didn't."),
-    g("I ___ a mistake in the test.", ["made", "did", "took", "had"], "make a mistake → made a mistake."),
+    g("I got up late and ___ my train.", ["missed", "lost", "forgot", "left"], "Poyezdga ulgurmaslik — miss the train."),
   ],
   "A1-27": [
     g("I met him three years ___.", ["ago", "last", "in", "past"], "Hozirdan oldin — ago: three years ago."),
