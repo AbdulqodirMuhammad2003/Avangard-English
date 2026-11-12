@@ -1111,3 +1111,20 @@ button.rounded-xl.border-2.border-rose-400 {
   user-select: none;
   animation: word-img-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+.ae-word-credit {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.35rem;
+  max-width: calc(100% - 0.8rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(4px);
+}

@@ -1,37 +1,53 @@
 "use client";
 
 import { useState } from "react";
-import { wordImageUrl } from "@/lib/word-images";
+import { wordImage } from "@/lib/word-images";
 
 /**
- * Lug'at so'zining rasmi: AI yasagan 3D rasm bo'lsa — o'sha, bo'lmasa yoki
- * yuklanmasa — so'zning emojisi (lib/word-images.ts).
+ * Lug'at so'zining rasmi: aniq narsa bo'lsa — Pexels fotosurati (ostida
+ * fotograf va Pexels nomi), mavhum so'zda yoki rasm yuklanmasa — emoji
+ * (lib/word-images.ts). Ota blok `relative` va `overflow-hidden` bo'lsin —
+ * foto butun blokni to'ldiradi.
  */
 export function WordPicture({
   word,
   emoji,
-  imgClassName = "h-full w-auto",
   emojiClassName = "",
+  credit = true,
 }: {
   word: string;
   emoji: string;
-  imgClassName?: string;
   emojiClassName?: string;
+  credit?: boolean;
 }) {
-  const src = wordImageUrl(word);
+  const image = wordImage(word);
   const [failed, setFailed] = useState(false);
-  if (!src || failed) return <span className={emojiClassName} aria-hidden="true">{emoji}</span>;
+  if (!image || failed) return <span className={emojiClassName} aria-hidden="true">{emoji}</span>;
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- /media yo'naltirishi imzolangan URL beradi
-    <img
-      key={src}
-      src={src}
-      alt=""
-      draggable={false}
-      loading="lazy"
-      decoding="async"
-      onError={() => setFailed(true)}
-      className={`ae-word-img ${imgClassName}`}
-    />
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element -- Pexels CDN, o'lcham URL'da berilgan */}
+      <img
+        key={image.src}
+        src={image.src}
+        alt=""
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        className="ae-word-img absolute inset-0 h-full w-full object-cover"
+      />
+      {credit && (
+        <a
+          href={image.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ae-word-credit"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {image.by} · Pexels
+        </a>
+      )}
+    </>
   );
 }

@@ -505,8 +505,8 @@ function LearnCard({
       <p className="text-center text-xs font-semibold text-ink-500 dark:text-ink-400">
         {t("So'z", "Word")} {index + 1} / {total}
       </p>
-      <div className="flex h-36 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-6xl dark:from-white/5 dark:to-gold-950/30">
-        <WordPicture word={word.word} emoji={word.emoji} imgClassName="h-full w-full object-contain" />
+      <div className="relative flex h-36 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-6xl dark:from-white/5 dark:to-gold-950/30">
+        <WordPicture word={word.word} emoji={word.emoji} />
       </div>
       <div className="flex items-center gap-3 rounded-2xl bg-ink-50/70 p-4 dark:bg-white/5">
         <button
@@ -751,8 +751,8 @@ function SpellingStage({
 
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
-      <div className="flex h-28 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
-        <WordPicture word={word.word} emoji={word.emoji} imgClassName="h-full w-full object-contain" />
+      <div className="relative flex h-28 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
+        <WordPicture word={word.word} emoji={word.emoji} />
       </div>
       <p className="text-center text-base font-bold text-ink-900 dark:text-ink-50">
         {word.translation_uz}
@@ -1143,8 +1143,8 @@ function SentenceStage({
         {t("Bo'sh joyga mos so'zni yozing", "Write the missing word")}
       </p>
       {showPicture && (
-        <div className="flex h-24 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
-          <WordPicture word={word.word} emoji={word.emoji} imgClassName="h-full w-full object-contain" />
+        <div className="relative flex h-24 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-ink-50 to-gold-50 text-5xl dark:from-white/5 dark:to-gold-950/30">
+          <WordPicture word={word.word} emoji={word.emoji} credit={false} />
         </div>
       )}
       <p className="rounded-2xl bg-ink-50/70 p-4 text-center text-base leading-relaxed text-ink-900 dark:bg-white/5 dark:text-ink-50">
