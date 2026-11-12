@@ -1,343 +1,172 @@
 /**
- * A1, 30-dars — «Kafeda». Taom buyurtma qilish, hisobni so'rash.
- * Grammatika: would like — xohish va taklif: I'd like a coffee. / Would you
- * like some tea? — Yes, please. / No, thank you.; I'd like + ot va I'd like
- * to + fe'l; like va would like farqi; some / any (takror). Matn va mashqlar
- * o'zimizniki.
+ * A1, 30-dars — «Kafeda: would like». Navigate A1, 10.3 «Cafe cities»,
+ * 10.4 «ordering food and drink / invitations» va 10.5 «A New York cafe»
+ * asosida: dunyoning eng yaxshi kafe shaharlari, kafe taomlari va
+ * ichimliklari, buyurtma berish (Can I take your order? Small or large?),
+ * rasmiy va norasmiy iboralar, taklifnoma va minnatdorchilik xati.
+ * Grammatika: would like + ot / to + fe'l (I'd like a coffee. Would you like
+ * to order?); bog'langan nutqni eshitish. Tinglash mashqlarida kitob
+ * treklari (yopiq ombordan), savollar va matnlar o'zimizniki.
  */
 import type { SeedExercise } from "../seed-exercises";
 import {
-  dictation,
   gaps,
   hearing,
   hearingTwo,
-  listen,
   mistake,
   pairs,
   phrases,
+  reading,
   say,
   sentences,
-  trueFalse,
+  slots,
   w,
   written,
   type Rounds,
 } from "./helpers";
 
+const track = (n: string) => `media:navigate-a1/audio/${n}.mp3`;
+
 export const A1_30_ROUNDS: Rounds = [
   {
     title: "1-bosqich",
     words: [
-      w("🍲", "soup", "suːp|suup", "ot", "Sho'rva", "Hot liquid food.", "I'd like the chicken soup, please.", "Tovuq sho'rvasini olaman, iltimos."),
-      w("🥗", "salad", "ˈsæləd|selad", "ot", "Salat", "Cold vegetables, often with oil.", "Would you like a salad?", "Salat xohlaysizmi?"),
-      w("🥪", "sandwich", "ˈsænwɪtʃ|senuich", "ot", "Sendvich, buterbrod", "Two pieces of bread with food between them.", "A cheese sandwich, please.", "Pishloqli sendvich, iltimos."),
-      w("🍳", "omelette", "ˈɒmlət|omlat", "ot", "Omlet", "Eggs cooked in a pan.", "I always have an omelette for breakfast.", "Nonushtaga doim omlet yeyman."),
-      w("🥞", "pancake", "ˈpænkeɪk|penkeyk", "ot", "Quymoq, blin", "A thin, flat cake cooked in a pan.", "I'd like a pancake with honey.", "Asalli quymoq olaman."),
-      w("🍨", "ice cream", "ˌaɪs ˈkriːm|ays kriim", "ot", "Muzqaymoq", "A cold, sweet dessert.", "Would you like some ice cream?", "Muzqaymoq xohlaysizmi?"),
-      w("🍮", "dessert", "dɪˈzɜːt|dizyort", "ot", "Desert, shirinlik", "Sweet food after the main meal.", "What would you like for dessert?", "Desertga nima xohlaysiz?"),
-      w("🍟", "chips", "tʃɪps|chips", "ot", "Kartoshka fri", "Long pieces of fried potato (British English).", "Fish and chips, please.", "Baliq va kartoshka fri, iltimos."),
-      w("🍔", "burger", "ˈbɜːɡə|byorga", "ot", "Burger", "Meat in a round bread roll.", "My brother ordered a big burger.", "Akam katta burger buyurtma qildi."),
-      w("🍋", "lemonade", "ˌleməˈneɪd|lemaneyd", "ot", "Limonad", "A cold, sweet lemon drink.", "Two glasses of lemonade, please.", "Ikki stakan limonad, iltimos."),
+      w("☕", "coffee", "ˈkɒfi|kofi", "ot", "Qahva", "A hot brown drink.", "The coffee in Vienna is world famous.", "Vena qahvasi dunyoga mashhur."),
+      w("🍊", "orange juice", "ˈɒrɪndʒ dʒuːs|orinj juus", "ot", "Apelsin sharbati", "A drink made from oranges.", "We'd like an orange juice.", "Bizga apelsin sharbati kerak."),
+      w("🍏", "apple juice", "ˈæpl dʒuːs|epl juus", "ot", "Olma sharbati", "A drink made from apples.", "Would you like an apple juice?", "Olma sharbati ichasizmi?"),
+      w("🍰", "cake", "keɪk|keyk", "ot", "Tort, pirojniy", "A sweet food for special days or with tea.", "Sachertorte is a kind of chocolate cake.", "Zaxertort — shokoladli tortning bir turi."),
+      w("🥐", "croissant", "ˈkwæsɒ̃|kuason", "ot", "Kruassan", "A soft French bread for breakfast.", "A croissant and a coffee, please.", "Kruassan va qahva, iltimos."),
+      w("🍩", "doughnut", "ˈdəʊnʌt|dounat", "ot", "Ponchik", "A round sweet cake, often with a hole.", "Try a doughnut with your coffee.", "Qahvangiz bilan ponchik tatib ko'ring."),
+      w("🥪", "sandwich", "ˈsænwɪtʃ|senuich", "ot", "Sendvich, buterbrod", "Two pieces of bread with food inside.", "A croque monsieur is a kind of sandwich.", "Krok-msye — sendvichning bir turi."),
+      w("🥗", "salad", "ˈsæləd|selad", "ot", "Salat", "Cold vegetables mixed together.", "She'd like a salad, please.", "U salat istaydi."),
+      w("🍪", "biscuit", "ˈbɪskɪt|biskit", "ot", "Pechenye", "A small, hard, sweet food.", "Would you like a doughnut or a biscuit?", "Ponchik yoki pechenye istaysizmi?"),
+      w("🍫", "chocolate", "ˈtʃɒklət|choklat", "ot", "Shokolad", "A sweet brown food.", "If you like chocolate, try the Sachertorte.", "Shokoladni yoqtirsangiz, zaxertortni tatib ko'ring."),
     ],
   },
   {
     title: "2-bosqich",
     words: [
-      w("📜", "menu", "ˈmenjuː|menyuu", "ot", "Menyu", "A list of food and drinks in a cafe.", "Can I see the menu, please?", "Menyuni ko'rsam bo'ladimi?"),
-      w("🍛", "main course", "ˌmeɪn ˈkɔːs|meyn koos", "ibora", "Asosiy taom", "The biggest part of a meal.", "What would you like for your main course?", "Asosiy taomga nima xohlaysiz?"),
-      w("💁‍♀️", "waitress", "ˈweɪtrəs|ueytras", "ot", "Ofitsiant (ayol)", "A woman who brings food in a restaurant.", "The waitress brought our tea.", "Ofitsiant qiz choyimizni olib keldi."),
-      w("🧾", "bill", "bɪl|bil", "ot", "Hisob (to'lov)", "A paper that shows how much you must pay.", "Can we have the bill, please?", "Hisobni olib kelasizmi, iltimos?"),
-      w("🪙", "tip", "tɪp|tip", "ot", "Choychaqa", "Extra money for the waiter.", "We left a tip for the waitress.", "Ofitsiant qizga choychaqa qoldirdik."),
-      w("📝", "order", "ˈɔːdə|ooda", "fe'l, ot", "Buyurtma qilmoq; buyurtma", "Ask for food in a cafe.", "Are you ready to order?", "Buyurtma berishga tayyormisiz?"),
-      w("🙋", "customer", "ˈkʌstəmə|kastama", "ot", "Mijoz", "A person who buys something.", "Every customer gets a free tea.", "Har bir mijozga bepul choy beriladi."),
-      w("🍽️", "portion", "ˈpɔːʃn|pooshn", "ot", "Porsiya", "The amount of food for one person.", "This portion is very big.", "Bu porsiya juda katta."),
-      w("🧾", "receipt", "rɪˈsiːt|risiit", "ot", "Chek", "A paper that shows you paid. The «p» is silent.", "Here's your receipt.", "Mana chekingiz."),
-      w("🥡", "takeaway", "ˈteɪkəweɪ|teykauey", "ot", "Olib ketiladigan ovqat", "Food you buy in a cafe and eat at home.", "Let's get a takeaway tonight.", "Bugun kechqurun ovqatni olib ketamiz."),
+      w("🙏", "would like", "wʊd ˈlaɪk|vud layk", "fe'l", "Istardi (muloyim)", "A polite way to say «want».", "We would like a table for two.", "Bizga ikki kishilik stol kerak."),
+      w("😊", "I'd like", "aɪd ˈlaɪk|ayd layk", "ibora", "Men … istardim", "I would like.", "I'd like the cake and a cup of tea.", "Men tort va bir piyola choy istardim."),
+      w("🍨", "dessert", "dɪˈzɜːt|dizyort", "ot", "Desert, shirinlik", "Sweet food after a meal.", "I'd like to have some dessert.", "Shirinlik yemoqchiman."),
+      w("📋", "menu", "ˈmenjuː|menyuu", "ot", "Menyu", "A list of food and drinks in a café.", "Would you like to see the menu?", "Menyuni ko'rasizmi?"),
+      w("✍️", "order", "ˈɔːdə|ooda", "fe'l, ot", "Buyurtma bermoq; buyurtma", "Ask for food in a café or restaurant.", "Would you like to order?", "Buyurtma berasizmi?"),
+      w("😋", "hungry", "ˈhʌŋɡri|hangri", "sifat", "Och, qorni och", "Wanting to eat.", "I'm not very hungry.", "Unchalik qornim och emas."),
+      w("🪑", "table for two", "ˌteɪbl fə ˈtuː|teybl fo tuu", "ibora", "Ikki kishilik stol", "A table for two people.", "Hello. Table for two?", "Salom. Ikki kishilik stolmi?"),
+      w("🍰", "piece", "piːs|piis", "ot", "Bo'lak", "A part of something.", "A piece of Sachertorte, please.", "Bir bo'lak zaxertort, iltimos."),
+      w("🔤", "a kind of", "ə ˈkaɪnd əv|a kaynd ov", "ibora", "…ning bir turi", "A type of.", "A macchiato is a kind of coffee.", "Makiato — qahvaning bir turi."),
+      w("🏛️", "culture", "ˈkʌltʃə|kalcha", "ot", "Madaniyat", "The way of life, art and traditions of a place.", "These cities are famous for their café culture.", "Bu shaharlar kafe madaniyati bilan mashhur."),
     ],
   },
   {
     title: "3-bosqich",
     words: [
-      w("🙂", "I'd like", "aɪd laɪk|ayd layk", "ibora", "…xohlardim, …olaman", "A polite way to say «I want».", "I'd like a coffee, please.", "Bitta qahva olaman, iltimos."),
-      w("🫴", "Would you like", "wʊd ju laɪk|vud yu layk", "ibora", "…xohlaysizmi?", "A polite way to offer something.", "Would you like some tea?", "Choy xohlaysizmi?"),
-      w("➕", "anything else", "ˈeniθɪŋ els|enising els", "ibora", "Yana biror narsa", "Something more.", "Would you like anything else?", "Yana biror narsa xohlaysizmi?"),
-      w("🤲", "here you are", "ˈhɪə ju ɑː|hia yu aa", "ibora", "Mana, marhamat", "We say it when we give something to someone.", "Here you are — your tea.", "Marhamat — choyingiz."),
-      w("💧", "still water", "stɪl ˈwɔːtə|stil voota", "ibora", "Gazsiz suv", "Water without bubbles.", "A bottle of still water, please.", "Bir shisha gazsiz suv, iltimos."),
-      w("🫧", "sparkling", "ˈspɑːklɪŋ|spaakling", "sifat", "Gazli", "With bubbles.", "Still or sparkling?", "Gazsizmi yoki gazli?"),
-      w("🌶️", "spicy", "ˈspaɪsi|spaysi", "sifat", "Achchiq", "With a hot taste, like chilli.", "Is the soup spicy?", "Sho'rva achchiqmi?"),
-      w("🍬", "sweet", "swiːt|suiit", "sifat", "Shirin", "With a lot of sugar.", "This cake is very sweet.", "Bu tort juda shirin."),
-      w("🥵", "thirsty", "ˈθɜːsti|syorsti", "sifat", "Chanqagan", "You want to drink something.", "I'm thirsty. I'd like some water.", "Chanqadim. Suv ichardim."),
-      w("🥕", "vegetarian", "ˌvedʒəˈteəriən|vejaterian", "sifat, ot", "Vegetarian (go'sht yemaydigan)", "A person who doesn't eat meat.", "Have you got any vegetarian dishes?", "Vegetarian taomlaringiz bormi?"),
+      w("🍔", "burger", "ˈbɜːɡə|byorga", "ot", "Burger", "Meat in a round bread.", "A burger and chips, please.", "Burger va kartoshka fri, iltimos."),
+      w("🍟", "chips", "tʃɪps|chips", "ot", "Kartoshka fri", "Hot fried pieces of potato.", "A large burger, some chips and a coffee.", "Katta burger, kartoshka fri va qahva."),
+      w("🌭", "hot dog", "ˈhɒt dɒɡ|hot dog", "ot", "Xot-dog", "A long sausage in bread.", "A large hot dog, please.", "Katta xot-dog, iltimos."),
+      w("🤏", "small", "smɔːl|smool", "sifat", "Kichik (porsiya)", "Not large.", "Small or large?", "Kichikmi yoki kattami?"),
+      w("🍹", "large", "lɑːdʒ|laaj", "sifat", "Katta (porsiya)", "Big.", "Large, please.", "Kattasini, iltimos."),
+      w("➕", "anything else", "ˌeniθɪŋ ˈels|enising els", "ibora", "Yana biror narsa?", "Do you want something more?", "Anything else? — No, thanks.", "Yana biror narsa? — Yo'q, rahmat."),
+      w("✅", "that's all", "ˌðæts ˈɔːl|zets ool", "ibora", "Shu xolos, bo'ldi", "Nothing more.", "No, thanks. That's all.", "Yo'q, rahmat. Shu xolos."),
+      w("🥡", "take away", "ˌteɪk əˈweɪ|teyk auey", "ibora", "Olib ketish uchun", "Buy food or drink to eat somewhere else.", "This customer always buys coffee to take away.", "Bu mijoz doim qahvani olib ketadi."),
+      w("🧑‍💼", "owner", "ˈəʊnə|ouna", "ot", "Egasi", "The person a shop or café belongs to.", "The owner of the café is from Venezuela.", "Kafe egasi Venesueladan."),
+      w("🥟", "pastry", "ˈpeɪstri|peystri", "ot", "Pishiriq", "Baked food made from flour, butter and water.", "The café is famous for a kind of pastry.", "Kafe pishiriqning bir turi bilan mashhur."),
     ],
   },
 ];
 
-const ORDER = `Good afternoon! Are you ready to order?
-Yes, please. I'd like the chicken soup to start. Is it spicy?
-No, it isn't. And for your main course?
-I'd like fish and chips, please.
-And for you, madam?
-Hmm… Have you got any vegetarian dishes?
-Yes, we've got a vegetable plov and a mushroom omelette.
-I'd like the omelette, please. And a salad.
-Would you like anything to drink?
-Yes. A lemonade for me, and a bottle of still water for my friend.
-Anything else?
-No, thank you. That's all.
-… Can we have the bill, please?
-Of course. Here you are. That's 186,000 so'm.
-Can I pay by card?
-Yes, of course.`;
-const hear = hearing(ORDER);
+const CITIES = `THE WORLD'S BEST CAFÉ CITIES
+The café is a popular place to have food and drink and to meet friends. These cities are famous for their café culture.
+1 Vienna, Austria. People sit and talk or read the newspaper for hours in the city's beautiful cafés. The coffee is world famous and not very expensive. If you like chocolate, try the special Sachertorte — it's a kind of chocolate cake.
+2 Melbourne, Australia. Coffee in Melbourne isn't very cheap, but it's very good. Every year, there is an international Coffee Expo there.
+3 Taipei, Taiwan. There are new cafés everywhere. You can try many different kinds of coffees and teas. Enjoy your drink with moa-chi, a kind of rice cake with a sweet filling.
+4 Havana, Cuba. Coffee is very cheap in Cuba, and it's very good. Try the popular tres leches cake, made with three kinds of milk.
+5 Seattle, USA. Seattle is the home of a famous coffee company, but there are many other cafés here, too. Try a doughnut or a colourful cupcake with your coffee.`;
+const read = reading(CITIES);
 
-const REVIEW = `CAFE «CHINOR» — a review by Laylo
-Last Saturday my friends and I had lunch at Cafe Chinor in the city centre. It's a small cafe with a lovely garden.
-The waiter gave us the menu, and it had a lot of choice: soups, salads, burgers and Uzbek dishes. I'd like to say that the prices were very good too.
-I ordered a lentil soup and a chicken sandwich. My friend Gulnoza is a vegetarian, so she had a big salad and a cheese omelette. Our other friend, Madina, ordered a burger and chips, but the chips were cold and she wasn't happy. The waiter was very nice, and he brought her new chips.
-For dessert we all had pancakes with honey — they were delicious! We drank lemonade and green tea.
-The bill wasn't expensive: 210,000 so'm for three people. We left a tip for the waiter. I'd like to go there again in summer and sit in the garden.`;
-const tf = trueFalse(REVIEW);
+const FORMAL = "Rasmiyroq";
+const INFORMAL = "Norasmiy";
 
 export const A1_30_EXERCISES: SeedExercise[] = [
   {
-    title: "Nima eshitildi?",
+    title: "Kafe shaharlari",
+    skill: "O'qish",
+    kind: "reading",
+    instructions: "Dunyoning eng yaxshi kafe shaharlari haqida o'qing va savollarga javob bering.",
+    questions: [
+      read("What do people do in Vienna's cafés?", ["They sit and talk or read the newspaper for hours.", "They drink coffee quickly.", "They have big dinners.", "They work on laptops."]),
+      read("What is Sachertorte?", ["A kind of chocolate cake", "A kind of coffee", "A kind of sandwich", "A kind of tea"]),
+      read("Is coffee in Melbourne cheap?", ["No, but it's very good.", "Yes, very cheap.", "Yes, and it's very good.", "The text doesn't say."]),
+      read("What happens in Melbourne every year?", ["An international Coffee Expo", "A cake festival", "A tea competition", "The text doesn't say."]),
+      read("What is moa-chi?", ["A rice cake with a sweet filling", "A kind of tea", "A chocolate cake", "A doughnut"]),
+      read("Where is coffee very cheap and very good?", ["In Havana", "In Melbourne", "In Seattle", "In Vienna"]),
+      read("What is tres leches cake made with?", ["Three kinds of milk", "Three kinds of chocolate", "Rice", "Coffee"]),
+      read("What can you try with your coffee in Seattle?", ["A doughnut or a cupcake", "Moa-chi", "Sachertorte", "A salad"]),
+    ],
+  },
+  {
+    title: "Kafe menyusi",
     skill: "Tinglash",
-    kind: "listen",
-    instructions: "Gap yoki so'z o'qiladi. Eshitganingizni toping. «I like» va «I'd like» farqiga quloq soling.",
+    kind: "listenmatch",
+    instructions: "Menyudagi ichimliklar va gazaklar aytiladi. Tinglang va har bir qatorga yozing.",
     questions: [
-      listen("I'd like a coffee.", ["I'd like a coffee.", "I like a coffee.", "I like coffee.", "I'd like coffee."]),
-      listen("I like tea.", ["I like tea.", "I'd like tea.", "I'd like a tea.", "I liked tea."]),
-      listen("Would you like some tea?", ["Would you like some tea?", "Do you like tea?", "Would you like tea?", "Would you like some to eat?"]),
-      listen("Do you like ice cream?", ["Do you like ice cream?", "Would you like ice cream?", "Would you like an ice cream?", "Do you like cream?"]),
-      listen("the bill", ["the bill", "the pill", "the bell", "the ball"]),
-      listen("dessert", ["dessert", "desert", "dissert", "the shirt"], "dessert [dizyort] — shirinlik; desert [dezat] — sahro."),
-      listen("receipt", ["receipt", "recipe", "reset", "receive"]),
-      listen("menu", ["menu", "many", "money", "manual"]),
-      listen("spicy", ["spicy", "space", "spice", "speedy"]),
-      listen("thirsty", ["thirsty", "thirty", "thirteen", "Thursday"]),
+      slots(track("10.7"), [
+        ["Drinks: 1.", "coffee"],
+        ["Drinks: 2.", "tea"],
+        ["Drinks: 3.", "apple juice"],
+        ["Drinks: 4.", "orange juice"],
+        ["Drinks: 5.", "water"],
+        ["Drinks: 6.", "milk"],
+        ["Snacks: 7.", "cake"],
+        ["Snacks: 8.", "croissant"],
+        ["Snacks: 9.", "doughnut"],
+        ["Snacks: 10.", "sandwich"],
+      ]),
     ],
   },
   {
-    title: "like yoki would like?",
-    skill: "Grammatika",
-    kind: "choice",
-    instructions: "Gapga mos variantni tanlang. like — umuman yoqadi; would like — hozir xohlayman.",
+    title: "Bu nima?",
+    skill: "Tinglash",
+    kind: "listengap",
+    instructions: "Uchta qisqa suhbatni tinglang. a kind of … — «…ning bir turi».",
     questions: [
-      say("I'm thirsty. I ___ some water, please.", ["'d like", "like", "likes", "liking"]),
-      say("I ___ tea. I drink it every day.", ["like", "'d like", "would like", "'d liking"]),
-      say("___ you like some cake? — Yes, please.", ["Would", "Do", "Are", "Did"]),
-      say("___ you like cake? — Yes, I love it.", ["Do", "Would", "Are", "Did"]),
-      say("Would you like a coffee? — ___", ["Yes, please.", "Yes, I like.", "Yes, I would like.", "Yes, I do."]),
-      say("Would you like some soup? — ___", ["No, thank you.", "No, I don't.", "No, I wouldn't like.", "No, I not."]),
-      say("I'd like ___ order, please.", ["to", "—", "for", "at"]),
-      say("She'd like ___ pancake with honey.", ["a", "to", "some", "—"]),
-      say("What ___ you like to drink?", ["would", "do", "are", "did"]),
-      say("He ___ like a big burger.", ["'d", "would to", "do", "does"]),
+      gaps(track("10.9"), [
+        ["1. A croque monsieur is a kind of ___.", "sandwich", "cake", "coffee"],
+        ["2. A buñuelo is a kind of ___ here in Mexico.", "doughnut", "biscuit", "salad"],
+        ["3. A macchiato is a kind of ___…", "coffee", "tea", "juice"],
+        ["3. …with ___.", "milk", "sugar", "chocolate"],
+      ]),
     ],
-  },
-  {
-    title: "Odobli so'rang",
-    skill: "Grammatika",
-    kind: "type",
-    instructions: "«I want» o'rniga odobliroq «I'd like» bilan yozing. Masalan: I want a tea. → I'd like a tea, please.",
-    questions: written([
-      ["I want a coffee.", "I'd like a coffee, please."],
-      ["I want the menu.", "I'd like the menu, please."],
-      ["I want a cheese sandwich.", "I'd like a cheese sandwich, please."],
-      ["I want some water.", "I'd like some water, please."],
-      ["I want the bill.", "I'd like the bill, please."],
-      ["I want to order.", "I'd like to order, please."],
-      ["I want to pay by card.", "I'd like to pay by card, please."],
-      ["I want an omelette.", "I'd like an omelette, please."],
-      ["I want two lemonades.", "I'd like two lemonades, please."],
-      ["I want the chicken soup.", "I'd like the chicken soup, please."],
-    ]),
-  },
-  {
-    title: "Taklif qiling",
-    skill: "Grammatika",
-    kind: "type",
-    instructions: "Would you like…? bilan taklif qiling. Masalan: some tea → Would you like some tea?",
-    questions: written([
-      ["some tea", "Would you like some tea?"],
-      ["a sandwich", "Would you like a sandwich?"],
-      ["some ice cream", "Would you like some ice cream?"],
-      ["anything else", "Would you like anything else?"],
-      ["a dessert", "Would you like a dessert?"],
-      ["to order", "Would you like to order?"],
-      ["to see the menu", "Would you like to see the menu?"],
-      ["still or sparkling water", "Would you like still or sparkling water?"],
-      ["to come with us", "Would you like to come with us?"],
-      ["a takeaway", "Would you like a takeaway?"],
-    ]),
-  },
-  {
-    title: "Ofitsiant va mijoz",
-    skill: "Dialog",
-    kind: "dialog",
-    instructions: "Siz kafedasiz. Ofitsiant yoki do'stingiz gapirdi. Mos javobni tanlang.",
-    questions: [
-      say("Good evening! Are you ready to order?", ["Yes, I'd like the soup, please.", "Yes, I like soup.", "Yes, I'd like.", "Yes, I ordered."]),
-      say("Would you like anything to drink?", ["A lemonade, please.", "Yes, I like drinks.", "No, I don't.", "I drink."]),
-      say("Still or sparkling?", ["Still, please.", "Yes, please.", "I'd like.", "It's water."]),
-      say("Would you like anything else?", ["No, thank you. That's all.", "No, I wouldn't.", "Yes, I would like.", "I don't like."]),
-      say("Would you like a dessert?", ["Yes, please. Ice cream.", "Yes, I like.", "Yes, I'd.", "Yes, I do."]),
-      say("Here you are.", ["Thank you.", "Here you are.", "You're welcome.", "Yes, please."]),
-      say("Can we have the bill, please?", ["Of course. Here you are.", "Yes, I'd like.", "No, thank you.", "Here's the menu."]),
-      say("How would you like to pay?", ["By card, please.", "In card, please.", "With card.", "Yes, please."]),
-      say("Thank you very much!", ["You're welcome!", "Here you are!", "Yes, please!", "I'd like!"]),
-      say("Is the soup spicy?", ["No, it isn't. It's mild.", "No, it doesn't.", "Yes, it does.", "It's sweet spicy."]),
-    ],
-  },
-  {
-    title: "Juftini toping",
-    skill: "Juftlik",
-    kind: "match",
-    instructions: "Juftlarni ulang.",
-    questions: pairs([
-      ["soup|sho'rva", "salad|salat", "omelette|omlet", "pancake|quymoq"],
-      ["dessert|desert", "chips|kartoshka fri", "ice cream|muzqaymoq", "lemonade|limonad"],
-      ["menu|menyu", "bill|hisob", "tip|choychaqa", "receipt|chek"],
-      ["customer|mijoz", "waiter|ofitsiant", "cash|naqd pul", "takeaway|olib ketiladigan ovqat"],
-      ["spicy|achchiq", "sweet|shirin", "thirsty|chanqagan", "sparkling|gazli"],
-      ["Are you ready|to order?", "Can we have|the bill?", "Would you like|anything else?", "Can I pay|by card?"],
-    ]),
-  },
-  {
-    title: "Xatoni toping",
-    skill: "Grammatika",
-    kind: "mistake",
-    instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
-    questions: [
-      mistake("I *like a coffee, please.", "Hozirgi xohish: I'd like a coffee."),
-      mistake("*Do you like some tea? — Yes, please.", "Taklif: Would you like…?"),
-      mistake("I'd like *order, please.", "would like + to + fe'l: I'd like to order."),
-      mistake("Would you like a dessert? — Yes, I *like.", "Yes, please. / Yes, I would."),
-      mistake("She'd *likes a sandwich.", "would dan keyin like o'zgarmaydi."),
-      mistake("Can we have the *menu? We'd like to pay.", "To'lash uchun: the bill."),
-      mistake("I'd like *a chips.", "chips — ko'plik: some chips."),
-      mistake("I'm *thirty. I'd like some water.", "Chanqagan — thirsty."),
-      mistake("Can I pay *with cash?", "in cash."),
-      mistake("What would you like *drink?", "to drink."),
-    ],
-  },
-  {
-    title: "Gap tuzing",
-    skill: "Gap tuzish",
-    kind: "order",
-    instructions: "So'zlarni to'g'ri tartibda bosib, gap tuzing.",
-    questions: sentences([
-      "I'd like a coffee, please.",
-      "Would you like some tea?",
-      "Are you ready to order?",
-      "Can we have the bill, please?",
-      "Would you like anything else?",
-      "Can I pay in cash?",
-      "Is the soup spicy?",
-      "What would you like for dessert?",
-      "I'd like to pay by card.",
-      "Have you got any vegetarian dishes?",
-    ]),
-  },
-  {
-    title: "Bo'sh joyni to'ldiring",
-    skill: "Yozish",
-    kind: "fill",
-    instructions: "Bo'sh joyga bitta so'z yozing.",
-    questions: written([
-      ["I'd ___ a lemonade, please.", "like"],
-      ["___ you like some ice cream?", "Would"],
-      ["I'd like ___ order, please.", "to"],
-      ["Can we have the ___, please? We'd like to pay.", "bill"],
-      ["Would you like anything ___?", "else"],
-      ["Here you ___ — your tea.", "are"],
-      ["Can I pay ___ card?", "by"],
-      ["Still or ___ water?", "sparkling"],
-      ["I'm ___. Can I have some water? (chanqagan)", "thirsty"],
-      ["We left a ___ for the waiter. (choychaqa)", "tip"],
-    ]),
-  },
-  {
-    title: "Buyurtma",
-    skill: "Tinglab tushunish",
-    kind: "audiotext",
-    instructions: "Kafedagi suhbatni tinglang (kerak bo'lsa, qayta yoki sekinroq) va savollarga javob bering. Matn ekranda ko'rsatilmaydi.",
-    questions: [
-      hear("Birinchi mijoz avval nimani buyurtma qildi?", ["Tovuq sho'rvasi", "Salat", "Omlet", "Burger"]),
-      hear("Sho'rva achchiqmi?", ["Yo'q", "Ha, juda", "Biroz", "Aytilmagan"]),
-      hear("Asosiy taomga u nima oldi?", ["Baliq va kartoshka fri", "Palov", "Burger", "Sendvich"]),
-      hear("Ikkinchi mijoz qanday taom so'radi?", ["Vegetarian taom", "Achchiq taom", "Shirinlik", "Go'shtli taom"]),
-      hear("Kafeda qaysi vegetarian taomlar bor?", ["Sabzavotli palov va qo'ziqorinli omlet", "Salat va sho'rva", "Pitsa va makaron", "Faqat salat"]),
-      hear("Ikkinchi mijoz nima oldi?", ["Omlet va salat", "Palov", "Faqat salat", "Sho'rva"]),
-      hear("Birinchi mijoz nima ichadi?", ["Limonad", "Gazsiz suv", "Choy", "Qahva"]),
-      hear("Do'sti uchun nima buyurtma qilindi?", ["Bir shisha gazsiz suv", "Gazli suv", "Choy", "Limonad"]),
-      hear("Hisob qancha?", ["186 000 so'm", "168 000 so'm", "186 so'm", "210 000 so'm"]),
-      hear("Ular qanday to'lashdi?", ["Karta bilan", "Naqd pul bilan", "Aytilmagan", "To'lashmadi"]),
-    ],
-  },
-  {
-    title: "Kafe haqida fikr",
-    skill: "Matn bilan ishlash",
-    kind: "truefalse",
-    instructions: "Fikrni o'qing va gap to'g'ri yoki noto'g'ri ekanini belgilang.",
-    questions: [
-      tf("Laylo had lunch at the cafe last Saturday.", true),
-      tf("Cafe Chinor is a big cafe near the station.", false, "It's a small cafe in the city centre."),
-      tf("The prices were good.", true),
-      tf("Laylo ordered a lentil soup and a chicken sandwich.", true),
-      tf("Gulnoza eats meat.", false, "She's a vegetarian."),
-      tf("Madina's chips were cold.", true),
-      tf("The waiter was unfriendly.", false, "He was very nice and brought new chips."),
-      tf("They all had ice cream for dessert.", false, "They had pancakes with honey."),
-      tf("The bill was 210,000 so'm for three people.", true),
-      tf("Laylo would like to go there again.", true),
-    ],
-  },
-  {
-    title: "Diktant",
-    skill: "Yozish",
-    kind: "dictation",
-    instructions: "Gapni tinglang va eshitganingizni yozing.",
-    questions: dictation([
-      "I'd like a coffee.",
-      "Would you like some tea?",
-      "Yes, please.",
-      "No, thank you.",
-      "Here you are.",
-      "The bill, please.",
-      "Anything else?",
-      "Still or sparkling?",
-      "Can I pay by card?",
-      "I'm thirsty.",
-    ]),
-  },
-  {
-    title: "Ayting",
-    skill: "Talaffuz",
-    kind: "speak",
-    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting.",
-    questions: phrases([
-      "I'd like a coffee, please.",
-      "Would you like some tea?",
-      "Are you ready to order?",
-      "Can we have the bill, please?",
-      "No, thank you. That's all.",
-      "Here you are.",
-      "Can I pay by card?",
-      "dessert",
-      "receipt",
-      "vegetarian",
-    ]),
   },
   {
     title: "Vena kafesida",
     skill: "Tinglash",
     kind: "audiotext",
-    instructions: "Ikki do'st kafeda buyurtma beradi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
+    instructions: "Ikki do'st Vena kafesida buyurtma beradi. Tinglang va savollarga javob bering. Ba'zi savollarda IKKITA to'g'ri javob bor.",
     questions: [
-      hearing("media:navigate-a1/audio/10.10.mp3")("How many people need a table?", ["Two","One","Three","Four"]),
-      hearing("media:navigate-a1/audio/10.10.mp3")("What is Sachertorte?", ["A kind of chocolate cake","A kind of coffee","A kind of sandwich","A kind of tea"]),
-      hearingTwo("media:navigate-a1/audio/10.10.mp3")("What do they order?", ["A coffee and a cup of tea","A piece of Sachertorte"], ["Two coffees","A sandwich"]),
-      hearing("media:navigate-a1/audio/10.10.mp3")("What do they talk about at the end?", ["Going to another museum or back to the hotel","Paying the bill","Ordering more cake","Calling a taxi"]),
+      hearing(track("10.10"))("How many people need a table?", ["Two", "One", "Three", "Four"]),
+      hearing(track("10.10"))("What city are they in?", ["Vienna", "Melbourne", "Seattle", "Havana"]),
+      hearing(track("10.10"))("What is Sachertorte?", ["A kind of chocolate cake", "A kind of coffee", "A kind of sandwich", "A kind of tea"]),
+      hearingTwo(track("10.10"))("What do they order?", ["A coffee and a cup of tea", "A piece of Sachertorte"], ["Two coffees", "A sandwich"]),
+      hearing(track("10.10"))("What do they talk about at the end?", ["Going to another museum or back to the hotel", "Paying the bill", "Ordering more cake", "Calling a taxi"]),
+    ],
+  },
+  {
+    title: "would like",
+    skill: "Grammatika",
+    kind: "choice",
+    instructions: "Muloyim so'rov: would like + ot (I'd like a sandwich) yoki would like + to + fe'l (Would you like to order?). Javob: Yes, please. / No, thanks.",
+    questions: [
+      say("I'd like ___ have some dessert.", ["to", "—", "for", "the"]),
+      say("Would you like ___ coffee, too?", ["a", "to", "—", "an"]),
+      say("I'd like ___ cake and a cup of tea.", ["the", "to", "—", "for"]),
+      say("Would you like to order? — Yes, ___.", ["please", "I like", "I would", "I'd like"]),
+      say("Would you like a coffee? — No, ___.", ["thanks", "I wouldn't like", "I don't", "not"]),
+      say("___ you like to see the menu?", ["Would", "Do", "Are", "Will"]),
+      say("We'd like ___ orange juice.", ["an", "a", "to", "—"]),
+      say("She'd like a salad, ___.", ["please", "thanks", "sure", "OK"]),
+      say("Qaysi gap to'g'ri?", ["I'd like to order now.", "I'd like order now.", "I like to order now, please would.", "I would like ordering now."]),
+      say("Qaysi gap to'g'ri?", ["Would you like milk with your coffee?", "Do you would like milk with your coffee?", "Would you like to milk with your coffee?", "You would like milk with your coffee?"]),
     ],
   },
   {
@@ -346,7 +175,128 @@ export const A1_30_EXERCISES: SeedExercise[] = [
     kind: "listengap",
     instructions: "Kafe va tez ovqatlanish joyidagi uchta suhbatni tinglang. To'g'ri so'zni tanlang.",
     questions: [
-      gaps("media:navigate-a1/audio/10.15.mp3", [["1. A burger and ___, please.","chips","salad","rice"],["1. Small or large? — ___, please.","Large","Small","Medium"],["2. A large ___, please.","hotdog","coffee","burger"],["2. How much is that? — Two pounds ___.","fifty","fifteen","five"],["3. Can we have the ___, please?","bill","menu","table"]]),
+      gaps(track("10.15"), [
+        ["1. «Can I take your ___?»", "order", "bill", "menu"],
+        ["1. «A burger and ___, please.»", "chips", "salad", "rice"],
+        ["1. «Small or large?» — «___, please.»", "Large", "Small", "Medium"],
+        ["1. «No, thanks. That's ___.»", "all", "fine", "it"],
+        ["2. «A large ___, please.»", "hot dog", "coffee", "burger"],
+        ["2. «How much is that?» — «Two pounds ___.»", "fifty", "fifteen", "five"],
+        ["3. «Can we have the ___, please?»", "bill", "menu", "table"],
+      ]),
     ],
+  },
+  {
+    title: "Rasmiymi yoki norasmiy?",
+    skill: "Dialog",
+    kind: "choice",
+    instructions: "Qisqa ibora — norasmiyroq, to'liq savol — rasmiyroq. Iborani belgilang.",
+    questions: [
+      say("Anything else?", [INFORMAL, FORMAL]),
+      say("Would you like anything else?", [FORMAL, INFORMAL]),
+      say("Can we have the bill, please?", [FORMAL, INFORMAL]),
+      say("The bill, please.", [INFORMAL, FORMAL]),
+      say("Salad?", [INFORMAL, FORMAL]),
+      say("Would you like a salad?", [FORMAL, INFORMAL]),
+      say("Can I have a large hot dog, please?", [FORMAL, INFORMAL]),
+      say("A large hot dog, please.", [INFORMAL, FORMAL]),
+    ],
+  },
+  {
+    title: "Ofitsiant va mijoz",
+    skill: "Dialog",
+    kind: "dialog",
+    instructions: "Kafedagi suhbat. Mos javobni tanlang.",
+    questions: [
+      say("Can I take your order?", ["A sandwich and an orange juice, please.", "Yes, I can.", "Here you are.", "That's all."]),
+      say("Small or large?", ["Large, please.", "Yes, please.", "A kind of coffee.", "Here you are."]),
+      say("Anything else?", ["No, thanks. That's all.", "Yes, I'd like.", "Small, please.", "Here you are."]),
+      say("Would you like a coffee?", ["Yes, please. With milk, please.", "Yes, I would like.", "Yes, I'd.", "Large."]),
+      say("What would you like to drink?", ["A tea, please.", "Yes, please.", "No, thanks.", "Here you are."]),
+      say("Can we have the bill, please?", ["Of course, just a moment.", "Small or large?", "Anything else?", "Yes, please."]),
+      say("Would you like to come to our house for dinner on Saturday?", ["That sounds great.", "Yes, I'd like dinner.", "Here you are.", "That's all."]),
+      say("Hello. Table for two?", ["Yes, please.", "Two coffees.", "No, I'm hungry.", "That's all."]),
+      say("What's a macchiato?", ["It's a kind of coffee, with milk.", "It's a kind of sandwich.", "Yes, please.", "I'd like a macchiato."]),
+      say("Here you are.", ["Thank you.", "Here you are.", "You're welcome.", "Anything else?"]),
+    ],
+  },
+  {
+    title: "Uchta ovoz",
+    skill: "Tinglash",
+    kind: "audiotext",
+    instructions: "Odamlar yoshi, jinsi, tezligi va talaffuzi bilan har xil eshitiladi. Uch kishi (A, B, C) bir xil gapni aytadi, lekin bittasi boshqacha gap aytadi. Qaysi biri?",
+    questions: [
+      hearing(track("10.18"))("1. Who says something different?", ["C — «What would you like to drink?»", "A", "B", "Nobody"]),
+      hearing(track("10.18"))("2. Who says something different?", ["B — «Can I have a small coffee, please?»", "A", "C", "Nobody"]),
+      hearing(track("10.18"))("3. Who says something different?", ["A — «I'd like a sandwich.»", "B", "C", "Nobody"]),
+      hearing(track("10.18"))("4. Who says something different?", ["B — «The café's going to close at four thirty.»", "A", "C", "Nobody"]),
+    ],
+  },
+  {
+    title: "Gap yozing",
+    skill: "Grammatika",
+    kind: "type",
+    instructions: "would like bilan gap yoki savol yozing. Qisqartma ishlating. Misol: I / order now → I'd like to order now.",
+    questions: written([
+      ["I / order now", "I'd like to order now.|I would like to order now."],
+      ["you / try the cake? (?)", "Would you like to try the cake?"],
+      ["you / see the menu? (?)", "Would you like to see the menu?"],
+      ["we / an orange juice", "We'd like an orange juice.|We would like an orange juice."],
+      ["you / milk with your coffee? (?)", "Would you like milk with your coffee?"],
+      ["she / a salad, please", "She'd like a salad, please.|She would like a salad, please."],
+      ["I / a table for two", "I'd like a table for two.|I would like a table for two."],
+      ["they / a cup of tea", "They'd like a cup of tea.|They would like a cup of tea."],
+      ["you / come to my party? (?)", "Would you like to come to my party?"],
+      ["where / you / go? (?)", "Where would you like to go?"],
+    ]),
+  },
+  {
+    title: "Xatoni toping",
+    skill: "Grammatika",
+    kind: "mistake",
+    instructions: "Har bir gapda bitta xato so'z bor. Uni bosing.",
+    questions: [
+      mistake("I'd like *have some dessert.", "would like + to + fe'l: I'd like to have."),
+      mistake("Would you like *a order?", "Would you like to order?"),
+      mistake("*Do you would like a coffee?", "Would you like a coffee?"),
+      mistake("Would you like a coffee? — Yes, I *like.", "Javob: Yes, please."),
+      mistake("I'd like *a orange juice.", "Unli oldida — an orange juice."),
+      mistake("Can I *taking your order?", "Can I take your order?"),
+      mistake("Small or large? — *Big, please.", "Porsiya — Large, please."),
+      mistake("Can we have the *menu, please? I'd like to pay.", "To'lash uchun — the bill."),
+      mistake("A macchiato is a kind *for coffee.", "a kind of coffee."),
+      mistake("I'm so sorry, but I *don't can come.", "can't come."),
+    ],
+  },
+  {
+    title: "Juftini toping",
+    skill: "Juftlik",
+    kind: "match",
+    instructions: "Juftlarni ulang.",
+    questions: pairs([
+      ["Small or large?|Large, please.", "Anything else?|No, thanks. That's all.", "Would you like a coffee?|Yes, please.", "Can we have the bill?|Of course."],
+      ["Vienna|Sachertorte", "Taipei|moa-chi", "Havana|tres leches cake", "Seattle|doughnuts"],
+      ["coffee|hot", "tea|hot", "orange juice|cold", "salad|cold"],
+      ["Can you come?|Thanks! Sounds great.", "Please join us for a party.|I'd love to come.", "Would you like to come for dinner?|Yes, I can come.", "Can you come today?|Sorry, I can't come."],
+      ["dessert|shirinlik", "menu|menyu", "bill|hisob", "owner|egasi"],
+    ]),
+  },
+  {
+    title: "Ayting",
+    skill: "Talaffuz",
+    kind: "speak",
+    instructions: "Iborani eshiting, keyin mikrofon tugmasini bosib o'zingiz ayting. So'zlarni bog'lab ayting: I'd_like_a_cake.",
+    questions: phrases([
+      "I'd like a cake.",
+      "Would you like a drink?",
+      "When does it open?",
+      "Would you like a doughnut or a biscuit?",
+      "Can I take your order?",
+      "A burger and chips, please.",
+      "No, thanks. That's all.",
+      "Can we have the bill, please?",
+      "Thank you very much for the invitation.",
+      "I'm so sorry, but I can't come.",
+    ]),
   },
 ];
