@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
-import { getUserStats } from "@/lib/data";
+import { getAllUnitsDetailed, getUserStats } from "@/lib/data";
+import { currentUnitOf } from "@/lib/progress";
+import { AnimatedWordmark, ContinueButton } from "@/components/HeaderBrand";
 import { getCertificates } from "@/lib/exam";
 import { Sidebar } from "@/components/Sidebar";
 import { EditableAvatar } from "@/components/EditableAvatar";
@@ -12,19 +14,22 @@ import { LogoMark } from "@/components/Logo";
 import { logoutAction } from "@/app/actions";
 import { LogOut } from "@/components/ui/IosIcons";
 import { LangProvider } from "@/components/LangProvider";
-import { langForLevel, translator } from "@/lib/i18n";
+import { langForLevel, localizeLabel, translator } from "@/lib/i18n";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const [user, certificates] = await Promise.all([
+  const [user, certificates, units] = await Promise.all([
     getUserStats(session.userId),
     getCertificates(session.userId),
+    getAllUnitsDetailed(session.userId),
   ]);
   if (!user) redirect("/login");
   const lang = langForLevel(user.level);
   const t = translator(lang);
+  // O'qituvchida «Davom etish» kerak emas — u darslarni o'quvchi sifatida o'tmaydi.
+  const current = user.role === "teacher" ? null : currentUnitOf(units, user.level);
 
   return (
     <LangProvider lang={lang}>
@@ -32,9 +37,19 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <Sidebar isTeacher={user.role === "teacher"} />
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-ink-100 bg-white/80 px-4 py-2.5 backdrop-blur-sm sm:px-6 lg:static lg:px-8 lg:py-3 dark:border-white/10 dark:bg-[#13100e]/75">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-4">
             <LogoMark size={34} className="shrink-0 lg:hidden" />
-            <CommandPalette />
+            <AnimatedWordmark />
+            {current && (
+              <ContinueButton
+                href={`/lessons?unit=${current.id}`}
+                label={t("Davom etish", "Continue")}
+                detail={`${current.level_code} · ${localizeLabel(lang, current.title)} · ${current.percent}%`}
+                percent={current.percent}
+              />
+            )}
+            {/* Qidiruv tugmasi ko'rinmaydi — faqat Ctrl/⌘+K bilan ochiladi. */}
+            <CommandPalette trigger={false} />
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">

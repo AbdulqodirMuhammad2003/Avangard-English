@@ -21,7 +21,8 @@ const COMMANDS = [
   { href: "/exam", label: "Daraja imtihoni", en: "Level exam", icon: GraduationCap, keywords: "imtihon exam test level" },
 ];
 
-export function CommandPalette() {
+/** trigger={false} — tugma ko'rinmaydi, faqat Ctrl/⌘+K bilan ochiladi. */
+export function CommandPalette({ trigger = true }: { trigger?: boolean }) {
   const router = useRouter();
   const t = useT();
   const [open, setOpen] = useState(false);
@@ -81,6 +82,7 @@ export function CommandPalette() {
 
   return (
     <>
+      {trigger && (
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -93,6 +95,7 @@ export function CommandPalette() {
           ⌘K
         </kbd>
       </button>
+      )}
 
       {mounted && open
         ? createPortal(

@@ -103,6 +103,7 @@ function wrap(Raw: ComponentType<SVGProps<SVGSVGElement>>, name: string): IosIco
 }
 
 // iOS nomlari
+export const PlayFill = wrap(PlayFillRaw, "PlayFill");
 export const ArrowCounterclockwise = wrap(ArrowCounterclockwiseRaw, "ArrowCounterclockwise");
 export const ArrowRight = wrap(ArrowRightRaw, "ArrowRight");
 export const BookFill = wrap(BookFillRaw, "BookFill");

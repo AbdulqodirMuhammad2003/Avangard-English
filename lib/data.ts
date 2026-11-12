@@ -432,7 +432,7 @@ export async function getUnitsForUser(userId: number): Promise<UnitRecord[]> {
  *  darslar soniga bog'liq bo'lmagan holda 5 ta so'rov parallel yuboriladi va
  *  natijalar shu yerda yig'iladi (avval har bir bosqich/mashq uchun alohida
  *  so'rov ketardi — ~50 ta ketma-ket so'rov). */
-export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]> {
+export const getAllUnitsDetailed = cache(async (userId: number): Promise<UnitDetail[]> => {
   const [units, rounds, wordCounts, exerciseRows, questionCounts, levelRows, placementRows, access] = await Promise.all([
     getUnitsForUser(userId),
     sql<{ id: number; unit_id: number; title: string; order_index: number }[]>`
@@ -559,7 +559,7 @@ export async function getAllUnitsDetailed(userId: number): Promise<UnitDetail[]>
   }
   // Boshqa (keyingi yoki o'qilmagan) darajalar darslari o'quvchiga yuborilmaydi.
   return access.staff ? detailed : detailed.filter((u) => access.visible.has(u.level_code));
-}
+});
 
 /** Sahifaga yuboriladigan darslar ro'yxatidan mashq savollarini olib
  *  tashlaydi: hamma darslarning savollari birga bir necha MB bo'lib, Vercel
