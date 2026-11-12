@@ -24,6 +24,8 @@ import {
 } from "./helpers";
 
 const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+/** 1.5 video (Navigate B2 «Report» 1) — tinglash mashqlarida ovozi ishlatiladi. */
+const VIDEO = "media:navigate-b2/video/report-01.mp4";
 
 export const B2_03_ROUNDS: Rounds = [
   {
@@ -340,5 +342,39 @@ export const B2_03_EXERCISES: SeedExercise[] = [
       "Hope to hear from you soon.",
       "What have you been up to?",
     ]),
+  },
+  {
+    title: "Video: Minority languages in the British Isles",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to the video «Minority languages in the British Isles» (you can also watch it in «Inglizcha tomosha» after the exercises). Are the sentences true or false?",
+    questions: (
+      [
+        ["92% of people in the UK speak English as their first language.", true],
+        ["In Scotland, Scottish Gaelic is spoken by around 60,000 people.", true],
+        ["In Ireland, only a few people understand Irish.", false],
+        ["In Wales, Welsh is spoken by about 50% of the population.", false],
+        ["In Cornwall, hardly anybody speaks Cornish.", true],
+      ] as [string, boolean][]
+    ).map(([prompt, isTrue]) => ({
+      prompt,
+      audio: VIDEO,
+      options: ["True", "False"],
+      correct: isTrue ? 0 : 1,
+    })),
+  },
+  {
+    title: "Video: choose the correct option",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to the video again. Choose the option that completes each sentence.",
+    questions: [
+      hearing(VIDEO)("Welsh, Scottish Gaelic, Irish and Cornish have their roots in ___ culture.", ["Celtic", "Anglo-Saxon", "Roman", "Viking"]),
+      hearing(VIDEO)("There are Scottish Gaelic communities in ___.", ["Canada", "Australia", "the USA", "New Zealand"]),
+      hearing(VIDEO)("The first official language of the Republic of Ireland is ___.", ["Irish", "English", "Scottish Gaelic", "Welsh"]),
+      hearing(VIDEO)("Welsh is most spoken in the ___ of Wales.", ["north", "south", "east", "capital"]),
+      hearing(VIDEO)("Cornish is spoken by a few ___ people.", ["hundred", "thousand", "million", "dozen"]),
+      hearing(VIDEO)("Experts predict that ___ of the world's languages will die out by the end of the century.", ["50%", "90%", "10%", "25%"]),
+    ],
   },
 ];
