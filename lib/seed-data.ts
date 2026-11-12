@@ -215,6 +215,8 @@ export const UNITS: UnitSeed[] = [
   { code: "A2-28", level: "A2", title: "28-dars", subtitle: "Artistic talent: present perfect, ever / never", color: "green", icon: "chart", locked: 1, date: "", clip: null },
   { code: "A2-29", level: "A2", title: "29-dars", subtitle: "At the movies: present perfect or past simple", color: "blue", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-a2/video/report-12.mp4", title: "Park Theatre", kind: "hujjatli", start: null, end: null } },
   { code: "A2-30", level: "A2", title: "30-dars", subtitle: "Bollywood and phone calls", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  // ---------- B2 — Upper-intermediate (Navigate B2: har unitdan 3 dars — x.1, x.2, x.3–5) ----------
+  { code: "B2-01", level: "B2", title: "1-dars", subtitle: "The rules of conversation: question types", color: "blue", icon: "chat", locked: 0, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
