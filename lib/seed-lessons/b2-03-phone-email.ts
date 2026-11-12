@@ -17,7 +17,6 @@ import {
   reading,
   say,
   sentences,
-  slots,
   trueFalse,
   w,
   written,
@@ -183,16 +182,14 @@ export const B2_03_EXERCISES: SeedExercise[] = [
   {
     title: "Four phone calls",
     skill: "Listening",
-    kind: "listenmatch",
-    instructions: "Listen to four phone conversations. What is the problem in each one?",
-    questions: [
-      slots(track("1.5"), [
-        ["Conversation 1", "an unwanted sales call"],
-        ["Conversation 2", "a friend wants to talk for too long"],
-        ["Conversation 3", "one of the speakers is distracted"],
-        ["Conversation 4", "an unclear telephone line"],
-      ]),
-    ],
+    kind: "audiotext",
+    instructions: "Listen to four phone conversations. In each one there is a problem. Choose the problem.",
+    questions: [1, 2, 3, 4].map((n) => ({
+      prompt: `Conversation ${n}: What is the problem?`,
+      audio: track("1.5"),
+      options: ["An unclear telephone line", "One of the speakers is distracted", "An unwanted sales call", "A friend wants to talk for too long"],
+      correct: [2, 3, 1, 0][n - 1],
+    })),
   },
   {
     title: "Phone call details",

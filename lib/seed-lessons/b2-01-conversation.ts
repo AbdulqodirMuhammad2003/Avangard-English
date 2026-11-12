@@ -18,7 +18,6 @@ import {
   phrases,
   say,
   sentences,
-  slots,
   trueFalse,
   w,
   written,
@@ -206,14 +205,14 @@ export const B2_01_EXERCISES: SeedExercise[] = [
   {
     title: "Grammar sentences",
     skill: "Listening",
-    kind: "listenmatch",
-    instructions: "Listen to four questions. Choose the missing word in each one.",
+    kind: "listengap",
+    instructions: "You will hear four questions. Listen and choose the missing words in each one.",
     questions: [
-      slots(track("gr-1.1"), [
-        ["1. How long has Anton been … at the university?", "working"],
-        ["2. Who has … to Italy before?", "been"],
-        ["3. I was just wondering if we'll … on time.", "arrive"],
-        ["4. Do you know where he comes …?", "from"],
+      gaps(track("gr-1.1"), [
+        ["1. How long ___ at the university?", "has Anton been working", "has been Anton working", "Anton has been working"],
+        ["2. Who ___ to Italy before?", "has been", "has he been", "did go"],
+        ["3. I was just wondering if ___ on time.", "we'll arrive", "will we arrive", "we arrive"],
+        ["4. Do you know where he ___?", "comes from", "does come from", "from comes"],
       ]),
     ],
   },
