@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { WordPicture } from "@/components/WordPicture";
 import Link from "next/link";
 import { CalendarClock, CheckCircle2, Trophy, Volume2 } from "@/components/ui/IosIcons";
 import type { ReviewWord } from "@/lib/data";
@@ -169,7 +170,9 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
           </button>
         ) : (
           <div className="text-center">
-            <div className="text-5xl">{item.word.emoji}</div>
+            <div className="mx-auto flex h-24 w-24 items-center justify-center text-5xl">
+              <WordPicture word={item.word.word} emoji={item.word.emoji} imgClassName="h-full w-full object-contain" />
+            </div>
             <p className="font-display mt-2 text-3xl font-bold text-ink-950 dark:text-ink-50">
               {item.mode === "en-uz" ? item.word.word : item.word.translation_uz}
             </p>
