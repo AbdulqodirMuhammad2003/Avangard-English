@@ -128,4 +128,44 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("You want to end a call politely:", ["I'd better get off the phone.", "You're breaking up.", "Hold the line.", "I'm losing you."]),
     ]
   ),
+  "B2-04": rule(
+    "Past events — narrative forms",
+    `A **narrative** is a story about the past. We usually tell it with three tenses: the **past simple**, the **past continuous** and the **past perfect**.
+
+## Past simple — the main events
+• The events that move the story forward, in order.
+→ In 1893, she **sailed** to Sierra Leone. · I **looked** out of the window and **saw** the Taj Mahal.
+
+## Past continuous — the background
+• a) An action **in progress** when the main event happened.
+→ **While** she **was canoeing** along the river, she **had** an encounter with a crocodile.
+→ I **was waiting** for them **when** I **heard** the news.
+• b) Two actions in progress **at the same time**.
+→ We **were drinking** coffee and Haruki **was doing** some shopping.
+• Form: was / were + -ing.
+
+## Past perfect — earlier in the past
+• An action that happened **before** a main event, or before the story began.
+→ She decided to travel to West Africa, a place she **had always dreamt** of visiting.
+→ The hotel was not as nice as we **had expected**.
+• Form: had + past participle (had seen, had learnt, had warned).
+• **Past perfect continuous** (had been + -ing) for a longer activity before: We**'d been driving** all day and were exhausted.
+
+## Linking words
+• **when, while, before, after, as soon as, by the time**
+→ **After** she **had learnt** the skills, she **set off** alone.
+→ **By the time** we arrived, we **had got** lost several times.`,
+    [
+      q("In 1893, she ___ to Sierra Leone.", ["sailed", "was sailing", "had sailed", "has sailed"]),
+      q("While she ___ along the river, she saw a crocodile.", ["was canoeing", "canoed", "had canoed", "canoes"]),
+      q("She went to Africa, a place she ___ of visiting.", ["had always dreamt", "was always dreaming", "has always dreamt", "always dreams"]),
+      q("By the time we arrived, the film ___.", ["had started", "started", "was starting", "has started"]),
+      q("I ___ for the bus when I heard the news.", ["was waiting", "had waited", "waited", "have waited"]),
+      q("We ___ coffee and Tom was doing some shopping.", ["were drinking", "drank", "had drunk", "drink"]),
+      q("Which tense is for the MAIN events of a story?", ["past simple", "past continuous", "past perfect", "present perfect"]),
+      q("Which tense shows something happened EARLIER?", ["past perfect", "past continuous", "past simple", "present simple"]),
+      q("We'd been driving all day, so we ___ exhausted.", ["were", "had been", "are", "have been"]),
+      q("___ she had learnt the skills, she set off alone.", ["After", "While", "During", "By"]),
+    ]
+  ),
 };
