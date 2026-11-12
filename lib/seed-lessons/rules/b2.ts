@@ -87,4 +87,45 @@ But there are three types of question where the word order is different.
       q("Which verb is NOT normally used in the continuous?", ["know", "work", "write", "wait"]),
     ]
   ),
+  "B2-03": rule(
+    "Verbs + prepositions · ellipsis",
+    `## Verbs + prepositions
+Some verbs are usually followed by a **particular preposition**. After the preposition we use a **noun, a pronoun or verb + -ing**.
+
+• **verb + preposition + object**
+→ Have you **heard of** Silbo Gomero? · Silbo **consists of** four vowels.
+→ Mobile phones **contributed to** the decline of Silbo. · You can't **depend on** the coverage.
+→ Some locals **disapprove of** it. · Whistling can **result in** bad luck.
+
+• **verb + object + preposition + object**
+→ It's easy to **confuse** Silbo **with** birdsong.
+→ They **adapted** the language **to** Spanish.
+→ an attempt to **prevent** the language **from** becoming extinct
+→ Henry Ford **banned** his workers **from** whistling.
+
+• After a preposition, use **-ing**: prevent it **from becoming** (NOT from become).
+• Learn verbs **together with** their preposition: communicate **in**, hear **of**, depend **on**, result **in**.
+
+## Ellipsis in informal writing
+In informal emails and speech we often **leave out words at the beginning** of a sentence.
+1. Leave out the **pronoun**: It sounds amazing. → **Sounds amazing.** · I hope to hear from you soon. → **Hope to hear from you soon.**
+2. Leave out the **pronoun + auxiliary**: It's great to hear from you. → **Great to hear from you.** · Are you going anywhere? → **Going anywhere?**
+
+## Phone phrases
+• Ending politely: I'd better get off the phone. · I'll let you get on. · I won't take up any more of your time.
+• Distractions: Just bear with me a moment. · I'm afraid you've caught me at a bad time.
+• A bad line: The coverage isn't too good here. · You're breaking up. · I'm losing you again.`,
+    [
+      q("Silbo consists ___ four vowels and four consonants.", ["of", "in", "from", "with"]),
+      q("It's easy to confuse Silbo ___ birdsong.", ["with", "to", "from", "of"]),
+      q("They wanted to prevent the language from ___ extinct.", ["becoming", "become", "to become", "became"]),
+      q("Some locals disapprove ___ teaching Silbo.", ["of", "on", "about", "with"]),
+      q("In much of the island, you cannot depend ___ phone coverage.", ["on", "of", "from", "to"]),
+      q("Whistling indoors can result ___ bad luck.", ["in", "to", "with", "on"]),
+      q("Informal: «I hope to hear from you soon.» →", ["Hope to hear from you soon.", "Hear from you soon hope.", "I hope hear from you soon.", "To hear from you soon."]),
+      q("Informal: «It's great to hear from you.» →", ["Great to hear from you.", "Is great to hear from you.", "It great to hear from you.", "Great hear from you."]),
+      q("You can't hear the other person well. You say:", ["You're breaking up.", "I'll let you get on.", "Bear with me.", "I don't take sales calls."]),
+      q("You want to end a call politely:", ["I'd better get off the phone.", "You're breaking up.", "Hold the line.", "I'm losing you."]),
+    ]
+  ),
 };
