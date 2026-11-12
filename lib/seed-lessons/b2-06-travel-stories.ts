@@ -23,6 +23,8 @@ import {
 } from "./helpers";
 
 const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+/** 2.5 video (Navigate B2 «Report» 2) — tinglash mashqida ovozi ishlatiladi. */
+const VIDEO = "media:navigate-b2/video/report-02.mp4";
 
 export const B2_06_ROUNDS: Rounds = [
   {
@@ -325,5 +327,29 @@ export const B2_06_EXERCISES: SeedExercise[] = [
       "I am writing to complain about an incident.",
       "I look forward to your reply.",
     ]),
+  },
+  {
+    title: "Video words: a painting holiday",
+    skill: "Vocabulary",
+    kind: "match",
+    instructions: "These words are from the video «Learning holidays». Match them to their meanings.",
+    questions: pairs([
+      ["harbour|a place where boats stay safely", "fishing boat|a boat for catching fish", "beach resort|a seaside town for holidays", "ocean view|you can see the sea from it"],
+      ["studio|a room where an artist works", "still life|a painting of objects, e.g. fruit", "tutor|a teacher of a small group", "paintbrush|a tool for putting on paint"],
+    ]),
+  },
+  {
+    title: "Video: Learning holidays",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to the video «Learning holidays» about a painting school in St Ives (you can also watch it in «Inglizcha tomosha» after the exercises). Choose the option that completes each sentence.",
+    questions: [
+      hearing(VIDEO)("St Ives is a seaside town in the ___ of Britain.", ["south-west", "south-east", "north-west", "north-east"]),
+      hearing(VIDEO)("As well as being famous for its ___, it is well known for its arts scene.", ["sandy beaches", "fish restaurants", "old castle", "museums"]),
+      hearing(VIDEO)("By the 1950s, it had become ___ for a large group of influential artists.", ["home", "a popular holiday destination", "too expensive", "a quiet village"]),
+      hearing(VIDEO)("The St Ives School of Painting opened in ___.", ["1938", "1958", "1918", "1988"]),
+      hearing(VIDEO)("The school runs courses in ___.", ["a range of art forms", "oil painting only", "photography only", "sculpture only"]),
+      hearing(VIDEO)("The school is located ___.", ["on the edge of a beach", "in the centre of the town", "on a hill outside the town", "next to the station"]),
+    ],
   },
 ];
