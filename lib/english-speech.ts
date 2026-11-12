@@ -148,6 +148,8 @@ export function answerMatches(given: string, expected: string) {
  *  mumkin, shuning uchun qisqartmalar ochiladi). */
 export function speechNorm(s: string) {
   return unifyMarks(s)
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/\b(i)'m\b/g, "$1 am")
     .replace(/n't\b/g, " not")
@@ -190,18 +192,100 @@ export function levenshtein(a: string, b: string) {
   return row[b.length];
 }
 
-/** Brauzer eshitgan matn kutilgan so'zga mosmi. Ovoz tanish ko'pincha bitta
- *  harfda adashadi (ship/sheep, live/leave), shuning uchun 4+ harfli so'zlarda
- *  ~75% o'xshashlik yetarli; qisqa so'zlar (it, yes) aynan mos kelishi kerak. */
+const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+  "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const ORDINALS: Record<string, string> = { "1st": "first", "2nd": "second", "3rd": "third", "5th": "fifth", "8th": "eighth", "9th": "ninth", "12th": "twelfth" };
+
+function below100(n: number) {
+  return n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? ` ${ONES[n % 10]}` : "");
+}
+
+/** Raqamni so'z bilan yozadi (brauzer «ten» ni «10» deb yozishi mumkin).
+ *  1100–2099 oralig'idagi to'rt xonali sonlar yil kabi o'qiladi (1990 → nineteen ninety). */
+function numberWords(n: number): string {
+  if (n < 100) return below100(n);
+  if (n >= 1100 && n < 2100 && n % 100 !== 0 && !(n >= 2000 && n < 2010))
+    return `${below100(Math.floor(n / 100))} ${n % 100 < 10 ? `oh ${ONES[n % 100]}` : below100(n % 100)}`;
+  if (n < 1000) return `${ONES[Math.floor(n / 100)]} hundred${n % 100 ? ` ${below100(n % 100)}` : ""}`;
+  if (n < 1_000_000)
+    return `${numberWords(Math.floor(n / 1000))} thousand${n % 1000 ? ` ${numberWords(n % 1000)}` : ""}`;
+  return String(n);
+}
+
+/** Talaffuzni solishtirish uchun matnning normallashtirilgan shakllari:
+ *  qisqartmalar ochilgan («baker is») va apostrofsiz («bakers», «dont»). Diakritika
+ *  (café), raqamlar (10 → ten, 1st → first) va okay/ok bir xil ko'rinishga keladi. */
+function speechForms(s: string): string[] {
+  const base = unifyMarks(s)
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/\b(\d+)(st|nd|rd|th)\b/g, (m, d) => ORDINALS[m] ?? `${numberWords(Number(d))}th`)
+    .replace(/\d+(?:,\d{3})*/g, (d) => ` ${numberWords(Number(d.replace(/,/g, "")))} `)
+    .replace(/\bokay\b/g, "ok");
+  const clean = (x: string) => x.replace(/[^a-z\s]/g, " ").replace(/\s+/g, " ").trim();
+  return [...new Set([clean(speechNorm(base)), clean(base.replace(/'/g, ""))])].filter(Boolean);
+}
+
+/** Bir xil eshitiladigan so'zlar (omofonlar) va UK/US yozuvlari: ovoz tanish
+ *  ulardan istalganini yozishi mumkin, shuning uchun bitta shaklga keltiriladi. */
+const SAME_SOUND: Record<string, string> = Object.fromEntries(
+  [
+    "two too to", "eight ate", "son sun", "sea see", "write right", "hour our", "one won",
+    "buy by bye", "die dye", "i eye", "know no", "new knew", "meet meat", "week weak",
+    "wait weight", "wear where", "pair pear", "hear here", "there their theyre", "flower flour",
+    "mail male", "sale sail", "road rode", "tail tale", "plane plain", "piece peace",
+    "blue blew", "hole whole", "some sum", "for four", "cell sell", "fair fare", "hi high",
+    "would wood", "weather whether", "which witch", "check cheque", "centre center",
+    "theatre theater", "metre meter", "grey gray", "tyre tire", "colour color",
+    "favourite favorite", "neighbour neighbor", "jewellery jewelry", "programme program",
+    "travelling traveling", "cancelled canceled", "mum mom", "mr mister", "mrs missus",
+    "ok okay", "be bee", "won't wont",
+    "great grate", "made maid", "steak stake", "stair stare",
+    "allowed aloud", "bored board", "brake break", "cereal serial", "dear deer", "fir fur",
+    "flu flew", "knight night", "knot not", "nose knows", "rain reign", "scene seen",
+    "stationary stationery", "waist waste", "way weigh", "whale wail",
+  ].flatMap((g) => {
+    const [first, ...rest] = g.split(" ");
+    return [first, ...rest].map((w) => [w, first] as const);
+  })
+);
+
+const soundAlike = (phrase: string) =>
+  phrase
+    .split(" ")
+    .map((w) => SAME_SOUND[w] ?? w)
+    .join(" ");
+
+/** Brauzer eshitgan matn kutilgan so'zga mosmi. Har bir variant (qisqartma
+ *  ochilgan / apostrofsiz) solishtiriladi: aynan, bo'shliqsiz (a.m. = am,
+ *  T-shirt = tshirt), omofonlar (two = too, eight = ate, centre = center) va
+ *  4+ harfli so'zlarda ~75% yozuv o'xshashligi (ship/sheep, centre/center). */
 export function matchesPronunciation(heard: string, targets: string[]) {
-  const h = speechNorm(heard);
-  if (!h) return false;
-  const heardWords = h.split(" ");
-  return targets.some((t) => {
-    if (` ${h} `.includes(` ${t} `)) return true;
-    if (t.length < 4) return false;
-    const close = (x: string) => 1 - levenshtein(x, t) / Math.max(x.length, t.length) >= 0.75;
-    return close(h) || heardWords.some(close);
+  const heardForms = speechForms(heard);
+  if (heardForms.length === 0) return false;
+  const targetForms = targets.flatMap(speechForms);
+  return targetForms.some((t) => {
+    const n = t.split(" ").length;
+    const tCompact = t.replace(/ /g, "");
+    const tSound = soundAlike(t);
+    return heardForms.some((h) => {
+      if (` ${h} `.includes(` ${t} `)) return true;
+      const words = h.split(" ");
+      const slices = (size: number) =>
+        Array.from({ length: Math.max(0, words.length - size + 1) }, (_, i) => words.slice(i, i + size).join(" "));
+      // Bo'shliqsiz aynan: «a.m.» = «am», «T-shirt» = «tshirt», «Wi-fi» = «wifi».
+      if ([n - 1, n, n + 1].some((size) => size > 0 && slices(size).some((c) => c.replace(/ /g, "") === tCompact)))
+        return true;
+      // Kutilgan so'z soniga teng har bir bo'lak (va butun matn): omofon yoki yozuvi yaqin.
+      return [h, ...slices(n)].some((c) => {
+        if (soundAlike(c) === tSound) return true;
+        if (tCompact.length < 4) return false;
+        const cCompact = c.replace(/ /g, "");
+        return 1 - levenshtein(cCompact, tCompact) / Math.max(cCompact.length, tCompact.length) >= 0.75;
+      });
+    });
   });
 }
 
