@@ -209,4 +209,41 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("Confused about where you are:", ["disorientated", "delighted", "bitter", "satisfied"]),
     ]
   ),
+  "B2-06": rule(
+    "Telling stories · complaints · American English",
+    `## Telling a story
+• **Introduce it:** Have I ever told you about …? · Did you hear about …?
+• **Give a time context:** This happened about ten years ago. · This was in the days before satnav.
+• **Add emphasis:** You'll never guess … · You're not going to believe this … · And then, **to make matters worse**, …
+• **End it:** In the end, … · We **ended up** sleeping in the car. (end up + -ing)
+• Use **narrative tenses**: We**'d been camping** in France and we **were driving** home when we **got** lost.
+
+## Reacting to a story
+• I'm not surprised! · You're kidding! · You can't be serious!
+• That is hilarious! · You must have been so embarrassed! · I bet you were furious / petrified!
+• Make your voice **rise and fall** — a flat voice sounds bored.
+
+## An email of complaint (formal)
+• **Reason:** I am writing to complain about … / to express my dissatisfaction with …
+• **The incident:** We had been informed that … · I discovered that … · Clearly, … · I am extremely upset about …
+• **Action:** I suggest that you investigate the matter. · I am therefore requesting compensation for …
+• **Close:** I look forward to your reply. Yours faithfully,
+• Be **respectful, brief, clear** and **reasonable**.
+
+## British and North American English
+• Different words: holiday → **vacation** · autumn → **fall** · boot → **trunk** · pavement → **sidewalk** · rubbish → **garbage** · toilet → **restroom** · the Underground → **subway** · motorway → **freeway** · return → **round-trip** · car park → **parking lot** · lorry → **truck** · petrol → **gas**
+• Pronunciation: in American English «t» in the middle often sounds like /d/ (water, writer) and «r» is always pronounced (car).`,
+    [
+      q("Have I ever ___ you about our trip to France?", ["told", "said", "talked", "spoke"]),
+      q("And then, to make matters ___, they lost my luggage.", ["worse", "bad", "worst", "badly"]),
+      q("We ended up ___ in the car.", ["sleeping", "sleep", "to sleep", "slept"]),
+      q("You parked in a playground? That's ___!", ["hilarious", "embarrassed", "furious", "inconvenient"]),
+      q("Formal: «I would like my money back.» →", ["I am therefore requesting compensation.", "Give me my money!", "Pay me now.", "I want cash."]),
+      q("I look forward to ___ your reply.", ["receiving", "receive", "received", "be receiving"]),
+      q("American English for «holiday»:", ["vacation", "fall", "trunk", "subway"]),
+      q("American English for «pavement»:", ["sidewalk", "freeway", "restroom", "garbage"]),
+      q("British English for «garbage»:", ["rubbish", "luggage", "queue", "petrol"]),
+      q("British English for «round-trip ticket»:", ["return", "single", "central", "one-way"]),
+    ]
+  ),
 };
