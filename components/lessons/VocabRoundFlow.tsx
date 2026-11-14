@@ -663,16 +663,16 @@ function SpellingStage({
   // Kataklar o'lchami eng uzun so'zga qarab tanlanadi — telefonda so'z bitta
   // qatorda qolishi uchun. Bir nechta so'zli ibora bo'shliqlarda bo'linadi.
   const longest = Math.max(...target.split(" ").map((w) => w.length));
+  // Katak eni qat'iy emas: asosiy eni `basis`, joy yetmasa bir tekis
+  // torayadi (so'z hech qachon ikkiga bo'linmaydi).
   const tileSize =
     longest <= 7
-      ? { tile: "h-11 w-9 text-lg rounded-xl", gap: "gap-1.5" }
+      ? { tile: "h-11 text-lg rounded-xl", basis: "2.25rem", gap: "gap-1.5" }
       : longest <= 9
-      ? { tile: "h-10 w-7 text-base rounded-lg", gap: "gap-1" }
-      : longest <= 11
-      ? { tile: "h-9 w-6 text-sm rounded-md", gap: "gap-0.5" }
-      : longest <= 13
-      ? { tile: "h-9 w-5 text-sm rounded-md", gap: "gap-0.5" }
-      : { tile: "h-8 w-4 text-xs rounded", gap: "gap-0.5" };
+      ? { tile: "h-10 text-base rounded-lg", basis: "2rem", gap: "gap-1" }
+      : longest <= 12
+      ? { tile: "h-10 text-base rounded-lg", basis: "1.75rem", gap: "gap-[3px]" }
+      : { tile: "h-9 text-sm rounded-md", basis: "1.6rem", gap: "gap-[2px]" };
   // So'zlar bo'yicha guruhlangan kataklar: [belgi, umumiy tartib raqami].
   const wordGroups = useMemo(() => {
     let pos = 0;
@@ -742,12 +742,26 @@ function SpellingStage({
   // ochiladi). Unda doim bitta yashirin belgi turadi — shunda bo'sh maydonda
   // ham Backspace keladi (Android klaviaturalari aks holda yubormaydi).
   const SENTINEL = "​";
+  // Maydon qiymati doim SENTINEL + yozilgan harflar — klaviatura nima
+  // ko'rsatsa, maydonda ham o'sha turadi. Har harfdan keyin maydonni
+  // tozalamaymiz: Android klaviaturasi tez yozilganda oldingi harfni hali
+  // «tahrir» qilayotgan bo'ladi va tozalash keyingi harfni yutib yuborardi.
   function onInput(value: string) {
-    if (!value.includes(SENTINEL)) removeLast();
-    for (const ch of value.replace(/​/g, "")) {
-      if (SPELL_CHAR.test(ch)) typeChar(ch);
+    if (checkedRef.current !== null) return;
+    const rest = value.split(SENTINEL).join("");
+    // Yashirin belgi o'chirildi — bo'sh maydonda Backspace bosildi.
+    if (!value.startsWith(SENTINEL) && rest === "") {
+      removeLast();
+      return;
     }
+    const letters = Array.from(rest)
+      .filter((ch) => SPELL_CHAR.test(ch))
+      .map((ch) => (ch === "’" ? "'" : ch))
+      .join("")
+      .slice(0, letterCount);
+    commit(letters);
   }
+
 
   return (
     <div className="flex animate-pop-in flex-col gap-5 rounded-3xl bg-white p-6 shadow-xl shadow-ink-900/5 dark:bg-[#201b17] dark:shadow-none">
@@ -760,14 +774,15 @@ function SpellingStage({
 
       <div className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
         {wordGroups.map((group, gi) => (
-          <span key={gi} className={`flex flex-wrap justify-center ${tileSize.gap}`}>
+          <span key={gi} className={`flex min-w-0 max-w-full flex-nowrap justify-center ${tileSize.gap}`}>
             {group.map(([, pos]) => {
               const letter = typed[pos] ?? "";
               const isCursor = checked === null && pos === typed.length;
               return (
                 <span
                   key={pos}
-                  className={`flex ${tileSize.tile} items-center justify-center border-2 font-bold uppercase transition-colors ${
+                  style={{ flex: `0 1 ${tileSize.basis}` }}
+                  className={`flex min-w-0 ${tileSize.tile} items-center justify-center border-2 font-bold uppercase transition-colors ${
                     checked === true
                       ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"
                       : checked === false
@@ -789,7 +804,7 @@ function SpellingStage({
         {checked === null && (
           <input
             ref={input}
-            value={SENTINEL}
+            value={SENTINEL + typed}
             onChange={(e) => onInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
