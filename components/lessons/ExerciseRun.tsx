@@ -6,6 +6,7 @@ import type { UnitDetail } from "@/lib/data";
 import { isMediaRef, mediaUrl } from "@/lib/media";
 import { MediaAudioPlayer } from "./MediaAudioPlayer";
 import { Blanked, type BlankTone } from "./Blanked";
+import { GapPicker } from "./GapPicker";
 import { ProgressRing } from "../ui/ProgressRing";
 import { buzz, celebrate } from "@/lib/celebrate";
 import { localizeOption } from "@/lib/i18n";
@@ -1029,27 +1030,23 @@ export function ExerciseRun({
                   </span>
                   <p lang="en" className="min-w-0 flex-1 leading-9">
                     {before}
-                    <select
-                      value={slots[i] ?? ""}
+                    <GapPicker
+                      value={slots[i]}
+                      options={gapChoices[i]}
                       disabled={checked !== null}
-                      onChange={(e) => {
-                        const v = e.target.value;
+                      tone={checked === null ? "selected" : slots[i] === row[1] ? "right" : "wrong"}
+                      onChange={(v) =>
                         setSlots((cur) => {
                           const nextSlots = [...cur];
                           nextSlots[i] = v;
                           return nextSlots;
-                        });
-                      }}
-                      aria-label={t(`${i + 1}-bo'sh joy`, `Gap ${i + 1}`)}
-                      className="mx-1 max-w-full rounded-lg border border-ink-200 bg-white px-2 py-1 align-middle text-base text-ink-900 dark:border-white/15 dark:bg-[#201b17] dark:text-ink-50"
-                    >
-                      <option value="">…</option>
-                      {gapChoices[i].map((choice) => (
-                        <option key={choice} value={choice}>
-                          {choice}
-                        </option>
-                      ))}
-                    </select>
+                        })
+                      }
+                      label={t(`${i + 1}-bo'sh joy`, `Gap ${i + 1}`)}
+                      before={before}
+                      after={after}
+                      chooseText={t("Mos so'zni tanlang", "Choose the word")}
+                    />
                     {after}
                     {checked !== null && slots[i] !== row[1] &&
                       (rowShown(i) ? (
