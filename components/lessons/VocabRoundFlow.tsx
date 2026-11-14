@@ -55,6 +55,13 @@ function StageNext({
   const t = useT();
   const [sent, setSent] = useState(false);
   const nextRef = useRef<HTMLButtonElement>(null);
+  // Javobni tekshirgan o'sha Enter / «keyingi» tugmasi shu tugmani ham bosib
+  // yubormasin: paydo bo'lgandan keyin qisqa vaqt klaviaturadan kelgan
+  // bosishni e'tiborsiz qoldiramiz (sichqoncha / barmoq bilan bosish ishlaydi).
+  const shownAt = useRef(0);
+  useEffect(() => {
+    shownAt.current = Date.now();
+  }, []);
   // Javob chiqishi bilan: to'g'ri bo'lsa — konfetti va qisqa tebranish.
   useEffect(() => {
     if (correct) {
@@ -86,8 +93,9 @@ function StageNext({
       <button
         ref={nextRef}
         autoFocus
-        onClick={() => {
+        onClick={(e) => {
           if (sent) return;
+          if (e.detail === 0 && Date.now() - shownAt.current < 600) return;
           setSent(true);
           onNext();
         }}
@@ -692,10 +700,13 @@ function SpellingStage({
   function commit(next: string) {
     typedRef.current = next;
     setTyped(next);
+    // Oxirgi katak to'lishi bilan avtomatik tekshiriladi («Tekshirish» shart
+    // emas); oxirgi harf ko'rinib ulgurishi uchun biroz kutiladi.
+    if (next.length >= letterCount) setTimeout(check, 250);
   }
 
   // Hamma kataklar to'lgach — «Tekshirish» tugmasi yoki Enter (oxirgi
-  // harfdagi xatoni ham o'chirib tuzatishga ulgurish uchun avtomatik emas).
+  // Oxirgi katak to'lganda commit() o'zi ham chaqiradi).
   function check() {
     const cur = typedRef.current;
     if (checkedRef.current !== null || cur.length < letterCount) return;
