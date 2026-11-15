@@ -1,13 +1,18 @@
 /**
- * Aniq narsalarni bildiradigan lug'at so'zlariga Pexels'dan bepul fotosurat
- * topadi va lib/word-images.ts ro'yxatini yangilaydi. Qaysi so'zga foto
- * olinishi va qanday qidirilishi — scripts/word-photo-queries.ts; u yerda
+ * Aniq narsalarni bildiradigan lug'at so'zlariga Unsplash'dan bepul
+ * fotosurat topadi va lib/word-images.ts ro'yxatini yangilaydi. Qaysi so'zga
+ * foto olinishi va qanday qidirilishi — scripts/word-photo-queries.ts; u yerda
  * yo'q (mavhum) so'zlar emoji bilan qoladi. Rasmi bor so'zlar o'tkazib
  * yuboriladi (qayta tanlash uchun --force).
  *
- * Kalit .env.local dan: PEXELS_API_KEY (bepul — https://www.pexels.com/api/).
- * Pexels litsenziyasi: tijoriy foydalanish bepul; rasmlar Pexels CDN'idan
- * ko'rsatiladi, ostida fotograf va Pexels nomi yoziladi.
+ * Kalit .env.local dan: UNSPLASH_ACCESS_KEY (https://unsplash.com/oauth/applications).
+ * Unsplash qoidalari: rasm Unsplash CDN'idan (images.unsplash.com) to'g'ridan
+ * ko'rsatiladi, ostida fotograf va Unsplash nomi havola bilan yoziladi,
+ * tanlangan rasm uchun download_location chaqiriladi.
+ *
+ * Demo kalit — soatiga 50 so'rov. Limit tugasa skript ro'yxatni saqlab,
+ * keyingi soatgacha kutadi va davom etadi (to'xtatish — Ctrl+C, keyin qayta
+ * ishga tushirilsa tayyorlari o'tkazib yuboriladi).
  *
  *   npm run words:images -- --unit A1-03            # faqat ro'yxat
  *   npm run words:images -- --unit A1-03 --apply    # qidirish + saqlash
@@ -36,6 +41,7 @@ const only = opt("word");
 const pickIndex = Math.max(1, Number(opt("pick") ?? 1)) - 1;
 const limit = Number(opt("limit") ?? Infinity);
 const MAP_FILE = "lib/word-images.ts";
+const UTM = "utm_source=avangard_english&utm_medium=referral";
 
 // Darslardagi so'zlar ichidan ro'yxatda so'rovi borlari.
 const words = new Map<string, { word: string; code: string; query: string }>();
@@ -58,33 +64,54 @@ if (!apply) {
   process.exit(0);
 }
 
-const key = process.env.PEXELS_API_KEY;
+const key = process.env.UNSPLASH_ACCESS_KEY;
 if (!key) {
-  console.error(".env.local da PEXELS_API_KEY kerak (bepul: https://www.pexels.com/api/).");
+  console.error(".env.local da UNSPLASH_ACCESS_KEY kerak (https://unsplash.com/oauth/applications).");
   process.exit(1);
 }
 
-type PexelsPhoto = { url: string; photographer: string; alt: string; src: { original: string } };
+type UnsplashPhoto = {
+  urls: { raw: string };
+  links: { html: string; download_location: string };
+  user: { name: string; links: { html: string } };
+};
 
-async function search(query: string): Promise<PexelsPhoto | null> {
-  const url = `https://api.pexels.com/v1/search?${new URLSearchParams({
-    query,
-    per_page: String(Math.max(5, pickIndex + 1)),
-    orientation: "square",
-  })}`;
-  const res = await fetch(url, { headers: { Authorization: key! } });
-  if (res.status === 429) throw new Error("Pexels limiti tugadi (soatiga 200 so'rov) — keyinroq qayta ishga tushiring.");
-  if (!res.ok) throw new Error(`Pexels ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  const json = (await res.json()) as { photos: PexelsPhoto[] };
-  return json.photos[pickIndex] ?? json.photos[0] ?? null;
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const map: Record<string, WordImage> = { ...WORD_IMAGES };
+
+/** Unsplash API so'rovi; limit tugasa ro'yxatni saqlab, kutib, qayta urinadi. */
+async function api(url: string): Promise<Response> {
+  for (;;) {
+    const res = await fetch(url, { headers: { Authorization: `Client-ID ${key}`, "Accept-Version": "v1" } });
+    const left = res.headers.get("x-ratelimit-remaining");
+    const limited = res.status === 429 || (res.status === 403 && left === "0");
+    if (!limited) {
+      if (!res.ok) throw new Error(`Unsplash ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      return res;
+    }
+    saveMap(map);
+    const at = new Date(Date.now() + 61 * 60_000);
+    console.log(`… soatlik limit tugadi, ${at.toLocaleTimeString()} da davom etadi.`);
+    await sleep(61 * 60_000);
+  }
+}
+
+async function search(query: string, squarish = true): Promise<UnsplashPhoto | null> {
+  const params = new URLSearchParams({ query, per_page: String(Math.max(5, pickIndex + 1)), content_filter: "high" });
+  if (squarish) params.set("orientation", "squarish");
+  const res = await api(`https://api.unsplash.com/search/photos?${params}`);
+  const json = (await res.json()) as { results: UnsplashPhoto[] };
+  const photo = json.results[pickIndex] ?? json.results[0] ?? null;
+  // Kvadratga yaqini topilmasa — istalgan shakldagi (URL baribir kvadrat qirqadi).
+  return photo ?? (squarish ? search(query, false) : null);
 }
 
 /** lib/word-images.ts dagi ro'yxatni (alifbo tartibida) qayta yozadi. */
-function saveMap(map: Record<string, WordImage>) {
+function saveMap(m: Record<string, WordImage>) {
   const src = readFileSync(MAP_FILE, "utf8");
-  const body = Object.keys(map)
+  const body = Object.keys(m)
     .sort()
-    .map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(map[k])},`)
+    .map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(m[k])},`)
     .join("\n");
   writeFileSync(
     MAP_FILE,
@@ -96,7 +123,6 @@ function saveMap(map: Record<string, WordImage>) {
 }
 
 async function main() {
-  const map: Record<string, WordImage> = { ...WORD_IMAGES };
   let done = 0;
   let missing = 0;
   for (const [k, v] of todo) {
@@ -106,20 +132,23 @@ async function main() {
       console.log(`– ${v.code} · ${v.word}: foto topilmadi ("${v.query}")`);
       continue;
     }
+    // Unsplash talabi: tanlangan rasm «yuklab olindi» deb belgilanadi.
+    await api(photo.links.download_location).catch(() => {});
     map[k] = {
-      src: `${photo.src.original}?auto=compress&cs=tinysrgb&fit=crop&w=640&h=640`,
-      by: photo.photographer,
-      link: photo.url,
+      src: `${photo.urls.raw}&w=640&h=640&fit=crop&crop=entropy&auto=format&q=70`,
+      by: photo.user.name,
+      link: `${photo.user.links.html}?${UTM}`,
     };
     done++;
     if (done % 10 === 0) saveMap(map); // to'xtab qolsa ham yo'qolmaydi
-    console.log(`✓ ${done}/${todo.length} ${v.code} · ${v.word} — ${photo.photographer}`);
+    console.log(`✓ ${done}/${todo.length} ${v.code} · ${v.word} — ${photo.user.name}`);
   }
   saveMap(map);
   console.log(`\nTayyor: ${done} ta foto, topilmadi: ${missing} ta. lib/word-images.ts yangilandi.`);
 }
 
 main().catch((e) => {
+  saveMap(map);
   console.error((e as Error).message);
   process.exit(1);
 });

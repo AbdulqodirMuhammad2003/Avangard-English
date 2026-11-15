@@ -1,5 +1,5 @@
 /**
- * Fotosurat bilan aniq ko'rsatsa bo'ladigan so'zlar → Pexels qidiruv so'rovi
+ * Fotosurat bilan aniq ko'rsatsa bo'ladigan so'zlar → Unsplash qidiruv so'rovi
  * (scripts/gen-word-images.ts). Bu ro'yxatda yo'q so'zlar (mavhum so'zlar,
  * grammatika, oylar, kunlar, o'tgan zamon shakllari va h.k.) emoji bilan
  * qoladi. So'rov ingliz tilida va iloji boricha aniq bo'lsin: «letter» emas
@@ -29,7 +29,7 @@ export const WORD_PHOTO_QUERIES: Record<string, string> = {
   tv: "television living room",
   computer: "desktop computer",
   "credit card": "credit card",
-  "room key": "hotel room key card",
+  "room key": "hotel key",
   newspaper: "newspaper",
   magazine: "magazine",
   comic: "comic book",
