@@ -653,8 +653,8 @@ function StageQuestion({
 
 // ---------- 1-bosqich: Imlo (klaviaturadan yozish) ----------
 
-/** Imloda qabul qilinadigan belgilar: harflar, apostrof va chiziqcha. */
-const SPELL_CHAR = /[a-z'’-]/i;
+/** Imloda qabul qilinadigan belgilar: harflar, raqamlar, apostrof va chiziqcha. */
+const SPELL_CHAR = /[a-z0-9'’-]/i;
 
 function SpellingStage({
   word,
