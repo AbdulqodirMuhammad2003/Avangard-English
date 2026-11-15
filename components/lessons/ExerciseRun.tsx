@@ -148,6 +148,9 @@ export function ExerciseRun({
   const [checked, setChecked] = useState<boolean | null>(null);
   // Juftlik: ulangan juftlar, tanlangan chap so'z va xato bo'lganmi.
   const [matched, setMatched] = useState<number[]>([]);
+  // O'ng ustundagi bosilgan (to'g'ri topilgan) tugmalar. Chapdan alohida:
+  // bir xil matnli javoblar (masalan, ikkita «up») o'zaro almashinadi.
+  const [matchedRight, setMatchedRight] = useState<number[]>([]);
   const [matchLeft, setMatchLeft] = useState<number | null>(null);
   const [matchMistake, setMatchMistake] = useState(false);
   const [matchFlash, setMatchFlash] = useState(false);
@@ -448,9 +451,12 @@ export function ExerciseRun({
 
   function pickMatchRight(pairIndex: number) {
     if (matchLeft === null || checked !== null) return;
-    if (pairIndex === matchLeft) {
-      const done = [...matched, pairIndex];
+    const same = (a: number, b: number) =>
+      (matchPairs[a]?.[1] ?? "").trim().toLowerCase() === (matchPairs[b]?.[1] ?? "").trim().toLowerCase();
+    if (pairIndex === matchLeft || same(pairIndex, matchLeft)) {
+      const done = [...matched, matchLeft];
       setMatched(done);
+      setMatchedRight([...matchedRight, pairIndex]);
       setMatchFlash(false);
       if (done.length === matchPairs.length) record(!matchMistake);
     } else {
@@ -506,6 +512,7 @@ export function ExerciseRun({
       setPicked([]);
       setChecked(null);
       setMatched([]);
+      setMatchedRight([]);
       setMatchLeft(null);
       setMatchMistake(false);
       setMatchFlash(false);
@@ -994,10 +1001,10 @@ export function ExerciseRun({
                 {matchRight.map((pairIndex) => (
                   <button
                     key={pairIndex}
-                    disabled={matched.includes(pairIndex) || checked !== null}
+                    disabled={matchedRight.includes(pairIndex) || checked !== null}
                     onClick={() => pickMatchRight(pairIndex)}
                     className={`min-w-0 break-words rounded-xl border-2 px-3 py-3 text-base transition-all duration-150 ${
-                      matched.includes(pairIndex) ? OPTION_STATE_CLASSES.right : OPTION_STATE_CLASSES.idle
+                      matchedRight.includes(pairIndex) ? OPTION_STATE_CLASSES.right : OPTION_STATE_CLASSES.idle
                     }`}
                   >
                     {matchPairs[pairIndex][1]}

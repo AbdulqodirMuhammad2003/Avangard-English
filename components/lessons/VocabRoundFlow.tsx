@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { WordPicture } from "@/components/WordPicture";
 import { createPortal } from "react-dom";
 import {
@@ -671,16 +672,15 @@ function SpellingStage({
   // Kataklar o'lchami eng uzun so'zga qarab tanlanadi — telefonda so'z bitta
   // qatorda qolishi uchun. Bir nechta so'zli ibora bo'shliqlarda bo'linadi.
   const longest = Math.max(...target.split(" ").map((w) => w.length));
-  // Katak eni qat'iy emas: asosiy eni `basis`, joy yetmasa bir tekis
-  // torayadi (so'z hech qachon ikkiga bo'linmaydi).
-  const tileSize =
-    longest <= 7
-      ? { tile: "h-11 text-lg rounded-xl", basis: "2.25rem", gap: "gap-1.5" }
-      : longest <= 9
-      ? { tile: "h-10 text-base rounded-lg", basis: "2rem", gap: "gap-1" }
-      : longest <= 12
-      ? { tile: "h-10 text-base rounded-lg", basis: "1.75rem", gap: "gap-[3px]" }
-      : { tile: "h-9 text-sm rounded-md", basis: "1.6rem", gap: "gap-[2px]" };
+  // Katak eni: odatda tileMax, lekin eng uzun so'z kartaga sig'masa hamma
+  // kataklar bir tekis kichrayadi (container query birligi — cqw). Balandlik
+  // enidan biroz katta, harf katakni to'ldirib turadi.
+  const tileMax = longest <= 7 ? 2.75 : longest <= 9 ? 2.5 : 2.25; // rem
+  const gapPx = longest <= 7 ? 6 : longest <= 10 ? 4 : 3;
+  const tileVars = {
+    "--tile": `min(${tileMax}rem, calc((100cqw - ${(longest - 1) * gapPx}px) / ${longest}))`,
+    gap: `${gapPx}px`,
+  } as CSSProperties;
   // So'zlar bo'yicha guruhlangan kataklar: [belgi, umumiy tartib raqami].
   const wordGroups = useMemo(() => {
     let pos = 0;
@@ -783,17 +783,21 @@ function SpellingStage({
         {word.translation_uz}
       </p>
 
-      <div className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+      <div className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-2" style={{ containerType: "inline-size" }}>
         {wordGroups.map((group, gi) => (
-          <span key={gi} className={`flex min-w-0 max-w-full flex-nowrap justify-center ${tileSize.gap}`}>
+          <span key={gi} className="flex flex-nowrap justify-center" style={tileVars}>
             {group.map(([, pos]) => {
               const letter = typed[pos] ?? "";
               const isCursor = checked === null && pos === typed.length;
               return (
                 <span
                   key={pos}
-                  style={{ flex: `0 1 ${tileSize.basis}` }}
-                  className={`flex min-w-0 ${tileSize.tile} items-center justify-center border-2 font-bold uppercase transition-colors ${
+                  style={{
+                    width: "var(--tile)",
+                    height: "calc(var(--tile) * 1.2)",
+                    fontSize: "calc(var(--tile) * 0.5)",
+                  }}
+                  className={`flex shrink-0 rounded-lg items-center justify-center border-2 font-bold uppercase transition-colors ${
                     checked === true
                       ? "border-mint-500 bg-mint-50 text-mint-800 dark:bg-mint-950/40 dark:text-mint-200"
                       : checked === false
