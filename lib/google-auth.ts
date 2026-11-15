@@ -11,6 +11,11 @@ import { AUTH_COOKIE, createSessionToken } from "@/lib/auth";
  * redirect URI: <sayt manzili>/auth/google/callback.
  */
 
+/** Vaqtincha: istalgan Google hisobi bilan kirish mumkin — ro'yxatda
+ *  yo'q bo'lsa, yangi o'quvchi hisobi ochiladi. Faqat o'qituvchi
+ *  ochgan hisoblarga qaytarish uchun false qiling. */
+export const OPEN_GOOGLE_SIGNUP = true;
+
 export const GOOGLE_STATE_COOKIE = "avangard_google_state";
 
 export function googleConfigured() {
@@ -71,7 +76,8 @@ export async function fetchGoogleProfile(code: string, origin: string): Promise<
  *  1) avval shu Google hisobi bilan kirgan bo'lsa — o'sha hisob;
  *  2) o'qituvchi shu emailni o'quvchiga yozib qo'ygan bo'lsa — unga
  *     bog'lanadi, darajasi va progressi saqlanib qoladi;
- *  3) aks holda null — kirish rad etiladi. */
+ *  3) OPEN_GOOGLE_SIGNUP yoqilgan bo'lsa — yangi o'quvchi hisobi (A1)
+ *     ochiladi; aks holda null — kirish rad etiladi. */
 export async function findGoogleUser(profile: GoogleProfile) {
   const email = profile.email.trim().toLowerCase();
 
@@ -86,7 +92,17 @@ export async function findGoogleUser(profile: GoogleProfile) {
     WHERE lower(email) = ${email} AND google_sub IS NULL
     RETURNING id, name, email
   `;
-  return byEmail ?? null;
+  if (byEmail) return byEmail;
+
+  if (!OPEN_GOOGLE_SIGNUP) return null;
+  const name = (profile.name || email.split("@")[0]).trim().slice(0, 80);
+  const [created] = await sql<{ id: number; name: string; email: string }[]>`
+    INSERT INTO users (name, email, google_sub, avatar_url, role, level)
+    VALUES (${name}, ${email}, ${profile.sub}, ${profile.picture ?? null}, 'student', 'A1')
+    ON CONFLICT DO NOTHING
+    RETURNING id, name, email
+  `;
+  return created ?? null;
 }
 
 export async function setSessionCookie(user: { id: number; name: string; email: string | null }) {
