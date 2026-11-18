@@ -7,6 +7,7 @@ import { getCertificates } from "@/lib/exam";
 import { Sidebar } from "@/components/Sidebar";
 import { EditableAvatar } from "@/components/EditableAvatar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SoundToggle } from "@/components/SoundToggle";
 import { CommandPalette } from "@/components/CommandPalette";
 import { MobileNav } from "@/components/MobileNav";
 import { InstallAppBanner } from "@/components/InstallAppBanner";
@@ -53,6 +54,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <SoundToggle />
             <ThemeToggle />
 
             <div className="mx-1 hidden h-6 w-px bg-ink-100 sm:block dark:bg-white/10" />

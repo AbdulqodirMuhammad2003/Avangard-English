@@ -9,6 +9,7 @@ import { saveExamAnswersAction, startExamAction, submitExamAction } from "@/app/
 import { useLang, useT } from "../LangProvider";
 import { ProgressRing } from "../ui/ProgressRing";
 import { celebrate } from "@/lib/celebrate";
+import { completeSound } from "@/lib/sfx";
 
 const CARD =
   "rounded-3xl bg-white p-5 shadow-sm ring-1 ring-ink-950/5 sm:p-7 dark:bg-[#201b17] dark:shadow-none dark:ring-white/10";
@@ -418,6 +419,7 @@ function ExamResultView({ result }: { result: ExamResult }) {
   useEffect(() => {
     if (!result.passed) return;
     celebrate({ count: 80, spread: 1.5 });
+    completeSound();
     const a = setTimeout(() => celebrate({ origin: { x: window.innerWidth * 0.2, y: window.innerHeight * 0.4 }, count: 40 }), 400);
     const b = setTimeout(() => celebrate({ origin: { x: window.innerWidth * 0.8, y: window.innerHeight * 0.4 }, count: 40 }), 700);
     return () => {

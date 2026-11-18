@@ -11,6 +11,7 @@ import { formatTranscription } from "@/lib/transcription";
 import { translator, type Translate } from "@/lib/i18n";
 import { useLang } from "../LangProvider";
 import { buzz, celebrate } from "@/lib/celebrate";
+import { correctSound, wrongSound } from "@/lib/sfx";
 
 export interface ReviewItem {
   word: ReviewWord;
@@ -127,9 +128,14 @@ export function ReviewSession({ items, nextDueAt }: { items: ReviewItem[]; nextD
     if (ok) {
       celebrate({ count: 16, spread: 0.7 });
       buzz(12);
-    } else buzz([18, 60, 18]);
+      correctSound();
+    } else {
+      buzz([18, 60, 18]);
+      wrongSound();
+    }
     if (!ok) setQueue((q) => [...q, item]);
-    if (item.mode !== "en-uz") speakEn(item.word.word);
+    // So'z javob ovozi tugagach o'qiladi, ikkalasi ustma-ust tushmasin.
+    if (item.mode !== "en-uz") setTimeout(() => speakEn(item.word.word), 450);
   }
 
   function next() {

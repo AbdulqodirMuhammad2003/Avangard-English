@@ -9,6 +9,7 @@ import { Blanked, type BlankTone } from "./Blanked";
 import { GapPicker } from "./GapPicker";
 import { ProgressRing } from "../ui/ProgressRing";
 import { buzz, celebrate } from "@/lib/celebrate";
+import { completeSound, correctSound, wrongSound } from "@/lib/sfx";
 import { localizeOption } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
 import { answerMatches, matchesPronunciation, normalizeAnswer, playListening, speechNorm, SPEECH_ERRORS, SPEECH_ERRORS_EN, SPEECH_LANG } from "@/lib/english-speech";
@@ -381,7 +382,11 @@ export function ExerciseRun({
       const btn = document.querySelector<HTMLElement>("[data-check-button]")?.getBoundingClientRect();
       celebrate({ origin: btn ? { x: btn.left + btn.width / 2, y: btn.top } : undefined, count: 18, spread: 0.7 });
       buzz(12);
-    } else buzz([18, 60, 18]);
+      correctSound();
+    } else {
+      buzz([18, 60, 18]);
+      wrongSound();
+    }
   }
 
   function record(ok: boolean) {
@@ -522,7 +527,11 @@ export function ExerciseRun({
     } else {
       const pct = Math.round(((alreadyCorrect + correctCount) / exercise.questions.length) * 100);
       setResult(pct);
-      if (pct >= 80) setTimeout(() => celebrate({ count: 70, spread: 1.4 }), 150);
+      if (pct >= 80)
+        setTimeout(() => {
+          celebrate({ count: 70, spread: 1.4 });
+          completeSound();
+        }, 150);
       onFinish(answers);
     }
   }

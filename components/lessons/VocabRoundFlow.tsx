@@ -30,6 +30,7 @@ import { formatTranscription } from "@/lib/transcription";
 import { localizeLabel, localizePos } from "@/lib/i18n";
 import { useLang, useT } from "../LangProvider";
 import { buzz, celebrate } from "@/lib/celebrate";
+import { correctSound, wrongSound } from "@/lib/sfx";
 
 // ---------- Yordamchi funksiyalar ----------
 
@@ -63,13 +64,17 @@ function StageNext({
   useEffect(() => {
     shownAt.current = Date.now();
   }, []);
-  // Javob chiqishi bilan: to'g'ri bo'lsa — konfetti va qisqa tebranish.
+  // Javob chiqishi bilan: to'g'ri bo'lsa — konfetti, qisqa tebranish va ovoz.
   useEffect(() => {
     if (correct) {
       const r = nextRef.current?.getBoundingClientRect();
       celebrate({ origin: r ? { x: r.left + r.width / 2, y: r.top } : undefined, count: 16, spread: 0.7 });
       buzz(12);
-    } else buzz([18, 60, 18]);
+      correctSound();
+    } else {
+      buzz([18, 60, 18]);
+      wrongSound();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
