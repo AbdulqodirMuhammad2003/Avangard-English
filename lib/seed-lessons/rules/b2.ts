@@ -328,4 +328,41 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("Which goes with BOTH time and money?", ["run out of", "kill", "get your … 's worth", "take your"]),
     ]
   ),
+  "B2-09": rule(
+    "Noun suffixes · likelihood · opinion essays",
+    `## Noun suffixes
+Some endings tell you that a word is a **noun**:
+• **-ence** reference · **-ance** appearance, inheritance
+• **-ery / -ry** bravery, robbery · **-ity** reality, generosity
+• **-tion** intention, invitation · **-dom** wisdom, freedom
+• **-ment** measurement, achievement, enjoyment
+• The spelling can change: enter → **entrance** · curious → **curiosity** · converse → **conversation** · vary → **variation** · scarce → **scarcity** · jewel → **jewellery**
+• Stress: we often stress the syllable **before** the suffix: gene**ro**sity, invi**ta**tion, a**chieve**ment.
+
+## Saying how likely something is
+• **Definitely won't:** There's no chance of (me eating) that!
+• **Probably won't:** I doubt (people would be satisfied).
+• **Possibly will:** I suppose it might happen.
+• **Probably will:** I wouldn't be surprised if it happened. · I expect (they'll travel more).
+• **Definitely will:** It's bound to happen. · That's sure to happen.
+
+## A balanced opinion essay (5 paragraphs)
+1. **Introduction:** Without doubt, … · In recent years, … · These days, …
+2. **First view:** Some people argue that … — for example / such as …
+3. **Second view:** Others feel, however, that … — In addition, … / Moreover, …
+4. **Your opinion:** Personally, … · In my opinion, … · In fact, …
+5. **Conclusion:** In conclusion, … · To sum up, …`,
+    [
+      q("Thank you for your ___.", ["generosity", "generous", "generously", "generate"]),
+      q("Noun from «free»:", ["freedom", "freement", "freeness", "freety"]),
+      q("Noun from «brave»:", ["bravery", "braveness", "bravity", "bravement"]),
+      q("Noun from «curious»:", ["curiosity", "curiousness", "curiosion", "curiousment"]),
+      q("Noun from «enter»:", ["entrance", "enterance", "entrence", "entering"]),
+      q("Definitely will happen:", ["It's bound to happen.", "I doubt it.", "I suppose it might.", "There's no chance."]),
+      q("Probably won't happen:", ["I doubt it'll happen.", "It's sure to happen.", "I expect so.", "It's bound to."]),
+      q("I wouldn't be ___ if it happened.", ["surprised", "surprise", "surprising", "sure"]),
+      q("Which phrase gives YOUR opinion?", ["Personally, …", "Some people argue that …", "Others feel that …", "For example, …"]),
+      q("Which phrase starts the conclusion?", ["In conclusion, …", "In addition, …", "Such as …", "Others feel, however, …"]),
+    ]
+  ),
 };
