@@ -246,4 +246,48 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("British English for «round-trip ticket»:", ["return", "single", "central", "one-way"]),
     ]
   ),
+  "B2-07": rule(
+    "Talking about the future (1)",
+    `English has **no single future tense**. We choose the form by its meaning.
+
+## will
+• a) A **prediction** based on what we know, think or feel.
+→ You**'ll** really like the film. · Some children born today **will** probably live to be 120.
+• b) A **spontaneous decision** — decided at the moment of speaking.
+→ The phone's ringing. — I**'ll** get it!
+• c) **Promises, offers, refusals and requests.**
+→ I **won't** tell anyone. I promise. · I**'ll** help you if you like. · **Will** you help me?
+• In speech: I'll, you'll, we'll · will not → **won't**.
+
+## going to
+• d) **Plans and intentions** we already have (decided before now).
+→ George has decided he**'s going to study** economics.
+• e) A prediction based on **evidence in the present**.
+→ Look at the traffic. We**'re going to be** late!
+
+## Present continuous
+• f) **Arrangements** and fixed plans, often with a time, date or place.
+→ We**'re meeting** at the restaurant at 7.30. · **Are** you **doing** anything at the weekend?
+
+## Present simple
+• g) **Scheduled or timetabled** events.
+→ Their plane **lands** at 7 a.m. on Wednesday. · The course **starts** next week.
+
+## Learning idioms
+• **drop out** (of university) · **pick up** (learn on the job) · **know your stuff**
+• **think ahead** · **make the most of** · **lose touch** (with) · **get on** (be successful)
+• **do your best** · **stick at it** (don't stop) · **give up** (stop trying)`,
+    [
+      q("The phone's ringing. — I ___ it!", ["'ll get", "'m going to get", "get", "'m getting"]),
+      q("Look at those clouds! It ___ rain.", ["'s going to", "will", "rains", "is raining"]),
+      q("We ___ at the restaurant at 7.30 — I've booked a table.", ["'re meeting", "meet", "'ll meet", "met"]),
+      q("The course ___ next week — it's on the timetable.", ["starts", "will starting", "is start", "going to start"]),
+      q("He's decided he ___ economics.", ["'s going to study", "'ll study", "studies", "is studied"]),
+      q("I promise I ___ anyone.", ["won't tell", "don't tell", "'m not telling", "not tell"]),
+      q("Which form is for a spontaneous decision?", ["will", "going to", "present continuous", "present simple"]),
+      q("Plenty of business people ___ of university.", ["drop out", "pick up", "get on", "stick at"]),
+      q("You can ___ a lot on the job.", ["pick up", "drop out", "give up", "lose touch"]),
+      q("If something is difficult, don't stop — ___.", ["stick at it", "give it up", "drop out", "lose touch"]),
+    ]
+  ),
 };
