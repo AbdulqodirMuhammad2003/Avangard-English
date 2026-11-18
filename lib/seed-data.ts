@@ -223,6 +223,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-05", level: "B2", title: "5-dars", subtitle: "An extraordinary escape: past perfect, feelings", color: "blue", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "B2-06", level: "B2", title: "6-dars", subtitle: "Travel stories: American English, complaints", color: "orange", icon: "chat", locked: 1, date: "", clip: { url: "media:navigate-b2/video/report-02.mp4", title: "Learning holidays", kind: "hujjatli", start: null, end: null } },
   { code: "B2-07", level: "B2", title: "7-dars", subtitle: "Invest in your future: will, going to, present forms", color: "purple", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-08", level: "B2", title: "8-dars", subtitle: "Time and money: future continuous and perfect", color: "green", icon: "chart", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

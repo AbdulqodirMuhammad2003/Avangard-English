@@ -290,4 +290,42 @@ In informal emails and speech we often **leave out words at the beginning** of a
       q("If something is difficult, don't stop — ___.", ["stick at it", "give it up", "drop out", "lose touch"]),
     ]
   ),
+  "B2-08": rule(
+    "Future continuous and future perfect",
+    `## Future continuous: will + be + -ing
+• An action **in progress** at a certain time in the future.
+→ This time next year, I**'ll be living** in another country.
+→ This time tomorrow I**'ll be flying** to New York.
+→ I hope I **won't** still **be working** here in five years.
+• Typical phrases: **this time tomorrow / next week / next year**, **in two years' time**, **a week from now**.
+
+## Future perfect: will + have + past participle
+• An action **completed before** a certain time in the future.
+→ By this time next year, I **will have finished** writing my book.
+→ Computers **will have changed** beyond recognition in twenty years' time.
+• Also for something still going on up to a future time: Next month, we**'ll have lived** here for twenty years.
+• Typical phrases: **by** August / the end of the year / 2030, **in ten years' time**.
+• Future perfect continuous (rare): In September, I**'ll have been working** here for a year.
+
+## Compare
+→ At 7 p.m. we**'ll be having** dinner. (in the middle of it)
+→ By 8 p.m. we**'ll have finished**. (it's over)
+
+## Collocations with time and money
+• **time:** kill time · take your time · while away the time
+• **money:** get your money's worth · throw your money around
+• **both:** be short of · fritter away · have … to spare · invest · run out of · set aside · waste`,
+    [
+      q("This time next week, we ___ on the beach.", ["'ll be lying", "'ll have lain", "lie", "lay"]),
+      q("By the end of the year, I ___ my book.", ["'ll have finished", "'ll be finishing", "finish", "finished"]),
+      q("Don't call at 7 — we ___ dinner then.", ["'ll be having", "'ll have had", "have", "had"]),
+      q("Future perfect form:", ["will + have + past participle", "will + be + -ing", "will + have + -ing", "will + past simple"]),
+      q("Future continuous form:", ["will + be + -ing", "will + have + past participle", "will + -ing", "be + going + -ed"]),
+      q("___ 2050, the population will have risen to nine billion.", ["By", "Since", "For", "During"]),
+      q("Apps are a good way to ___ time when you're bored.", ["kill", "spend away", "throw", "set"]),
+      q("Work hard and get your money's ___.", ["worth", "value", "price", "cost"]),
+      q("Which goes with MONEY only?", ["throw … around", "kill", "take your", "while away"]),
+      q("Which goes with BOTH time and money?", ["run out of", "kill", "get your … 's worth", "take your"]),
+    ]
+  ),
 };
