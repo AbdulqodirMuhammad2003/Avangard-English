@@ -852,4 +852,47 @@ We often **leave out words** when they are clear from the context.
       q("Yes, that's spot ___.", ["on", "in", "at", "off"]),
     ]
   ),
+  "B2-22": rule(
+    "Relative clauses",
+    `A **relative clause** gives more information about a noun. It starts with **who** (people), **which** (things), **whose** (possession), **that**, **whom**, **where**.
+
+## Identifying relative clauses
+• Tell us **which** person or thing we mean — the sentence makes no sense without it. **No commas.**
+→ Do you know anyone **who designs websites**? · IoT is the technology **that allows objects to communicate**.
+• You can use **that** instead of who or which.
+• You can **leave out** the pronoun when it's the **object** of the clause:
+→ The bicycle **(that) you told me about** was on offer. · Have you seen the DVD **(which) I bought**?
+
+## Non-identifying relative clauses
+• Give **extra** information — the sentence makes sense without it. Use **commas**.
+→ Steve Jobs**, who co-founded Apple,** was very creative.
+→ The pump**, which is attached to your body,** monitors insulin.
+• ⚠ **Don't use that**, and don't leave out the pronoun.
+
+## whose
+• For possession, in both types: That's the girl **whose** brother lives next door.
+
+## Prepositions
+• **Informal:** at the end — IoT is an area I'm interested **in**.
+• **Formal:** before **which / whom** — an area **in which** money is being invested · the man **for whom** you were waiting.
+• Never before **that**.
+
+## Pronunciation
+• Pause at the commas of a non-identifying clause: My car, | which is internet-connected, | can book itself in.
+
+## Smart technology collocations
+• hack / control a **device** · personal **data** · high-speed **broadband** · a **security** issue · a technical **fault** · advances in **technology** · protect your **privacy**`,
+    [
+      q("Do you know anyone ___ has a smart fridge?", ["who", "which", "whose", "whom"]),
+      q("I have a coffee machine, ___ is connected to my alarm.", ["which", "that", "who", "whose"]),
+      q("That's the girl ___ brother lives next door.", ["whose", "who's", "who", "which"]),
+      q("Steve Jobs, ___ co-founded Apple, was creative.", ["who", "that", "which", "whose"]),
+      q("Which sentence can lose the pronoun?", ["The book that I bought is great.", "The man who called you is here.", "My car, which is new, is red.", "The girl whose bag this is …"]),
+      q("Non-identifying clauses use …", ["commas", "that", "no pronoun", "no commas"]),
+      q("Formal: an area ___ money is invested.", ["in which", "in that", "which in", "that"]),
+      q("I know the man for ___ you were waiting.", ["whom", "who", "that", "which"]),
+      q("personal ___ / protect ___", ["data", "device", "fault", "broadband"]),
+      q("a technical ___", ["fault", "privacy", "data", "broadband"]),
+    ]
+  ),
 };

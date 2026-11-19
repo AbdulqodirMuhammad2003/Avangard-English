@@ -237,6 +237,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-19", level: "B2", title: "19-dars", subtitle: "Finders keepers? Present modal verbs, crime", color: "purple", icon: "book", locked: 1, date: "", clip: null },
   { code: "B2-20", level: "B2", title: "20-dars", subtitle: "Rules at work: past modals of deduction", color: "green", icon: "chat", locked: 1, date: "", clip: null },
   { code: "B2-21", level: "B2", title: "21-dars", subtitle: "The carrot or the stick? Prefixes, agreeing and disagreeing", color: "blue", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B2-22", level: "B2", title: "22-dars", subtitle: "The Internet of Things: relative clauses", color: "orange", icon: "book", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
