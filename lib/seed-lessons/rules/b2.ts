@@ -606,4 +606,42 @@ Linkers show how ideas connect — they help you **predict** what comes next.
       q("___ touching the bulb — it may be hot.", ["Avoid", "Make sure", "Remember", "Don't forget"]),
     ]
   ),
+  "B2-16": rule(
+    "Articles: a/an, the and – (no article)",
+    `## a / an (indefinite article)
+• One member of a class, or something we mention **for the first time**:
+→ I saw **an** amazing film last night. · There's **a** concert in Hyde Park.
+• **a** before a consonant **sound**, **an** before a vowel **sound**: a car, **a u**niversity /juː/, **a e**uro · an apple, **an h**our, an umbrella.
+• Rates: one pound **an** hour.
+
+## the (definite article)
+• It's **clear which one** (often the second mention): How was **the** concert?
+• The **only one**: **the** sun, **the** full moon.
+• **Superlatives**: **the** biggest community, **the** quickest way.
+• **Rivers, valleys, oceans, seas, deserts, mountain ranges**: the Nile, the Chubut Valley, the Atlantic, the Sahara, the Andes.
+• **Plural countries / groups of islands**: the UK, the USA, the Netherlands, the Bahamas.
+• **Theatres, cinemas, hotels, galleries, museums**: the Globe Theatre, the British Museum.
+
+## No article (–)
+• **Generalizing** with plural or uncountable nouns: **Food** prices have risen. · I love **music**.
+• **Most countries, continents, states, lakes, single mountains**: Japan, Asia, California, Lake Superior, Mount Fuji.
+• **Towns, cities, neighbourhoods, streets**: Tokyo, Athens, Liberdade, Fifth Avenue.
+
+## Communities vocabulary
+• **ancestors** (long ago) ↔ **descendants** (later generations) · **immigrants** · **citizens**
+• **custom** (tradition) ≠ **costume** (clothes) · **festival / ceremony / parade**
+• **neighbourhood** (place) ≠ **community** (people) · **adjust** (get used to) ≠ **establish** (set up)`,
+    [
+      q("I saw ___ amazing film yesterday.", ["an", "a", "the", "–"]),
+      q("___ sun is very hot today.", ["The", "A", "An", "–"]),
+      q("It's ___ biggest carnival in Europe.", ["the", "a", "an", "–"]),
+      q("We sailed down ___ Nile.", ["the", "–", "a", "an"]),
+      q("Have you been to ___ Japan?", ["–", "the", "a", "an"]),
+      q("I'm studying at ___ university.", ["a", "an", "the", "–"]),
+      q("I love ___ music. (in general)", ["–", "the", "a", "an"]),
+      q("Have you visited ___ British Museum?", ["the", "–", "a", "an"]),
+      q("People in a later generation of your family:", ["descendants", "ancestors", "immigrants", "citizens"]),
+      q("Traditional clothes for a festival:", ["costumes", "customs", "ceremonies", "communities"]),
+    ]
+  ),
 };
