@@ -772,4 +772,44 @@ Some non-modal verbs work in a similar way: **have to, need (to), ought to**.
       q("He got a ___ for returning the bag.", ["reward", "profit", "claim", "suspect"]),
     ]
   ),
+  "B2-20": rule(
+    "Past modals of deduction · verbs + prepositions",
+    `We use **modal + have + past participle** to make **deductions** (logical guesses) about the past.
+
+## must have — almost certain it happened
+→ It's very quiet. The children **must have fallen** asleep.
+→ Someone **must have spilt** a drink over the computer.
+
+## can't have / couldn't have — almost certain it did NOT happen
+→ They **can't have stopped** them having a lunch break.
+→ You **couldn't have seen** Alice — she's in Dubai.
+• We don't usually say **mustn't have** in this meaning.
+
+## might / could / may have — a guess, it's possible
+→ It **might have been** a safety issue. · She **may have missed** the bus.
+→ I **could have left** my phone in the taxi.
+• Negative: She **might not have got** your message.
+• ⚠ NOT can have: I ~~can have left~~ it in the car.
+
+## Pronunciation
+• **have** is weak: must've /ˈmʌstəv/, might've, can't've.
+
+## Verbs + prepositions
+• protect **from** · prohibit **from** · react **to** · expose **to** · apply **to**
+• protest **against** · insist **on** · count **on**
+• criticize **for** · blame **for** · accuse **of** · take advantage **of**
+• After a preposition use **-ing**: accused of **taking** · prohibited from **contacting**`,
+    [
+      q("It's very quiet. The kids ___ asleep.", ["must have fallen", "can't have fallen", "must fall", "might fall"]),
+      q("He wasn't at the meeting. He ___ about it.", ["can't have known", "must have known", "mustn't know", "can know"]),
+      q("She's late. She ___ the bus.", ["might have missed", "can have missed", "must miss", "might missed"]),
+      q("Which is NOT correct for a guess about the past?", ["can have", "might have", "may have", "could have"]),
+      q("Past modal form:", ["modal + have + past participle", "modal + had + verb", "modal + has + -ing", "modal + to + verb"]),
+      q("The laws protect workers ___ stress.", ["from", "of", "on", "to"]),
+      q("They were accused ___ cheating.", ["of", "for", "from", "on"]),
+      q("The laws insist ___ switching off email.", ["on", "to", "for", "from"]),
+      q("Workers protested ___ the new rules.", ["against", "to", "on", "of"]),
+      q("The government prohibited them ___ smoking.", ["from", "to", "of", "on"]),
+    ]
+  ),
 };
