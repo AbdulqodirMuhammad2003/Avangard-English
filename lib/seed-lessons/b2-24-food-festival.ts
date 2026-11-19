@@ -1,0 +1,286 @@
+/**
+ * B2, 24-dars — «Old World, New World food and a festival of lights».
+ * Kolumb almashinuvi (New/Old World mahsulotlari), urg'uli so'zlarni
+ * tinglash, sifat + predlog, tadbir haqida taassurot (Lyon yorug'lik
+ * festivali), sharh yozish, an'anaviy qog'oz yasash videosi so'zlari.
+ * Navigate B2, 8.3 + 8.4 + 8.5 asosida: tinglash mashqlarida kitob
+ * treklari (yopiq ombordan), lug'at misollari kitob matni va Wordlist'idan
+ * yoki unga yaqin; mashq matnlari o'zimizniki. Mashqlar inglizcha.
+ */
+import type { SeedExercise } from "../seed-exercises";
+import {
+  gaps,
+  hearing,
+  mistake,
+  pairs,
+  phrases,
+  say,
+  stress,
+  w,
+  type Rounds,
+} from "./helpers";
+
+const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+
+export const B2_24_ROUNDS: Rounds = [
+  {
+    title: "1-bosqich",
+    words: [
+      w("🍆", "aubergines", "ˈəʊbəʒiːnz|oubajiinz", "ot", "Baqlajon", "Long purple vegetables (BrE).", "It's hard to imagine Greek food without aubergines.", "Yunon taomlarini baqlajonsiz tasavvur qilish qiyin."),
+      w("🥑", "avocados", "ˌævəˈkɑːdəʊz|evakaadouz", "ot", "Avokado", "Green fruit with a large stone inside.", "Avocados first came from the Americas.", "Avokado birinchi bo'lib Amerikadan kelgan."),
+      w("🌶️", "chillies", "ˈtʃɪliz|chiliz", "ot", "Achchiq qalampir", "Small, very hot peppers.", "Chillies are grown all over the world.", "Achchiq qalampir butun dunyoda yetishtiriladi."),
+      w("🍋", "citrus fruit", "ˈsɪtrəs fruːt|sitras fruut", "ibora", "Sitrus mevalar", "Fruit such as oranges, lemons and limes.", "The Americas gained citrus fruit from Europe.", "Amerika sitrus mevalarni Yevropadan olgan."),
+      w("🥒", "courgettes", "kʊəˈʒets|kuajets", "ot", "Qovoqcha (kabachok)", "Long green vegetables (BrE).", "Courgettes were brought over from Central America to Europe.", "Kabachok Markaziy Amerikadan Yevropaga olib kelingan."),
+      w("🧀", "dairy products", "ˈdeəri ˌprɒdʌkts|deari prodakts", "ibora", "Sut mahsulotlari", "Milk, cheese, butter and yoghurt.", "People in the Americas could enjoy dairy products for the first time.", "Amerikadagilar birinchi marta sut mahsulotlaridan bahramand bo'lishdi."),
+      w("🥭", "papayas", "pəˈpaɪəz|papayaz", "ot", "Papayya", "Tropical fruit with orange flesh.", "Pineapples and papayas came from South and Central America.", "Ananas va papayya Janubiy va Markaziy Amerikadan kelgan."),
+      w("🥜", "peanuts", "ˈpiːnʌts|piinats", "ot", "Yeryong'oq", "Nuts that grow under the ground.", "Peanuts and chillies were introduced to Asia by the Europeans.", "Yeryong'oq va qalampirni Osiyoga yevropaliklar olib kelgan."),
+      w("🌱", "quinoa", "ˈkiːnwɑː|kiinwaa", "ot", "Kinoa (don)", "A grain from the Andes, rich in protein.", "Quinoa is now considered a superfood.", "Kinoa hozir «superoziq-ovqat» hisoblanadi."),
+      w("🌾", "wheat", "wiːt|wiit", "ot", "Bug'doy", "A grain used to make flour and bread.", "The Americas gained wheat and rice from Europe.", "Amerika bug'doy va guruchni Yevropadan olgan."),
+    ],
+  },
+  {
+    title: "2-bosqich",
+    words: [
+      w("🤩", "enthusiastic about", "ɪnˌθjuːziˈæstɪk əˌbaʊt|insyuuziestik abaut", "ibora", "…ga ishtiyoqmand", "Very interested in and excited by something.", "The Europeans weren't very enthusiastic about the new foods.", "Yevropaliklar yangi taomlarga unchalik ishtiyoqmand emas edi."),
+      w("🤨", "suspicious of", "səˈspɪʃəs əv|saspishas av", "ibora", "…ga shubha bilan qaraydigan", "Not trusting something.", "People were suspicious of them, thinking they were dangerous to eat.", "Odamlar ularni yeyish xavfli deb, shubha bilan qarashardi."),
+      w("🥔", "dependent on", "dɪˈpendənt ɒn|dipendant on", "ibora", "…ga qaram", "Needing something in order to survive.", "Ireland had become so dependent on potatoes.", "Irlandiya kartoshkaga juda qaram bo'lib qolgan edi."),
+      w("🥩", "associated with", "əˈsəʊsieɪtɪd wɪð|asousieytid wiz", "ibora", "…bilan bog'liq", "Connected in people's minds.", "Argentina is now strongly associated with beef.", "Argentina hozir mol go'shti bilan kuchli bog'lanadi."),
+      w("💪", "rich in", "ˈrɪtʃ ɪn|rich in", "ibora", "…ga boy", "Containing a lot of something.", "Quinoa is extremely rich in protein.", "Kinoa oqsilga juda boy."),
+      w("❓", "aware of", "əˈweər əv|awear av", "ibora", "…dan xabardor", "Knowing about something.", "Many people aren't aware of the risks of eating too much sugar.", "Ko'pchilik ko'p shakar yeyish xavfidan xabardor emas."),
+      w("👏", "impressed by", "ɪmˈprest baɪ|imprest bay", "ibora", "…dan taassurot olgan", "Admiring something very much.", "I was impressed by the food in the Chinese restaurant.", "Xitoy restoranidagi taomlardan katta taassurot oldim."),
+      w("🍔", "fussy about", "ˈfʌsi əˌbaʊt|fasi abaut", "ibora", "…da injiq", "Too concerned about details; difficult to please.", "My brother-in-law is very fussy about what he eats.", "Pochcham ovqat tanlashda juda injiq."),
+      w("🫖", "preferable to", "ˈprefrəbl tə|prefrabl ta", "ibora", "…dan afzal", "More attractive or suitable than.", "In a hot climate, drinking hot tea is preferable to cold water.", "Issiq iqlimda issiq choy ichish sovuq suvdan afzal."),
+      w("🌍", "responsible for", "rɪˈspɒnsəbl fə|risponsabl fa", "ibora", "…uchun javobgar", "Being the cause of something.", "The Europeans were responsible for taking new diseases to the New World.", "Yevropaliklar Yangi dunyoga yangi kasalliklar olib borishga sabab bo'lgan."),
+    ],
+  },
+  {
+    title: "3-bosqich",
+    words: [
+      w("😍", "just stunning", "ˌdʒʌst ˈstʌnɪŋ|jast staning", "ibora", "Shunchaki hayratlanarli", "Extremely beautiful.", "The colours are just stunning.", "Ranglar shunchaki hayratlanarli."),
+      w("💡", "the highlight", "ðə ˈhaɪlaɪt|za haylayt", "ot", "Eng yaxshi qismi", "The best or most exciting part.", "The highlight for me was that building with the giant face.", "Men uchun eng zo'r qismi o'sha ulkan yuzli bino edi."),
+      w("👍", "well worth", "ˌwel ˈwɜːθ|wel wooS", "ibora", "…ga juda arziydi", "Definitely worth doing.", "It was well worth coming here.", "Bu yerga kelishga juda arzidi."),
+      w("😟", "disturbing", "dɪˈstɜːbɪŋ|distooobing", "sifat", "Bezovta qiluvchi", "Making you feel worried or upset.", "I found it a bit disturbing, though.", "Lekin u meni biroz bezovta qildi."),
+      w("👥", "packed", "pækt|pekt", "sifat", "Odam bilan to'la", "Very crowded.", "It's a bit too packed for my liking.", "Menga yoqadiganidan ko'ra biroz ko'p odam bor."),
+      w("🤷", "see the point of", "ˌsiː ðə ˈpɔɪnt əv|sii za poynt av", "ibora", "…ning ma'nosini tushunmoq", "Understand why something is done.", "I didn't really see the point of it.", "Uning ma'nosini unchalik tushunmadim."),
+      w("😕", "live up to my expectations", "ˌlɪv ˌʌp tə maɪ ˌekspekˈteɪʃnz|liv ap ta may ekspekteyshnz", "ibora", "Kutganimdek chiqmoq", "Be as good as I expected.", "It didn't really live up to my expectations.", "Kutganimdek chiqmadi."),
+      w("🎆", "illuminations", "ɪˌluːmɪˈneɪʃnz|iluumineyshnz", "ot", "Yoritish bezaklari", "Bright lights used to decorate a town.", "So what do you think of the illuminations?", "Xo'sh, yoritish bezaklari haqida nima deysiz?"),
+      w("🏭", "mass-produced", "ˌmæs prəˈdjuːst|mes pradyuust", "sifat", "Ommaviy ishlab chiqarilgan", "Made in large numbers in a factory.", "This paper is thicker than mass-produced paper.", "Bu qog'oz ommaviy ishlab chiqarilgan qog'ozdan qalinroq."),
+      w("🧑‍🎨", "skilled craftsmen", "ˌskɪld ˈkrɑːftsmən|skild kraaftsman", "ibora", "Mohir hunarmandlar", "People who make things very well by hand.", "In the village, paper is still made by skilled craftsmen.", "Qishloqda qog'ozni hali ham mohir hunarmandlar yasaydi."),
+    ],
+  },
+];
+
+export const B2_24_EXERCISES: SeedExercise[] = [
+  {
+    title: "Food words",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "You will hear twenty food words in alphabetical order. Choose the word you hear each time.",
+    questions: [
+      gaps(track("8.6"), [
+        ["___", "aubergines", "avocados", "apples"],
+        ["___", "avocados", "aubergines", "apricots"],
+        ["___", "beef", "beans", "beer"],
+        ["___", "chillies", "cherries", "cheese"],
+        ["___", "citrus fruit", "dried fruit", "fresh fruit"],
+        ["___", "coffee", "toffee", "cocoa"],
+        ["___", "courgettes", "carrots", "cabbages"],
+        ["___", "dairy products", "daily products", "fresh products"],
+        ["___", "onions", "olives", "oranges"],
+        ["___", "papayas", "potatoes", "peppers"],
+        ["___", "peanuts", "peas", "pecans"],
+        ["___", "pineapples", "apples", "pears"],
+        ["___", "potatoes", "tomatoes", "papayas"],
+        ["___", "rice", "rye", "rolls"],
+        ["___", "sweetcorn", "popcorn", "sweet potato"],
+        ["___", "tomatoes", "potatoes", "turnips"],
+        ["___", "turkey", "chicken", "tuna"],
+        ["___", "vanilla", "vinegar", "venison"],
+        ["___", "wheat", "white", "weed"],
+      ]),
+    ],
+  },
+  {
+    title: "Stressed syllables",
+    skill: "Pronunciation",
+    kind: "stress",
+    instructions: "Listen to the word. Tap the stressed syllable.",
+    questions: stress([
+      ["au|ber|gines", 0],
+      ["a|vo|ca|dos", 2],
+      ["cour|gettes", 1],
+      ["co|ffee", 0],
+      ["pine|ap|ples", 0],
+      ["po|ta|toes", 1],
+      ["to|ma|toes", 1],
+      ["va|nil|la", 1],
+    ]),
+  },
+  {
+    title: "Listen for stressed words",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "Listen to a short talk about chillies. Choose the stressed words you hear.",
+    questions: [
+      gaps(track("8.8"), [
+        ["Chillies are ___ all over the world.", "grown", "eaten", "sold"],
+        ["They're from the same ___ as tomatoes, potatoes and aubergines.", "family", "country", "group"],
+        ["Although they make your ___ burn, …", "mouth", "eyes", "throat"],
+        ["… they are also thought to have a number of ___ benefits.", "health", "money", "taste"],
+        ["They can help with ___ problems, …", "stomach", "heart", "skin"],
+        ["… ___ problems …", "breathing", "sleeping", "eating"],
+        ["… and can reduce the feeling of ___.", "pain", "hunger", "cold"],
+      ]),
+    ],
+  },
+  {
+    title: "Vanilla",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to a short talk about vanilla. Answer the questions.",
+    questions: [
+      hearing(track("8.9"))("What does the talk say about vanilla?", ["It's the most popular spice in the world.", "It's the cheapest spice.", "It comes from Europe.", "It's very spicy."]),
+      hearing(track("8.9"))("How is its taste described?", ["Sweet and slightly smoky", "Hot and sour", "Bitter", "Salty"]),
+      hearing(track("8.9"))("Why is it so expensive?", ["It requires a lot of hard labour to produce.", "It only grows in one country.", "It's very rare.", "It's imported by plane."]),
+      hearing(track("8.9"))("What is it sometimes called?", ["Green gold", "Black gold", "White gold", "Brown gold"]),
+    ],
+  },
+  {
+    title: "The Columbian Exchange",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to a food historian talking about the origins of New and Old World food. Answer the questions.",
+    questions: [
+      hearing(track("8.10"))("When did the Columbian Exchange take place?", ["In the early 16th century", "In the 19th century", "In the 1840s", "Last century"]),
+      hearing(track("8.10"))("What percentage of the world's crops originally came from the Americas?", ["60%", "16%", "90%", "40%"]),
+      hearing(track("8.10"))("How long did it take before tomatoes and potatoes were accepted in Europe?", ["Three centuries", "Three years", "Thirty years", "One century"]),
+      hearing(track("8.10"))("What happened in Ireland in the 1840s?", ["The potato crop failed and a million people died of hunger.", "People stopped eating potatoes.", "Ireland started growing tomatoes.", "Cows were introduced."]),
+      hearing(track("8.10"))("What did the Europeans introduce to the New World?", ["Cows", "Potatoes", "Chillies", "Vanilla"]),
+      hearing(track("8.10"))("Where is quinoa grown?", ["In the Andes mountains", "In Ireland", "In China", "In Argentina's cities"]),
+    ],
+  },
+  {
+    title: "Adjectives + prepositions",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "You will hear six sentences from the talk. Listen and choose the missing preposition.",
+    questions: [
+      gaps(track("8.11"), [
+        ["These foods were first introduced during a process known ___ the «Columbian Exchange».", "as", "for", "by"],
+        ["The Europeans weren't very enthusiastic ___ the new foods.", "about", "on", "with"],
+        ["People were suspicious ___ them, thinking they were dangerous to eat.", "of", "about", "with"],
+        ["Ireland had become so dependent ___ potatoes …", "on", "of", "from"],
+        ["Argentina – now so strongly associated ___ beef – had no cows.", "with", "to", "by"],
+        ["Quinoa is extremely rich ___ protein.", "in", "of", "with"],
+      ]),
+    ],
+  },
+  {
+    title: "Which preposition?",
+    skill: "Vocabulary",
+    kind: "choice",
+    instructions: "Choose the correct preposition.",
+    questions: [
+      say("Many people aren't aware ___ the risks of sugar.", ["of", "about", "with", "for"]),
+      say("I was impressed ___ the food in the restaurant.", ["by", "of", "on", "for"]),
+      say("He's very fussy ___ what he eats.", ["about", "of", "with", "on"]),
+      say("Hot tea is preferable ___ cold water.", ["to", "than", "from", "for"]),
+      say("The Europeans were responsible ___ new diseases.", ["for", "of", "to", "with"]),
+      say("Which countries were involved ___ the Columbian Exchange?", ["in", "on", "with", "at"]),
+      say("It's not characteristic ___ my father to eat so little.", ["of", "for", "to", "with"]),
+      say("I'm sympathetic ___ the vegetarian cause.", ["to", "of", "about", "with"]),
+    ],
+  },
+  {
+    title: "A festival of lights",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to Anya (A) and Zac (Z) at a festival of lights. Who …?",
+    questions: [
+      hearing(track("8.12"))("Who particularly likes the contrast of old and new?", ["Zac", "Anya", "Both", "Neither"]),
+      hearing(track("8.12"))("Who found the giant moving face a bit disturbing?", ["Anya", "Zac", "Both", "Neither"]),
+      hearing(track("8.12"))("Who found the event too crowded?", ["Zac", "Anya", "Both", "Neither"]),
+      hearing(track("8.12"))("Who wasn't very impressed by the fish in the phone box?", ["Zac", "Anya", "Both", "Neither"]),
+      hearing(track("8.12"))("What do they decide to do at the end?", ["Go and get a hot drink", "Go home", "See the fish again", "Take photos"]),
+    ],
+  },
+  {
+    title: "Describing your impressions",
+    skill: "Listening",
+    kind: "listengap",
+    instructions: "You will hear nine sentences. Listen and choose the missing word.",
+    questions: [
+      gaps(track("8.13"), [
+        ["What I ___ like is the contrast of old and new.", "particularly", "really", "just"],
+        ["… the colours are ___ stunning.", "just", "really", "so"],
+        ["I really like the ___ the buildings seem to come alive.", "way", "fact", "idea"],
+        ["… the ___ for me was that building with the giant face …", "highlight", "point", "best"],
+        ["I found it a ___ disturbing, though.", "bit", "lot", "lit"],
+        ["It's a bit too packed for my ___.", "liking", "taste", "mind"],
+        ["I didn't really see the ___ of it.", "point", "way", "highlight"],
+        ["… I just wasn't ___ impressed.", "that", "so", "very"],
+        ["It didn't really ___ up to my expectations.", "live", "come", "look"],
+      ]),
+    ],
+  },
+  {
+    title: "Positive or negative?",
+    skill: "Speaking",
+    kind: "match",
+    instructions: "Is the impression positive or negative?",
+    questions: pairs([
+      ["It's just stunning.|positive", "It was well worth coming.|positive", "I didn't see the point of it.|negative", "It's a bit too packed for my liking.|negative"],
+      ["For me the highlight was …|positive", "What I particularly loved was …|positive", "I wasn't that impressed by …|negative", "It didn't live up to my expectations.|negative"],
+    ]),
+  },
+  {
+    title: "Video words: traditional skills",
+    skill: "Vocabulary",
+    kind: "choice",
+    instructions: "These words are from the video about traditional paper-making. Traditional or modern?",
+    questions: [
+      say("ancient techniques", ["traditional", "modern"]),
+      say("coal ovens", ["traditional", "modern"]),
+      say("machinery", ["modern", "traditional"]),
+      say("mass-produced", ["modern", "traditional"]),
+      say("skilled craftsmen", ["traditional", "modern"]),
+      say("technologically advanced", ["modern", "traditional"]),
+    ],
+  },
+  {
+    title: "Find the mistake",
+    skill: "Vocabulary",
+    kind: "mistake",
+    instructions: "Each sentence has one wrong word. Tap it.",
+    questions: [
+      mistake("They weren't enthusiastic *for the new foods.", "enthusiastic about."),
+      mistake("People were suspicious *about them.", "suspicious of."),
+      mistake("Ireland was dependent *of potatoes.", "dependent on."),
+      mistake("Quinoa is rich *of protein.", "rich in."),
+      mistake("Hot tea is preferable *than cold water.", "preferable to."),
+      mistake("I was very impressed *with of the colours.", "impressed by (or with) — not both."),
+      mistake("The highlight *to me was the giant face.", "the highlight for me."),
+      mistake("It's a bit too packed for my *like.", "for my liking."),
+      mistake("It didn't really live up *at my expectations.", "live up to."),
+      mistake("It was well *worthy coming here.", "well worth + -ing."),
+    ],
+  },
+  {
+    title: "Say it",
+    skill: "Pronunciation",
+    kind: "speak",
+    instructions: "Listen, then say it yourself. Stress the important words.",
+    questions: phrases([
+      "What I particularly like is the contrast of old and new.",
+      "The colours are just stunning.",
+      "The highlight for me was the giant face.",
+      "I found it a bit disturbing, though.",
+      "It's a bit too packed for my liking.",
+      "I didn't really see the point of it.",
+      "It didn't really live up to my expectations.",
+      "It was well worth coming here.",
+      "aubergines",
+      "avocados",
+    ]),
+  },
+];

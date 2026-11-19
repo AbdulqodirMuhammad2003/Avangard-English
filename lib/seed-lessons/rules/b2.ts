@@ -935,4 +935,39 @@ We often **leave out words** when they are clear from the context.
       q("Thinking you're better than others:", ["arrogant", "loyal", "critical", "realistic"]),
     ]
   ),
+  "B2-24": rule(
+    "Adjectives + prepositions · stressed words · impressions",
+    `## Adjectives + dependent prepositions
+Some adjectives are almost always followed by a particular **preposition**, then a **noun** or **-ing**:
+→ She's very **keen on** avocados. · Is he **capable of** cooking a meal on his own?
+• **about:** enthusiastic about, fussy about
+• **of:** aware of, suspicious of, characteristic of, capable of
+• **on:** dependent on, keen on
+• **with:** associated with
+• **in:** rich in, involved in
+• **by:** impressed by
+• **to:** preferable to, sympathetic to
+• **for:** responsible for
+• **as:** known as
+
+## Listening for stressed words
+• In fast speech it's hard to hear every word. Listen for the **stressed words** — nouns, main verbs, adjectives — they carry the meaning.
+• Grammar words (articles, pronouns, auxiliaries) are said quickly and quietly.
+
+## Describing your impressions
+• **Positive:** It's (just) stunning / magical / fascinating. · What I particularly liked was … · I like the way … · For me the highlight was … · It was well worth + -ing
+• **Negative:** I wasn't that impressed by … · I found it a bit dull / disturbing. · I didn't see the point of it. · It's a bit too … for my liking. · It didn't really live up to my expectations.`,
+    [
+      q("The Europeans weren't enthusiastic ___ the new foods.", ["about", "of", "on", "with"]),
+      q("People were suspicious ___ them.", ["of", "about", "on", "with"]),
+      q("Ireland was dependent ___ potatoes.", ["on", "of", "from", "with"]),
+      q("Quinoa is rich ___ protein.", ["in", "of", "with", "on"]),
+      q("Hot tea is preferable ___ cold water.", ["to", "than", "from", "for"]),
+      q("I was impressed ___ the food.", ["by", "of", "on", "to"]),
+      q("Argentina is associated ___ beef.", ["with", "to", "by", "on"]),
+      q("It was well worth ___ here.", ["coming", "to come", "come", "came"]),
+      q("It didn't live up ___ my expectations.", ["to", "for", "with", "on"]),
+      q("Which phrase is negative?", ["I didn't see the point of it.", "It's just stunning.", "For me the highlight was …", "It was well worth it."]),
+    ]
+  ),
 };
