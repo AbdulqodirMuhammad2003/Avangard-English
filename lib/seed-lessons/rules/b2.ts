@@ -530,4 +530,42 @@ The passive has the same tenses as the active. Only **be** changes:
       q("I have no ___ of it whatsoever.", ["recollection", "recall", "remember", "memorize"]),
     ]
   ),
+  "B2-14": rule(
+    "Other uses of -ing and infinitive with to",
+    `## -ing form
+• As the **subject** or **object** of a sentence: **Running** is my favourite hobby. · I hate **washing** dishes.
+• **adjective + preposition + -ing**: fed up **with**, tired **of**, capable **of**, interested **in**
+→ I'm **tired of working** here. · Are you **interested in coming** with us?
+• **noun + preposition + -ing**: the chance of, difficulty in, a feeling of, the idea of, the purpose of, the thought of
+→ I hate **the idea of having** nothing to do.
+• **before, after, since, while + -ing** (when the subject is the same):
+→ He felt sick **after eating** a whole packet of biscuits. · I fell asleep **while watching** TV.
+• In everyday English we often use a clause instead: I fell asleep **while I was watching** TV.
+
+## Infinitive with to
+• **adjective + to**: about, desperate, easy, keen, likely, rare, surprised, willing
+→ Is the software **easy to install**? · How long are you **willing to wait**?
+• **noun + to**: decision, desire, need, motivation, opportunity, plan, reason
+→ Have you got any **plans to move** abroad? · There's no **reason to get** upset.
+• **noun + be + to**: My **advice is to work** harder.
+• **something / anything / nothing / anyone + to**:
+→ I haven't got **anything to do**. · She hasn't got **anyone to talk to**.
+
+## Boredom vocabulary
+• **bored:** bored to death, bored with, fed up with, tired of, have had enough of
+• **boring:** dull, repetitive, uninteresting
+• **symptoms:** yawn, can't sit still, lose concentration, your mind wanders, zone out, feel desperate to escape`,
+    [
+      q("I'm tired of ___ here.", ["working", "to work", "work", "worked"]),
+      q("I fell asleep while ___ TV.", ["watching", "to watch", "watch", "watched"]),
+      q("Is the software easy ___?", ["to install", "installing", "install", "installed"]),
+      q("I haven't got anything ___.", ["to do", "doing", "do", "done"]),
+      q("Have you got any plans ___ abroad?", ["to move", "moving", "move", "moved"]),
+      q("I hate the idea of ___ nothing to do.", ["having", "to have", "have", "had"]),
+      q("___ is good for your health.", ["Swimming", "Swim", "To swimming", "Swam"]),
+      q("Which word means «boring»?", ["dull", "fed up", "yawn", "zone out"]),
+      q("Which is a symptom of boredom?", ["yawn", "repetitive", "dull", "uninteresting"]),
+      q("I'm really fed up ___ this weather.", ["with", "of", "about", "for"]),
+    ]
+  ),
 };

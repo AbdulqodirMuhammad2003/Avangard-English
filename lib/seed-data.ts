@@ -229,6 +229,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-11", level: "B2", title: "11-dars", subtitle: "Creative environments: causative have and get", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
   { code: "B2-12", level: "B2", title: "12-dars", subtitle: "Yarn-bombing and good teachers: confused words, opinions", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "B2-13", level: "B2", title: "13-dars", subtitle: "Childhood memories: verbs with -ing and infinitive", color: "blue", icon: "book", locked: 1, date: "", clip: null },
+  { code: "B2-14", level: "B2", title: "14-dars", subtitle: "Bored! Other uses of -ing and to-infinitive", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
