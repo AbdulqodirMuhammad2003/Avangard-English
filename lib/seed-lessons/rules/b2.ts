@@ -485,4 +485,49 @@ The passive has the same tenses as the active. Only **be** changes:
       q("Which phrase gives your opinion?", ["It seems to me …", "No, but look …", "Yes, but on the other hand …", "Yes, but don't you think …?"]),
     ]
   ),
+  "B2-13": rule(
+    "Verbs with -ing and infinitive",
+    `When one verb follows another, the second verb is **-ing** or the **infinitive** (with or without **to**).
+
+## verb + -ing
+• adore, don't mind, enjoy, fancy, feel like, hate, can't help, can't imagine, can't stand, involve, miss, avoid
+→ I don't feel like **going** out tonight. · The job involves **working** with children.
+
+## verb + to + verb
+• agree, aim, appear, arrange, choose, decide, expect, hope, learn, offer, plan, pretend, refuse, tend, want
+→ We've arranged **to meet** on the 25th. · I pretended **to be** excited.
+
+## verb + object + to + verb
+• advise, allow, ask, encourage, expect, forbid, get, need, remind, teach, tell, want
+→ They encouraged **me to do** it. · I tried to get **the horse to slow** down.
+
+## make / let + object + verb (no to)
+→ My father **let me sit** on his shoulders. · My boss **makes us stay** until 5.30.
+• **help** + object + verb with or without to: Help **me (to) cook** dinner.
+
+## Change of meaning
+• **remember / forget + -ing** = a memory: I'll never forget **falling** off that horse.
+• **remember / forget + to** = something you must do: Remember **to lock** the door.
+• **regret + -ing** = sorry about the past: I regret **not speaking** to her.
+• **regret + to** = formal bad news: We regret **to inform** you …
+• **stop + -ing** = the action ends: I stopped **playing** games.
+• **stop + to** = the reason you stopped: We stopped **to get** petrol.
+
+## Talking about memories
+• Clear: vivid · I can recall it clearly · as if it were yesterday
+• Unclear: vaguely · just about · can't remember the precise details · it has begun to fade
+• None: no recollection · no memory of it whatsoever`,
+    [
+      q("I don't feel like ___ out tonight.", ["going", "to go", "go", "went"]),
+      q("We've arranged ___ on Friday.", ["to meet", "meeting", "meet", "met"]),
+      q("My father let me ___ on his shoulders.", ["sit", "to sit", "sitting", "sat"]),
+      q("They encouraged me ___ it.", ["to do", "do", "doing", "done"]),
+      q("I'll never forget ___ you for the first time.", ["meeting", "to meet", "meet", "met"]),
+      q("Remember ___ the door when you leave.", ["to lock", "locking", "lock", "locked"]),
+      q("We stopped ___ some petrol. (the reason)", ["to get", "getting", "get", "got"]),
+      q("I stopped ___ when I was 30. (I don't do it now)", ["smoking", "to smoke", "smoke", "smoked"]),
+      q("A very clear memory:", ["vivid", "vague", "faded", "precise-less"]),
+      q("I have no ___ of it whatsoever.", ["recollection", "recall", "remember", "memorize"]),
+    ]
+  ),
 };
