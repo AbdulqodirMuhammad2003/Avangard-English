@@ -895,4 +895,44 @@ We often **leave out words** when they are clear from the context.
       q("a technical ___", ["fault", "privacy", "data", "broadband"]),
     ]
   ),
+  "B2-23": rule(
+    "Participle clauses",
+    `A **participle clause** starts with a **present participle** (coming, knowing) or a **past participle** (born, referred to). It lets us say more in one sentence and is common in **formal or written** English.
+
+## Instead of a full clause
+→ Because we didn't know the area, we got lost. → **Not knowing** the area, we got lost.
+→ As he was born in the 1960s, he is a baby boomer. → **Born** in the 1960s, he is a baby boomer.
+→ This generation is sandwiched between … It shares … → **Sandwiched** between Baby Boomers and Gen Y, this generation shares …
+• The subject of both parts must be the **same**.
+
+## Active or passive meaning
+• **Present participle (-ing) = active**: People **growing up** after the war (= who grew up) …
+→ Who's the man **standing** by the window? (= who is standing)
+• **Past participle = passive**: Generation Z, **also known as** Generation Net (= who are known) …
+→ People **born** in the 1960s (= who were born) …
+
+## having + past participle — earlier in the past
+→ **Having missed** the bus, he was late for work.
+→ **Having lived** through a recession, Gen Z won't take money for granted.
+
+## Negative
+• Put **not** before the participle: **Not speaking** any German, we missed the announcement.
+
+## Describing people
+• Positive: open-minded, loyal, well informed, well educated, tech-savvy, self-confident, easy-going
+• Negative: arrogant, self-centred, irresponsible, stubborn
+• It depends: competitive, critical, conventional, realistic`,
+    [
+      q("___ in 1990, she's a millennial.", ["Born", "Bearing", "Having born", "Being born of"]),
+      q("___ the area, we got lost.", ["Not knowing", "Knowing not", "Not knew", "Don't knowing"]),
+      q("___ the bus, he was late.", ["Having missed", "Having miss", "Missed having", "Had missing"]),
+      q("Who's the man ___ by the window?", ["standing", "stood", "having stand", "stands"]),
+      q("Gen Z, also ___ as Generation Net, …", ["known", "knowing", "having know", "knew"]),
+      q("Present participle (-ing) usually has a ___ meaning.", ["active", "passive", "future", "negative"]),
+      q("Past participle in a clause usually has a ___ meaning.", ["passive", "active", "future", "present"]),
+      q("Knowing a lot about computers:", ["tech-savvy", "well educated", "stubborn", "loyal"]),
+      q("Not willing to change your mind:", ["stubborn", "open-minded", "easy-going", "realistic"]),
+      q("Thinking you're better than others:", ["arrogant", "loyal", "critical", "realistic"]),
+    ]
+  ),
 };
