@@ -446,4 +446,43 @@ The passive has the same tenses as the active. Only **be** changes:
       q("Always traditional and normal:", ["conventional", "innovative", "inventive", "striking"]),
     ]
   ),
+  "B2-12": rule(
+    "Confused words · summaries · opinions",
+    `## Easily confused words
+**1. Different grammar** (verb / noun):
+• **affect** (v) / **effect** (n): It **affected** me badly. = It had a bad **effect** on me.
+• **advise** (v) / **advice** (n) · **practise** (v) / **practice** (n) — in British English.
+**2. Similar sound or spelling:**
+• **specially** = for a special purpose: I made this **specially** for you.
+• **especially** = in particular: It's popular everywhere, **especially** in the USA.
+• **quite** (adverb, fairly) / **quiet** (adjective, not noisy) · **lose** (verb) / **loose** (adjective, not tight)
+**3. Close meaning:**
+• **manage** = succeed in a difficult situation: She always **manages** to finish on time.
+• **control** = have power over: He finds it hard to **control** his children.
+• **mistake** = something wrong you do · **fault** = responsibility for something bad: It's my **fault**.
+
+## Lost sounds in fast speech
+• /t/ and /d/ at the end of a consonant cluster often **disappear** before another consonant: I'm no(t) going · He stoppe(d) kicking.
+• They **stay** before a vowel or /h/: firs**t** of all · She seeme**d** happy.
+
+## Writing a summary
+• Include the **main ideas**, not minor details. · Use **your own words**. · Don't add **your opinion**.
+• Paraphrase: use synonyms (memorization → rote learning), change active to passive (People say that … → **It is often thought that** …), or a verb to a noun.
+
+## Giving opinions and changing someone's opinion
+• **Giving:** Well, I have to say that … · Personally, I think … · As I see it, … · It seems to me …
+• **Changing:** Well, you've got a point, but … · Yes, but on the other hand … · No, but look … · Yes, but don't you think …?`,
+    [
+      q("The new rules will ___ everyone.", ["affect", "effect", "affection", "effective"]),
+      q("The medicine had no ___.", ["effect", "affect", "affected", "affecting"]),
+      q("Can you give me some ___?", ["advice", "advise", "advices", "advised"]),
+      q("Please be ___ in the library.", ["quiet", "quite", "quit", "quietly"]),
+      q("These trousers are too ___ — I need a belt.", ["loose", "lose", "lost", "loss"]),
+      q("I love fruit, ___ mangoes.", ["especially", "specially", "special", "specialist"]),
+      q("She ___ to finish all her work on time.", ["managed", "controlled", "succeeded", "made"]),
+      q("A summary should NOT include …", ["your own opinion", "the main ideas", "your own words", "paraphrases"]),
+      q("Which phrase tries to change someone's opinion?", ["Well, you've got a point, but …", "Personally, I think …", "As I see it, …", "I have to say that …"]),
+      q("Which phrase gives your opinion?", ["It seems to me …", "No, but look …", "Yes, but on the other hand …", "Yes, but don't you think …?"]),
+    ]
+  ),
 };

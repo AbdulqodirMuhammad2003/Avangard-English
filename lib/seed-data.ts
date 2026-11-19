@@ -227,6 +227,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-09", level: "B2", title: "9-dars", subtitle: "Gold and predictions: noun suffixes, opinion essay", color: "blue", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "B2-10", level: "B2", title: "10-dars", subtitle: "Inventive ideas: the passive, how things work", color: "orange", icon: "book", locked: 1, date: "", clip: null },
   { code: "B2-11", level: "B2", title: "11-dars", subtitle: "Creative environments: causative have and get", color: "purple", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-12", level: "B2", title: "12-dars", subtitle: "Yarn-bombing and good teachers: confused words, opinions", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
