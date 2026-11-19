@@ -78,6 +78,7 @@ import { B2_11_EXERCISES, B2_11_ROUNDS } from "./b2-11-creative-offices";
 import { B2_12_EXERCISES, B2_12_ROUNDS } from "./b2-12-yarn-bombing";
 import { B2_13_EXERCISES, B2_13_ROUNDS } from "./b2-13-memories";
 import { B2_14_EXERCISES, B2_14_ROUNDS } from "./b2-14-bored";
+import { B2_15_EXERCISES, B2_15_ROUNDS } from "./b2-15-brain-solutions";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -190,6 +191,7 @@ const LESSONS: LessonContent[] = [
   { code: "B2-12", rounds: B2_12_ROUNDS, exercises: B2_12_EXERCISES },
   { code: "B2-13", rounds: B2_13_ROUNDS, exercises: B2_13_EXERCISES },
   { code: "B2-14", rounds: B2_14_ROUNDS, exercises: B2_14_EXERCISES },
+  { code: "B2-15", rounds: B2_15_ROUNDS, exercises: B2_15_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —

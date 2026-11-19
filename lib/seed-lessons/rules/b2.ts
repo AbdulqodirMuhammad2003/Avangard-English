@@ -568,4 +568,42 @@ The passive has the same tenses as the active. Only **be** changes:
       q("I'm really fed up ___ this weather.", ["with", "of", "about", "for"]),
     ]
   ),
+  "B2-15": rule(
+    "Linkers · phrasal verbs · solutions · advice",
+    `## Linkers
+Linkers show how ideas connect — they help you **predict** what comes next.
+• **Making things clearer:** in other words, that is to say, i.e., to put it another way
+• **Giving examples:** for example, for instance, e.g., such as
+• **Showing a reason:** because of, due to, owing to, since
+→ The flight was cancelled **due to** bad weather. · I love sports **such as** tennis.
+
+## Phrasal verbs with up and out
+• **up** = begin or appear: come up, pop up, turn up, set up, take up
+• **up** = create: come up with, make up, dream up, think up
+• **out** = find or discover: work out, find out, figure out, turn out
+• **out** = finish or use completely: run out of, sort out, die out, carry out
+→ Something urgent has **come up**. · It **turned out** he had cheated. · I **ran out of** time.
+
+## Working out solutions
+• **Suggesting:** What if we …? · Would it be worth + -ing? · Would there be any point in + -ing? · One alternative would be + to … · We need to take … into consideration.
+• **Accepting:** That would be an effective solution. · I suppose there's no harm in doing that.
+• **Rejecting:** I'm not convinced. · I don't think that's an option. · I think a better way forward would be to …
+
+## Writing advice
+• **Do:** Make sure you … · It's advisable to … · You should … · Remember to … · Don't forget to …
+• **Don't:** It's not advisable to … · Try not to … · Be careful not to … · Avoid + -ing · Whatever you do, don't …
+• **Reasons:** … otherwise / or else it might … · … in case it + present tense · … as it could …`,
+    [
+      q("The flight was cancelled ___ bad weather.", ["due to", "such as", "in other words", "for instance"]),
+      q("I love outdoor sports, ___ climbing.", ["such as", "due to", "i.e.", "because of"]),
+      q("Something urgent has ___, so I have to go.", ["come up", "turned out", "sorted out", "made up"]),
+      q("I ___ time in the exam.", ["ran out of", "came up with", "turned up", "made up"]),
+      q("It ___ he had cheated.", ["turned out", "came up", "popped up", "made up"]),
+      q("Would it be worth ___ fake cameras?", ["putting in", "to put in", "put in", "to putting in"]),
+      q("We need to take cost into ___.", ["consideration", "considerate", "considering", "consider"]),
+      q("Which phrase rejects a suggestion?", ["I'm not convinced.", "That would be an effective solution.", "What if we …?", "There's no harm in it."]),
+      q("Take a coat ___ it gets cold.", ["in case", "otherwise", "whatever", "such as"]),
+      q("___ touching the bulb — it may be hot.", ["Avoid", "Make sure", "Remember", "Don't forget"]),
+    ]
+  ),
 };
