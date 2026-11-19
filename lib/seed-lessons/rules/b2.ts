@@ -729,4 +729,47 @@ Some very common verbs add little meaning — the main meaning is in the words t
       q("Which phrase compares two groups?", ["In contrast, …", "On average, …", "The chart shows …", "Overall, …"]),
     ]
   ),
+  "B2-19": rule(
+    "Present modal verbs",
+    `Modal verbs (must, can, could, might, may, should) are followed by the **base verb** (no -s, no to): She **can speak** … · You **must be** …
+Some non-modal verbs work in a similar way: **have to, need (to), ought to**.
+
+## Strong obligation
+• **must / have to** = it's necessary or a rule: You **must be** at work by 9 a.m. · They **have to give** the money back.
+• Questions usually use have to: **Do** you **have to** work on Saturdays?
+
+## Lack of obligation
+• **don't have to / don't need to / needn't** = it isn't necessary (you can choose):
+→ We **don't have to** wear a tie. · You **needn't** buy any sugar.
+• ⚠ **mustn't** does NOT mean this!
+
+## Prohibition
+• **mustn't / can't** = it's not allowed: You **mustn't** ever leave that door unlocked. · You **can't** smoke inside.
+
+## Permission
+• **can / may** (may is more formal): Employees **can** use the gym. · **May** I leave the room?
+
+## Advice
+• **should / shouldn't / ought to**: Do you think I **should** say something? · You **ought to** talk to your boss.
+• We don't usually use ought to in questions or negatives.
+
+## Possibility
+• **could / might / may** = it's possible: That young man **could** be Angela's brother. · The meeting **might** be interesting.
+
+## Crime and justice vocabulary
+• lost property · valuables · illegal · suspended sentence · justify · circumstances · abandoned · accidentally
+• Same word, different part of speech: a **reward** / to be **rewarded** · a **claim** / to **claim** · an **official** / **official** · a **suspect** / to **suspect**`,
+    [
+      q("You ___ be at work by 9 — it's the rule.", ["must", "needn't", "might", "don't have to"]),
+      q("We ___ wear a tie. It's our choice.", ["don't have to", "mustn't", "can't", "shouldn't"]),
+      q("You ___ leave that door unlocked! It's dangerous.", ["mustn't", "don't have to", "needn't", "don't need to"]),
+      q("___ I leave the room? (formal)", ["May", "Must", "Should", "Ought"]),
+      q("You ___ talk to your boss. (advice)", ["ought to", "ought", "must to", "can't"]),
+      q("He ___ be her brother — they look alike.", ["could", "must to", "has", "needs"]),
+      q("Which means «it isn't necessary»?", ["needn't", "mustn't", "can't", "must"]),
+      q("She ___ three languages.", ["can speak", "cans speak", "can to speak", "can speaks"]),
+      q("It's ___ to keep lost property.", ["illegal", "illegally", "illegality", "unlegal"]),
+      q("He got a ___ for returning the bag.", ["reward", "profit", "claim", "suspect"]),
+    ]
+  ),
 };

@@ -234,6 +234,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-16", level: "B2", title: "16-dars", subtitle: "Crossing cultures: articles", color: "green", icon: "book", locked: 1, date: "", clip: null },
   { code: "B2-17", level: "B2", title: "17-dars", subtitle: "Alone or together? Determiners and quantifiers", color: "blue", icon: "chat", locked: 1, date: "", clip: null },
   { code: "B2-18", level: "B2", title: "18-dars", subtitle: "Online communities: collocations, strangers, data", color: "orange", icon: "headphones", locked: 1, date: "", clip: null },
+  { code: "B2-19", level: "B2", title: "19-dars", subtitle: "Finders keepers? Present modal verbs, crime", color: "purple", icon: "book", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {
