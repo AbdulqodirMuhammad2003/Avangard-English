@@ -644,4 +644,47 @@ Linkers show how ideas connect — they help you **predict** what comes next.
       q("Traditional clothes for a festival:", ["costumes", "customs", "ceremonies", "communities"]),
     ]
   ),
+  "B2-17": rule(
+    "Determiners and quantifiers",
+    `Determiners come **before a noun** and tell us **how many / how much** or **which**.
+
+## Countable or uncountable?
+• **Countable** (houses, people): many, a number of, hundreds of, several, few, a few, too many
+→ There are **several** houses on my road. · **Hundreds of** people live this way.
+• **Uncountable** (money, time, space): much, a great deal of, a large quantity of, little, a little, too much
+→ Did you do **much** sightseeing? — **A little**.
+• **Both**: a lot of, lots of, some, any, enough, plenty of
+→ There are **a lot of** cafés. · Is there **enough** space?
+
+## few / a few, little / a little
+• **a few / a little** = some (positive): **A few** houses have been built already.
+• **few / little** = not many / not much (negative): **Few** people learn Latin these days.
+
+## too many / too much / enough
+• **too many** + countable, **too much** + uncountable = more than is good.
+• **enough** = as many / as much as you need: Are there **enough** chairs?
+
+## all, every, each
+• **all** + plural noun (+ plural verb): **All** (of) **the** houses have gardens.
+• **every / each** + singular noun (+ singular verb): **Every** house has a front door.
+• **each** = every individual one, also for two things: houses on **each** side of the street (NOT every side).
+
+## both, either, neither (two people or things)
+• **both** + plural: **Both** doctors work in Edinburgh. · **Both of them** (NOT both them).
+• **either / neither** + singular: I don't like **either** house. · **Neither** house is big.
+• **either … or**, **neither … nor**: **Neither** David **nor** Andrew speaks German.
+• Before the / my / us / them → **of**: either **of** the houses, neither **of** us.`,
+    [
+      q("How ___ houses are there?", ["many", "much", "a little", "little"]),
+      q("Did you do ___ shopping?", ["much", "many", "a few", "several"]),
+      q("___ house has a garden.", ["Every", "All", "Both", "Many"]),
+      q("___ the apartments have been sold.", ["All", "Every", "Each", "Either"]),
+      q("___ of them speak French.", ["Both", "Either", "Every", "Each"]),
+      q("Neither David ___ Andrew speaks German.", ["nor", "or", "and", "but"]),
+      q("There are far too ___ cars in the city.", ["many", "much", "few", "little"]),
+      q("Is there ___ space for everyone?", ["enough", "many", "few", "every"]),
+      q("___ people learn Latin now — it's a pity.", ["Few", "A few", "Little", "A little"]),
+      q("I don't like ___ of the houses.", ["either", "neither", "both", "every"]),
+    ]
+  ),
 };
