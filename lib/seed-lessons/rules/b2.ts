@@ -687,4 +687,46 @@ Linkers show how ideas connect — they help you **predict** what comes next.
       q("I don't like ___ of the houses.", ["either", "neither", "both", "every"]),
     ]
   ),
+  "B2-18": rule(
+    "Verb collocations · conversation starters · describing data",
+    `## High-frequency verb collocations
+Some very common verbs add little meaning — the main meaning is in the words that go with them. Learn them as **phrases**:
+• **do:** do you good, do a lot of damage, do nothing
+• **get:** get to know someone, get into an argument, get an illness, get together, get dressed up
+• **give:** give someone an idea / a fright / a headache, give permission, give a speech / talk, give something some thought
+• **have:** have an argument / a chat, have problems, have an accident, have a lie-down
+• **make:** make yourself understood, make the most of, make sure of, make all the difference
+• **put:** put into practice, put in charge, put pressure on, put the blame on
+• **take:** take the blame, take control, take something seriously, take a look
+• **set:** set free, set a limit, set a date, set a good / bad example
+
+## Linking sounds in fluent speech
+• Between two vowel sounds we add **/j/** (after /iː/, /aɪ/): be /j/ English
+• **/w/** (after /uː/, /aʊ/, /əʊ/): go /w/ outside · who /w/ is
+• **/r/** (after a word ending in r / re): the car /r/ is ready
+
+## Starting a conversation with a stranger
+• Lovely weather, isn't it? · Is it always this busy?
+• Excuse me, is anyone sitting there? · Excuse me, do you mind if I …?
+• I hope you don't mind me asking, but (haven't we met before)?
+• Sorry, but I couldn't help overhearing … · So, how do you know (Jonathan)?
+
+## Describing data
+• The chart shows / illustrates … · It is clear / noticeable that …
+• **the number of** + countable · **the amount of** + uncountable
+• However, … · In contrast, … · much / significantly more … than …
+• On average, … · Overall, … · By far the most … · Perhaps the most striking feature of the data is …`,
+    [
+      q("Bad advice can ___ a lot of damage.", ["do", "make", "get", "set"]),
+      q("It ___ all the difference.", ["makes", "does", "takes", "gives"]),
+      q("Have you ___ a date for the wedding?", ["set", "made", "done", "put"]),
+      q("She ___ the blame on her brother.", ["put", "gave", "made", "set"]),
+      q("Cosplayers ___ dressing up very seriously.", ["take", "make", "do", "have"]),
+      q("He couldn't make himself ___.", ["understood", "understand", "understanding", "to understand"]),
+      q("Polite starter on a train:", ["Excuse me, is anyone sitting there?", "Give me that seat.", "Move, please.", "Is this my seat?"]),
+      q("The ___ of people living alone is growing.", ["number", "amount", "deal", "much"]),
+      q("___, about 65% of people see their family daily.", ["On average", "In contrast", "By far", "However of"]),
+      q("Which phrase compares two groups?", ["In contrast, …", "On average, …", "The chart shows …", "Overall, …"]),
+    ]
+  ),
 };
