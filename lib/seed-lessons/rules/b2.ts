@@ -365,4 +365,43 @@ Some endings tell you that a word is a **noun**:
       q("Which phrase starts the conclusion?", ["In conclusion, …", "In addition, …", "Such as …", "Others feel, however, …"]),
     ]
   ),
+  "B2-10": rule(
+    "Passive forms",
+    `## Form: be + past participle
+The passive has the same tenses as the active. Only **be** changes:
+• Present simple: Billions of messages **are sent** every day.
+• Present continuous: My car **is being serviced** at the moment.
+• Past simple: The computer mouse **was invented** in the 1960s.
+• Past continuous: Our rooms **were** still **being cleaned** when we arrived.
+• Present perfect: Twenty inventions **have been shortlisted**.
+• Past perfect: Linacre **had been inspired** by the drought.
+• Future: The winner **will be announced** in November.
+
+## Passive infinitive (be + past participle)
+• After **modal verbs**, **be going to** and verbs with **to** (need to, have to, want to):
+→ Bags **must not be left** unattended. · Water **can be collected** from the air.
+→ The film **is going to be released** next year. · The software **needs to be updated**.
+• Past modal: The problem **may have been solved**.
+
+## Why use the passive?
+• We are interested in **what happens to something**, not who does it — the doer is **unknown, obvious or unimportant**: The mixture **is heated** to 100°C.
+• Use **by** to say who or what does the action: The mouse was invented **by** Douglas Engelbart.
+
+## Two objects → two passives
+• They showed **the judges** **the designs**. →
+→ **The judges** were shown the designs. OR **The designs** were shown to the judges.
+• **was / were born**: I **was born** in Milan. (NOT I born)`,
+    [
+      q("The winner ___ in November.", ["will be announced", "will announce", "will announced", "is announcing"]),
+      q("My car ___ at the moment.", ["is being serviced", "is serviced", "has serviced", "services"]),
+      q("Twenty inventions ___ for the award.", ["have been shortlisted", "have shortlisted", "has been shortlist", "are shortlisting"]),
+      q("Water ___ from the air.", ["can be collected", "can collect", "can be collect", "can been collected"]),
+      q("The mouse was invented ___ Douglas Engelbart.", ["by", "from", "of", "with"]),
+      q("The software needs ___.", ["to be updated", "to update", "be updated", "updated be"]),
+      q("Where ___ you born?", ["were", "did", "are", "have"]),
+      q("They gave the winners a prize. → The winners ___ a prize.", ["were given", "gave", "were giving", "had give"]),
+      q("Passive form:", ["be + past participle", "have + past participle", "be + -ing", "will + verb"]),
+      q("The problem ___ by a young inventor.", ["may have been solved", "may have solved", "may been solved", "may have be solved"]),
+    ]
+  ),
 };

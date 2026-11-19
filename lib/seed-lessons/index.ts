@@ -73,6 +73,7 @@ import { B2_06_EXERCISES, B2_06_ROUNDS } from "./b2-06-travel-stories";
 import { B2_07_EXERCISES, B2_07_ROUNDS } from "./b2-07-future-jobs";
 import { B2_08_EXERCISES, B2_08_ROUNDS } from "./b2-08-time-money";
 import { B2_09_EXERCISES, B2_09_ROUNDS } from "./b2-09-gold-predictions";
+import { B2_10_EXERCISES, B2_10_ROUNDS } from "./b2-10-inventions";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -180,6 +181,7 @@ const LESSONS: LessonContent[] = [
   { code: "B2-07", rounds: B2_07_ROUNDS, exercises: B2_07_EXERCISES },
   { code: "B2-08", rounds: B2_08_ROUNDS, exercises: B2_08_EXERCISES },
   { code: "B2-09", rounds: B2_09_ROUNDS, exercises: B2_09_EXERCISES },
+  { code: "B2-10", rounds: B2_10_ROUNDS, exercises: B2_10_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —
