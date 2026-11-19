@@ -812,4 +812,44 @@ Some non-modal verbs work in a similar way: **have to, need (to), ought to**.
       q("The government prohibited them ___ smoking.", ["from", "to", "of", "on"]),
     ]
   ),
+  "B2-21": rule(
+    "Ellipsis · prefixes · agreeing and disagreeing",
+    `## Ellipsis
+We often **leave out words** when they are clear from the context.
+• **Noun ellipsis** — we don't repeat a noun or pronoun:
+→ Julia has six years' experience, but Mike (has) only two (years' experience).
+→ She bought a ticket but (she) didn't use it.
+• **Verb ellipsis** — we don't repeat the verb, or we use only the auxiliary:
+→ The weather has been excellent and the food (has been) delicious.
+→ I knew he would do well, but I wouldn't (do well).
+
+## Prefixes
+• **self-** (done to or by yourself): self-confidence, self-control, self-interest, self-centred
+• **bi-** (two): bilingual, bicycle, bicentenary
+• **inter-** (between): international, intercontinental, interstate
+• **mono-** (one): monolingual, monotone
+• **multi-** (many): multicoloured, multimillionaire
+• **semi-** (half, partly): semicircle, semi-detached, semi-retired
+
+## Agreeing
+• I'm with you there. (informal) · I completely agree. · True enough.
+• Yes, that's spot on. (informal) · Absolutely! · That's just what I was thinking. · I couldn't agree more.
+
+## Disagreeing
+• **Strong / informal:** You can't be serious! · Come off it!
+• **Polite:** That's not really how I see it. · I'm not sure I quite agree. · I can't agree with you there. · I'm not sure about that.
+• **Formal:** I beg to differ.`,
+    [
+      q("He tried hard but (…) failed. What's missing?", ["he", "was", "I", "do"]),
+      q("Speaking two languages:", ["bilingual", "monolingual", "multilingual", "interlingual"]),
+      q("Between continents:", ["intercontinental", "multicontinental", "bicontinental", "semicontinental"]),
+      q("Thinking only about yourself:", ["self-centred", "self-control", "self-confidence", "semi-centred"]),
+      q("Half a circle:", ["semicircle", "bicircle", "monocircle", "multicircle"]),
+      q("Informal agreement:", ["I'm with you there.", "I beg to differ.", "Come off it!", "I'm not sure about that."]),
+      q("Strong informal disagreement:", ["Come off it!", "True enough.", "I completely agree.", "That's spot on."]),
+      q("Formal, polite disagreement:", ["I beg to differ.", "Come off it!", "You can't be serious!", "Absolutely!"]),
+      q("I couldn't agree ___.", ["more", "less", "most", "better"]),
+      q("Yes, that's spot ___.", ["on", "in", "at", "off"]),
+    ]
+  ),
 };
