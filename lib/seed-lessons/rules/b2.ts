@@ -404,4 +404,46 @@ The passive has the same tenses as the active. Only **be** changes:
       q("The problem ___ by a young inventor.", ["may have been solved", "may have solved", "may been solved", "may have be solved"]),
     ]
   ),
+  "B2-11": rule(
+    "Causative have and get",
+    `We use causative structures when **someone else does something for us** (usually because we arranged it).
+
+## have / get + object + past participle
+• We **don't say** who does the action.
+→ We**'re having** the roof **repaired** in the summer.
+→ At this hotel, you can **get** your dry-cleaning **done** for free.
+→ Where do you **get** your hair **cut**? · I'm **getting** my car **serviced** tomorrow.
+• **get** is a little more **informal** than have.
+• Any tense is possible: I **had** my apartment **valued** last week. · We**'re having** our office **decorated**.
+
+## Something bad that happened to us
+• **have + object + past participle** — for unwelcome events (NOT get).
+→ I **had** my handbag **stolen** last night. · I**'ve had** my car **broken** into.
+
+## have someone do / get someone to do
+• We **do say** who does the action.
+• **have** + person + infinitive **without to**: We **had the doctor check** her blood pressure.
+• **get** + person + infinitive **with to**: I'm **getting Alex to pick** my parents up.
+→ I had someone **clean** the carpets. = I got someone **to clean** the carpets.
+
+## Compare
+• I **cut** my hair. → I did it myself.
+• I **had** my hair **cut**. → A hairdresser did it.
+
+## Describing your impressions
+• weird → **odd** · original → **innovative, inventive** · impressive → **remarkable, striking**
+• functional → **practical, user-friendly** · childish → **silly** · unimaginative → **conventional**`,
+    [
+      q("I ___ yesterday. (a hairdresser did it)", ["had my hair cut", "cut my hair", "had cut my hair", "got cut my hair"]),
+      q("We're having the roof ___.", ["repaired", "repair", "to repair", "repairing"]),
+      q("I got the mechanic ___ my brakes.", ["to check", "check", "checked", "checking"]),
+      q("I had the mechanic ___ my brakes.", ["check", "to check", "checked", "checks"]),
+      q("Something bad: I ___ my bike stolen.", ["had", "got", "made", "did"]),
+      q("Where do you get your car ___?", ["washed", "wash", "to wash", "washing"]),
+      q("Which is more informal?", ["get", "have", "both are formal", "neither"]),
+      q("Very noticeable and unusual:", ["striking", "conventional", "practical", "silly"]),
+      q("Easy to understand and use:", ["user-friendly", "odd", "remarkable", "childish"]),
+      q("Always traditional and normal:", ["conventional", "innovative", "inventive", "striking"]),
+    ]
+  ),
 };
