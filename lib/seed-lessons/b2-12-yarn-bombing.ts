@@ -22,6 +22,8 @@ import {
 } from "./helpers";
 
 const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+/** Unit video (Navigate B2 «Report») — used as clip and in the video tasks. */
+const VIDEO = "media:navigate-b2/video/report-04.mp4";
 
 export const B2_12_ROUNDS: Rounds = [
   {
@@ -280,5 +282,19 @@ export const B2_12_EXERCISES: SeedExercise[] = [
       "quiet",
       "advice",
     ]),
+  },
+  {
+    title: "Video: La Belle Époque",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to the video «La Belle Époque» about Paris around 1900 (you can also watch it in «Inglizcha tomosha» after the exercises). Choose the option that completes the summary.",
+    questions: [
+      hearing(VIDEO)("The Eiffel Tower was built to commemorate the hundredth anniversary of the ___.", ["French Revolution", "World Fair", "Paris metro", "Musée d'Orsay"]),
+      hearing(VIDEO)("For more than ___ years, it was the tallest tower in the world.", ["forty", "ten", "a hundred", "twenty"]),
+      hearing(VIDEO)("The 1900 World Fair also popularized «___ Nouveau», a popular style of design.", ["Art", "Belle", "Paris", "Style"]),
+      hearing(VIDEO)("The Musée d'Orsay was originally a ___.", ["railway station", "palace", "theatre", "factory"]),
+      hearing(VIDEO)("It became a museum in ___.", ["1986", "1900", "1950", "2000"]),
+      hearing(VIDEO)("The underground metro opened in 1900, on ___.", ["19 July", "1 January", "14 July", "25 December"]),
+    ],
   },
 ];

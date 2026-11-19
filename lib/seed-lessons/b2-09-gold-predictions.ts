@@ -23,6 +23,8 @@ import {
 } from "./helpers";
 
 const track = (n: string) => `media:navigate-b2/audio/${n}.mp3`;
+/** Unit video (Navigate B2 «Report») — used as clip and in the video tasks. */
+const VIDEO = "media:navigate-b2/video/report-03.mp4";
 
 export const B2_09_ROUNDS: Rounds = [
   {
@@ -312,5 +314,18 @@ export const B2_09_EXERCISES: SeedExercise[] = [
       "achievement",
       "generosity",
     ]),
+  },
+  {
+    title: "Video: The future of work",
+    skill: "Listening",
+    kind: "audiotext",
+    instructions: "Listen to the video «The future of work» (you can also watch it in «Inglizcha tomosha» after the exercises). Choose the topic that completes each statement.",
+    questions: [
+      hearing(VIDEO)("___ has affected some industries negatively, but made others better and more profitable.", ["Technology", "Social media", "Careers", "Writing in code"]),
+      hearing(VIDEO)("___ is something that more people can do nowadays.", ["Writing in code", "Technology", "Creative environments", "Careers"]),
+      hearing(VIDEO)("Younger people are more used to ___.", ["social media", "careers", "writing in code", "creative environments"]),
+      hearing(VIDEO)("Now that many businesses use ___, there is a concern that workers may take advantage of this.", ["creative environments", "careers", "technology", "writing in code"]),
+      hearing(VIDEO)("Young people starting ___ need to find jobs they enjoy.", ["careers", "social media", "technology", "creative environments"]),
+    ],
   },
 ];

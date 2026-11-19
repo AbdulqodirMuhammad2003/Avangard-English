@@ -18,6 +18,7 @@ import {
   reading,
   say,
   w,
+  written,
   type Rounds,
 } from "./helpers";
 
@@ -295,6 +296,19 @@ export const B2_15_EXERCISES: SeedExercise[] = [
       "It turned out he had cheated.",
       "Make sure you turn the power off.",
       "attention span",
+    ]),
+  },
+  {
+    title: "Video words: compound nouns",
+    skill: "Vocabulary",
+    kind: "fill",
+    instructions: "These compound nouns are from the video «Boredom» (watch it in «Inglizcha tomosha» after the exercises). Complete each sentence: attention span, pie chart, spreadsheet, instant gratification, production line.",
+    questions: written([
+      ["He has a very short ___. He can't concentrate on anything for more than a few minutes.", "attention span"],
+      ["A ___ consists of a circle divided into sections.", "pie chart"],
+      ["I find inputting data into a ___ so tedious.", "spreadsheet|spread sheet"],
+      ["We live in an age of ___, where we want things immediately.", "instant gratification"],
+      ["I once had a really repetitive job working on a ___ in a bottling factory.", "production line"],
     ]),
   },
 ];
