@@ -242,6 +242,7 @@ export const UNITS: UnitSeed[] = [
   { code: "B2-24", level: "B2", title: "24-dars", subtitle: "Old World, New World: adjectives + prepositions, impressions", color: "green", icon: "headphones", locked: 1, date: "", clip: null },
   { code: "B2-25", level: "B2", title: "25-dars", subtitle: "Dark days and white nights: adjectives and adverbs", color: "blue", icon: "book", locked: 1, date: "", clip: null },
   { code: "B2-26", level: "B2", title: "26-dars", subtitle: "Sleep: used to, would, be/get used to", color: "orange", icon: "chat", locked: 1, date: "", clip: null },
+  { code: "B2-27", level: "B2", title: "27-dars", subtitle: "Man and the moon: reference, synonyms, interrupting", color: "purple", icon: "headphones", locked: 1, date: "", clip: null },
 ];
 
 export async function seedDatabase() {

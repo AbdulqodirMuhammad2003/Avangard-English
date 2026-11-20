@@ -1039,4 +1039,38 @@ Adverbs tell us more about **verbs, adjectives or whole sentences**:
       q("Not sleep at all:", ["not sleep a wink", "sleep soundly", "fast asleep", "have a snooze"]),
     ]
   ),
+  "B2-27": rule(
+    "Reference · synonyms and antonyms · interrupting",
+    `## Reference
+Writers link a text by **referring back** to earlier parts, so they don't repeat words.
+• **Pronouns and possessives:** he, she, it, this, that, these, those, one(s), its, their …
+→ Nor is it true that the other side of the moon is always dark. **This** is just a myth; **its** far side is lit by the sun.
+• **Auxiliaries and so:** do, does, did, **doing so** → They planted a flag. In **doing so**, they started a myth.
+• **Adverbs:** here, **there**, **then** → … clearly there is no wind **there** (on the moon).
+• **such / such a** + noun = this kind of → … but **such** occurrences are just coincidence.
+
+## Synonyms and antonyms
+• **Synonyms** (similar meaning): closer → **nearer** · tsunamis → **disasters** · cease → **stop** · evil → **bad**
+• **Antonyms** (opposite meaning): faked ↔ **genuine** · praise ↔ **criticism** · absence ↔ **presence** · deliberate ↔ **accidental** · match ↔ **contrast**
+
+## Interrupting
+• **More formal / polite:** If I could just interrupt a second, … · Excuse me for interrupting, but … · I'd like to comment on that … · I'd like to say something, if I may.
+• **Less formal:** Can I say something here? · Can I just say … · Just a second, … · Hang on a minute, … · Can I just come in here?
+• To keep your turn: **If I could just finish what I was saying, …**
+
+## Pronunciation — dropped syllables
+• veg(e)table · ev(e)ry · cam(e)ra · rest(au)rant · myst(e)ry`,
+    [
+      q("They planted a flag. In ___, they started a myth.", ["doing so", "making it", "this way so", "doing it so"]),
+      q("Tsunamis can happen with a supermoon, but ___ occurrences are coincidence.", ["such", "so", "these one", "this"]),
+      q("Antonym of «genuine»:", ["faked", "real", "true", "nearer"]),
+      q("Synonym of «cease»:", ["stop", "start", "praise", "match"]),
+      q("Antonym of «deliberate»:", ["accidental", "evil", "genuine", "intentional"]),
+      q("Antonym of «praise»:", ["criticism", "comment", "presence", "evil"]),
+      q("Polite way to interrupt:", ["If I could just interrupt a second, …", "Hang on a minute!", "Just a second!", "Can I just come in?"]),
+      q("Excuse me for ___, but …", ["interrupting", "interrupt", "interrupted", "to interrupt"]),
+      q("I'd like to say something, if I ___.", ["may", "might", "can be", "do"]),
+      q("Informal way to interrupt:", ["Hang on a minute, …", "I'd like to comment on that …", "Excuse me for interrupting, but …", "I'd like to say something, if I may."]),
+    ]
+  ),
 };
