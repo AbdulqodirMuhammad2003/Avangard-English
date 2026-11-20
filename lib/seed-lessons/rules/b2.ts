@@ -1005,4 +1005,38 @@ Adverbs tell us more about **verbs, adjectives or whole sentences**:
       q("In the beginning:", ["originally", "gradually", "slightly", "considerably"]),
     ]
   ),
+  "B2-26": rule(
+    "Past and present habits",
+    `## Past habits
+• **used to + infinitive** — past habits, typical behaviour, **states** and situations that are no longer true:
+→ I **used to go** to bed around midnight when I was a teenager. · We **used to live** in Manchester.
+• No **-d** in negatives and questions: I **didn't use to** read much. · **Did** you **use to** play sport?
+• **would + infinitive** — past habits and typical behaviour, but **NOT states** (live, love, be, have = own):
+→ My grandfather **would always check** the farm animals. · NOT ~~We would live in Manchester.~~
+
+## Present habits
+• Use the **present simple**, often with an adverb (usually, often, always): I **usually watch** TV in the evening.
+• ⚠ NOT ~~I use to …~~ for the present.
+
+## be used to / get used to + -ing (or noun)
+• **be used to** = it's familiar, normal for you: I**'m used to getting** up early. · I**'m not used to** the weather here.
+• **get used to** = it's becoming familiar: We**'re getting used to living** here. · I **got used to driving** on the right.
+• Here **used** is an adjective, and **to** is a preposition → follow it with **-ing** or a noun.
+
+## Sleep idioms
+• sleep like a log · not sleep a wink · have a lie-in · a light sleeper · fast asleep / wide awake
+• drop off / nod off / fall asleep · have a nap / a snooze · get up at the crack of dawn · catch up on sleep`,
+    [
+      q("We ___ in Manchester for a few years.", ["used to live", "would live", "are used to living", "use to live"]),
+      q("I didn't ___ read much as a child.", ["use to", "used to", "would", "using to"]),
+      q("When I was little, I ___ hide under the bed.", ["would", "am used to", "get used to", "was used"]),
+      q("I'm not used to ___ up so early.", ["getting", "get", "got", "gets"]),
+      q("We're ___ the new flat — it feels like home now.", ["getting used to", "use to", "would", "used"]),
+      q("Present habit:", ["I usually get up at 7.", "I use to get up at 7.", "I would get up at 7 now.", "I'm used to get up at 7."]),
+      q("Which can't use «would»?", ["a past state, e.g. live / be", "a past action habit", "a repeated past action", "typical past behaviour"]),
+      q("Sleep very deeply:", ["sleep like a log", "not sleep a wink", "be a light sleeper", "nod off"]),
+      q("Stay in bed late in the morning:", ["have a lie-in", "drop off", "have a nap", "get up at the crack of dawn"]),
+      q("Not sleep at all:", ["not sleep a wink", "sleep soundly", "fast asleep", "have a snooze"]),
+    ]
+  ),
 };

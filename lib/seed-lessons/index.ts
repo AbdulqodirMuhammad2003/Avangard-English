@@ -89,6 +89,7 @@ import { B2_22_EXERCISES, B2_22_ROUNDS } from "./b2-22-internet-of-things";
 import { B2_23_EXERCISES, B2_23_ROUNDS } from "./b2-23-generations";
 import { B2_24_EXERCISES, B2_24_ROUNDS } from "./b2-24-food-festival";
 import { B2_25_EXERCISES, B2_25_ROUNDS } from "./b2-25-dark-days";
+import { B2_26_EXERCISES, B2_26_ROUNDS } from "./b2-26-sleep";
 import { A1_RULES } from "./rules/a1";
 import { A2_RULES } from "./rules/a2";
 import { B1_RULES } from "./rules/b1";
@@ -212,6 +213,7 @@ const LESSONS: LessonContent[] = [
   { code: "B2-23", rounds: B2_23_ROUNDS, exercises: B2_23_EXERCISES },
   { code: "B2-24", rounds: B2_24_ROUNDS, exercises: B2_24_EXERCISES },
   { code: "B2-25", rounds: B2_25_ROUNDS, exercises: B2_25_EXERCISES },
+  { code: "B2-26", rounds: B2_26_ROUNDS, exercises: B2_26_EXERCISES },
 ];
 
 /** Har bir darsning «Qoida» bo'limi (sodda tushuntirish + 10 ta test) —
