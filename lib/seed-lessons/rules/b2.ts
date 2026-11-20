@@ -970,4 +970,39 @@ Some adjectives are almost always followed by a particular **preposition**, then
       q("Which phrase is negative?", ["I didn't see the point of it.", "It's just stunning.", "For me the highlight was …", "It was well worth it."]),
     ]
   ),
+  "B2-25": rule(
+    "Adjectives and adverbs",
+    `## Adjectives
+• Describe **people or things**.
+• Two positions: **before a noun** — a **dramatic** landscape; **after a linking verb** (be, seem, look, feel, smell, sound) — The room looks **cosy**. · The flowers smell **wonderful** (NOT wonderfully).
+
+## Adverbs
+Adverbs tell us more about **verbs, adjectives or whole sentences**:
+• **How** something happens: The weather has **gradually** improved. · The sun sets very **quickly**.
+• **Your attitude**: **Basically**, I think it's a bad idea.
+• **When / where**: I go there **weekly**.
+• **Level or extent**: It's **considerably** hotter in the rainy season. · It gets **slightly** darker.
+• **How often**: I **rarely** go out at night.
+
+## Common confusions
+• Not all adverbs end in **-ly**: often, never, yesterday, now, everywhere, nearby.
+• Some **adjectives** end in -ly: friendly, likely, lonely, lovely, silly, ugly, **lively**. There is no adverb — use a phrase: She spoke to me **in a friendly way**.
+• Same form for both: daily, early, **hard**, **fast**, weekly → I get a **daily** paper. · I go there **daily**.
+• **hard** (= with effort) vs **hardly** (= almost not): The rain fell **hard**. · I **hardly** ever go out.
+
+## Pronunciation — dropped syllables
+• The syllable after the stress can disappear: **comf(or)table, diff(e)rent, fam(i)ly, fav(ou)rite, int(e)resting, mis(e)rable, sep(a)rate**.`,
+    [
+      q("The sun sets very ___ in the tropics.", ["quickly", "quick", "quicker", "quickness"]),
+      q("The flowers smell ___.", ["wonderful", "wonderfully", "wonder", "wondering"]),
+      q("She spoke to me ___.", ["in a friendly way", "friendlily", "very friendly", "friendly way"]),
+      q("He works very ___.", ["hard", "hardly", "hards", "hardy"]),
+      q("I ___ ever go out — almost never.", ["hardly", "hard", "harder", "hardest"]),
+      q("It's ___ hotter in summer.", ["considerably", "considerable", "consider", "considered"]),
+      q("Which word is an adjective?", ["lively", "slightly", "gradually", "basically"]),
+      q("Which word can be an adjective AND an adverb?", ["daily", "slowly", "happily", "quietly"]),
+      q("Making you feel sad:", ["depressing", "depressed", "dramatic", "cosy"]),
+      q("In the beginning:", ["originally", "gradually", "slightly", "considerably"]),
+    ]
+  ),
 };
